@@ -8,8 +8,21 @@
                 <div class="panel-heading">Login</div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('login') }}">
+                    <form class="form-horizontal" method="POST" action="{{ route('log_in.submit') }}">
                         {{ csrf_field() }}
+                        <div class="form-group{{ $errors->has('company_id') ? ' has-error' : '' }}">
+                            <label for="company_id" class="col-md-4 control-label">Company ID </label>
+
+                            <div class="col-md-6">
+                                <input id="company_id" type="text" class="form-control" name="company_id" value="{{ old('company_id') }}" required autofocus>
+
+                                @if ($errors->has('company_id'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('company_id') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
