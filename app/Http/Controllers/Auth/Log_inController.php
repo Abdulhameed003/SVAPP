@@ -8,6 +8,18 @@ use Illuminate\Support\Facades\Auth;
 
 class Log_inController extends Controller
 {
+     /**
+     * Where to redirect users after login.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/dashboard';
+
+    
+    public function __construct(){
+        $this->middleware('guest')->except('logout');
+    }
+
 
     public function show(){
         return view('auth.login');
@@ -23,11 +35,9 @@ class Log_inController extends Controller
         ]);
         
         // try to login user
-        if(Auth::attempt($this->Credentials($request),$request->remember)){
-            return redirect()->intended(route(dashboard));
-
-        }else {
-            return 'failed';
+        return $request->all();
+        if(Auth::attempt(['email'=>$request->email,'password'=>$request->password, 'company_id' => $request->company_id],$request->remember)){
+            return redirect()->intended(route('dashboard.show'));
         }
 
         return redirect()->back()->withinput($request->only('email','remember'));

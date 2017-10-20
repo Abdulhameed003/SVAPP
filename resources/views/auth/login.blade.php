@@ -10,8 +10,9 @@
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST" action="{{ route('log_in.submit') }}">
                         {{ csrf_field() }}
+                        
                         <div class="form-group{{ $errors->has('company_id') ? ' has-error' : '' }}">
-                            <label for="company_id" class="col-md-4 control-label">Company ID </label>
+                            <label for="company_id" class="col-md-4 control-label">Company ID</label>
 
                             <div class="col-md-6">
                                 <input id="company_id" type="text" class="form-control" name="company_id" value="{{ old('company_id') }}" required autofocus>

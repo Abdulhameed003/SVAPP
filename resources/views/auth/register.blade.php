@@ -11,15 +11,29 @@
                     <form class="form-horizontal" method="POST" action="{{ route('register') }}">
                         {{ csrf_field() }}
 
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Name</label>
+                        <div class="form-group{{ $errors->has('f_name') ? ' has-error' : '' }}">
+                            <label for="f_name" class="col-md-4 control-label">First Name</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+                                <input id="f_name" type="text" class="form-control" name="first_name" value="{{ old('f_name') }}" required autofocus>
 
-                                @if ($errors->has('name'))
+                                @if ($errors->has('f_name'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
+                                        <strong>{{ $errors->first('f_name') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                         <div class="form-group{{ $errors->has('l_name') ? ' has-error' : '' }}">
+                            <label for="l_name" class="col-md-4 control-label">Last Name</label>
+
+                            <div class="col-md-6">
+                                <input id="l_name" type="text" class="form-control" name="last_name" value="{{ old('l_name') }}" required autofocus>
+
+                                @if ($errors->has('l_name'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('l_name') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -58,6 +72,34 @@
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                            </div>
+                        </div>
+
+                         <div class="form-group{{ $errors->has('Company_id') ? ' has-error' : '' }}">
+                            <label for="company_id" class="col-md-4 control-label">Company ID</label>
+
+                            <div class="col-md-6">
+                                <input id="company_id" type="text" class="form-control" name="company_id" value="{{ old('company_id') }}" required autofocus>
+
+                                @if ($errors->has('company_id'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('company_id') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                         <div class="form-group{{ $errors->has('user_role') ? ' has-error' : '' }}">
+                            <label for="user_role" class="col-md-4 control-label">User Role</label>
+
+                            <div class="col-md-6">
+                                <input id="user_role" type="text" class="form-control" name="user_role" value="{{ old('user_role') }}" required autofocus>
+
+                                @if ($errors->has('user_role'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('user_role') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                         </div>
 

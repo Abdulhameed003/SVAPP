@@ -11,11 +11,12 @@
 |
 */
 
+Route::get('/', function(){
+    return view('welcome');
+});
 
 
 Auth::routes();
-
-Route::get('/dashboard', 'DashboardController@index');
-
-Route::get('login','Auth\Log_inController@show')->name('log_in.show');
-Route::post('login','Auth\Log_inController@login')->name('log_in.submit');
+Route::get('log_in','Auth\Log_inController@show')->name('log_in.show');
+Route::post('log_in','Auth\Log_inController@login')->name('log_in.submit');
+Route::get('dashboard', 'DashboardController@index')->name('dashboard.show');
