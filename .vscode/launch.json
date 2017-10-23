@@ -6,6 +6,20 @@
     "configurations": [
         
         {
+            "type": "chrome",
+            "request": "attach",
+            "name": "Attach to Chrome",
+            "port": 9222,
+            "webRoot": "${workspaceRoot}/public/index.php"
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Chrome",
+            "url": "http://localhost:8080/xampp/htdocs/SVapp/public/index.php",
+            "webRoot": "${workspaceRoot}/public/index.php"
+        },
+        {
             "type": "extensionHost",
             "request": "launch",
             "name": "Launch Extension",

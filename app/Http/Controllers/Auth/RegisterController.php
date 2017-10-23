@@ -8,6 +8,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
+use Artisan;
+use App;
 
 class RegisterController extends Controller
 {
@@ -29,9 +33,8 @@ class RegisterController extends Controller
      *
      * @var string
      */
-
     protected function redirectTo(){
-
+        
         return '/dashboard';
     }
 
@@ -42,6 +45,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
+        
         $this->middleware('guest');
     }
 
@@ -51,40 +55,56 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    protected function validator($request)
     {
-        return Validator::make($data, [
+        return Validator::make($request, [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
             'company_id' => 'required|string|max:255',
+            'company_name' => 'required|string|max:255',
+            'company_phone' => 'required|string|max:255',
             'user_role' => 'required|string|max:255',
 
         ]);
     }
 
+    public function register(request $request){
+        $this->validator($request->all())->validate();
+        
+        if ($this->CreateCompany($request) == true ){
+            $tenantAdmin = User::create([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+                'company_id' => $request->company_id,
+                'user_role' => $request->user_role
+            ]);
+        }else {
+            return $tenantAdmin;//redirect()->back();//->withInput($data->all()->except('password','company_id'));
+        }
+    }
     
-    //Get company_id and check if name exist as a database
-    private function CreatCompany(array $data){
-        if(isNotEmpty(Tenant::find($request->company_id))) {
+  
+    private function CreateCompany($request){
+      
+        if(Tenant::where('company_id',$request->company_id)->count() > 0) {
             return false;
         }else{
             $company= Tenant::create([
-                'company_name' => $data['company_name'],
-                'company_id'=> $data['company_id'],
-                'company_phone'=> $data['company_phone']
+                'company_name' => $request->company_name,
+                'company_id'=> $request->company_id,
+                'company_phone'=> $request->company_phone
             ]);
-            
+            $this->createSchema($request->company_id);
+            $this->configurDB($request->company_id);
+            Artisan::call('migrate', ['database' => $request->company_id, 'path' => 'database/migrations']);
             return true;
         }
     }    
 
-    //save comapny credentials to the SVapp database(default db)
-
-    // if name exist then inform guest
-
-    // create new users
 
 
     /**
@@ -95,7 +115,6 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        if (CreateCompany($data)){
             return User::create([
                 'first_name' => $data['first_name'],
                 'last_name' => $data['last_name'],
@@ -104,11 +123,46 @@ class RegisterController extends Controller
                 'company_id' => $data['company_id'],
                 'user_role' => $data['user_role'],
             ]);
-        }else {
-            return redirect()->back()->withInput($request->all()->except('password','company_id'))->with('error','The company ID already exist');
-        }
     }
 
-    // change default db to company db
+
+
+    /**
+    * Creates a new database schema.
+    * @param  string $schemaName The new schema name.
+    * @return bool
+    */
+   private function createSchema($schemaName)
+   {
+       
+       return DB::statement('CREATE DATABASE '.$schemaName);
+   }
+   
+    /**
+     * Configures a tenant's database connection.
+    * @param  string $Company_id The database name.
+    * @return void
+    */
+    private function configurDB($company_id)
+    {
+        // Just get access to the config. 
+        $config = App::make('config');
+
+        // Will contain the array of connections that appear in our database config file.
+        $connections = $config->get('database.connections');
+
+        // This line pulls out the default connection by key (by default it's `mysql`)
+        $defaultConnection = $connections[$config->get('database.default')];
+
+        // Now we simply copy the default connection information to our new connection.
+        $newConnection = $defaultConnection;
+        // Override the database name.
+        $newConnection['database'] = $company_id;
+
+        // This will add our new connection to the run-time configuration for the duration of the request.
+        App::make('config')->set('database.connections.'.$company_id, $newConnection);
+
+    }
+  
 
 }

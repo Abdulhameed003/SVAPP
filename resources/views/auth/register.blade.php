@@ -89,6 +89,34 @@
                             </div>
                         </div>
 
+                         <div class="form-group{{ $errors->has('Company_name') ? ' has-error' : '' }}">
+                            <label for="company_name" class="col-md-4 control-label">Company Name</label>
+
+                            <div class="col-md-6">
+                                <input id="company_name" type="text" class="form-control" name="company_name" value="{{ old('company_name') }}" required autofocus>
+
+                                @if ($errors->has('company_name'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('company_name') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                         <div class="form-group{{ $errors->has('Company_phone') ? ' has-error' : '' }}">
+                            <label for="company_phone" class="col-md-4 control-label">Company Phone</label>
+
+                            <div class="col-md-6">
+                                <input id="company_phone" type="text" class="form-control" name="company_phone" value="{{ old('company_phone') }}" required autofocus>
+
+                                @if ($errors->has('company_phone'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('company_phone') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                          <div class="form-group{{ $errors->has('user_role') ? ' has-error' : '' }}">
                             <label for="user_role" class="col-md-4 control-label">User Role</label>
 
