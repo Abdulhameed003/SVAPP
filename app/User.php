@@ -27,6 +27,8 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected $connection = 'mysql';
+
     //Relationships 
     public function tenant(){
         return $this->belongsTo('App\Tenant');

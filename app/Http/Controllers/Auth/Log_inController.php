@@ -35,7 +35,6 @@ class Log_inController extends Controller
         ]);
         
         // try to login user
-        return $request->all();
         if(Auth::attempt(['email'=>$request->email,'password'=>$request->password, 'company_id' => $request->company_id],$request->remember)){
             return redirect()->intended(route('dashboard.show'));
         }
