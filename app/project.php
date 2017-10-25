@@ -6,5 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
-    //
+   public $table = 'projects';
+   protected $primaryKey = '';
+   protected $fillable = [];
+
+
+
+   
 }

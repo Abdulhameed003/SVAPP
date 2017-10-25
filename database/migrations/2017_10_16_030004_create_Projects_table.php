@@ -16,16 +16,16 @@ class CreateProjectsTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->increments('id')->unique();
             $table->string('project_category');
-            $table->string('company_id');
-            $table->integer('salesperson_id');
-            $table->integer('product');
+            $table->string('company_id');  //rel2
+            $table->integer('salesperson_id'); //rel2
+            $table->integer('product'); //rel 3
             $table->integer('value');
             $table->string('project_type');
-            $table->integer('sales_stage');
+            $table->integer('sales_stage'); 
             $table->string('status');
             $table->string('tender');
-            $table->string('remarks');
-            $table->date('close_at');
+            $table->string('remarks')->nullable;
+            $table->date('close_at')->nullable;
             $table->timestamps();
 
         });

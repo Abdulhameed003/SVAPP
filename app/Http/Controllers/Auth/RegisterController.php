@@ -4,14 +4,16 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Tenant;
+use App\ConfigureDB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Artisan;
-use App;
+
+
 
 class RegisterController extends Controller
 {
@@ -28,7 +30,7 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
-    private $dbaseName="";
+
 
     /**
      * Where to redirect users after registration.
@@ -84,6 +86,7 @@ class RegisterController extends Controller
                 'company_id' => $request->company_id,
                 'user_role' => $request->user_role
             ]);
+            return redirect('/login');
         }else {
             return redirect()->back()->withInput($request->except('password','company_id'));
         }
@@ -91,56 +94,24 @@ class RegisterController extends Controller
     
   
     private function CreateCompany(request $request){
-      
+        $dbaseName="";
+
         if(Tenant::where('company_id',$request->company_id)->count() > 0) {
             return false;
         }else{
-            $this->dbaseName = 'DB_'.$request->company_id;
+            $dbaseName = 'DB_'.$request->company_id;
             Tenant::create([
                 'company_name' => $request->company_name,
                 'company_id'=> $request->company_id,
                 'company_phone'=> $request->company_phone
             ]);
-
-            $this->createSchema($this->dbaseName);
-            $this->configurDBConnection($this->dbaseName);
-            Artisan::call('migrate', ['--database' => $this->dbaseName, '--path' => 'database/migrations', '--force' => true]);
+            
+            ConfigureDB::CreateSchema($dbaseName);
+            ConfigureDB::ConfigureDBConnection($dbaseName);
+            Artisan::call('migrate', ['--database' => $dbaseName, '--path' => 'database/migrations', '--force' => true]);
             return true;
         }
     }    
 
-
-
-  
-   private function createSchema($schemaName)
-   {
-       
-       return DB::statement('CREATE DATABASE '.$schemaName);
-   }
-   
-  
-    private function configurDBConnection($database)
-    {
-        // Just get access to the config. 
-        $config = App::make('config');
-
-        // Will contain the array of connections that appear in our database config file.
-        $connections = $config->get('database.connections');
-
-        // This line pulls out the default connection by key (by default it's `mysql`)
-        $defaultConnection = $connections[$config->get('database.default')];
-
-        // Now we simply copy the default connection information to our new connection.
-        $newConnection = $defaultConnection;
-
-        // Override the database name.
-        $newConnection['database'] = $database;
-
-       
-        // This will add our new connection to the run-time configuration for the duration of the request.
-        App::make('config')->set('database.connections.'.$database, $newConnection);
-        
-    }
-  
 
 }

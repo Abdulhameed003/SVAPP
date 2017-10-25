@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\ConfigureDB;
+use App\Deal;
 
 class DashboardController extends Controller
 {
@@ -23,6 +26,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        $dbToConnect = ConfigureDB::ConfigureDBConnection('db_'.auth()->User()->company_id);
+        DB::connection($dbToConnect);
+
         return view('dashboard');
     }
 }

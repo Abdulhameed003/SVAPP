@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\User;
+
 
 class Log_inController extends Controller
 {
@@ -13,7 +16,11 @@ class Log_inController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard';
+    protected function redirectTo(){
+       
+        return  '/dashboard';
+    }
+
 
     
     public function __construct(){
@@ -29,13 +36,14 @@ class Log_inController extends Controller
 
         //validate request
         $this->validate($request,[
-            'comapny_id'=>'required',
+            'company_id'=>'required',
             'email'=> 'required|email',
             'password'=>'required|min:6'
         ]);
         
         // try to login user
-        if(Auth::attempt(['email'=>$request->email,'password'=>$request->password, 'company_id' => $request->company_id],$request->remember)){
+        if(Auth::attempt($this->Credentials($request),$request->remember)){
+          
             return redirect()->intended(route('dashboard.show'));
         }
 
@@ -43,6 +51,6 @@ class Log_inController extends Controller
     }
 
     private function Credentials(request $request ){
-        return $request->only('company_id','email','password');
+        return $request->only('email','password','company_id');
     }
 }
