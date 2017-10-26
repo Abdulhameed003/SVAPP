@@ -15,11 +15,7 @@
                     @endif
 
                     You are logged in!
-                    @if(count($deal) > 0)
-                        {{$deal->po_num}}
-                    @else
-                        <p>NO data </p>
-                    @endif
+                   
                     
                 </div>
             </div>

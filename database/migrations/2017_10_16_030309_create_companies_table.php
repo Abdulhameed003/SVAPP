@@ -17,7 +17,7 @@ class CreateCompaniesTable extends Migration
             $table->increments('id');
             $table->string('company_id')->unique();
             $table->string('company_name');
-            $table->string('industry');
+            $table->string('industry_id');
             $table->string('website');
             $table->integer('office_num');
             $table->timestamps();
