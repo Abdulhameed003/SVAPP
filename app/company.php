@@ -11,12 +11,16 @@ class Company extends ConfigureDB
 
     //relationships
 
-    public function project(){
-        return $this->hasMany('App\Project');
+    public function projects(){
+        return $this->hasMany('App\Project','company_id','company_id');
 
     }
 
     public function industry(){
-        return $this->belongsTo('App\Industry');
+        return $this->belongsTo('App\Industry','industry_id','id');
+    }
+
+    public function contacts(){
+        return $this->hasMany('App\Contact','company_id','company_id');
     }
 }

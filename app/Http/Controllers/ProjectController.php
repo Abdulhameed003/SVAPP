@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use App\Project;
+use App\Salesperson;
 use App\Company;
 use App\Product;
+use App\Project;
 
 class ProjectController extends Controller
 {
@@ -17,8 +18,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::orderBy('created_at', 'desc')->get();
-        //$projects= $projects->sortByDesc('created_at');
+        $projects = Project::with('company.industry','company.contacts')->orderBy('created_at','Desc')->get();
+        
         return $projects;//view('dashboard')->with('projects', $projects);
     }
 
@@ -42,19 +43,31 @@ class ProjectController extends Controller
     {
         
         $this->validate($request,rule());
-
+        //find or create new industry if not in db
         $industry = Industry::firstOrCreate(['name'=>$request->industry ]);
-        //if (isEmpty($industry->companies()->find($request->id))){
-           $company= $industry->companies()->firstOrCreate(['company_name'=>$request->company_name],
-            ['company_id'=>$request->company_id],
-            ['industry_id'=>$industry_id],
-            ['website'=>$request->website],
-            ['office_number'=>$request->office_number]
-            );
-        //}else 
-       
 
-        $projectStore = Project::create([
+        //find or create new comapny if not in db in case of new company entry
+        $company= $industry->companies()->firstOrCreate(['company_id'=>$request->company_id],
+                    ['company_name'=>$request->company_name],
+                    ['industry_id'=>$industry_id],
+                    ['website'=>$request->website],
+                    ['office_number'=>$request->office_number]);
+
+        //if new company is filled save contact attached to that company
+        if($request->exist('contact_name')){
+            $company->contacts()->firstOrCreate(['company_id'=>$request->contact_id],
+                ['contact_name'=>$request->contact_name],
+                ['contact_number'=>$request->contact_number],
+                ['email'=>$request->contact_email],
+                ['designation'=>$request->contact_designation]);
+        }
+
+        //get product id
+        $product = Product::find($request->product_name);
+       
+        //get salesperson 
+        $salesPerson = Salesperson::find($request->salesperson_name);
+        $salesPerson->projects()->create([
             'project_category'=>$request->project_category,
             'product'=>$product->id,
             'value'=>$request->value,
@@ -64,7 +77,7 @@ class ProjectController extends Controller
             'tender'=>$request->tender,
             'remark'=>$request->remark,
             'company_id'=>$company->company_id,
-            'salesperson'=>$salesperson->salesperson_id
+            'salesperson'=>$salesPerson->salesperson_id
         ]);
 
         return reditect('/project')->with('success','A new project is added to the list');
@@ -76,14 +89,14 @@ class ProjectController extends Controller
     private function rule(){
       return   ['company_name'=>'sometimes|required',
                 'company_id'=>'sometimes|required',
-                'industry'=>'sometimes|required',
+                'industry_id'=>'sometimes|required',
                 'website'=>'sometimes|required|url',
                 'office_number'=>'sometimes|required|numeric',
                 'contact_name'=>'sometimes|required',
                 'contact_number'=>'sometimes|required',
                 'contact_email'=>'sometimes|required',
                 'contact_designation'=>'sometimes|nullable|string',
-                'salesperson_id'=>'required',
+                'salesperson_name'=>'required',
                 'project_category'=>'required',
                 'product'=>'required',
                 'value'=>'required|numeric',
@@ -130,8 +143,20 @@ class ProjectController extends Controller
     {
         $this->validate($request,rules());
 
-        $project = Project::find($id);
+        $salesPerson = Salesperson::find($request->salesperson_name);
 
+        $project = $salesPerson->projects()->where('id',$id)->get();
+        $project->project_category = $request->project_category;
+        $project->value =$request->value;
+        $project->project_type = $request->project_type;
+        $project->sales_stage = $request->sales_stage;
+        $project->status = $request->status;
+        $project->tender = $request->tender;
+        $project->remark = $request->remark;
+        $project->salesperson = $salesPerson->salesperson_id;
+        $project->save();
+
+        return redirect('/project')->with('success');
     }
 
     /**

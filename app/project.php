@@ -15,7 +15,7 @@ class Project extends ConfigureDB
 //relationships
 
 public function company(){
-    return $this->belongsTo();
+    return $this->belongsTo('App\Company','company_id','company_id');
 }
 
 }
