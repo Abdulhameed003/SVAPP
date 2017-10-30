@@ -12,6 +12,14 @@ use App\Project;
 class ProjectController extends Controller
 {
     /**
+     * provide authorization control in this controller
+     */
+    public function __construct(){
+        $this->middleware('auth');
+    }
+
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -117,7 +125,8 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        //
+        $project = Project::with('company.industy','company.contact')->where('id',$id)->get(); 
+        return view('pages.display_proj')->with('project', $project);
     }
 
     /**
@@ -129,7 +138,7 @@ class ProjectController extends Controller
     public function edit($id)
     {
         $project = Project::find($id);
-       return view('/project')->with('project',$project);
+       return view('pages.project')->with('project',$project);
     }
 
     /**
@@ -156,7 +165,7 @@ class ProjectController extends Controller
         $project->salesperson = $salesPerson->salesperson_id;
         $project->save();
 
-        return redirect('/project')->with('success');
+        return redirect('/project')->with('success','Update was successful');
     }
 
     /**
@@ -167,6 +176,9 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $project = Project::find($id);
+        $project->delete();
+        return redirect('/project')->with('succes', 'Record has been deleted.');
     }
+
 }
