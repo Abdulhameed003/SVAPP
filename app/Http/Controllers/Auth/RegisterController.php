@@ -66,10 +66,10 @@ class RegisterController extends Controller
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
-            'company_id' => 'required|string|unique:tenants|max:255',
+            'company_id' => 'required|string|unique:tenants|max:50',
             'company_name' => 'required|string|max:255',
-            'company_phone' => 'required|string|max:255',
-            'user_role' => 'required|string|max:255',
+            'company_phone' => 'required|digit:11',
+            'user_role' => 'required|string|max:50',
 
         ]);
     }

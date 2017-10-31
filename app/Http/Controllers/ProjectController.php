@@ -85,7 +85,7 @@ class ProjectController extends Controller
             'tender'=>$request->tender,
             'remark'=>$request->remark,
             'company_id'=>$company->company_id,
-            'salesperson'=>$salesPerson->salesperson_id
+            'salesperson_id'=>$salesPerson->salesperson_id
         ]);
 
         return reditect('/project')->with('success','A new project is added to the list');
@@ -95,9 +95,9 @@ class ProjectController extends Controller
      * @return \array of rules
      */
     private function rule(){
-      return   ['company_name'=>'sometimes|required',
-                'company_id'=>'sometimes|required',
-                'industry_id'=>'sometimes|required',
+      return   ['company_name'=>'sometimes|required|string|max:255',
+                'company_id'=>'sometimes|required|',
+                'industry_id'=>'sometimes|required|',
                 'website'=>'sometimes|required|url',
                 'office_number'=>'sometimes|required|numeric',
                 'contact_name'=>'sometimes|required',
@@ -125,7 +125,7 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        $project = Project::with('company.industy','company.contact')->where('id',$id)->get(); 
+        $project = Project::with('company.industy','company.contact','salesperson')->where('id',$id)->get(); 
         return view('pages.display_proj')->with('project', $project);
     }
 
@@ -162,7 +162,7 @@ class ProjectController extends Controller
         $project->status = $request->status;
         $project->tender = $request->tender;
         $project->remark = $request->remark;
-        $project->salesperson = $salesPerson->salesperson_id;
+        $project->salesperson_id = $salesPerson->salesperson_id;
         $project->save();
 
         return redirect('/project')->with('success','Update was successful');

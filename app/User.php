@@ -4,11 +4,12 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\ConfigureDB;
 
 class User extends Authenticatable
 {
     use Notifiable;
-
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -32,5 +33,9 @@ class User extends Authenticatable
     //Relationships 
     public function tenant(){
         return $this->belongsTo('App\Tenant');
+    }
+
+    public function salesperson(){
+        return $this->hasOne('App\Salesperson','email','email');
     }
 }
