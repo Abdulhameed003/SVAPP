@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\User;
 use App;
 
-class ConfigureDB extends Model
+class ConfigureDB extends Model 
 {
     public function __construct(array $attributes = array())
     {

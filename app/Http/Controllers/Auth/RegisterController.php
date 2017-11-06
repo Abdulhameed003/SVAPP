@@ -31,7 +31,7 @@ class RegisterController extends Controller
     use RegistersUsers;
 
 
-
+   
     /**
      * Where to redirect users after registration.
      *
@@ -47,10 +47,11 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    public function __construct() 
     {
         
         $this->middleware('guest');
+        $this->configDB = $configDb;
     }
 
     /**
@@ -106,6 +107,7 @@ class RegisterController extends Controller
                 'company_phone'=> $request->company_phone
             ]);
             
+          
             ConfigureDB::CreateSchema($dbaseName);
             ConfigureDB::ConfigureDBConnection($dbaseName);
             Artisan::call('migrate', ['--database' => $dbaseName, '--path' => 'database/migrations', '--force' => true]);
