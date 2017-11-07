@@ -38,4 +38,6 @@ class User extends Authenticatable
     public function salesperson(){
         return $this->hasOne('App\Salesperson','email','email');
     }
+    
+   
 }

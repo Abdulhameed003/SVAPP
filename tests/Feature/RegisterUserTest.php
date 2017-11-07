@@ -7,6 +7,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App;
 
 class RegisterUserTest extends TestCase
 {
@@ -16,18 +17,19 @@ class RegisterUserTest extends TestCase
     }
 
 
-    public function teardown(){
-        
+    public function tearDown(){
+        //Test::clean();
     }
 
-    public function test_register_with_no_credentials(){
-
-        $response = $this->post('/register',[]);
-        
+    public function test_registration_display(){
+        $response = $this->get('/register');
+        $response->assertStatus(200);
     }
 
-
+    /**@test */
     public function test_Register_With_Valid_Credentials(){
-
+      $user = factory(\App\User::class)->make();
+        $this->post('/register/store',$user->toArray());
+        
     }
 }
