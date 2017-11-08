@@ -20,9 +20,20 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'last_name' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
-        'comapny_id' =>function(){ return factory(App\Tenant::class)->create()->company_id; },
+        'comapny_id' => str_random(6) ?: function(){ 
+                return factory(App\Tenant::class)->make()->company_id;
+            },
         'user_role' => $faker->word,
        // 'remember_token' => str_random(10),
+    ];
+});
+
+
+$factory->define(App\Tenant::class, function (Faker\Generator $faker) {
+    return [ 
+        'company_id' =>$faker->ean8,
+        'company_name' => $faker->company,
+        'company_phone' => $faker->phoneNumber 
     ];
 });
 
@@ -40,15 +51,5 @@ $factory->define(App\Project::class, function (Faker\Generator $faker) {
         'remark'=>$request->remark,
         'company_id'=>$company->company_id,
         'salesperson_id'=>$salesPerson->salesperson_id
-    ];
-});
-
-$factory->define(App\Tenant::class, function (Faker\Generator $faker) {
-    static $password;
-
-    return [
-        'company_name' => $faker->company,
-        'company_id' =>str_random(6),
-        'company_phone' => $faker->phoneNumber 
     ];
 });
