@@ -67,10 +67,10 @@ class RegisterController extends Controller
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
-            'company_id' => 'required|string|unique:tenants|max:50',
+            'company_id' => 'required|string|unique:tenants',
             'company_name' => 'required|string|max:255',
-            'company_phone' => 'required|digit:11',
-            'user_role' => 'required|string|max:50',
+            'company_phone' => 'required|string',
+            'user_role' => 'required|string',
 
         ]);
     }
@@ -87,9 +87,9 @@ class RegisterController extends Controller
                 'company_id' => $request->company_id,
                 'user_role' => $request->user_role
             ]);
-            return redirect('/login');
+            return redirect('/login')->with('success','Please login with your new account');
         }else {
-            return redirect()->back()->withInput($request->except('password','company_id'));
+            return redirect()->back()->with('success','Company Name Exist');
         }
     }
     
@@ -107,7 +107,6 @@ class RegisterController extends Controller
                 'company_phone'=> $request->company_phone
             ]);
             
-          
             ConfigureDB::CreateSchema($dbaseName);
             ConfigureDB::ConfigureDBConnection($dbaseName);
             Artisan::call('migrate', ['--database' => $dbaseName, '--path' => 'database/migrations', '--force' => true]);
