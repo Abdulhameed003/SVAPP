@@ -109,7 +109,7 @@ class RegisterController extends Controller
             
             ConfigureDB::CreateSchema($dbaseName);
             ConfigureDB::ConfigureDBConnection($dbaseName);
-            Artisan::call('migrate', ['--database' => $dbaseName, '--path' => 'database/migrations', '--force' => true]);
+            Artisan::call('migrate', ['--database' => 'mysql2', '--path' => 'database/migrations', '--force' => true]);
             return true;
         }
     }    
