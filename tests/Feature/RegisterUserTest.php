@@ -1,7 +1,7 @@
 <?php
 namespace Tests\Feature;
 
-
+//use AspectMock\Test;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Auth\RegisterController;
-
+use Mockery;
 
 
 class RegisterUserTest extends TestCase
@@ -25,7 +25,10 @@ class RegisterUserTest extends TestCase
         
     }
  
-   
+    public function tearDown(){
+        Mockery::close();
+    }
+
     public function test_registration_display(){
         $response = $this->get('/register');
         $response->assertStatus(200);
@@ -45,16 +48,14 @@ class RegisterUserTest extends TestCase
                     'company_phone' => '323223',
                     'user_role' => 'admin',
                 ];  
-        
+        $m = \Mockery::mock('App\ConfigureDB');
+        $m->shouldReceive('ConfigureDBConnection')->with('db_'.$this->company->company_id)->andReturn('foo');
         $response = $this->call('POST','/register',$data);
-        
-        $this->assertDatabaseHas('tenants',['company_id'=>$this->company->company_id],'mysql');
-        $this->assertDatabaseHas('users',['email'=>$this->user->email],'mysql');
+        var_dump($m);
+        //$this->assertDatabaseHas('tenants',['company_id'=>$this->company->company_id],'mysql');
+        //$this->assertDatabaseHas('users',['email'=>$this->user->email],'mysql');
     }
 
-    public function tearDown(){
-        parent::tearDown();
-        //DB::statement('drop database db_'.$this->company->company_id);
-    }
+   
 
 }

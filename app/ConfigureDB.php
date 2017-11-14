@@ -15,8 +15,10 @@ class ConfigureDB extends Model
         parent::__construct($attributes);
 
         // Set the database connection name.
-        $this->setConnection(ConfigureDB::configureDBConnection('db_'.Auth::user()->company_id));
+        $dbName = !Auth::guest() ? 'db_'.Auth::user()->company_id : '' ;
+        $this->setConnection(ConfigureDB::configureDBConnection($dbName));
     }
+
 
 
     public static  function ConfigureDBConnection($database)
