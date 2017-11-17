@@ -52,8 +52,8 @@ class RegisterUserTest extends TestCase
         $m->shouldReceive('ConfigureDBConnection')->with('db_'.$this->company->company_id)->andReturn('foo');
         $response = $this->call('POST','/register',$data);
         var_dump($m);
-        //$this->assertDatabaseHas('tenants',['company_id'=>$this->company->company_id],'mysql');
-        //$this->assertDatabaseHas('users',['email'=>$this->user->email],'mysql');
+        $this->assertDatabaseHas('tenants',['company_id'=>$this->company->company_id],'mysql');
+        $this->assertDatabaseHas('users',['email'=>$this->user->email],'mysql');
     }
 
    

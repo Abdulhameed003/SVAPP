@@ -87,9 +87,9 @@ class RegisterController extends Controller
                 'company_id' => $request->company_id,
                 'user_role' => $request->user_role
             ]);
-            return redirect('/login')->with('success','Please login with your new account');
+            return 'success';//redirect('/login')->with('success','Please login with your new account');
         }else {
-            return redirect()->back()->with('success','Company Name Exist');
+            return 'Failed';//redirect()->back()->with('success','Company Name Exist');
         }
     }
     
