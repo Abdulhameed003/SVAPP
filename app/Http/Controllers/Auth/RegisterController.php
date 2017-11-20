@@ -65,20 +65,19 @@ class RegisterController extends Controller
         return Validator::make($request, [
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255',
             'password' => 'required|string|min:6|confirmed',
             'company_id' => 'required|string|unique:tenants',
             'company_name' => 'required|string|max:255',
             'company_phone' => 'required|string',
             'user_role' => 'required|string',
-
         ]);
     }
 
     public function register(request $request){
         $this->validator($request->all())->validate();
-        
-        if ($this->CreateCompany($request) == true ){
+
+            $this->CreateCompany($request);
             User::create([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
@@ -87,19 +86,12 @@ class RegisterController extends Controller
                 'company_id' => $request->company_id,
                 'user_role' => $request->user_role
             ]);
-            return 'success';//redirect('/login')->with('success','Please login with your new account');
-        }else {
-            return 'Failed';//redirect()->back()->with('success','Company Name Exist');
-        }
+            return redirect('/login')->with('success','Please login with your new account');
+      
     }
     
   
     private function CreateCompany(request $request){
-        $dbaseName="";
-
-        if(Tenant::where('company_id',$request->company_id)->count() > 0) {
-            return false;
-        }else{
             $dbaseName = 'DB_'.$request->company_id;
             Tenant::create([
                 'company_name' => $request->company_name,
@@ -111,7 +103,7 @@ class RegisterController extends Controller
             ConfigureDB::ConfigureDBConnection($dbaseName);
             Artisan::call('migrate', ['--database' => 'mysql2', '--path' => 'database/migrations', '--force' => true]);
             return true;
-        }
+    
     }    
 
 
