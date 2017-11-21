@@ -1,0 +1,184 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/angular-datepicker.css">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.csss">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style1.css">
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/ui-bootstrap-tpls-0.14.3.min.js"></script>
+    <script src="js/angular.ng-modules.js"></script>
+    <script src="js/angular-datepicker.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="js/SV.js"></script>
+    <script src="js/checklist-model.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-table/0.8.3/ng-table.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-table/0.8.3/ng-table.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+</head>
+
+<body ng-app="MyApp">
+    <div ng-controller="PaginationCtrl">
+        <input type="text" ng-model="searchText.name">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in items | filter: searchText | offset: currentPage*itemsPerPage | limitTo: itemsPerPage">
+                    <td>{{item.id}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.description}}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <td colspan="3">
+                    <div class="pagination">
+                        <ul>
+                            <li ng-class="prevPageDisabled()">
+                                <a href ng-click="prevPage()">« Prev</a>
+
+                            </li>
+                            <li ng-repeat="n in pages" ng-class="{active: n == currentPage}" ng-click="setPage(n)">
+                                <a href="#">{{n+1}}</a>
+
+                            </li>
+                            <li ng-class="nextPageDisabled()">
+                                <a href ng-click="nextPage()">Next »</a>
+
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tfoot>
+        </table>
+    </div>
+    <script>
+        var app = angular.module("MyApp", []);
+
+app.filter('offset', function () {
+    return function (input, start) {
+        start = parseInt(start, 10);
+        return input.slice(start);
+    };
+});
+
+app.controller("PaginationCtrl", function ($scope, $filter) {
+
+    $scope.itemsPerPage = 5;
+    $scope.currentPage = 0;
+    $scope.items = [];
+
+    for (var i = 0; i < 50; i++) {
+        $scope.items.push({
+            id: i,
+            name: "name " + i,
+            description: "description " + i
+        });
+    }
+
+    $scope.pageCount = function () {
+        var pages = $filter('filter')($scope.items, $scope.searchText);
+        return Math.ceil(pages.length / $scope.itemsPerPage);
+    };
+
+    $scope.range = function () {
+        var rangeSize = 5;
+        var ret = [];
+        var start;
+        
+        var count = $scope.pageCount();
+        
+        if (count < rangeSize) {
+            rangeSize = count;
+        }
+
+        start = $scope.currentPage;
+        if (start > count - rangeSize) {
+            start = count - rangeSize;
+        }
+
+        for (var i = start; i < start + rangeSize; i++) {
+            ret.push(i);
+        }
+        return ret;
+    };
+    $scope.pages = $scope.range();
+
+    $scope.$watch('searchText.name', function (v) {
+        $scope.currentPage = 0;
+        $scope.pages = $scope.range();
+    });
+    
+    $scope.$watch('currentPage', function (v) {
+        $scope.pages = $scope.range();
+    });
+
+    $scope.prevPage = function () {
+        if ($scope.prevPageDisabled()) {
+            return;
+        }
+        if ($scope.currentPage > 0) {
+            $scope.currentPage--;
+        }
+    };
+
+    $scope.prevPageDisabled = function () {
+        return $scope.currentPage === 0 ? "disabled" : "";
+    };
+
+    $scope.nextPage = function () {
+        if ($scope.nextPageDisabled()) {
+            return;
+        }
+        if ($scope.currentPage < $scope.pageCount()) {
+            $scope.currentPage++;
+        }
+    };
+
+    $scope.nextPageDisabled = function () {
+        return $scope.currentPage + 1 === $scope.pageCount() ? "disabled" : "";
+    };
+
+    $scope.setPage = function (n) {
+        $scope.currentPage = n;
+    };
+
+});
+    </script>
+</body>
+
+</html>
+
+
+
+
+
+<div class="pagination">
+        <ul>
+            <div ng-class="prevPageDisabled()" class="paginationcustom" style="position:relative;top:20px;left:450px;">
+                <a href ng-click="prevPage()">« Prev</a>
+
+            </div>
+            <div ng-repeat="n in pages" ng-class="{active: n == currentPage}" ng-click="setPage(n)" class="paginationcustom" style="display:inline-block;position:relative;left:500px;margin-left:20px;" >
+                <a href="#" >{{n+1}}</a>
+
+            </div>
+            <div ng-class="nextPageDisabled()" class="paginationcustom" style="position:relative;top:-20px;left:670px;" >
+                <a href ng-click="nextPage()" >Next »</a>
+
+            </div>
+        </ul>
+    </div>

@@ -1,0 +1,110 @@
+<html>
+
+<head>
+</head>
+
+<body>
+    <div class="modal-content">
+        <div class="modal-header" style="height:40px;">
+            <h3>Edit lead</h3>
+        </div>
+        <form id="addLead" name="addLead" class="form-group">
+            <div class="modal-body" style="overflow-y: auto; max-height:400px;">
+
+                <select class="forInput" ng-model="item.companyID" ng-selected="0" ng-options="company.id as company.name for company in companies"
+                ng-disabled="addcompany">
+
+            </select>
+
+                <div class="spacing" ng-hide="projectCat.catID =='2'">
+                    <select class="forInput" ng-model="leadsalesPerson">
+                        <option>Select the person in charge</option>
+
+                    </select>
+
+                </div>
+                <div class="spacing">
+                    <select class="forInput" ng-model="leadproject.typeID" ng-selected="0" ng-options="type.id as type.name for type in types">
+                    </select>
+                </div>
+                <div class="spacing">
+                    <select class="forInput">
+                        <option>Select the product</option>
+                    </select>
+                </div>
+                <div class="spacing">
+                    <input class="forInput" type="text" placeholder="Value" ng-model="leadValue">
+                </div>
+                <div class="spacing">
+                    <input class="forInput" type="text" placeholder="Sales stage in percentage" ng-model="leadStage">
+                </div>
+                <div class="spacing" ng-hide="projectCat.catID !='0'">
+                    <select class="forInput" ng-model="lead.statusID" ng-selected="0" ng-options="status.id as status.name for status in statuses">
+                    </select>
+                </div>
+                <div ng-hide="projectCat.catID !='0'">
+                    <h6 class="spacing">Tender:</h6>
+
+                    <input type="checkbox" class="checkbox-default" ng-model="tenderYes" ng-click="checkboxRule('tenderYes')" />
+                    <label class="convertToblack">Yes</label>
+
+
+                    <input type="checkbox" class="checkbox-default Dealcheckbox" ng-model="tenderNo" ng-click="checkboxRule('tenderNo')" />
+                    <label class="convertToblack">No</label>
+
+                    <input type="checkbox" class="checkbox-default Dealcheckbox" ng-model="tenderPossibly" ng-click="checkboxRule('tenderPossibly')"
+                    />
+                    <label class="convertToblack">Possibly</label>
+                </div>
+                <div class="spacing">
+                    <textarea class="forInput" wrap="soft" rows="5" type="text" size="255" placeholder="Remarks" ng-model="leadremarks" />
+                </div>
+                <div class="spacing">
+                    <select class="forInput" ng-model="projectCat.catID" ng-selected="0" ng-options="cat.id as cat.name for cat in cats" >
+                    </select>
+                </div>
+
+<div ng-show="projectCat.catID=='1'">
+        <div class="spacing">
+                <input class="forInput" type="text" placeholder="PO-number" ng-model="POnum">
+            </div>
+            <div class="datepicker modalpodate" date-format="dd/MM/yyyy">
+                <input class="forInput modaldatepicker" ng-model="POdate" type="text" placeholder="PO-date">
+                <i class="fa fa-calendar fafaPosititionondatepicker"></i>
+                </input>
+            </div>
+</div>
+
+
+
+
+
+                <div class="datepicker modalstartdate" date-format="dd/MM/yyyy">
+                    <input class="forInput modaldatepicker" ng-model="leadstartdate" type="text" placeholder="Start date">
+                    <i class="fa fa-calendar fafaPosititionondatepicker"></i>
+                    </input>
+                </div>
+                <div class="datepicker modalenddate" date-format="dd/MM/yyyy">
+                    <input class="forInput modaldatepicker" ng-model="leadenddate" type="text" placeholder="End date">
+                    <i class="fa fa-calendar fafaPosititionondatepicker"></i>
+                    </input>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" ng-click="close()" class="button modalsubmit">Submit</button>
+            </div>
+
+            <a href="#" ng-click="close()" style=" position:fixed;top:10px;left:273px;">
+                <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
+            </a>
+
+
+        </form>
+
+
+    </div>
+
+
+</body>
+
+</html>

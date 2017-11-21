@@ -1,0 +1,37 @@
+<div class="modal-content">
+    <div class="modal-header" style="height:40px;">
+        <h3>Edit Contact</h3>
+    </div>
+    <form id="addLead" name="addLead" class="form-group">
+        <div class="modal-body" style="overflow-y: auto; max-height:400px;">
+            <select class="forInput" ng-model="item.companyID" ng-selected="0" ng-options="company.id as company.name for company in companies"
+                ng-disabled="addcompany">
+
+            </select>
+            <div class="spacing">
+                <input class="forInput" type="text" placeholder="Name" ng-model="name">
+            </div>
+            <div class="spacing">
+                <input class="forInput" type="text" placeholder="Phone" ng-model="phone">
+            </div>
+            <div class="spacing">
+                <input class="forInput" type="text" placeholder="Email" ng-model="email">
+            </div>
+            <div class="spacing">
+                <input class="forInput" type="text" placeholder="Position" ng-model="position">
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="submit" ng-click="close()" class="button modalsubmit">Submit</button>
+        </div>
+
+        <a href="#" ng-click="close()" style=" position:fixed;top:10px;left:273px;">
+            <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
+        </a>
+
+
+    </form>
+
+
+</div>
