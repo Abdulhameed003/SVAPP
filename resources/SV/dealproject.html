@@ -1,0 +1,123 @@
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <div class="modal-content">
+        <div class="modal-header" style="height:40px;">
+            <h3>New Deal</h3>
+        </div>
+        <form id="addDeal" name="addDeal" class="form-group">
+            <div class="modal-body" style="overflow-y: auto; max-height:400px;">
+                <h4> Pleas fill the form to add new deal.</h4>
+                <div class="SectionBox">
+                    <h5>Company and contact:</h5>
+                    <div>
+                        <select class="forInput" ng-model="item.companyID" ng-selected="0" ng-options="company.id as company.name for company in companies"
+                            ng-disabled="addcompany">
+
+                        </select>
+                        <a href="#" id="addIcon">
+                            <span id="addIcon" class="glyphicon glyphicon-plus-sign" ng-init="showAdd=false, " ng-click="showAdd=!showAdd; addcompany=!addcompany; resetSelect()"></span>
+                        </a>
+                    </div>
+                    <div ng-show="showAdd">
+                        <div class="spacing">
+                            <input class="forInput" type="text" ng-model="addCompanyName" placeholder="Company name">
+                        </div>
+                        <div class="spacing">
+                            <input class="forInput" type="text" placeholder=" Company website">
+                        </div>
+                        <div class="spacing">
+                            <input class="forInput" type="text" placeholder="Company office number">
+                        </div>
+                        <div class="spacing">
+                            <input class="forInput" type="text" placeholder="Company address">
+                        </div>
+                        <div class="spacing">
+                            <select class="forInput" ng-model="industry">
+                                <option>Select the Industry</option>
+
+                            </select>
+                        </div>
+                        <div class="spacing">
+                            <input class="forInput" type="text" placeholder="Contact person name">
+                        </div>
+                        <div class="spacing">
+                            <input class="forInput" type="text" placeholder=" Contact person Email">
+                        </div>
+                        <div class="spacing">
+                            <input class="forInput" type="text" placeholder="Contact person phone">
+                        </div>
+                        <div class="spacing">
+                            <input class="forInput" type="text" placeholder="Contact person position">
+                        </div>
+                    </div>
+                </div>
+                <div class="SectionBox">
+                    <h5>Deal Information:</h5>
+                    <div>
+                        <select class="forInput" ng-model="salesPerson">
+                            <option>Select the person in charge</option>
+
+                        </select>
+
+                    </div>
+                    <div class="spacing">
+                        <select class="forInput" ng-model="project.typeID" ng-selected="0" ng-options="type.id as type.name for type in types">
+                        </select>
+                    </div>
+                    <div class="spacing">
+                        <select class="forInput">
+                            <option>Select the product</option>
+                        </select>
+                    </div>
+                    <div class="spacing">
+                        <input class="forInput" type="text" placeholder="Value">
+                    </div>
+                    <div class="spacing">
+                        <input class="forInput" type="text" placeholder="Sales stage in percentage">
+                    </div>
+                    <div class="spacing">
+                            <textarea class="forInput" wrap="soft" rows="5"  type="text" size="255" placeholder="Remarks" />
+                        </div>
+                    <div class="spacing">
+                        <input class="forInput" type="text" placeholder="PO-Number">
+                    </div>
+                    <div class="datepicker modalpodate" date-format="dd/MM/yyyy">
+                        <input class="forInput modaldatepicker" ng-model="POdate" type="text" placeholder="PO-date">
+                        <i class="fa fa-calendar fafaPosititionondatepicker"></i>
+                        </input>
+                    </div>
+                    <div class="datepicker modalstartdate" date-format="dd/MM/yyyy">
+                        <input class="forInput modaldatepicker" ng-model="leadstartdate" type="text" placeholder="Start date">
+                        <i class="fa fa-calendar fafaPosititionondatepicker"></i>
+                        </input>
+                    </div>
+                    <div class="datepicker modalenddate" date-format="dd/MM/yyyy">
+                        <input class="forInput modaldatepicker" ng-model="leadenddate" type="text" placeholder="End date">
+                        <i class="fa fa-calendar fafaPosititionondatepicker"></i>
+                        </input>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" ng-click=close() class="button modalsubmit">Submit</button>
+            </div>
+
+            <a href="#" ng-click=close() style=" position:fixed;top:10px;left:273px;">
+                <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
+            </a>
+        </form>
+
+
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html >
+
+  <head>
+
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/angular.min.js"></script>
+    <script src="js/ui-bootstrap-tpls-0.14.3.min.js"></script>
+    <script src="js/SV.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+ 
+
+  
+  </head>
+
+  <body  ng-app="myApp" ng-controller="mainCtrl">
+
+
+     <div class="box" style="left: 60%; top: 15%;">
+             <div class="bar" style="width: 400px; height: 50px;border-radius: 25px 25px 0px 0px;">
+                 <h2> Login to SalesVision </h2>
+             </div>
+             <form class="form-group">
+ 
+                 <input type="email" ng-model="Username" class="form-control" id="txf1" placeholder="Email"/>
+ 
+                 <div>
+                     <input type="password" ng-model="password" class="form-control" id="txf2" placeholder="Password">
+                 </div>
+ 
+                 <div >
+                     <input type="text" ng-model="companyID"  id="txf3" placeholder="Company Id">
+                 </div>
+                 <div >
+                    <button type="submit" ng-model="login" class="button login">Sign In</button>
+                </div>
+
+                <div  >
+                    <button type="button" ng-click="open('sm')"  class="btn btn-link" id="forget-pass">Forgot your Password?</button>
+
+                    <a href="RegisterPage.html" target="blank">
+                        <button type="button" class="btn btn-link" id="sign-up">Sign Up</button>
+                    </a>
+                </div>
+
+
+ 
+             </form>
+         </div>
+
+  </body>
+
+</html>
