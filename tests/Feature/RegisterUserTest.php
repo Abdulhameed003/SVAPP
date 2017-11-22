@@ -9,6 +9,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Auth\RegisterController;
+use Illuminate\Support\MessageBag;
 use Mockery;
 
 
@@ -59,7 +60,7 @@ class RegisterUserTest extends TestCase
     }
 
 
-    
+    /* This test test checks for when an existing company_id is reegisteredr*/    
     public function test_register_for_invalid_registration(){
         $data =['first_name' =>'abduldhd',
                 'last_name' =>'dxdsdssd',
@@ -73,9 +74,9 @@ class RegisterUserTest extends TestCase
          ]; 
 
          $response = $this->call('POST','/register',$data);
-         
+         $errors = session('errors')->getBag('default')->getMessages();
          $response->assertSessionHasErrors();
-
+         $this->assertEquals(array_shift($errors['company_id']),'The company id has already been taken.');
 
     }
 
