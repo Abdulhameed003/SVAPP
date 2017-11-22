@@ -20,16 +20,17 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'last_name' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
-        'comapny_id' => str_random(6) ?: function(){ 
-                return factory(App\Tenant::class)->make()->company_id;
+        'company_id' => $faker->ean8 ?: function(){ 
+                return factory(\App\Tenant::class)->make()->company_id;
             },
         'user_role' => $faker->word,
-       // 'remember_token' => str_random(10),
+       'remember_token' => str_random(10)
     ];
 });
 
 
 $factory->define(App\Tenant::class, function (Faker\Generator $faker) {
+    static $company_id;
     return [ 
         'company_id' =>$faker->ean8,
         'company_name' => $faker->company,
