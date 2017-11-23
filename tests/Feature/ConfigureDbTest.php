@@ -30,7 +30,7 @@ class ConfigureDbTest extends TestCase
             ->andReturn(true);
         $result = $this->ConfigDB->CreateSchema('NewDB');
         $this->assertTrue($result);
-        return 'NewDB';
+        
     }
      
     public function test_ConfigureDBConnection(){
