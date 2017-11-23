@@ -9,6 +9,7 @@ class Contact extends Model
     public $table = 'contacts';
     protected $fillable = [''];
     protected $primaryKey = 'contact_id';
+    protected $connection = 'mysql2';
     //Relationships
 
     public function company(){

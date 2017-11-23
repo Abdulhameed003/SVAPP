@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Deal extends ConfigureDB
 {
     public $table = 'deals';
-    
+    protected $connection = 'mysql2';
     //relationships 
 
     public function project() {

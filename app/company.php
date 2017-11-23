@@ -8,7 +8,7 @@ class Company extends ConfigureDB
 {
     public $table= 'companies';
     protected $fillable = ['company_name','company_id','website','office_number','industry'];
-
+    protected $connection = 'mysql2';
     //relationships
 
     public function projects(){
@@ -23,4 +23,10 @@ class Company extends ConfigureDB
     public function contacts(){
         return $this->hasMany('App\Contact','company_id','company_id');
     }
+
+    //Static Calls
+    public static function loadCompanyNames(){
+        $product = static::all();
+        return $product->only(['id','company_name'])->all() ;
+    } 
 }

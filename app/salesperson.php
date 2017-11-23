@@ -8,7 +8,7 @@ class Salesperson extends ConfigureDB
 {
     public $table = 'salespersons';
     protected $fillable = ['salesperson_id','name','email','phone_num','position'];
-    protected $connection = 'mysql';
+    protected $connection = 'mysql2';
 
     public function __construct(){
         $this->setConnection($connection);
