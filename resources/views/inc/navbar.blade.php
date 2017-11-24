@@ -1,54 +1,47 @@
- <nav class="navbar navbar-default navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
+ <nav class="bar" style="height:50px;width:100%;position:fixed; top:3%;left:0%;">
+    <button type="button" class="btn btn-link mainbutton" ng-click="callProject(); setTabletoDefault()" style="position:fixed;top:3%;left:100px;">Projects</button>
+    <button type="button" class="btn btn-link mainbutton" style="position:fixed;top:3%;left:250px;" ng-click="callCompany()">Companies</button>
+    <button type="button" class="btn btn-link mainbutton" style="position:fixed;top:3%;left:400px;" ng-click="callContact()">Contacts</button>
+    <button type="button" class="btn btn-link mainbutton" style="position:fixed;top:3%;left:550px;" ng-click="callSalesperson()">Sales Persons</button>
+    <button type="button" class="btn btn-link mainbutton" style="position:fixed;top:3%;left:700px;">Dashboard</button>
+    
+    <div class="dropdown navdropdown" style="top:3%;left:88%;" ng-controller="MyControllerModal">
+        <button type="button" class="btn btn-link mainbutton1" id="usernamebtn">Username</button>
+        <div class="dropdown-content">
+            <a href="#" ng-click="openchangepassword('sm')">Change password</a>
+            <a href="index.html">Sign out</a>
+        </div>
+    </div>
 
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+    <div class="dropdown navdropdown" style=" top:3%;left:84.3%;">
+        <button class="btn-link mainbutton1 barIcon">
+            <span class="glyphicon glyphicon-plus-sign" style="color:white; font-size:20px; padding-top:5px;"></span>
+        </button>
+        <div class="dropdown-content" role="menu" aria-labelledby="dropdownMenu" ng-controller="MyControllerModal">
+            <div class="dropdown-submenu">
+                <a tabindex="-1" href="#">Add Project</a>
+                <div class="dropdown-content">
 
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
-                </div>
+                    <a tabindex="-1" href="#" ng-click="openL('sm')">Lead</a>
+                    <a href="#" ng-click="openD('sm')">Deal</a>
 
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li><a href="{{ route('log_in.show') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
-                        @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->first_name }} <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endif
-                    </ul>
                 </div>
             </div>
-        </nav>
+
+            <a href="#" ng-click="opencontact('sm')">Add Contact</a>
+            <a href="#" ng-click="opensalesperson('sm')">Add Sales Person</a>
+        </div>
+    </div>
+
+    <div class="dropdown navdropdown" style="top:3.1%;left:80.5%;" ng-controller="MyControllerModal">
+        <button class="btn-link mainbutton1 barIcon">
+            <span>
+                <img src="image/settings.png" style="height:22px; width:22px;">
+            </span>
+        </button>
+        <div class="dropdown-content">
+            <a href="#" ng-click="openindustry('sm')">Edit industry</a>
+            <a href="#" ng-click="openproduct('sm')">Edit product</a>
+        </div>
+    </div>
+</nav>
