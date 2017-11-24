@@ -63,10 +63,10 @@ class ProjectController extends Controller
         //find or create new industry if not in db
         $industry = Industry::firstOrCreate(['name'=>$request->industry ]);
 
-        //find or create new comapny if not in db in case of new company entry
+        //find or create new comapny if not found in the db in case of new company entry
         $company= $industry->companies()->firstOrCreate(['company_id'=>$request->company_id],
                     ['company_name'=>$request->company_name],
-                    ['industry_id'=>$industry_id],
+                    ['industry_id'=>$industry->id],
                     ['website'=>$request->website],
                     ['office_number'=>$request->office_number]);
 
@@ -105,8 +105,8 @@ class ProjectController extends Controller
      */
     private function rule(){
       return   ['company_name'=>'sometimes|required|string|max:255',
-                'company_id'=>'sometimes|required|',
-                'industry_id'=>'sometimes|required|',
+                //'company_id'=>'sometimes|required|',
+                'industry'=>'sometimes|required|',
                 'website'=>'sometimes|required|url',
                 'office_number'=>'sometimes|required|numeric',
                 'contact_name'=>'sometimes|required',
