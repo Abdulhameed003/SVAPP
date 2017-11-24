@@ -16,31 +16,24 @@ class ConfigureDB extends Model
 
         // Set the database connection name.
         $dbName = !Auth::guest() ? 'db_'.Auth::user()->company_id : '' ;
-        $this->setConnection(ConfigureDB::configureDBConnection($dbName));
+        $connName = ConfigureDB::configureDBConnection($dbName);
+        $this->setConnection($connName);
     }
 
 
 
     public static  function ConfigureDBConnection($database)
     {
-        // Just get access to the config. 
-        $config = App::make('config'); // Dependency inversion
-
-        // Will contain the array of connections that appear in our database config file.
+      
+        $config = App::make('config'); // Dependency inversion/resolution
         $connections = $config->get('database.connections');
-
-        // This line pulls out the default connection by key (by default it's `mysql`
-        $tenantConnection = $connections['mysql2'];//[$config->get('database.default')];
-
-        // Now we simply copy the default connection information to our new connection.
+        $tenantConnection = $connections['mysql2'];
         $newConnection = $tenantConnection;
-
-        // Override the database name.
         $newConnection['database'] = $database;
-       
-        // This will add our new connection to the run-time configuration for the duration of the request.
+     
         App::make('config')->set('database.connections.mysql2', $newConnection);
-        // return $database;
+        
+        return 'mysql2';
     }
 
 

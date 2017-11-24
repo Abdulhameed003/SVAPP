@@ -8,6 +8,7 @@ use App\Salesperson;
 use App\Company;
 use App\Product;
 use App\Project;
+use App\Industry;
 
 class ProjectController extends Controller
 {
@@ -26,9 +27,9 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::with('company.industry','company.contacts')->orderBy('created_at','Desc')->get();
+        $projects = Project::loadProjects();
         
-        return $projects;//view('dashboard')->with('projects', $projects);
+        return view('pages.project')->with('projects', $projects);
     }
 
     /**
@@ -38,7 +39,15 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('pages.project');
+        $company = Company::loadCompanyNames();
+        $industry = Industry::all();
+        $product = Product::all();
+
+        $data=['company'=>$company,
+                'industry'=>$industry,
+                'product'=>$product];
+
+        return $data;
     }
 
     /**
@@ -126,7 +135,7 @@ class ProjectController extends Controller
     public function show($id)
     {
         $project = Project::with('company.industy','company.contact','salesperson')->where('id',$id)->get(); 
-        return view('pages.display_proj')->with('project', $project);
+        return $project;//view('pages.display_proj')->with('project', $project);
     }
 
     /**
