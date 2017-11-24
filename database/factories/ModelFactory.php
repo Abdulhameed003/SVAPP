@@ -34,23 +34,62 @@ $factory->define(App\Tenant::class, function (Faker\Generator $faker) {
     return [ 
         'company_id' =>$faker->ean8,
         'company_name' => $faker->company,
-        'company_phone' => $faker->phoneNumber 
+        'company_phone' => $faker->e164PhoneNumber  
     ];
 });
 
 $factory->define(App\Project::class, function (Faker\Generator $faker) {
-    static $password;
-
+    
     return [
         'project_category'=>$faker->word,
         'product'=>$faker->randomDigit,
         'value'=>$faker->randomDigit,
         'project_type'=>$faker->word,
         'sales_stage'=>$faker->sales_stage,
-        'status'=>$request->status,
-        'tender'=>$request->tender,
-        'remark'=>$request->remark,
-        'company_id'=>$company->company_id,
+        'status'=>$faker->randomDigit,
+        'tender'=>$faker->word,
+        'remark'=>$faker->text($max = 50),
+        'company_id'=>$faker->ean8,
         'salesperson_id'=>$salesPerson->salesperson_id
     ];
 });
+
+$factory->define(App\Salesperson::class, function (Faker\Generator $faker) {
+    static $password;
+    return [ 
+        'salesperson_id' =>$faker->ean8,
+        'name' => $faker->company,
+        'email' => $faker->unique()->safeEmail,
+        'password'=>  $password ?: $password = bcrypt('secret'),
+        'phone_num'=> $faker->e164PhoneNumber ,
+        'position'=> $faker->jobTitle
+    ];
+});
+
+$factory->define(App\Industry::class, function (Faker\Generator $faker) {
+    
+    return [ 
+        'name' =>$faker->creditCardType,
+    ];
+});
+
+$factory->define(App\Company::class, function (Faker\Generator $faker) {
+
+    return [ 
+        'company_id' =>$faker->ean8,
+        'company_name' => $faker->company,
+        'industry_id'=>$faker->randomDigit,
+        'website'=>$faker->url,
+        'office_num' => $faker->e164PhoneNumber  
+    ];
+});
+
+$factory->define(App\Contact::class, function (Faker\Generator $faker) {
+    
+        return [
+            'contact_name' => $faker->name,
+            'contact_number'=>$faker->e164PhoneNumber,
+            'email'=>$faker->unique()->safeEmail,
+            'designation' => $faker->jobTitle  
+        ];
+    });
