@@ -9,6 +9,14 @@
     <script src="js/ui-bootstrap-tpls-0.14.3.min.js"></script>
     <script src="js/SV.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <style>
+        body{
+        /* The image used */
+        background-image: url("image/design.png") !important;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    </style>
 </head>
 
 <body ng-app="RegisterPage" ng-controller="regController">
@@ -23,7 +31,7 @@
                 <input type="text" ng-model="fname" class="form-control" id="txf1" placeholder="Name">
 
                 <div class="form-group">
-                    <input type="email" ng-model="email" class="form-control" id="txf3" placeholder="Email">
+                    <input type="email" ng-model="email" class="form-control" id="txf2" placeholder="Email">
                 </div>
                 <div class="form-group">
                     <input type="text" ng-model="phone" class="form-control" id="txf4" placeholder="Phone">

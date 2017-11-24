@@ -6,30 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="css/angular-datepicker.css">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.csss">
+    <link rel="stylesheet" type="text/css" href="css/others//bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/style1.css">
-    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="js/jquery.js"></script>
     <script src="js/angular.min.js"></script>
     <script src="js/ui-bootstrap-tpls-0.14.3.min.js"></script>
-    <script src="js/angular.ng-modules.js"></script>
     <script src="js/angular-datepicker.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <script src="js/SV.js"></script>
     <script src="js/checklist-model.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="bower_components/moment/moment.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ng-table/0.8.3/ng-table.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-table/0.8.3/ng-table.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
-    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-
-
-
+    <script src="js/bootstrap.js"></script>
+    <script src="js/moment.js"></script>
     <style>
         body {
-            background-image: url("mainpage.png");
+            background-image: url("image/mainpage.png");
             background-repeat: no-repeat;
             background-size: cover;
         }
@@ -40,116 +31,161 @@
     <div class="container"></div>
     <nav class="bar" style="height:50px;width:100%;position:fixed; top:3%;left:0%;">
         <button type="button" class="btn btn-link mainbutton" ng-click="callProject(); setTabletoDefault()" style="position:fixed;top:3%;left:100px;">Projects</button>
+        <button type="button" class="btn btn-link mainbutton" style="position:fixed;top:3%;left:250px;" ng-click="callCompany()">Companies</button>
+        <button type="button" class="btn btn-link mainbutton" style="position:fixed;top:3%;left:400px;" ng-click="callContact()">Contacts</button>
+        <button type="button" class="btn btn-link mainbutton" style="position:fixed;top:3%;left:550px;" ng-click="callSalesperson()">Sales Persons</button>
+        <button type="button" class="btn btn-link mainbutton" style="position:fixed;top:3%;left:700px;">Dashboard</button>
+        <div class="dropdown navdropdown" style="top:3%;left:88%;" ng-controller="MyControllerModal">
+            <button type="button" class="btn btn-link mainbutton1" id="usernamebtn">Username</button>
+            <div class="dropdown-content">
+                <a href="#" ng-click="openchangepassword('sm')">Change password</a>
+                <a href="index.html">Sign out</a>
+            </div>
+        </div>
+
+        <div class="dropdown navdropdown" style=" top:3%;left:84.3%;">
+            <button class="btn-link mainbutton1 barIcon">
+                <span class="glyphicon glyphicon-plus-sign" style="color:white; font-size:20px; padding-top:5px;"></span>
+            </button>
+            <div class="dropdown-content" role="menu" aria-labelledby="dropdownMenu" ng-controller="MyControllerModal">
+                <div class="dropdown-submenu">
+                    <a tabindex="-1" href="#">Add Project</a>
+                    <div class="dropdown-content">
+
+                        <a tabindex="-1" href="#" ng-click="openL('sm')">Lead</a>
+                        <a href="#" ng-click="openD('sm')">Deal</a>
+
+                    </div>
+                </div>
+
+                <a href="#" ng-click="opencontact('sm')">Add Contact</a>
+                <a href="#" ng-click="opensalesperson('sm')">Add Sales Person</a>
+            </div>
+        </div>
+
+        <div class="dropdown navdropdown" style="top:3.1%;left:80.5%;" ng-controller="MyControllerModal">
+            <button class="btn-link mainbutton1 barIcon">
+                <span>
+                    <img src="image/settings.png" style="height:22px; width:22px;">
+                </span>
+            </button>
+            <div class="dropdown-content">
+                <a href="#" ng-click="openindustry('sm')">Edit industry</a>
+                <a href="#" ng-click="openproduct('sm')">Edit product</a>
+            </div>
+        </div>
+    </nav>
+
+
+    <!--project section !-->
+    <section id="defaultprojectview" class="project" ng-class="{visible:show}">
         <div>
-            <section class="project" ng-class="{visible:show}">
-                <div>
-                    <h1 class="sectiontitle">{{projectTitle}}</h1>
+            <h1 class="sectiontitle">{{projectTitle}}</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-3">
+                <form action="" class="search-form">
+                    <div class="form-group has-feedback" style="position:relative;left:425px;top:18px;">
+                        <label for="search" class="sr-only">Search</label>
+                        <input type="text" class="form-control" name="search" id="filterText" ng-model="searchData" ng-change="checkLength()" placeholder="Search"
+                            style="font-family:sans-serif">
+                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="tablevisibility" ng-class="{tablevisible:showprojecttable}">
+            <div class="table-wrapper projectTable">
+                <table class="table table-condensed table-bordered table-striped table-responsive table-hover">
+                    <thead>
+                        <tr>
+
+                            <th style="text-align:right;width:150px;"> No.
+                                <a href="#" ng-click="sort('No')" class="sortDir" ng-class="{ active: isSorted('No') }">&#x25B2;</a>
+                                <a href="#" ng-click="sort('-No')" class="sortDir" ng-class="{ active: isSorted('-No' ) }">&#x25BC;</a>
+                            </th>
+
+                            <th>Company name
+
+                                <a href="#" ng-click="sort('companyName')" class="sortDir" ng-class="{ active: isSorted('companyName' ) }">&#x25B2;</a>
+                                <a href="#" ng-click="sort('-companyName')" class="sortDir" ng-class="{ active: isSorted('-companyName' ) }">&#x25BC;</a>
+                            </th>
+                            <th ng-if="colContactPerson">Contact person</th>
+                            <th ng-if="colEmail">Email</th>
+                            <th ng-if="colPhone">Phone</th>
+                            <th ng-if="colIndustry">Industry</th>
+                            <th ng-if="colProduct">Product</th>
+                            <th ng-if="colValue">Value
+                                <a href="#" ng-click="sort('-value')" class="sortDir" ng-class="{ active: isSorted('-value' ) }">&#x25B2;</a>
+                                <a href="#" ng-click="sort('value')" class="sortDir" ng-class="{ active: isSorted('value' ) }">&#x25BC;</a>
+                            </th>
+                            <th ng-if="colType">Type</th>
+                            <th ng-if="colCategory">Category</th>
+                            <th ng-if="colStartdate">Start date
+                                <a href="#" ng-click="sort('startDate')" class="sortDir" ng-class="{ active: isSorted('startDate' ) }">&#x25B2;</a>
+                                <a href="#" ng-click="sort('-startDate')" class="sortDir" ng-class="{ active: isSorted('-startDate' ) }">&#x25BC;</a>
+                            </th>
+                            <th ng-if="colClosingdate">Closing date</th>
+                            <th ng-if="colSalesstage">Sales stage</th>
+                            <th ng-if="colLastupdate">Last update</th>
+                            <th ng-if="colRemarks" style="width:250px;">Remarks</th>
+                        </tr>
+
+                    </thead>
+                    <tbody ng-controller="MyControllerModal">
+
+                        <tr class="paginationclass" ng-repeat="proj in (filteredRows = (rows| orderBy:predicate:reverse | filter:searchData | pagination: curPage * pageSize | limitTo: pageSize))">
+                            <td style="text-align:right;">
+                                <div style="float:left;">
+                                    <input type="checkbox" name="rowID" class="squaredFour" checklist-model="projecttable.projects" checklist-value="proj.No"
+                                        style="position:relative;top:-1px;" />
+                                    <a href="#" ng-click="openEdit('sm',proj)">
+                                        <span class="fa fa-pencil-square-o" style="font-size:19px;color:#4E4EFD ;position:relative;top:-2px;margin-left:3px;" popover="Edit this project"
+                                            popover-trigger="mouseenter" popover-placement="right"></span>
+                                    </a>
+                                    <a href="#" ng-click="openDelete('sm',proj)">
+                                        <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#4E4EFD;position:relative;top:-3px;margin-left:3px;"
+                                            popover="Delete this project" popover-trigger="mouseenter" popover-placement="right"></span>
+                                    </a>
+                                </div>
+                                {{proj.No}}
+                            </td>
+
+                            <td>{{proj.companyName}}</td>
+                            <td ng-if="colContactPerson">{{proj.contactPerson}}</td>
+                            <td ng-if="colEmail">{{proj.email}}</td>
+                            <td ng-if="colPhone">{{proj.phone}}</td>
+                            <td ng-if="colIndustry">{{proj.industry}}</td>
+                            <td ng-if="colProduct">{{proj.product}}</td>
+                            <td ng-if="colValue">{{proj.value}}</td>
+                            <td ng-if="colType">{{proj.type}}</td>
+                            <td ng-if="colCategory">{{proj.category}}</td>
+                            <td ng-if="colStartdate">{{proj.startDate}}</td>
+                            <td ng-if="colClosingdate">{{proj.closingDate}}</td>
+                            <td ng-if="colSalesstage">{{proj.salesStage}}</td>
+                            <td ng-if="colLastupdate">{{proj.lastUpdate}}</td>
+                            <td ng-if="colRemarks">{{proj.remarks}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!--pagination buttons!-->
+            <div class="row1">
+                <div class="pagination pagination-centered" ng-show="rows.length">
+                    <ul class="pagination-controle pagination">
+                        <li>
+                            <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
+                        </li>
+                        <li>
+                            <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
+                        </li>
+                        <li>
+                            <button type="button" class="btn btn-primary" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
+                                ng-click="curPage = curPage+1">&gt;&gt;</button>
+                        </li>
+                    </ul>
                 </div>
-                <div class="row">
-                    <div class="col-md-4 col-md-offset-3">
-                        <form action="" class="search-form">
-                            <div class="form-group has-feedback" style="position:relative;left:425px;top:18px;">
-                                <label for="search" class="sr-only">Search</label>
-                                <input type="text" class="form-control" name="search" id="filterText" ng-model="searchData" ng-change="checkLength()" placeholder="Search" 
-                                    style="font-family:sans-serif">
-                                <span class="glyphicon glyphicon-search form-control-feedback"></span>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="tablevisibility" ng-class="{tablevisible:showprojecttable}">
-                    <div class="table-wrapper projectTable">
-                        <table class="table table-condensed table-bordered table-striped table-responsive table-hover">
-                            <thead>
-                                <tr>
-
-                                    <th style="text-align:right;width:150px;"> No.
-                                        <a href="#" ng-click="sort('No')" class="sortDir" ng-class="{ active: isSorted('No') }">&#x25B2;</a>
-                                        <a href="#" ng-click="sort('-No')" class="sortDir" ng-class="{ active: isSorted('-No' ) }">&#x25BC;</a>
-                                    </th>
-
-                                    <th>Company name
-
-                                        <a href="#" ng-click="sort('companyName')" class="sortDir" ng-class="{ active: isSorted('companyName' ) }">&#x25B2;</a>
-                                        <a href="#" ng-click="sort('-companyName')" class="sortDir" ng-class="{ active: isSorted('-companyName' ) }">&#x25BC;</a>
-                                    </th>
-                                    <th ng-if="colContactPerson">Contact person</th>
-                                    <th ng-if="colEmail">Email</th>
-                                    <th ng-if="colPhone">Phone</th>
-                                    <th ng-if="colIndustry">Industry</th>
-                                    <th ng-if="colProduct">Product</th>
-                                    <th ng-if="colValue">Value
-                                        <a href="#" ng-click="sort('-value')" class="sortDir" ng-class="{ active: isSorted('-value' ) }">&#x25B2;</a>
-                                        <a href="#" ng-click="sort('value')" class="sortDir" ng-class="{ active: isSorted('value' ) }">&#x25BC;</a>
-                                    </th>
-                                    <th ng-if="colType">Type</th>
-                                    <th ng-if="colCategory">Category</th>
-                                    <th ng-if="colStartdate">Start date
-                                        <a href="#" ng-click="sort('startDate')" class="sortDir" ng-class="{ active: isSorted('startDate' ) }">&#x25B2;</a>
-                                        <a href="#" ng-click="sort('-startDate')" class="sortDir" ng-class="{ active: isSorted('-startDate' ) }">&#x25BC;</a>
-                                    </th>
-                                    <th ng-if="colClosingdate">Closing date</th>
-                                    <th ng-if="colSalesstage">Sales stage</th>
-                                    <th ng-if="colLastupdate">Last update</th>
-                                    <th ng-if="colRemarks" style="width:250px;">Remarks</th>
-                                </tr>
-
-                            </thead>
-                            <tbody ng-controller="MyControllerModal">
-
-                                <tr class="paginationclass" ng-repeat="proj in (filteredRows = (rows| orderBy:predicate:reverse | filter:searchData | pagination: curPage * pageSize | limitTo: pageSize))">
-                                    <td style="text-align:right;">
-                                        <div style="float:left;">
-                                            <input type="checkbox" name="rowID" class="squaredFour" checklist-model="projecttable.projects" checklist-value="proj.No"
-                                                style="position:relative;top:-1px;" />
-                                            <a href="#" ng-click="openEdit('sm',proj)">
-                                                <span class="fa fa-pencil-square-o" style="font-size:19px;color:#4E4EFD ;position:relative;top:-2px;margin-left:3px;" popover="Edit this project"
-                                                    popover-trigger="mouseenter" popover-placement="right"></span>
-                                            </a>
-                                            <a href="#" ng-click="openDelete('sm',proj)">
-                                                <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#4E4EFD;position:relative;top:-3px;margin-left:3px;" popover="Delete this project"
-                                                    popover-trigger="mouseenter" popover-placement="right"></span>
-                                            </a>
-                                        </div>
-                                        {{proj.No}}
-                                    </td>
-
-                                    <td>{{proj.companyName}}</td>
-                                    <td ng-if="colContactPerson">{{proj.contactPerson}}</td>
-                                    <td ng-if="colEmail">{{proj.email}}</td>
-                                    <td ng-if="colPhone">{{proj.phone}}</td>
-                                    <td ng-if="colIndustry">{{proj.industry}}</td>
-                                    <td ng-if="colProduct">{{proj.product}}</td>
-                                    <td ng-if="colValue">{{proj.value}}</td>
-                                    <td ng-if="colType">{{proj.type}}</td>
-                                    <td ng-if="colCategory">{{proj.category}}</td>
-                                    <td ng-if="colStartdate">{{proj.startDate}}</td>
-                                    <td ng-if="colClosingdate">{{proj.closingDate}}</td>
-                                    <td ng-if="colSalesstage">{{proj.salesStage}}</td>
-                                    <td ng-if="colLastupdate">{{proj.lastUpdate}}</td>
-                                    <td ng-if="colRemarks">{{proj.remarks}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    
-        <!--pagination buttons!-->
-                    <div class="row1">
-                        <div class="pagination pagination-centered" ng-show="rows.length">
-                            <ul class="pagination-controle pagination">
-                                <li>
-                                    <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
-                                </li>
-                                <li>
-                                    <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
-                                </li>
-                                <li>
-                                    <button type="button" class="btn btn-primary" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
-                                        ng-click="curPage = curPage+1">&gt;&gt;</button>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+            </div>
         </div>
 
         <!-- lead table !-->
@@ -195,60 +231,60 @@
 
                     </thead>
                     <!--
-                        <tbody ng-controller="MyControllerModal">
+                            <tbody ng-controller="MyControllerModal">
 
-                            <tr>
-                                <td style="text-align:right;">
-                                    <div style="float:left;">
-                                        <input type="checkbox" name="rowID" class="squaredFour" style="position:relative;top:-1px;" />
-                                        <a href="#">
-                                            <span class="fa fa-pencil-square-o" style="font-size:19px;color:#4E4EFD ;position:relative;top:-2px;"></span>
-                                        </a>
-                                        <a href="#" ng-click="openDelete('sm',proj)">
-                                            <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#4E4EFD;position:relative;top:-3px;"></span>
-                                        </a>
-                                    </div>
-                          
-                                </td>
+                                <tr>
+                                    <td style="text-align:right;">
+                                        <div style="float:left;">
+                                            <input type="checkbox" name="rowID" class="squaredFour" style="position:relative;top:-1px;" />
+                                            <a href="#">
+                                                <span class="fa fa-pencil-square-o" style="font-size:19px;color:#4E4EFD ;position:relative;top:-2px;"></span>
+                                            </a>
+                                            <a href="#" ng-click="openDelete('sm',proj)">
+                                                <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#4E4EFD;position:relative;top:-3px;"></span>
+                                            </a>
+                                        </div>
+                            
+                                    </td>
 
-                                <td></td>
-                                <td ng-if="colContactPerson"></td>
-                                <td ng-if="colEmail"></td>
-                                <td ng-if="colPhone"></td>
-                                <td ng-if="colIndustry"></td>
-                                <td ng-if="colProduct"></td>
-                                <td ng-if="colValue"></td>
-                                <td ng-if="colType"></td>
-                                <td ng-if="colCategory"></td>
-                                <td ng-if="colStartdate"></td>
-                                <td ng-if="colClosingdate"></td>
-                                <td ng-if="colSalesstage"></td>
-                                <td ng-if="colLastupdate"></td>
-                                <td ng-if="colPersonincharge"></td>
-                                <td ng-if="colStatus">Status</td>
-                                <td ng-if="colTender">Tender</td>
-                                <td ng-if="colRemarks"></td>
-                            </tr>
-                        </tbody>  
-                        !-->
+                                    <td></td>
+                                    <td ng-if="colContactPerson"></td>
+                                    <td ng-if="colEmail"></td>
+                                    <td ng-if="colPhone"></td>
+                                    <td ng-if="colIndustry"></td>
+                                    <td ng-if="colProduct"></td>
+                                    <td ng-if="colValue"></td>
+                                    <td ng-if="colType"></td>
+                                    <td ng-if="colCategory"></td>
+                                    <td ng-if="colStartdate"></td>
+                                    <td ng-if="colClosingdate"></td>
+                                    <td ng-if="colSalesstage"></td>
+                                    <td ng-if="colLastupdate"></td>
+                                    <td ng-if="colPersonincharge"></td>
+                                    <td ng-if="colStatus">Status</td>
+                                    <td ng-if="colTender">Tender</td>
+                                    <td ng-if="colRemarks"></td>
+                                </tr>
+                            </tbody>  
+                            !-->
                 </table>
             </div>
             <div class="row1">
-                    <div class="pagination pagination-centered" ng-show="rows.length">
-                        <ul class="pagination-controle pagination">
-                            <li>
-                                <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
-                            </li>
-                            <li>
-                                <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
-                            </li>
-                            <li>
-                                <button type="button" class="btn btn-primary" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
-                                    ng-click="curPage = curPage+1">&gt;&gt;</button>
-                            </li>
-                        </ul>
-                    </div>
+                <div class="pagination pagination-centered" ng-show="rows.length">
+                    <ul class="pagination-controle pagination">
+                        <li>
+                            <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
+                        </li>
+                        <li>
+                            <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
+                        </li>
+                        <li>
+                            <button type="button" class="btn btn-primary" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
+                                ng-click="curPage = curPage+1">&gt;&gt;</button>
+                        </li>
+                    </ul>
                 </div>
+            </div>
         </div>
 
         <!-- Deal table !-->
@@ -294,60 +330,60 @@
 
                     </thead>
                     <!--
-                        <tbody ng-controller="MyControllerModal">
+                            <tbody ng-controller="MyControllerModal">
 
-                            <tr>
-                                <td style="text-align:right;">
-                                    <div style="float:left;">
-                                        <input type="checkbox" name="rowID" class="squaredFour" style="position:relative;top:-1px;" />
-                                        <a href="#">
-                                            <span class="fa fa-pencil-square-o" style="font-size:19px;color:#4E4EFD ;position:relative;top:-2px;"></span>
-                                        </a>
-                                        <a href="#" ng-click="openDelete('sm',proj)">
-                                            <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#4E4EFD;position:relative;top:-3px;"></span>
-                                        </a>
-                                    </div>
-                          
-                                </td>
+                                <tr>
+                                    <td style="text-align:right;">
+                                        <div style="float:left;">
+                                            <input type="checkbox" name="rowID" class="squaredFour" style="position:relative;top:-1px;" />
+                                            <a href="#">
+                                                <span class="fa fa-pencil-square-o" style="font-size:19px;color:#4E4EFD ;position:relative;top:-2px;"></span>
+                                            </a>
+                                            <a href="#" ng-click="openDelete('sm',proj)">
+                                                <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#4E4EFD;position:relative;top:-3px;"></span>
+                                            </a>
+                                        </div>
+                            
+                                    </td>
 
-                                <td></td>
-                                <td ng-if="colContactPerson"></td>
-                                <td ng-if="colEmail"></td>
-                                <td ng-if="colPhone"></td>
-                                <td ng-if="colIndustry"></td>
-                                <td ng-if="colProduct"></td>
-                                <td ng-if="colValue"></td>
-                                <td ng-if="colType"></td>
-                                <td ng-if="colCategory"></td>
-                                <td ng-if="colStartdate"></td>
-                                <td ng-if="colClosingdate"></td>
-                                <td ng-if="colSalesstage"></td>
-                                <td ng-if="colLastupdate"></td>
-                                <td ng-if="colPersonincharge"></td>
-                                <td ng-if="colPOnum">Status</td>
-                                <td ng-if="colPOdate">Tender</td>
-                                <td ng-if="colRemarks"></td>
-                            </tr>
-                        </tbody>  
-                        !-->
+                                    <td></td>
+                                    <td ng-if="colContactPerson"></td>
+                                    <td ng-if="colEmail"></td>
+                                    <td ng-if="colPhone"></td>
+                                    <td ng-if="colIndustry"></td>
+                                    <td ng-if="colProduct"></td>
+                                    <td ng-if="colValue"></td>
+                                    <td ng-if="colType"></td>
+                                    <td ng-if="colCategory"></td>
+                                    <td ng-if="colStartdate"></td>
+                                    <td ng-if="colClosingdate"></td>
+                                    <td ng-if="colSalesstage"></td>
+                                    <td ng-if="colLastupdate"></td>
+                                    <td ng-if="colPersonincharge"></td>
+                                    <td ng-if="colPOnum">Status</td>
+                                    <td ng-if="colPOdate">Tender</td>
+                                    <td ng-if="colRemarks"></td>
+                                </tr>
+                            </tbody>  
+                            !-->
                 </table>
             </div>
             <div class="row1">
-                    <div class="pagination pagination-centered" ng-show="rows.length">
-                        <ul class="pagination-controle pagination">
-                            <li>
-                                <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
-                            </li>
-                            <li>
-                                <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
-                            </li>
-                            <li>
-                                <button type="button" class="btn btn-primary" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
-                                    ng-click="curPage = curPage+1">&gt;&gt;</button>
-                            </li>
-                        </ul>
-                    </div>
+                <div class="pagination pagination-centered" ng-show="rows.length">
+                    <ul class="pagination-controle pagination">
+                        <li>
+                            <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
+                        </li>
+                        <li>
+                            <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
+                        </li>
+                        <li>
+                            <button type="button" class="btn btn-primary" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
+                                ng-click="curPage = curPage+1">&gt;&gt;</button>
+                        </li>
+                    </ul>
                 </div>
+            </div>
         </div>
 
 
@@ -392,28 +428,28 @@
 
                     </thead>
                     <!-- same to projetable tobody
-                        <tbody ng-controller="MyControllerModal">
+                            <tbody ng-controller="MyControllerModal">
 
-                         
-                        !-->
+                            
+                            !-->
                 </table>
             </div>
             <div class="row1">
-                    <div class="pagination pagination-centered" ng-show="rows.length">
-                        <ul class="pagination-controle pagination">
-                            <li>
-                                <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
-                            </li>
-                            <li>
-                                <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
-                            </li>
-                            <li>
-                                <button type="button" class="btn btn-primary" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
-                                    ng-click="curPage = curPage+1">&gt;&gt;</button>
-                            </li>
-                        </ul>
-                    </div>
+                <div class="pagination pagination-centered" ng-show="rows.length">
+                    <ul class="pagination-controle pagination">
+                        <li>
+                            <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
+                        </li>
+                        <li>
+                            <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
+                        </li>
+                        <li>
+                            <button type="button" class="btn btn-primary" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
+                                ng-click="curPage = curPage+1">&gt;&gt;</button>
+                        </li>
+                    </ul>
                 </div>
+            </div>
         </div>
 
 
@@ -445,13 +481,13 @@
                         <br>
                         <div ng-show="filterForm.date">
                             <div class="datepicker mainpagedatepicker" date-format="dd/MM/yyyy">
-                                <input class="maindateWidth" ng-model="startdate" type="text" placeholder="Start date">
-                                <i class="fa fa-calendar fafaPosititionondatepicker"></i>
+                                <input class="maindateWidth form-control" ng-model="startdate" type="text" placeholder="Start date">
+                                <i class="fa fa-calendar fafaPosititionondatepicker1"></i>
                                 </input>
                             </div>
                             <div class="datepicker mainpagedatepicker" date-format="dd/MM/yyyy">
-                                <input class="maindateWidth" ng-model="enddate" type="text" placeholder="End date">
-                                <i class="fa fa-calendar fafaPosititionondatepicker"></i>
+                                <input class="maindateWidth form-control" ng-model="enddate" type="text" placeholder="End date">
+                                <i class="fa fa-calendar fafaPosititionondatepicker1"></i>
                                 </input>
                             </div>
                         </div>
@@ -508,347 +544,277 @@
                 <i class="fa fa-trash" style="position:fixed;top:13.5%;left:1320px;font-size:35px;color:#4E4EFD"></i>
             </a>
         </div>
-   
-        </section>
+
+    </section>
+
+    <!--company section !-->
+    <section id="companysection" class="project" ng-class="{visible:showcomp}">
+        <div>
+            <h1 class="sectiontitle">{{projectTitle}}</h1>
         </div>
-
-
-
-
-
-
-
-
-
-        <!--company section !-->
-        <section class="project" ng-class="{visible:showcomp}">
-            <div>
-                <h1 class="sectiontitle">{{projectTitle}}</h1>
-            </div>
-            <div class="row">
-                <div class="col-md-4 col-md-offset-3">
-                    <form action="" class="search-form">
-                        <div class="form-group has-feedback" style="position:relative;left:525px;top:18px;">
-                            <label for="search" class="sr-only">Search</label>
-                            <input type="text" class="form-control" name="search" id="search" placeholder="Search" ng-model="searchKeyword" style="font-family:sans-serif">
-                            <span class="glyphicon glyphicon-search form-control-feedback"></span>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="table-wrapper companiestable " id="companyTable">
-                <table class="table table-condensed table-bordered table-striped table-responsive table-hover">
-                    <thead>
-                        <tr>
-
-                            <th style="text-align:right;width:150px;"> No.
-                                <a href="#" ng-click="sort('No')" class="sortDir" ng-class="{ active: isSorted('No') }">&#x25B2;</a>
-                                <a href="#" ng-click="sort('-No')" class="sortDir" ng-class="{ active: isSorted('-No' ) }">&#x25BC;</a>
-                            </th>
-
-                            <th>Company name
-
-                                <a href="#" ng-click="sort('companyName')" class="sortDir" ng-class="{ active: isSorted('companyName' ) }">&#x25B2;</a>
-                                <a href="#" ng-click="sort('-companyName')" class="sortDir" ng-class="{ active: isSorted('-companyName' ) }">&#x25BC;</a>
-                            </th>
-                            <th>Contact person</th>
-                            <th>Website</th>
-                            <th>Phone</th>
-                            <th>Industry</th>
-                            <th style="width:400px;">Address</th>
-                        </tr>
-
-                    </thead>
-                    <tbody ng-controller="MyControllerModal">
-                        <tr ng-repeat="company in companylist|orderBy:predicate:reverse | filter:searchKeyword">
-                            <td style="text-align:right;">
-                                <div style="float:left;">
-                                    <input type="checkbox" class="squaredFour" checklist-model="companytable.companylist" checklist-value="company.No" style="position:relative;top:-1px;"
-                                    />
-                                    <a href="#" ng-click="openEditcomp('sm',company)" popover="Edit this company" popover-trigger="mouseenter" popover-placement="right">
-                                        <span class="fa fa-pencil-square-o" style="font-size:19px;color:#4E4EFD ;position:relative;top:-2px;"></span>
-                                    </a>
-                                    <a href="#" ng-click="openDeletecomp('sm',company)" popover="Delete this company" popover-trigger="mouseenter" popover-placement="right">
-                                        <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#4E4EFD;position:relative;top:-3px;"></span>
-                                    </a>
-                                </div>
-                                {{company.No}}
-                            </td>
-                            <td>{{company.companyName}}</td>
-                            <td>{{company.contactPerson}}</td>
-                            <td>{{company.website}}</td>
-                            <td>{{company.phone}}</td>
-                            <td>{{company.industry}}</td>
-                            <td>{{company.address}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="row2">
-                    <div class="pagination pagination-centered" ng-show="rows.length">
-                        <ul class="pagination-controle pagination">
-                            <li>
-                                <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
-                            </li>
-                            <li>
-                                <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
-                            </li>
-                            <li>
-                                <button type="button" class="btn btn-primary" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
-                                    ng-click="curPage = curPage+1">&gt;&gt;</button>
-                            </li>
-                        </ul>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-3">
+                <form action="" class="search-form">
+                    <div class="form-group has-feedback" style="position:relative;left:525px;top:18px;">
+                        <label for="search" class="sr-only">Search</label>
+                        <input type="text" class="form-control" name="search" id="search" placeholder="Search" ng-model="searchKeyword" style="font-family:sans-serif">
+                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
                     </div>
-                </div>
-            <div ng-controller="MyControllerModal">
-                <a href="#" ng-click="openmultiplecompanydelete(companytable.companylist)" popover="Delete multiple companies" popover-trigger="mouseenter"
-                    popover-placement="left">
-                    <i class="fa fa-trash" style="position:fixed;top:13.3%;left:1320px;font-size:35px;color:#4E4EFD"></i>
-                </a>
-            </div>
-
-        </section>
-
-
-
-
-        <!--contact section !-->
-        <section class="project" ng-class="{visible:showcontact}">
-            <div>
-                <h1 class="sectiontitle">{{projectTitle}}</h1>
-            </div>
-            <div class="row">
-                <div class="col-md-4 col-md-offset-3">
-                    <form action="" class="search-form">
-                        <div class="form-group has-feedback" style="position:relative;left:525px;top:18px;">
-                            <label for="search" class="sr-only">Search</label>
-                            <input type="text" class="form-control" name="search" id="search" placeholder="Search" ng-model="searchKeyword" style="font-family:sans-serif">
-                            <span class="glyphicon glyphicon-search form-control-feedback"></span>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="table-wrapper companiestable" id="companyTable">
-                <table class="table table-condensed table-bordered table-striped table-responsive table-hover">
-                    <thead>
-                        <tr>
-
-                            <th style="text-align:right;width:150px;"> No.
-                                <a href="#" ng-click="sort('No')" class="sortDir" ng-class="{ active: isSorted('No') }">&#x25B2;</a>
-                                <a href="#" ng-click="sort('-No')" class="sortDir" ng-class="{ active: isSorted('-No' ) }">&#x25BC;</a>
-                            </th>
-
-                            <th>Company
-
-                                <a href="#" ng-click="sort('companyName')" class="sortDir" ng-class="{ active: isSorted('companyName' ) }">&#x25B2;</a>
-                                <a href="#" ng-click="sort('-companyName')" class="sortDir" ng-class="{ active: isSorted('-companyName' ) }">&#x25BC;</a>
-                            </th>
-                            <th>Name
-
-                                <a href="#" ng-click="sort('name')" class="sortDir" ng-class="{ active: isSorted('name' ) }">&#x25B2;</a>
-                                <a href="#" ng-click="sort('-name')" class="sortDir" ng-class="{ active: isSorted('-name' ) }">&#x25BC;</a>
-                            </th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Position</th>
-                        </tr>
-
-                    </thead>
-                    <tbody ng-controller="MyControllerModal">
-                        <tr ng-repeat="contact in contacts|orderBy:predicate:reverse | filter:searchKeyword">
-                            <td style="text-align:right;">
-                                <div style="float:left;">
-                                    <input type="checkbox" class="squaredFour" checklist-model="contacttable.contacts" checklist-value="contact.No" style="position:relative;top:-1px;"
-                                    />
-                                    <a href="#" ng-click="openEditcont('sm',contact)" popover="Edit this contact" popover-trigger="mouseenter" popover-placement="right">
-                                        <span class="fa fa-pencil-square-o" style="font-size:19px;color:#4E4EFD;position:relative;top:-2px;"></span>
-                                    </a>
-                                    <a href="#" ng-click="openDeletecont('sm',contact)" popover="delete this contact" popover-trigger="mouseenter" popover-placement="right">
-                                        <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#4E4EFD;position:relative;top:-3px;"></span>
-                                    </a>
-                                </div>
-                                {{contact.No}}
-                            </td>
-                            <td>{{contact.companyName}}</td>
-                            <td>{{contact.name}}</td>
-                            <td>{{contact.phone}}</td>
-                            <td>{{contact.email}}</td>
-                            <td>{{contact.position}}</td>
-
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="row2">
-                    <div class="pagination pagination-centered" ng-show="rows.length">
-                        <ul class="pagination-controle pagination">
-                            <li>
-                                <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
-                            </li>
-                            <li>
-                                <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
-                            </li>
-                            <li>
-                                <button type="button" class="btn btn-primary" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
-                                    ng-click="curPage = curPage+1">&gt;&gt;</button>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            <div ng-controller="MyControllerModal">
-                <a href="#" ng-click="openmultiplecontactdelete(contacttable.contacts)" popover="Delete multiple contacts" popover-trigger="mouseenter"
-                    popover-placement="left">
-                    <i class="fa fa-trash" style="position:fixed;top:13.3%;left:1320px;font-size:35px;color:#4E4EFD"></i>
-                </a>
-            </div>
-
-        </section>
-
-
-
-        <!--salesperson section !-->
-        <section class="project" ng-class="{visible:showsalesperson}">
-            <div>
-                <h1 class="sectiontitle">{{projectTitle}}</h1>
-            </div>
-            <div class="row">
-                <div class="col-md-4 col-md-offset-3">
-                    <form action="" class="search-form">
-                        <div class="form-group has-feedback" style="position:relative;left:525px;top:18px;">
-                            <label for="search" class="sr-only">Search</label>
-                            <input type="text" class="form-control" name="search" id="search" placeholder="Search" ng-model="searchKeyword" style="font-family:sans-serif">
-                            <span class="glyphicon glyphicon-search form-control-feedback"></span>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="table-wrapper companiestable" id="companyTable">
-                <table class="table table-hover table-bordered table-responsive">
-                    <thead>
-                        <tr>
-
-                            <th style="text-align:right;width:150px;"> No.
-                                <a href="#" ng-click="sort('No')" class="sortDir" ng-class="{ active: isSorted('No') }">&#x25B2;</a>
-                                <a href="#" ng-click="sort('-No')" class="sortDir" ng-class="{ active: isSorted('-No' ) }">&#x25BC;</a>
-                            </th>
-
-                            <th>Name
-
-                                <a href="#" ng-click="sort('name')" class="sortDir" ng-class="{ active: isSorted('name' ) }">&#x25B2;</a>
-                                <a href="#" ng-click="sort('-name')" class="sortDir" ng-class="{ active: isSorted('-name' ) }">&#x25BC;</a>
-                            </th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Position</th>
-                        </tr>
-
-                    </thead>
-                    <tbody ng-controller="MyControllerModal">
-                        <tr ng-repeat="sperson in spersonlist|orderBy:predicate:reverse | filter:searchKeyword">
-                            <td style="text-align:right;">
-                                <div style="float:left;">
-                                    <input type="checkbox" class="squaredFour" checklist-model="spersontable.spersonlist" checklist-value="sperson.No" style="position:relative;top:-1px;"
-                                    />
-                                    <a href="#" ng-click="openEditsperson('sm',sperson)" popover="Edit this sales person" popover-trigger="mouseenter" popover-placement="right">
-                                        <span class="fa fa-pencil-square-o" style="font-size:19px;color:#4E4EFD;position:relative;top:-2px;"></span>
-                                    </a>
-                                    <a href="#" ng-click="openDeletesperson('sm',sperson)" popover="Delete this sales person" popover-trigger="mouseenter" popover-placement="right">
-                                        <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#4E4EFD;position:relative;top:-3px;"></span>
-                                    </a>
-                                </div>
-                                {{sperson.No}}
-                            </td>
-                            <td>{{sperson.name}}</td>
-                            <td>{{sperson.phone}}</td>
-                            <td>{{sperson.email}}</td>
-                            <td>{{sperson.position}}</td>
-
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="row2">
-                    <div class="pagination pagination-centered" ng-show="rows.length">
-                        <ul class="pagination-controle pagination">
-                            <li>
-                                <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
-                            </li>
-                            <li>
-                                <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
-                            </li>
-                            <li>
-                                <button type="button" class="btn btn-primary" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
-                                    ng-click="curPage = curPage+1">&gt;&gt;</button>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div ng-controller="MyControllerModal">
-                <a href="#" ng-click="openmultiplespersondelete(spersontable.spersonlist)" popover="Delete multiple sales persons" popover-trigger="mouseenter"
-                    popover-placement="left">
-                    <i class="fa fa-trash" style="position:fixed;top:13.3%;left:1320px;font-size:35px;color:#4E4EFD"></i>
-                </a>
-            </div>
-
-        </section>
-
-
-
-
-
-
-
-
-        <button type="button" class="btn btn-link mainbutton" style="position:fixed;top:3%;left:250px;" ng-click="callCompany()">Companies</button>
-        <button type="button" class="btn btn-link mainbutton" style="position:fixed;top:3%;left:400px;" ng-click="callContact()">Contacts</button>
-        <button type="button" class="btn btn-link mainbutton" style="position:fixed;top:3%;left:550px;" ng-click="callSalesperson()">Sales Persons</button>
-        <button type="button" class="btn btn-link mainbutton" style="position:fixed;top:3%;left:700px;">Dashboard</button>
-
-        <div class="dropdown" style="top:3%;left:88%;" ng-controller="MyControllerModal">
-            <button type="button" class="btn btn-link mainbutton1" id="usernamebtn">Username</button>
-            <div class="dropdown-content">
-                <a href="#" ng-click="openchangepassword('sm')">Change password</a>
-                <a href="index.html">Sign out</a>
+                </form>
             </div>
         </div>
+        <div class="table-wrapper companiestable " id="companyTable">
+            <table class="table table-condensed table-bordered table-striped table-responsive table-hover">
+                <thead>
+                    <tr>
 
-        <div class="dropdown" style=" top:3%;left:84.3%;">
-            <button class="btn-link mainbutton1 barIcon">
-                <span class="glyphicon glyphicon-plus-sign" style="color:white; font-size:20px; padding-top:5px;"></span>
-            </button>
-            <div class="dropdown-content" role="menu" aria-labelledby="dropdownMenu" ng-controller="MyControllerModal">
-                <div class="dropdown-submenu">
-                    <a tabindex="-1" href="#">Add Project</a>
-                    <div class="dropdown-content">
+                        <th style="text-align:right;width:150px;"> No.
+                            <a href="#" ng-click="sort('No')" class="sortDir" ng-class="{ active: isSorted('No') }">&#x25B2;</a>
+                            <a href="#" ng-click="sort('-No')" class="sortDir" ng-class="{ active: isSorted('-No' ) }">&#x25BC;</a>
+                        </th>
 
-                        <a tabindex="-1" href="#" ng-click="openL('sm')">Lead</a>
-                        <a href="#" ng-click="openD('sm')">Deal</a>
+                        <th>Company name
 
+                            <a href="#" ng-click="sort('companyName')" class="sortDir" ng-class="{ active: isSorted('companyName' ) }">&#x25B2;</a>
+                            <a href="#" ng-click="sort('-companyName')" class="sortDir" ng-class="{ active: isSorted('-companyName' ) }">&#x25BC;</a>
+                        </th>
+                        <th>Contact person</th>
+                        <th>Website</th>
+                        <th>Phone</th>
+                        <th>Industry</th>
+                        <th style="width:400px;">Address</th>
+                    </tr>
+
+                </thead>
+                <tbody ng-controller="MyControllerModal">
+                    <tr ng-repeat="company in companylist|orderBy:predicate:reverse | filter:searchKeyword">
+                        <td style="text-align:right;">
+                            <div style="float:left;">
+                                <input type="checkbox" class="squaredFour" checklist-model="companytable.companylist" checklist-value="company.No" style="position:relative;top:-1px;"
+                                />
+                                <a href="#" ng-click="openEditcomp('sm',company)" popover="Edit this company" popover-trigger="mouseenter" popover-placement="right">
+                                    <span class="fa fa-pencil-square-o" style="font-size:19px;color:#4E4EFD ;position:relative;top:-2px;"></span>
+                                </a>
+                                <a href="#" ng-click="openDeletecomp('sm',company)" popover="Delete this company" popover-trigger="mouseenter" popover-placement="right">
+                                    <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#4E4EFD;position:relative;top:-3px;"></span>
+                                </a>
+                            </div>
+                            {{company.No}}
+                        </td>
+                        <td>{{company.companyName}}</td>
+                        <td>{{company.contactPerson}}</td>
+                        <td>{{company.website}}</td>
+                        <td>{{company.phone}}</td>
+                        <td>{{company.industry}}</td>
+                        <td>{{company.address}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row2">
+            <div class="pagination pagination-centered" ng-show="rows.length">
+                <ul class="pagination-controle pagination">
+                    <li>
+                        <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
+                    </li>
+                    <li>
+                        <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-primary" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
+                            ng-click="curPage = curPage+1">&gt;&gt;</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div ng-controller="MyControllerModal">
+            <a href="#" ng-click="openmultiplecompanydelete(companytable.companylist)" popover="Delete multiple companies" popover-trigger="mouseenter"
+                popover-placement="left">
+                <i class="fa fa-trash" style="position:fixed;top:13.3%;left:1320px;font-size:35px;color:#4E4EFD"></i>
+            </a>
+        </div>
+
+    </section>
+
+    <!--contact section !-->
+    <section id="contactsection" class="project" ng-class="{visible:showcontact}">
+        <div>
+            <h1 class="sectiontitle">{{projectTitle}}</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-3">
+                <form action="" class="search-form">
+                    <div class="form-group has-feedback" style="position:relative;left:525px;top:18px;">
+                        <label for="search" class="sr-only">Search</label>
+                        <input type="text" class="form-control" name="search" id="search" placeholder="Search" ng-model="searchKeyword" style="font-family:sans-serif">
+                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
                     </div>
-                </div>
-
-                <a href="#" ng-click="opencontact('sm')">Add Contact</a>
-                <a href="#" ng-click="opensalesperson('sm')">Add Sales Person</a>
+                </form>
             </div>
         </div>
+        <div class="table-wrapper companiestable" id="companyTable">
+            <table class="table table-condensed table-bordered table-striped table-responsive table-hover">
+                <thead>
+                    <tr>
 
+                        <th style="text-align:right;width:150px;"> No.
+                            <a href="#" ng-click="sort('No')" class="sortDir" ng-class="{ active: isSorted('No') }">&#x25B2;</a>
+                            <a href="#" ng-click="sort('-No')" class="sortDir" ng-class="{ active: isSorted('-No' ) }">&#x25BC;</a>
+                        </th>
 
-        <div class="dropdown" style="top:3.1%;left:80.5%;" ng-controller="MyControllerModal">
-            <button class="btn-link mainbutton1 barIcon">
-                <span>
-                    <img src="settings.png" style="height:22px; width:22px;">
-                </span>
-            </button>
-            <div class="dropdown-content">
-                <a href="#" ng-click="openindustry('sm')">Edit industry</a>
-                <a href="#" ng-click="openproduct('sm')">Edit product</a>
+                        <th>Company
+
+                            <a href="#" ng-click="sort('companyName')" class="sortDir" ng-class="{ active: isSorted('companyName' ) }">&#x25B2;</a>
+                            <a href="#" ng-click="sort('-companyName')" class="sortDir" ng-class="{ active: isSorted('-companyName' ) }">&#x25BC;</a>
+                        </th>
+                        <th>Name
+
+                            <a href="#" ng-click="sort('name')" class="sortDir" ng-class="{ active: isSorted('name' ) }">&#x25B2;</a>
+                            <a href="#" ng-click="sort('-name')" class="sortDir" ng-class="{ active: isSorted('-name' ) }">&#x25BC;</a>
+                        </th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Position</th>
+                    </tr>
+
+                </thead>
+                <tbody ng-controller="MyControllerModal">
+                    <tr ng-repeat="contact in contacts|orderBy:predicate:reverse | filter:searchKeyword">
+                        <td style="text-align:right;">
+                            <div style="float:left;">
+                                <input type="checkbox" class="squaredFour" checklist-model="contacttable.contacts" checklist-value="contact.No" style="position:relative;top:-1px;"
+                                />
+                                <a href="#" ng-click="openEditcont('sm',contact)" popover="Edit this contact" popover-trigger="mouseenter" popover-placement="right">
+                                    <span class="fa fa-pencil-square-o" style="font-size:19px;color:#4E4EFD;position:relative;top:-2px;"></span>
+                                </a>
+                                <a href="#" ng-click="openDeletecont('sm',contact)" popover="delete this contact" popover-trigger="mouseenter" popover-placement="right">
+                                    <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#4E4EFD;position:relative;top:-3px;"></span>
+                                </a>
+                            </div>
+                            {{contact.No}}
+                        </td>
+                        <td>{{contact.companyName}}</td>
+                        <td>{{contact.name}}</td>
+                        <td>{{contact.phone}}</td>
+                        <td>{{contact.email}}</td>
+                        <td>{{contact.position}}</td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row2">
+            <div class="pagination pagination-centered" ng-show="rows.length">
+                <ul class="pagination-controle pagination">
+                    <li>
+                        <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
+                    </li>
+                    <li>
+                        <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-primary" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
+                            ng-click="curPage = curPage+1">&gt;&gt;</button>
+                    </li>
+                </ul>
             </div>
         </div>
-    </nav>
+        <div ng-controller="MyControllerModal">
+            <a href="#" ng-click="openmultiplecontactdelete(contacttable.contacts)" popover="Delete multiple contacts" popover-trigger="mouseenter"
+                popover-placement="left">
+                <i class="fa fa-trash" style="position:fixed;top:13.3%;left:1320px;font-size:35px;color:#4E4EFD"></i>
+            </a>
+        </div>
+
+    </section>
+
+    <!--salesperson section!-->
+    <section id="salespersonsection" class="project" ng-class="{visible:showsalesperson}">
+        <div>
+            <h1 class="sectiontitle">{{projectTitle}}</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-3">
+                <form action="" class="search-form">
+                    <div class="form-group has-feedback" style="position:relative;left:525px;top:18px;">
+                        <label for="search" class="sr-only">Search</label>
+                        <input type="text" class="form-control" name="search" id="search" placeholder="Search" ng-model="searchKeyword" style="font-family:sans-serif">
+                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="table-wrapper companiestable" id="companyTable">
+            <table class="table table-hover table-bordered table-responsive">
+                <thead>
+                    <tr>
+
+                        <th style="text-align:right;width:150px;"> No.
+                            <a href="#" ng-click="sort('No')" class="sortDir" ng-class="{ active: isSorted('No') }">&#x25B2;</a>
+                            <a href="#" ng-click="sort('-No')" class="sortDir" ng-class="{ active: isSorted('-No' ) }">&#x25BC;</a>
+                        </th>
+
+                        <th>Name
+
+                            <a href="#" ng-click="sort('name')" class="sortDir" ng-class="{ active: isSorted('name' ) }">&#x25B2;</a>
+                            <a href="#" ng-click="sort('-name')" class="sortDir" ng-class="{ active: isSorted('-name' ) }">&#x25BC;</a>
+                        </th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Position</th>
+                    </tr>
+
+                </thead>
+                <tbody ng-controller="MyControllerModal">
+                    <tr ng-repeat="sperson in spersonlist|orderBy:predicate:reverse | filter:searchKeyword">
+                        <td style="text-align:right;">
+                            <div style="float:left;">
+                                <input type="checkbox" class="squaredFour" checklist-model="spersontable.spersonlist" checklist-value="sperson.No" style="position:relative;top:-1px;"
+                                />
+                                <a href="#" ng-click="openEditsperson('sm',sperson)" popover="Edit this sales person" popover-trigger="mouseenter" popover-placement="right">
+                                    <span class="fa fa-pencil-square-o" style="font-size:19px;color:#4E4EFD;position:relative;top:-2px;"></span>
+                                </a>
+                                <a href="#" ng-click="openDeletesperson('sm',sperson)" popover="Delete this sales person" popover-trigger="mouseenter" popover-placement="right">
+                                    <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#4E4EFD;position:relative;top:-3px;"></span>
+                                </a>
+                            </div>
+                            {{sperson.No}}
+                        </td>
+                        <td>{{sperson.name}}</td>
+                        <td>{{sperson.phone}}</td>
+                        <td>{{sperson.email}}</td>
+                        <td>{{sperson.position}}</td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row2">
+            <div class="pagination pagination-centered" ng-show="rows.length">
+                <ul class="pagination-controle pagination">
+                    <li>
+                        <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
+                    </li>
+                    <li>
+                        <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-primary" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
+                            ng-click="curPage = curPage+1">&gt;&gt;</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        </div>
+        <div ng-controller="MyControllerModal">
+            <a href="#" ng-click="openmultiplespersondelete(spersontable.spersonlist)" popover="Delete multiple sales persons" popover-trigger="mouseenter"
+                popover-placement="left">
+                <i class="fa fa-trash" style="position:fixed;top:13.3%;left:1320px;font-size:35px;color:#4E4EFD"></i>
+            </a>
+        </div>
+
+    </section>
     </div>
-
-
 
     <script type="text/javascript">
         var yourbuttons = document.getElementsByClassName('mainbutton');
@@ -889,10 +855,956 @@
             $("#columndropdown").show();
             $("#contentdropdown").hide();
         });
+    </script>
+
+    <script type="text/ng-template" id="addcontact.html"> 
+        <div class="modal-content">
+            <div class="modal-header" style="height:40px;">
+                <h3>New contact</h3>
+            </div>
+            <form>
+        
+                <div class="modal-body">
+                    <h4> Pleas fill the form to add new contact.</h4>
+                    <div class="SectionBox">
+                        <div class="spacinga">
+                            <select class="forInput form-control" ng-model="item.companyID"  ng-options="company.id as company.name for company in companies">
+                                <option value="" default disabled selected>Select the company</option>
+                            </select>
+                        </div>
+                        <div class="spacing">
+                            <input class="forInput form-control" type="text" placeholder="Name">
+                        </div>
+                        <div class="spacing">
+                            <input class="forInput form-control" type="text" placeholder="Email">
+                        </div>
+                        <div class="spacing">
+                            <input class="forInput form-control" type="text" placeholder="phone">
+                        </div>
+                        <div class="spacing">
+                            <input class="forInput form-control" type="text" placeholder="Position">
+                        </div>
+        
+                    </div>
+                </div>
+                <div class="modal-footer" style="height:70px;">
+                    <button type="submit" ng-click=close() class="button modalsubmit">Submit</button>
+                </div>
+            </form>
+            <a href="#" ng-click=close() style=" position:fixed;top:10px;left:273px;">
+                <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
+            </a>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="addsalesperson.html">
+        <div class="modal-content">
+        <div class="modal-header" >
+            <h3>New sales person</h3>
+        </div>
+        <form>
+            <div class="modal-body">
+                    <h4> Pleas fill the form to add new sales person.</h4>
+             <div class="SectionBox">   
+                <div class="spacinga">
+                    <input class="forInput form-control" type="text" placeholder="Name">
+                </div>
+                <div class="spacing">
+                    <input class="forInput form-control" type="text" placeholder="Id">
+                </div>
+                <div class="spacing">
+                    <input class="forInput form-control" type="text" placeholder="Email">
+                </div>
+                <div class="spacing">
+                    <input class="forInput form-control" type="text" placeholder="phone">
+                </div>
+                <div class="spacing">
+                    <input class="forInput form-control" type="text" placeholder="Position">
+                </div>
+                <div class="spacing">
+                    <input class="forInput form-control" type="password" placeholder="Password">
+                </div>
+                <div class="spacing">
+                    <input class="forInput form-control" type="password" placeholder="Confirm password">
+                </div>
+            </div>
+            </div>
+            <div class="modal-footer" style="height:70px;">
+                <button type="submit" ng-click=close() class="button modalsubmit">Submit</button>
+            </div>
+        </form>
+        <a href="#" ng-click=close() style=" position:fixed;top:10px;left:273px;">
+            <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
+        </a>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="changepasswordmodal.html">  
+        <div class="modal-content">
+        <div class="modal-header" style="height:40px;">
+            <h3>Change your Password</h3>
+        </div>
+        <form class="form-group">
+            <div class="modal-body">
+                <div class="spacing">
+                    <input type="password" ng-model="pass" class="forInput form-control" placeholder="New Password" style="position:relative; left:10px;width:250px;">
+                </div>
+                <div class="spacing">
+                    <input type="password" ng-model="confpass" class="forInput form-control" placeholder="Confirm password" style="position:relative;left:10px;width:250px;">
+                </div>
+            </div>
+            <div class="modal-footer">
+                    <button type="submit" ng-click=close() class="button modalsubmit">Submit</button>
+            </div>
+        </form>
+        <a href="#" ng-click="close()" style=" position:fixed;top:10px;left:273px;">
+         <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
+        </a>
+        </div>
+     </script>
 
 
+
+   
+     <script type="text/ng-template" id="dealproject.html">
+        <div class="modal-content">
+         <div class="modal-header" style="height:40px;">
+        <h3>New Deal</h3>
+        </div>
+        <form id="addDeal" name="addDeal" class="form-group">
+           <div class="modal-body" style="overflow-y: auto; max-height:400px;">
+                <h4> Pleas fill the form to add new deal.</h4>
+                <div class="SectionBox">
+                   <h5>Company and contact:</h5>
+                <div>
+                    <select class="forInput form-control"  id="companyselect" ng-model="item.companyID" ng-selected="0" ng-options="company.id as company.name for company in companies"
+                        ng-disabled="addcompany">
+
+                    </select>
+                    <a href="#" id="addIcon">
+                        <span id="addIcon" class="glyphicon glyphicon-plus-sign" ng-init="showAdd=false, " ng-click="showAdd=!showAdd; addcompany=!addcompany; resetSelect()"></span>
+                    </a>
+                </div>
+                <div ng-show="showAdd">
+                    <div class="spacing">
+                        <input class="forInput form-control" type="text" ng-model="addCompanyName" placeholder="Company name">
+                    </div>
+                    <div class="spacing">
+                        <input class="forInput form-control" type="text" placeholder=" Company website">
+                    </div>
+                    <div class="spacing">
+                        <input class="forInput form-control" type="text" placeholder="Company office number">
+                    </div>
+                    <div class="spacing">
+                        <input class="forInput form-control" type="text" placeholder="Company address">
+                    </div>
+                    <div class="spacing">
+                        <select class="forInput form-control" ng-model="industry">
+                            <option>Select the Industry</option>
+
+                        </select>
+                    </div>
+                    <div class="spacing">
+                        <input class="forInput form-control" type="text" placeholder="Contact person name">
+                    </div>
+                    <div class="spacing">
+                        <input class="forInput form-control" type="text" placeholder=" Contact person Email">
+                    </div>
+                    <div class="spacing">
+                        <input class="forInput form-control" type="text" placeholder="Contact person phone">
+                    </div>
+                    <div class="spacing">
+                        <input class="forInput form-control" type="text" placeholder="Contact person position">
+                    </div>
+                </div>
+            </div>
+            <div class="SectionBox">
+                <h5>Deal Information:</h5>
+                <div>
+                    <select class="forInput form-control" ng-model="salesPerson">
+                        <option>Select the person in charge</option>
+
+                    </select>
+
+                </div>
+                <div class="spacing">
+                    <select class="forInput form-control" ng-model="project.typeID" ng-selected="0" ng-options="type.id as type.name for type in types">
+                    </select>
+                </div>
+                <div class="spacing">
+                    <select class="forInput form-control">
+                        <option>Select the product</option>
+                    </select>
+                </div>
+                <div class="spacing">
+                    <input class="forInput form-control" type="text" placeholder="Value">
+                </div>
+                <div class="spacing">
+                    <input class="forInput form-control" type="text" placeholder="Sales stage in percentage">
+                </div>
+                <div class="spacing">
+                        <textarea class="forInput form-control" wrap="soft" rows="5"  type="text" size="255" placeholder="Remarks" />
+                    </div>
+                <div class="spacing">
+                    <input class="forInput form-control" id="ponumber" type="text" placeholder="PO-Number">
+                </div>
+                <div class="datepicker modalpodate" date-format="dd/MM/yyyy">
+                    <input class="forInput form-control  modaldatepicker" ng-model="POdate" type="text" placeholder="PO-date">
+                    <i class="fa fa-calendar fafaPosititionondatepicker"></i>
+                    </input>
+                </div>
+                <div class="datepicker modalstartdate" date-format="dd/MM/yyyy">
+                    <input class=" modaldatepicker form-control " ng-model="leadstartdate" type="text" placeholder="Start date">
+                    <i class="fa fa-calendar fafaPosititionondatepicker"></i>
+                    </input>
+                </div>
+                <div class="datepicker modalenddate" date-format="dd/MM/yyyy">
+                    <input class=" modaldatepicker form-control" ng-model="leadenddate" type="text" placeholder="End date">
+                    <i class="fa fa-calendar fafaPosititionondatepicker"></i>
+                    </input>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="submit" ng-click=close() class="button modalsubmit">Submit</button>
+        </div>
+
+        <a href="#" ng-click=close() style=" position:fixed;top:10px;left:273px;">
+            <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
+        </a>
+     </form>
+     </div>
+     </script>
+
+
+
+    
+     <script type="text/ng-template" id="delete.html">
+     <div class="modal-content">
+        <div class="modal-header" style="height:40px;">
+                <h3>{{deleteHeader}}</h3>
+        </div>
+        <div class="modal-body" style="height:80px;border-radius:10px 10px 10px 10px;">
+                <h4> {{deleteTitle}}</h4>
+        </div>
+        <div class="modal-footer">
+                <button type="submit" ng-click="close(); removeRow()" class="button deletemodalsubmit">Yes</button>
+        </div>
+        <a href="#" ng-click=close() style="position:fixed;top:10px;left:273px;">
+                <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
+        </a>
+
+     </div>
+    </script>
+
+    <script type="text/ng-template" id="editcompany.html">
+    
+        <div class="modal-content">
+        <div class="modal-header" style="height:40px;">
+            <h3>Edit company</h3>
+        </div>
+        <form id="addLead" name="addLead" class="form-group">
+            <div class="modal-body" style="overflow-y: auto; max-height:400px;">
+
+                <div class="spacing">
+                    <input class="forInput form-control" type="text" placeholder="Company name" ng-model="editcomname">
+                </div>
+                <div class="spacing">
+                        <input class="forInput form-control" type="text" placeholder="Website" ng-model="website">
+                    </div>
+                    <div class="spacing">
+                            <input class="forInput form-control" type="text" placeholder="Phone" ng-model="officephone">
+                        </div>
+           
+                <div class="spacing">
+                    <select class="forInput form-control">
+                        <option value="" default disabled selected>Select the industry</option>
+                    </select>
+                </div>
+
+                <div class="spacing">
+                    <textarea class="forInput form-control" wrap="soft" rows="5" type="text" size="255" placeholder="Address" ng-model="address" />
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" ng-click="close()" class="button modalsubmit">Submit</button>
+            </div>
+
+            <a href="#" ng-click="close()" style=" position:fixed;top:10px;left:273px;">
+                <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
+            </a>
+
+
+        </form>
+
+
+        </div>
 
     </script>
+
+    <script type="text/ng-template" id="editcontact.html">
+            <div class="modal-content">
+            <div class="modal-header" style="height:40px;">
+                <h3>Edit Contact</h3>
+            </div>
+            <form id="addLead" name="addLead" class="form-group">
+                <div class="modal-body" style="overflow-y: auto; max-height:400px;">
+                    <select class="forInput form-control" ng-model="item.companyID"  ng-options="company.id as company.name for company in companies"
+                       >
+                        <option value="" default disabled selected>Select the company</option>
+        
+                    </select>
+                    <div class="spacing">
+                        <input class="forInput form-control" type="text" placeholder="Name" ng-model="name">
+                    </div>
+                    <div class="spacing">
+                        <input class="forInput form-control" type="text" placeholder="Phone" ng-model="phone">
+                    </div>
+                    <div class="spacing">
+                        <input class="forInput form-control" type="text" placeholder="Email" ng-model="email">
+                    </div>
+                    <div class="spacing">
+                        <input class="forInput form-control" type="text" placeholder="Position" ng-model="position">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" ng-click="close()" class="button modalsubmit">Submit</button>
+                </div>
+        
+                <a href="#" ng-click="close()" style=" position:fixed;top:10px;left:273px;">
+                    <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
+                </a>
+        
+        
+            </form>
+        
+        
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="editdeal.html">
+        <div class="modal-content">
+            <div class="modal-header" style="height:40px;">
+                <h3>Edit deal</h3>
+            </div>
+            <form id="editdeal" name="editDeal" class="form-group">
+                <div class="modal-body" style="overflow-y: auto; max-height:450px;">
+    
+                    <select class="forInput form-control" ng-model="item.companyID"  ng-options="company.id as company.name for company in companies"
+                    ng-disabled="addcompany">
+                    <option value="" default disabled selected>Select the company</option>
+    
+                </select>
+                    <div class="spacing">
+                        <select class="forInput form-control" ng-model="dealsalesPerson">
+                            <option value="" default disabled selected>Select the person in charge</option>
+    
+                        </select>
+                    </div>
+                    <div class="spacing">
+                        <select class="forInput form-control" ng-model="leadproject.typeID"  ng-options="type.id as type.name for type in types">
+                                <option value="" default disabled selected>Select the type</option>
+                        </select>
+                    </div>
+                    <div class="spacing">
+                        <select class="forInput form-control">
+                            <option value="" default disabled selected>Select the product</option>
+                        </select>
+                    </div>
+                    <div class="spacing">
+                        <input class="forInput form-control" type="text" placeholder="Value" ng-model="dealValue">
+                    </div>
+                    <div class="spacing">
+                        <input class="forInput form-control" type="text" placeholder="Sales stage in percentage" ng-model="dealsalesstage">
+                    </div>
+                    <div class="spacing">
+                            <textarea class="forInput form-control" wrap="soft" rows="5"  type="text" size="255" placeholder="Remarks" ng-model="dealRemarks" />
+                        </div>
+                    
+                    <div class="spacing">
+                        <input class="forInput form-control" id="ponumber" type="text" placeholder="PO-Number" ng-model="POnum">
+                    </div>
+                    <div class="datepicker modaldate " date-format="dd/MM/yyyy">
+                        <input class="forInput modaldatepicke form-control" ng-model="POdate" type="text" placeholder="PO-date">
+                        <i class="fa fa-calendar fafaPosititionondatepicker"></i>
+                        </input>
+                    </div>
+                    <div class="datepicker modaldate" date-format="dd/MM/yyyy">
+                        <input class="forInput modaldatepicker form-control" ng-model="dealstartdate" type="text" placeholder="Start date">
+                        <i class="fa fa-calendar fafaPosititionondatepicker"></i>
+                        </input>
+                    </div>
+                    <div class="datepicker modaldate" date-format="dd/MM/yyyy">
+                        <input class="forInput modaldatepicker form-control" ng-model="dealenddate" type="text" placeholder="End date">
+                        <i class="fa fa-calendar fafaPosititionondatepicker"></i>
+                        </input>
+                    </div>
+                </div>
+    
+                <div class="modal-footer">
+                    <button type="submit" ng-click="close()" class="button modalsubmit">Submit</button>
+                </div>
+    
+                <a href="#" ng-click="close()" style=" position:fixed;top:10px;left:273px;">
+                    <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
+                </a>
+            </form>
+    
+    
+    
+        </div>
+    
+    </script>
+
+    <script type="text/ng-template" id="dealproject.html">
+        <div class="modal-content">
+            <div class="modal-header" style="height:40px;">
+                <h3>New Deal</h3>
+            </div>
+            <form id="addDeal" name="addDeal" class="form-group">
+                <div class="modal-body" style="overflow-y: auto; max-height:400px;">
+                    <h4> Pleas fill the form to add new deal.</h4>
+                    <div class="SectionBox">
+                        <h5>Company and contact:</h5>
+                        <div>
+                            <select class="forInput form-control" id="companyselect" ng-model="item.companyID"  ng-options="company.id as company.name for company in companies"
+                                ng-disabled="addcompany">
+                                <option value="" default disabled selected>Select the company</option>
+                            </select>
+                            <a href="#" id="addIcon">
+                                <span id="addIcon" class="glyphicon glyphicon-plus-sign" ng-init="showAdd=false, " ng-click="showAdd=!showAdd; addcompany=!addcompany; resetSelect()"></span>
+                            </a>
+                        </div>
+                        <div ng-show="showAdd">
+                            <div class="spacing">
+                                <input class="forInput form-control" type="text" ng-model="addCompanyName" placeholder="Company name">
+                            </div>
+                            <div class="spacing">
+                                <input class="forInput form-control" type="text" placeholder=" Company website">
+                            </div>
+                            <div class="spacing">
+                                <input class="forInput form-control" type="text" placeholder="Company office number">
+                            </div>
+                            <div class="spacing">
+                                <input class="forInput form-control" type="text" placeholder="Company address">
+                            </div>
+                            <div class="spacing">
+                                <select class="forInput form-control" ng-model="industry">
+                                    <option value="" default disabled selected>Select the industry</option>
+    
+                                </select>
+                            </div>
+                            <div class="spacing">
+                                <input class="forInput form-control" type="text" placeholder="Contact person name">
+                            </div>
+                            <div class="spacing">
+                                <input class="forInput form-control" type="text" placeholder=" Contact person Email">
+                            </div>
+                            <div class="spacing">
+                                <input class="forInput form-control" type="text" placeholder="Contact person phone">
+                            </div>
+                            <div class="spacing">
+                                <input class="forInput form-control" type="text" placeholder="Contact person position">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="SectionBox">
+                        <h5>Deal Information:</h5>
+                        <div>
+                            <select class="forInput form-control" ng-model="salesPerson">
+                                <option value="" default disabled selected>Select the person in charge</option>
+    
+                            </select>
+    
+                        </div>
+                        <div class="spacing">
+                            <select class="forInput form-control" ng-model="project.typeID"  ng-options="type.id as type.name for type in types">
+                                    <option value="" default disabled selected>Select the type</option>
+                            </select>
+                        </div>
+                        <div class="spacing">
+                            <select class="forInput form-control">
+                                <option value="" default disabled selected>Select the product</option>
+                            </select>
+                        </div>
+                        <div class="spacing">
+                            <input class="forInput form-control" type="text" placeholder="Value">
+                        </div>
+                        <div class="spacing">
+                            <input class="forInput form-control" type="text" placeholder="Sales stage in percentage">
+                        </div>
+                        <div class="spacing">
+                                <textarea class="forInput form-control" wrap="soft" rows="5"  type="text" size="255" placeholder="Remarks" />
+                            </div>
+                        <div class="spacing">
+                            <input class="forInput form-control" id="ponumber" type="text" placeholder="PO-Number">
+                        </div>
+                        <div class="datepicker modaldate" date-format="dd/MM/yyyy">
+                            <input class="forInput modaldatepicker form-control" ng-model="POdate" type="text" placeholder="PO-date">
+                            <i class="fa fa-calendar fafaPosititionondatepicker"></i>
+                            </input>
+                        </div>
+                        <div class="datepicker modaldate" date-format="dd/MM/yyyy">
+                            <input class="forInput modaldatepicker form-control" ng-model="leadstartdate" type="text" placeholder="Start date">
+                            <i class="fa fa-calendar fafaPosititionondatepicker"></i>
+                            </input>
+                        </div>
+                        <div class="datepicker modaldate" date-format="dd/MM/yyyy">
+                            <input class="forInput modaldatepicker form-control" ng-model="leadenddate" type="text" placeholder="End date">
+                            <i class="fa fa-calendar fafaPosititionondatepicker"></i>
+                            </input>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="modal-footer">
+                    <button type="submit" ng-click=close() class="button modalsubmit">Submit</button>
+                </div>
+    
+                <a href="#" ng-click=close() style=" position:fixed;top:10px;left:273px;">
+                    <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
+                </a>
+            </form>
+    
+    
+    
+        </div>
+    </script>
+
+
+    <script type="text/ng-template" id="editindustry.html">
+        <div class="modal-content">
+            <div class="modal-header" style="height:40px;">
+                <h3>Edit Industry list</h3>
+            </div>
+            <form class="form-group">
+                <div class="modal-body" style="overflow-y: auto; max-height:200px;min-height:200px;">
+                    <div>
+                        <input class="forInput form-control " id="industrytxf" type="text" placeholder="Industry name">
+                        <a href="#" id="addIcon">
+                            <span id="addIcon" class="glyphicon glyphicon-plus-sign"></span>
+                        </a>
+                    </div>
+                    <div ng-repeat="industry in industryList" class="spacing">
+                        <div style="background-color:rgb(227, 227, 228);">
+                            {{industry.name}}
+                            <a href="#" ng-click="deleteSelected($index)">
+                                <span class="glyphicon glyphicon-remove" style="color:red;font-size:13px;float:right;"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="button modalsubmit" ng-click="close()">Submit</button>
+                </div>
+            </form>
+        
+        
+            <a href="#" ng-click="close()" style=" position:fixed;top:10px;left:273px;">
+                <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
+            </a>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="editlead.html">
+        <div class="modal-content">
+            <div class="modal-header" style="height:40px;">
+                <h3>Edit lead</h3>
+            </div>
+            <form id="addLead" name="addLead" class="form-group">
+                <div class="modal-body" style="overflow-y: auto; max-height:400px;">
+    
+                    <select class="forInput form-control" ng-model="item.companyID"  ng-options="company.id as company.name for company in companies">
+                    <option value="" default disabled selected>Select the company</option>
+                </select>
+    
+                    <div class="spacing" ng-hide="projectCat.catID =='2'">
+                        <select class="forInput form-control" ng-model="leadsalesPerson">
+                                <option value="" default disabled selected>Select the person in charge</option>
+    
+                        </select>
+    
+                    </div>
+                    <div class="spacing">
+                        <select class="forInput form-control" ng-model="leadproject.typeID"  ng-options="type.id as type.name for type in types">
+                                <option value="" default disabled selected>Select the type of project</option>
+
+                        </select>
+                    </div>
+                    <div class="spacing">
+                        <select class="forInput form-control">
+                            <option value="" default disabled selected>Select the product</option>
+                        </select>
+                    </div>
+                    <div class="spacing">
+                        <input class="forInput form-control" type="text" placeholder="Value" ng-model="leadValue">
+                    </div>
+                    <div class="spacing">
+                        <input class="forInput form-control" type="text" placeholder="Sales stage in percentage" ng-model="leadStage">
+                    </div>
+                    <div class="spacing" ng-hide="projectCat.catID !='0'">
+                        <select class="forInput form-control" ng-model="lead.statusID"  ng-options="status.id as status.name for status in statuses">
+                                <option value="" default disabled selected>Select the status</option>
+                        </select>
+                    </div>
+                    <div ng-hide="projectCat.catID !='0'">
+                        <h6 class="spacing">Tender:</h6>
+    
+                        <input type="checkbox" class="checkbox-default" ng-model="tenderYes" ng-click="checkboxRule('tenderYes')" />
+                        <label class="convertToblack">Yes</label>
+    
+    
+                        <input type="checkbox" class="checkbox-default Dealcheckbox" ng-model="tenderNo" ng-click="checkboxRule('tenderNo')" />
+                        <label class="convertToblack">No</label>
+    
+                        <input type="checkbox" class="checkbox-default Dealcheckbox" ng-model="tenderPossibly" ng-click="checkboxRule('tenderPossibly')"
+                        />
+                        <label class="convertToblack">Possibly</label>
+                    </div>
+                    <div class="spacing">
+                        <textarea class="forInput form-control" wrap="soft" rows="5" type="text" size="255" placeholder="Remarks" ng-model="leadremarks" />
+                    </div>
+                    <div class="spacing">
+                        <select class="forInput form-control" id="ponumber" ng-model="projectCat.catID" ng-options="cat.id as cat.name for cat in cats" >
+                                <option value="" default disabled selected>Select the category</option>
+                        </select>
+                    </div>
+    
+                    <div ng-show="projectCat.catID=='1'">
+                     <div >
+                     <input class="forInpu form-control"  id="ponumber" type="text" placeholder="PO-number" ng-model="POnum">
+                     </div>
+                     <div class="datepicker modaldate" date-format="dd/MM/yyyy">
+                     <input class="forInput form-control modaldatepicker" ng-model="POdate" type="text" placeholder="PO-date">
+                     <i class="fa fa-calendar fafaPosititionondatepicker"></i>
+                     </input>
+                     </div>
+                     </div>
+                    <div class="datepicker modaldate" date-format="dd/MM/yyyy">
+                        <input class="forInput form-control modaldatepicker" id="startdate" ng-model="leadstartdate" type="text" placeholder="Start date">
+                        <i class="fa fa-calendar fafaPosititionondatepicker"></i>
+                        </input>
+                    </div>
+                    <div class="datepicker modaldate" date-format="dd/MM/yyyy">
+                        <input class="forInput form-control modaldatepicker" ng-model="leadenddate" type="text" placeholder="End date">
+                        <i class="fa fa-calendar fafaPosititionondatepicker"></i>
+                        </input>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" ng-click="close()" class="button modalsubmit">Submit</button>
+                </div>
+    
+                <a href="#" ng-click="close()" style=" position:fixed;top:10px;left:273px;">
+                    <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
+                </a>
+    
+    
+            </form>
+    
+    
+        </div>
+    
+    </script>
+
+    <script type="text/ng-template" id="editlostcase.html">
+        <div class="modal-content">
+            <div class="modal-header" style="height:40px;">
+                <h3>Edit lost case</h3>
+            </div>
+            <form id="addLead" name="addLead" class="form-group">
+                <div class="modal-body" style="overflow-y: auto; max-height:400px;">
+                    <select class="forInput form-control" ng-model="item.companyID"  ng-options="company.id as company.name for company in companies"
+                    ng-disabled="addcompany">
+                    <option value="" default disabled selected>Select the company</option>
+                </select>
+    
+
+                    <div class="spacing">
+                        <select class="forInput form-control" ng-model="leadproject.typeID" ng-options="type.id as type.name for type in types">
+                                    <option value="" default disabled selected>Select the type of project</option> 
+                        </select>
+                    </div>
+                    <div class="spacing">
+                        <select class="forInput form-control">
+                            <option value="" default disabled selected>Select the product</option>
+                        </select>
+                    </div>
+                    <div class="spacing">
+                        <input class="forInput form-control " type="text" placeholder="Value" ng-model="leadValue">
+                    </div>
+
+                    <div class="spacing">
+                        <textarea class="forInput form-control" wrap="soft" id="ponumber" rows="5" type="text" size="255" placeholder="Remarks" ng-model="leadremarks" />
+                    </div>
+
+
+                    <div class="datepicker modaldate" date-format="dd/MM/yyyy" id="ponumber" >
+                        <input class="forInput form-control modaldatepicker"  ng-model="leadstartdate" type="text" placeholder="Start date">
+                        <i class="fa fa-calendar fafaPosititionondatepicker2"></i>
+                        </input>
+                    </div>
+                    <div class="datepicker modaldate" date-format="dd/MM/yyyy">
+                        <input class="forInput form-control modaldatepicker" ng-model="leadenddate" type="text" placeholder="End date">
+                        <i class="fa fa-calendar fafaPosititionondatepicker2"></i>
+                        </input>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" ng-click="close()" class="button modalsubmit">Submit</button>
+                </div>
+    
+                <a href="#" ng-click="close()" style=" position:fixed;top:10px;left:273px;">
+                    <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
+                </a>
+    
+    
+            </form>
+    
+    
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="editproduct.html">
+        <div class="modal-content">
+            <div class="modal-header" style="height:40px;">
+                <h3>Edit product list</h3>
+            </div>
+            <form class="form-group">
+                <div class="modal-body" style="overflow-y: auto; max-height:200px;min-height:200px;">
+                    <div>
+                        <input class="forInput form-control" id="industrytxf" type="text" placeholder="Product name">
+                        <a href="#" id="addIcon">
+                            <span id="addIcon" class="glyphicon glyphicon-plus-sign"></span>
+                        </a>
+                    </div>
+                    <div ng-repeat="product in productList" class="spacing">
+                        <div style="background-color:rgb(227, 227, 228);">
+                            {{product.name}}
+                            <a href="#" ng-click="deleteSelected($index)">
+                                <span class="glyphicon glyphicon-remove" style="color: red;font-size:13px;float:right;"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="button modalsubmit" ng-click="close()">Submit</button>
+                </div>
+            </form>
+        
+        
+            <a href="#" ng-click="close()" style=" position:fixed;top:10px;left:273px;">
+                <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
+            </a>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="editsalesperson.html">
+        <div class="modal-content">
+            <div class="modal-header" style="height:40px;">
+                <h3>Edit sales person</h3>
+            </div>
+            <form id="addLead" name="addLead" class="form-group">
+                <div class="modal-body" style="overflow-y: auto; max-height:400px;">
+                    <div class="spacing">
+                        <input class="forInput form-control" type="text" placeholder="Name" ng-model="name">
+                    </div>
+                    <div class="spacing">
+                        <input class="forInput form-control" type="text" placeholder="Phone" ng-model="phone">
+                    </div>
+                    <div class="spacing">
+                        <input class="forInput form-control" type="text" placeholder="Email" ng-model="email">
+                    </div>
+                    <div class="spacing">
+                        <input class="forInput form-control" type="text" placeholder="Position" ng-model="position">
+                    </div>
+        
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" ng-click="close()" class="button modalsubmit">Submit</button>
+                </div>
+        
+                <a href="#" ng-click="close()" style=" position:fixed;top:10px;left:273px;">
+                    <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
+                </a>
+        
+        
+            </form>
+        
+        
+        </div>
+    
+    </script>
+
+    <script type="text/ng-template" id="leadproject.html">
+        <div class="modal-content">
+            <div class="modal-header" style="height:40px;">
+                <h3>New Lead</h3>
+            </div>
+            <form id="addLead" name="addLead" class="form-group">
+                <div class="modal-body" style="overflow-y: auto; max-height:400px;">
+                    <h4> Pleas fill the form to add new lead.</h4>
+                    <div class="SectionBox">
+                        <h5>Company and contact:</h5>
+                        <div>
+                            <select class="forInput form-control" id="companyselect" ng-model="item.companyID"  ng-options="company.id as company.name for company in companies"
+                                ng-disabled="addcompany">
+                                <option value="" default disabled selected>Select the company</option>
+                            </select>
+                            <a href="#" id="addIcon">
+                                <span id="addIcon" class="glyphicon glyphicon-plus-sign" ng-init="showAdd=false, " ng-click="showAdd=!showAdd; addcompany=!addcompany; resetSelect()"></span>
+                            </a>
+                        </div>
+                        <div ng-show="showAdd">
+                            <div class="spacing">
+                                <input class="forInput form-control" type="text" ng-model="addCompanyName" placeholder="Company name">
+                            </div>
+                            <div class="spacing">
+                                <input class="forInput form-control" type="text" placeholder="Company website">
+                            </div>
+                            <div class="spacing">
+                                <input class="forInput form-control" type="text" placeholder="Company office number">
+                            </div>
+                            <div class="spacing">
+                                <input class="forInput form-control" type="text" placeholder="Company address">
+                            </div>
+                            <div class="spacing">
+                                <select class="forInput form-control" ng-model="industry">
+                                    <option value="" default disabled selected>Select the industry</option>
+    
+                                </select>
+                            </div>
+                            <div class="spacing">
+                                <input class="forInput form-control" type="text" placeholder="Contact person name">
+                            </div>
+                            <div class="spacing">
+                                <input class="forInput form-control" type="text" placeholder="Contact person email">
+                            </div>
+                            <div class="spacing">
+                                <input class="forInput form-control" type="text" placeholder="Contact person phone">
+                            </div>
+                            <div class="spacing">
+                                <input class="forInput form-control" type="text" placeholder="Contact person position">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="SectionBox">
+                        <h5>Lead Information:</h5>
+                        <div>
+                            <select class="forInput form-control" ng-model="salesPerson">
+                                <option value="" default disabled selected>Select the person in charge</option>
+                            </select>
+    
+                        </div>
+                        <div class="spacing">
+                            <select class="forInput form-control" ng-model="project.typeID"  ng-options="type.id as type.name for type in types">
+                                    <option value="" default disabled selected>Select the type of project</option>
+                            </select>
+                        </div>
+                        <div class="spacing">
+                            <select class="forInput form-control">
+                                <option value="" default disabled selected>Select the product</option>
+                            </select>
+                        </div>
+                        <div class="spacing">
+                            <input class="forInput form-control" type="text" placeholder="Value">
+                        </div>
+                        <div class="spacing">
+                            <input class="forInput form-control" type="text" placeholder="Sales stage in percentage">
+                        </div>
+                        <div class="spacing">
+                            <select class="forInput form-control" ng-model="lead.statusID"  ng-options="status.id as status.name for status in statuses">
+                                    <option value="" default disabled selected>Select the status</option>
+                            </select>
+                        </div>
+                        <div>
+                            <h6 class="spacing">Tender:</h6>
+    
+                            <input type="checkbox" class="checkbox-default" ng-model="tenderYes" ng-click="checkboxRule('tenderYes')" />
+                            <label class="convertToblack">Yes</label>
+    
+    
+                            <input type="checkbox" class="checkbox-default Dealcheckbox" ng-model="tenderNo" ng-click="checkboxRule('tenderNo')" />
+                            <label class="convertToblack">No</label>
+    
+                            <input type="checkbox" class="checkbox-default Dealcheckbox" ng-model="tenderPossibly" ng-click="checkboxRule('tenderPossibly')"
+                            />
+                            <label class="convertToblack">Possibly</label>
+                        </div>
+                        <div class="spacing" id="ponumber">
+                                <textarea class="forInput form-control" wrap="soft" rows="5"  type="text" size="255" placeholder="Remarks" />
+                            </div>
+                        <div class="datepicker modaldate" date-format="dd/MM/yyyy">
+                            <input class="forInput form-control modaldatepicker" ng-model="leadstartdate" type="text" placeholder="Start date">
+                            <i class="fa fa-calendar fafaPosititionondatepicker"></i>
+                            </input>
+                        </div>
+                        <div class="datepicker modaldate" date-format="dd/MM/yyyy">
+                            <input class="forInput form-control modaldatepicker" ng-model="leadenddate" type="text" placeholder="End date">
+                            <i class="fa fa-calendar fafaPosititionondatepicker"></i>
+                            </input>
+                        </div>
+                    </div>
+    
+                </div>
+    
+                <div class="modal-footer">
+                    <button type="submit" ng-click=close() class="button modalsubmit">Submit</button>
+                </div>
+    
+                <a href="#" ng-click=close() style=" position:fixed;top:10px;left:273px;">
+                    <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
+                </a>
+    
+    
+            </form>
+    
+    
+        </div>
+    
+    </script>
+
+
+    <script type="text/ng-template" id="multipledelete.html">
+        <div class="modal-content">
+            <div class="modal-header" style="height:40px;">
+                <h3>{{deleteHeaderrows}}</h3>
+    
+            </div>
+            <div class="modal-body" style="height:100px;border-radius:10px 10px 10px 10px;">
+                <h4> {{deleteMessage}}</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" ng-click="close(); removeSelectedRows()" class="button deletemodalsubmit">Yes</button>
+            </div>
+            <a href="#" ng-click=close() style="position:fixed;top:10px;left:273px;">
+                <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
+            </a>
+    
+        </div>
+    </script>
+
+
+    <script type="text/ng-template" id="multipledelete2.html">
+        <div class="modal-content">
+            <div class="modal-header" style="height:40px;">
+                <h3>{{deleteHeaderrows}}</h3>
+    
+            </div>
+            <div class="modal-body" style="height:100px;border-radius:10px 10px 10px 10px;">
+                <h4>{{deleteErrorMessage}}</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" ng-click="close()" class="button deletemodalsubmit">Ok</button>
+            </div>
+            <a href="#" ng-click="close()" style="position:fixed;top:10px;left:273px;">
+                <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
+            </a>
+        </div>
+    </script>
+
 
 
 

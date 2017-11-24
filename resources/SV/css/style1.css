@@ -1,10 +1,4 @@
-
-body{
-    /* The image used */
-    background-image: url("design.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-}
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
 .box {
     border-radius: 25px;
@@ -58,7 +52,7 @@ body{
 
 #txf3 {
     position: relative;
-    top: 75px;
+    top: 90px;
     left: 23px;
     height: 30px;
     width: 350px;
@@ -215,14 +209,11 @@ text-decoration: none !important;
 }
 
 
-
-
-
 .mainbutton{
     color:white; 
     font-family:sans-serif;
     font-size:15px;
-    height:49.3px;
+    height:49.4px;
     width:150px;
     outline: 0;
     border: none; 
@@ -304,7 +295,7 @@ text-decoration: none;
     border-radius: 5px 5px 5px 5px;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+     z-index:999;
 }
 
 .dropdown-content a {
@@ -332,6 +323,7 @@ text-decoration: none;
 
 .dropdown:hover .dropdown-content {
     display: block;
+   
 }
 
 .project{
@@ -469,25 +461,31 @@ width:140px;
     background: transparent;
     box-shadow: none;
     display:block;
+    padding-left:10px !important;
   }
   .search-form .form-group input.form-control::-webkit-input-placeholder {
     display: none;
+   
   }
   .search-form .form-group input.form-control:-moz-placeholder {
     /* Firefox 18- */
     display: none;
+
   }
   .search-form .form-group input.form-control::-moz-placeholder {
     /* Firefox 19+ */
     display: none;
+   
   }
   .search-form .form-group input.form-control:-ms-input-placeholder {
     display: none;
+   
   }
   .search-form .form-group:hover,
   .search-form .form-group.hover {
     width: 100%;
     border-radius: 4px 25px 25px 4px;
+
   }
   .search-form .form-group span.form-control-feedback {
     position: absolute;
@@ -502,6 +500,7 @@ width:140px;
     color: #4E4EFD;
     left: initial;
     font-size: 14px;
+    
   }
 
 
@@ -614,18 +613,36 @@ width:200px;
 
 .mainpagedatepicker{
    
-    margin-top: 10px;
+    margin-top: 6px;
     margin-left:16px;
 
 }
 .maindateWidth{
     width:260px;
     font-family:sans-serif;
+    padding-left:5px;
 }
 .fafaPosititionondatepicker{
     position:relative;
-left:-23px;
+    float:right;
+    left:-6px;
+    top:-22px;
 }
+.fafaPosititionondatepicker1{
+  position:relative;
+  right:23px ;
+  top:1px;
+
+}
+
+.fafaPosititionondatepicker2{
+    position:relative;
+    float:right;
+    top:7px;
+    left:-23px;
+
+  
+  }
 
 #companyTable{
     position:relative;
@@ -680,8 +697,16 @@ h5 {
     color: #4E4EFD;
     font-size: 20px;
     position: relative;
-    top: 2px;
+    top:2px;
+     float:right;
+}
 
+#industrytxf{
+width:223px;
+}
+.form-control { 
+display: inline-block !important; 
+padding-left:5px !important;
 }
 
 .spacing {
@@ -696,9 +721,9 @@ h5 {
 }
 
 .forInput {
-    width: 220px;
+    width: 250px;
     font-family:sans-serif;
-    
+    height:30px;
 }
 
 
@@ -782,6 +807,9 @@ border-radius: 10px 10px 10px 10px;
     font-size: 14px;
 
 }
+#companyselect{
+    width:225px;
+}
 
 #passwordSubmit {
     font-family: sans-serif;
@@ -792,26 +820,18 @@ border-radius: 10px 10px 10px 10px;
 }
 .modaldatepicker{
     font-family:sans-serif;
-    margin-top: 10px;
 
 }
-
-.modalstartdate>._720kb-datepicker-calendar{
-    position:fixed;
-    top:104px;
-    left:18px;
+#ponumber{
+    margin-bottom:10px;
 }
-.modalenddate>._720kb-datepicker-calendar{
+
+.modaldate>._720kb-datepicker-calendar{
     position:fixed;
-    top:138px;
+    top:30px;
     left:18px;
 }
 
-.modalpodate>._720kb-datepicker-calendar{
-    position:fixed;
-    top:70px;
-    left:18px;
-}
 
 .deletemodalsubmit{
     margin-top:-5px;
@@ -868,4 +888,17 @@ background-color: #4E4EFD;
 .row2{
     margin-top:13px;
     margin-left:40%;
+}
+
+#defaultprojectview{
+    z-index:-1;
+}
+#companysection{
+    z-index:-1;
+}
+#contactsection{
+    z-index:-1; 
+}
+#salespersonsection{
+    z-index:-1; 
 }
