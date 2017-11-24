@@ -18,6 +18,7 @@ class CreateSalespersonsTable extends Migration
             $table->integer('saleperson_id')->unique();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('password');
             $table->integer('phone_num');
             $table->string('position');
             $table->timestamps();
