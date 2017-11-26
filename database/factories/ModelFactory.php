@@ -45,12 +45,12 @@ $factory->define(App\Project::class, function (Faker\Generator $faker) {
         'product'=>$faker->randomDigit,
         'value'=>$faker->randomDigit,
         'project_type'=>$faker->word,
-        'sales_stage'=>$faker->sales_stage,
+        'sales_stage'=>$faker->randomDigit,
         'status'=>$faker->randomDigit,
         'tender'=>$faker->word,
         'remark'=>$faker->text($max = 50),
         'company_id'=>$faker->ean8,
-        'salesperson_id'=>$salesPerson->salesperson_id
+        'salesperson_id'=>$faker->ean8
     ];
 });
 

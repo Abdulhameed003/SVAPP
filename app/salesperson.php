@@ -10,9 +10,7 @@ class Salesperson extends ConfigureDB
     protected $fillable = ['salesperson_id','name','email','phone_num','position'];
     protected $connection = 'mysql2';
 
-    public function __construct(){
-        $this->setConnection($connection);
-    }
+   
     //relationships
 
     public function projects(){

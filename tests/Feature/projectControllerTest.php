@@ -7,17 +7,31 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Http\Controllers\ProjectController;
-use RegisterUserTest;
-use Config;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\MessageBag;
+use App;
 
 class projectControllerTest extends TestCase
 {
     public function setUp(){
         parent::setUp();
         
-        $this->user = factory(\App\User::class)->create([
-            'company_id'=>'83978555'
-        ]); 
+        $this->user = factory(\App\User::class)->create(); 
+        $this->database = 'db_'.$this->user->company_id;
+
+        $config = App::make('config'); // Dependency inversion/resolution
+        $connections = $config->get('database.connections');
+        $tenantConnection = $connections['mysql2'];
+        $newConnection = $tenantConnection;
+        $newConnection['database'] = $this->database;
+     
+        App::make('config')->set('database.connections.mysql2', $newConnection);
+
+        DB::statement('CREATE DATABASE '.$this->database );
+
+        Artisan::call('migrate', ['--database' => 'mysql2','--path' => 'database/migrations','--force' => true]);
+
         $this->project= factory(\App\Project::class)->make();   
         $this->company= factory(\App\Company::class)->make();
         $this->industry= factory(\App\Industry::class)->make();
@@ -25,12 +39,15 @@ class projectControllerTest extends TestCase
         $this->contact = factory(App\Contact::class)->make();
     }
 
-    public function test_project_page_display(){
-        //$response = $this->get('/project');
+    public function tearDown(){
+        DB::statement('DROP DATABASE '.$this->database);
+    }
 
+    public function test_project_page_display(){
+    
         $response = $this->actingAs($this->user)->withSession(['token'=>'testing12345'])->get('/project');
         $response->assertViewIs('pages.project');
-       
+    
     }
 
     public function test_load_variables_for_project_creation()
@@ -68,7 +85,7 @@ class projectControllerTest extends TestCase
         $response =$this->call('POST','/project/store',$data);
         $this->assertDatabaseHas('projects',['company_id'=>$this->company->company_id],'mysql2');
         $this->assertDatabaseHas('companies',['company_id'=>$this->company->company_id],'mysql2');
-        $this->assertDatabaseHas('Industires',['name'=>$this->industry->],'mysql2');
+        $this->assertDatabaseHas('Industires',['name'=>$this->industry->name],'mysql2');
         //assert data record exist in database
 
     }
