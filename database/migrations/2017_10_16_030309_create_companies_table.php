@@ -19,7 +19,7 @@ class CreateCompaniesTable extends Migration
             $table->string('company_name');
             $table->string('industry_id');
             $table->string('website');
-            $table->integer('office_num');
+            $table->string('office_num');
             $table->timestamps();
         });
     }

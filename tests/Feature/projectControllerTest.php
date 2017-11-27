@@ -14,6 +14,7 @@ use App;
 
 class projectControllerTest extends TestCase
 {
+   
     public function setUp(){
         parent::setUp();
         
@@ -40,7 +41,7 @@ class projectControllerTest extends TestCase
     }
 
     public function tearDown(){
-        DB::statement('DROP DATABASE '.$this->database);
+       // DB::statement('DROP DATABASE '.$this->database);
     }
 
     public function test_project_page_display(){
@@ -60,13 +61,14 @@ class projectControllerTest extends TestCase
     }
 
 
-    public function test_project_is_stored_with_new_company(){
+    public function test_project_is_stored_with_new_company_entry(){
+       
         //seed the data to be stored
         $data= ['company_name'=>$this->company->company_name,
-                //'company_id'=>$this->company->company_id,
-                'industry'=>$this->industry->name,
+                'company_id'=>$this->company->company_id,
                 'website'=>$this->company->website,
                 'office_number'=>$this->company->office_num,
+                'industry'=>$this->industry->industry,
                 'contact_name'=>$this->contact->contact_name,
                 'contact_number'=>$this->contact->contact_number,
                 'contact_email'=>$this->contact->email,
@@ -81,12 +83,13 @@ class projectControllerTest extends TestCase
                 'tender'=>$this->project->tender,
                 'remark'=>$this->project->remark
         ]; 
-        //post to url 'project/store'
-        $response =$this->call('POST','/project/store',$data);
+          $response = $this->actingAs($this->user)->post('/project',$data);
+          var_dump($response->getContent());
+      
         $this->assertDatabaseHas('projects',['company_id'=>$this->company->company_id],'mysql2');
         $this->assertDatabaseHas('companies',['company_id'=>$this->company->company_id],'mysql2');
-        $this->assertDatabaseHas('Industires',['name'=>$this->industry->name],'mysql2');
-        //assert data record exist in database
+        $this->assertDatabaseHas('industires',['industry'=>$this->industry->industry],'mysql2');
+      
 
     }
 

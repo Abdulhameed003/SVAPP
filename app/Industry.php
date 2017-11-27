@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Industry extends ConfigureDB
 {
     public $table = 'industries';
-    protected $fillable = ['industy'];
+    protected $fillable = ['industry'];
     protected $connection = 'mysql2';
     //relationship
     public function companies(){

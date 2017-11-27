@@ -58,25 +58,24 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $this->validate($request,rule());
+        $this->validate($request,$this->rule());
         //find or create new industry if not in db
-        $industry = Industry::firstOrCreate(['name'=>$request->industry ]);
+        $industry = Industry::firstOrCreate(['industry'=>$request->industry ]);
 
         //find or create new comapny if not found in the db in case of new company entry
-        $company= $industry->companies()->firstOrCreate(['company_id'=>$request->company_id],
-                    ['company_name'=>$request->company_name],
-                    ['industry_id'=>$industry->id],
-                    ['website'=>$request->website],
-                    ['office_number'=>$request->office_number]);
+        $company= $industry->companies()->firstOrCreate(['company_id'=>$request->company_id,
+                    'industry_id'=>$industry->id,
+                    'company_name'=>$request->company_name,
+                    'website'=>$request->website,
+                    'office_num'=>$request->office_number]);
 
         //if new company is filled save contact attached to that company
-        if($request->exist('contact_name')){
-            $company->contacts()->firstOrCreate(['company_id'=>$request->contact_id],
-                ['contact_name'=>$request->contact_name],
-                ['contact_number'=>$request->contact_number],
-                ['email'=>$request->contact_email],
-                ['designation'=>$request->contact_designation]);
+        if($request->has('contact_name')){
+            $company->contacts()->firstOrCreate(['company_id'=>$request->contact_id,
+                'contact_name'=>$request->contact_name,
+                'contact_number'=>$request->contact_number,
+                'email'=>$request->contact_email,
+                'designation'=>$request->contact_designation]);
         }
 
         //get product id
@@ -97,7 +96,7 @@ class ProjectController extends Controller
             'salesperson_id'=>$salesPerson->salesperson_id
         ]);
 
-        return reditect('/project')->with('success','A new project is added to the list');
+        return 'success';//reditect('/project')->with('success','A new project is added to the list');
     }
 
     /** validates the field related to creating a new project
@@ -105,7 +104,7 @@ class ProjectController extends Controller
      */
     private function rule(){
       return   ['company_name'=>'sometimes|required|string|max:255',
-                //'company_id'=>'sometimes|required|',
+                'company_id'=>'sometimes|required|',
                 'industry'=>'sometimes|required|',
                 'website'=>'sometimes|required|url',
                 'office_number'=>'sometimes|required|numeric',
