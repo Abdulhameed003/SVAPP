@@ -9,7 +9,7 @@ class Project extends ConfigureDB
     public $table = 'projects';
     protected $primaryKey = 'id';
     protected $fillable = ['project_category','company_id','salesperson_id',
-                        'product','value','project_type','sales_stage','status','tender'];
+                        'product','value','project_type','sales_stage','status','tender','remarks','close_at'];
     protected $connection = 'mysql2';
 
     //relationships

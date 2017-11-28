@@ -48,7 +48,7 @@ $factory->define(App\Project::class, function (Faker\Generator $faker) {
         'sales_stage'=>$faker->randomDigit,
         'status'=>$faker->randomDigit,
         'tender'=>$faker->word,
-        'remark'=>$faker->text($max = 50),
+        'remarks'=>$faker->text($max = 50),
         'company_id'=>$faker->ean8,
         'salesperson_id'=>$faker->ean8
     ];
@@ -93,3 +93,10 @@ $factory->define(App\Contact::class, function (Faker\Generator $faker) {
             'designation' => $faker->jobTitle  
         ];
     });
+
+$factory->define(App\Product::class, function(faker\Generator $faker){
+
+    return [
+        'product_name' => $faker->word,
+    ];
+});

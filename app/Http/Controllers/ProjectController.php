@@ -79,10 +79,10 @@ class ProjectController extends Controller
         }
 
         //get product id
-        $product = Product::find($request->product_name);
+        $product = Product::firstOrCreate(['product_name'=>$request->product]);
        
         //get salesperson 
-        $salesPerson = Salesperson::find($request->salesperson_name);
+        $salesPerson = Salesperson::firstOrCreate(['name'=>$request->salesperson_name]);
         $salesPerson->projects()->create([
             'project_category'=>$request->project_category,
             'product'=>$product->id,
@@ -91,7 +91,8 @@ class ProjectController extends Controller
             'sales_stage'=>$request->sales_stage,
             'status'=>$request->status,
             'tender'=>$request->tender,
-            'remark'=>$request->remark,
+            'remarks'=>$request->remark,
+            'close_at'=>null,
             'company_id'=>$company->company_id,
             'salesperson_id'=>$salesPerson->salesperson_id
         ]);
@@ -118,7 +119,7 @@ class ProjectController extends Controller
                 'value'=>'required|numeric',
                 'project_type'=>'required',
                 'sales_stage'=>'required',
-                'Status'=>'required',
+                'status'=>'required',
                 'tender'=>'nullable|string',
                 'remark'=>'nullable|string',
                 'close_date'=>'nullable|date'

@@ -15,11 +15,11 @@ class CreateSalespersonsTable extends Migration
     {
         Schema::create('salespersons', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('saleperson_id')->unique();
+            $table->string('salesperson_id')->unique();
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->integer('phone_num');
+            $table->string('phone_num');
             $table->string('position');
             $table->timestamps();
         });

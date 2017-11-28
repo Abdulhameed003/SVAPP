@@ -36,8 +36,9 @@ class projectControllerTest extends TestCase
         $this->project= factory(\App\Project::class)->make();   
         $this->company= factory(\App\Company::class)->make();
         $this->industry= factory(\App\Industry::class)->make();
-        $this->sales =factory(App\Salesperson::class)->make();
+        $this->sales =factory(App\Salesperson::class)->create(['name'=>'danny']);
         $this->contact = factory(App\Contact::class)->make();
+        $this->product= factory(App\Product::class)->create(['product_name'=>'VPS']); 
     }
 
     public function tearDown(){
@@ -73,15 +74,15 @@ class projectControllerTest extends TestCase
                 'contact_number'=>$this->contact->contact_number,
                 'contact_email'=>$this->contact->email,
                 'contact_designation'=>$this->contact->designation,
-                'salesperson_name'=>$this->sales->name,
+                'salesperson_name'=>'danny',
                 'project_category'=>$this->project->project_category,
-                'product'=>$this->project->product,
+                'product'=>'VPS',
                 'value'=>$this->project->value,
                 'project_type'=>$this->project->project_type,
                 'sales_stage'=>$this->project->sales_stage,
-                'Status'=>$this->project->status,
+                'status'=>$this->project->status,
                 'tender'=>$this->project->tender,
-                'remark'=>$this->project->remark
+                'remark'=>$this->project->remarks
         ]; 
           $response = $this->actingAs($this->user)->post('/project',$data);
           var_dump($response->getContent());
