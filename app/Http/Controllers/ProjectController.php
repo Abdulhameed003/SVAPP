@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use App\Salesperson;
 use App\Company;
+use App\Contact;
 use App\Product;
 use App\Project;
 use App\Industry;
@@ -59,45 +60,51 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,$this->rule());
-        //find or create new industry if not in db
-        $industry = Industry::firstOrCreate(['industry'=>$request->industry ]);
+        try{
+           
+          
+            
+            $industry = $request->has('industry') ? Industry::firstOrCreate(['industry'=>$request->industry ]):null;
 
-        //find or create new comapny if not found in the db in case of new company entry
-        $company= $industry->companies()->firstOrCreate(['company_id'=>$request->company_id,
-                    'industry_id'=>$industry->id,
-                    'company_name'=>$request->company_name,
-                    'website'=>$request->website,
-                    'office_num'=>$request->office_number]);
+            //find or create new comapny if not found in the db in case of new company entry
+            $company= Company::firstOrCreate(['company_id'=>$request->company_id],
+                ['industry_id'=> !is_null($industry) ? $industry->id : '',
+                'company_name'=>$request->company_name,
+                'website'=>$request->website,
+                'office_num'=>$request->office_number]);
 
-        //if new company is filled save contact attached to that company
-        if($request->has('contact_name')){
-            $company->contacts()->firstOrCreate(['company_id'=>$request->contact_id,
-                'contact_name'=>$request->contact_name,
-                'contact_number'=>$request->contact_number,
-                'email'=>$request->contact_email,
-                'designation'=>$request->contact_designation]);
+            if ($request->has('contact_name')){
+                Contact::firstOrCreate(['company_id'=>$company->company_id],
+                    ['contact_name'=>$request->contact_name,
+                    'contact_number'=>$request->contact_number,
+                    'email'=>$request->contact_email,
+                    'designation'=>$request->contact_designation]);
+
+            }
+            //get product id
+            $product = Product::firstOrCreate(['product_name'=>$request->product]);
+            
+            //get salesperson 
+            $salesPerson = Salesperson::firstOrCreate(['name'=>$request->salesperson_name]);
+            $project = Project::create([
+                    'project_category'=>$request->project_category,
+                    'product'=>$product->id,
+                    'value'=>$request->value,
+                    'project_type'=>$request->project_type,
+                    'sales_stage'=>$request->sales_stage,
+                    'status'=>$request->status,
+                    'tender'=>$request->tender,
+                    'remarks'=>$request->remark,
+                    'company_id'=>$company->company_id,
+                    'salesperson_id'=>$salesPerson->salesperson_id
+                ]);
+                return 'success';//reditect('/project')->with('success','A new project is added to the list');
+        }catch(\Exception $e ){
+            return 'failed'.$e->getMessage();
         }
-
-        //get product id
-        $product = Product::firstOrCreate(['product_name'=>$request->product]);
        
-        //get salesperson 
-        $salesPerson = Salesperson::firstOrCreate(['name'=>$request->salesperson_name]);
-        $salesPerson->projects()->create([
-            'project_category'=>$request->project_category,
-            'product'=>$product->id,
-            'value'=>$request->value,
-            'project_type'=>$request->project_type,
-            'sales_stage'=>$request->sales_stage,
-            'status'=>$request->status,
-            'tender'=>$request->tender,
-            'remarks'=>$request->remark,
-            'close_at'=>null,
-            'company_id'=>$company->company_id,
-            'salesperson_id'=>$salesPerson->salesperson_id
-        ]);
-
-        return 'success';//reditect('/project')->with('success','A new project is added to the list');
+    
+      
     }
 
     /** validates the field related to creating a new project

@@ -40,7 +40,7 @@ class ContactController extends Controller
     {
         $rule = ['company_name'=>'required',
                  'contact_name' =>'required',
-                 'contact_number'=>'required|digit:10',
+                 'contact_number'=>'required',
                  'contact_email' =>'required|email',
                  'contact_designation'=>'required'
         ];

@@ -37,7 +37,12 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        
+        Commpany::create(['company_id'=>$request->company_id,
+        'industry_id'=>$industry->id,
+        'company_name'=>$request->company_name,
+        'website'=>$request->website,
+        'office_num'=>$request->office_number]);
+
     }
 
     /**
