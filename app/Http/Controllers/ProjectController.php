@@ -10,6 +10,7 @@ use App\Contact;
 use App\Product;
 use App\Project;
 use App\Industry;
+use App\Deal;
 
 class ProjectController extends Controller
 {
@@ -62,8 +63,6 @@ class ProjectController extends Controller
         $this->validate($request,$this->rule());
         try{
            
-          
-            
             $industry = $request->has('industry') ? Industry::firstOrCreate(['industry'=>$request->industry ]):null;
 
             //find or create new comapny if not found in the db in case of new company entry
@@ -95,12 +94,20 @@ class ProjectController extends Controller
                     'status'=>$request->status,
                     'tender'=>$request->tender,
                     'remarks'=>$request->remark,
+                    'close_at'=>$request->close_at,
                     'company_id'=>$company->company_id,
                     'salesperson_id'=>$salesPerson->salesperson_id
-                ]);
-                return 'success';//reditect('/project')->with('success','A new project is added to the list');
+            ]);
+
+            if($request->has('PO_number')){
+                Deal::firstOrCreate(['po_num'=>$request->PO_number],
+                    ['po_date'=>$request->PO_date,'project_id'=>$project->id]);    
+            }    
+
+            return 'success';//reditect('/project')->with('success','A new project is added to the list');
+
         }catch(\Exception $e ){
-            return 'failed'.$e->getMessage();
+            return 'failed';
         }
        
     
@@ -120,7 +127,7 @@ class ProjectController extends Controller
                 'contact_number'=>'sometimes|required',
                 'contact_email'=>'sometimes|required',
                 'contact_designation'=>'sometimes|nullable|string',
-                'salesperson_name'=>'required',
+                'salesperson_id'=>'required',
                 'project_category'=>'required',
                 'product'=>'required',
                 'value'=>'required|numeric',
@@ -129,7 +136,9 @@ class ProjectController extends Controller
                 'status'=>'required',
                 'tender'=>'nullable|string',
                 'remark'=>'nullable|string',
-                'close_date'=>'nullable|date'
+                'close_date'=>'nullable|string',
+                'PO_number'=>'sometimes|required|string',
+                'PO_date'=>'sometimes|required'
         ];      
     }
 
@@ -154,7 +163,7 @@ class ProjectController extends Controller
     public function edit($id)
     {
         $project = Project::find($id);
-       return view('pages.project')->with('project',$project);
+        return $project;
     }
 
     /**
@@ -166,22 +175,29 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,rules());
+        $this->validate($request,$this->rule());
 
-        $salesPerson = Salesperson::find($request->salesperson_name);
+        $salesPerson = Salesperson::where('salesperson_id',$request->salesperson_id)->first();
 
-        $project = $salesPerson->projects()->where('id',$id)->get();
+        $project = Project::find($id);
+       
         $project->project_category = $request->project_category;
         $project->value =$request->value;
         $project->project_type = $request->project_type;
         $project->sales_stage = $request->sales_stage;
         $project->status = $request->status;
         $project->tender = $request->tender;
-        $project->remark = $request->remark;
+        $project->remarks = $request->remark;
+        $project->close_at = $request->close_at;
         $project->salesperson_id = $salesPerson->salesperson_id;
-        $project->save();
-
-        return redirect('/project')->with('success','Update was successful');
+        
+        if($request->has('PO_number')){
+           $project->deal->po_num = $request->PO_number;
+           $project->deal->po_date = $request->PO_date;
+           $project->deal->project_id = $project->id;
+        }
+        return $result = $project->save() ? $result ='success' : $result = 'failed';
+      
     }
 
     /**

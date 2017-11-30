@@ -39,7 +39,7 @@ $factory->define(App\Tenant::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(App\Project::class, function (Faker\Generator $faker) {
-    
+    static $close_at;
     return [
         'project_category'=>$faker->word,
         'product'=>$faker->randomDigit,

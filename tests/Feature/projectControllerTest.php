@@ -29,17 +29,19 @@ class projectControllerTest extends TestCase
         $newConnection['database'] = $this->database;
      
         App::make('config')->set('database.connections.mysql2', $newConnection);
+
         $this->createDB($this->database);
-        $this->project= factory(\App\Project::class)->make();   
-        $this->company= factory(\App\Company::class)->make(['company_id'=>'22222']);
-        $this->industry= factory(\App\Industry::class)->make();
-        $this->sales =factory(App\Salesperson::class)->create(['name'=>'danny']);
-        $this->contact = factory(App\Contact::class)->make();
-        $this->product= factory(App\Product::class)->create(['product_name'=>'VPS']); 
+
+        // $this->project= factory(\App\Project::class)->make();   
+        // $this->company= factory(\App\Company::class)->make(['company_id'=>'22222']);
+        // $this->industry= factory(\App\Industry::class)->make();
+        // $this->sales =factory(App\Salesperson::class)->create(['name'=>'danny']);
+        // $this->contact = factory(App\Contact::class)->make();
+        // $this->product= factory(App\Product::class)->create(['product_name'=>'VPS']); 
     }
     
     public function tearDown(){
-      // DB::statement('DROP DATABASE '.$this->database);
+      DB::statement('DROP DATABASE '.$this->database);
     }
 
     public function test_project_page_display(){
@@ -49,8 +51,7 @@ class projectControllerTest extends TestCase
     
     }
 
-    public function test_load_variables_for_project_creation()
-    {
+    public function test_load_variables_for_project_creation(){
         $response = $this->actingAs($this->user)->withSession(['token'=>'testing12345'])->get('/project/create');
         $this->assertContains('company',$response->getContent());
         $this->assertContains('industry',$response->getContent());
@@ -59,10 +60,16 @@ class projectControllerTest extends TestCase
     }
 
 
-    public function test_project_is_stored_with_new_company_entry(){
+    public function test_if_project_is_stored_with_new_company_entry(){
        
         //seed the data to be stored
-      
+        $this->project= factory(\App\Project::class)->make();   
+        $this->company= factory(\App\Company::class)->make();
+        $this->industry= factory(\App\Industry::class)->make();
+        $this->contact = factory(App\Contact::class)->make();
+        $this->sales =factory(App\Salesperson::class)->create(['salesperson_id'=>'1234567']);
+        $this->product= factory(App\Product::class)->create(['product_name'=>'VPS']); 
+
         $data= ['company_name'=>$this->company->company_name,
                 'company_id'=>$this->company->company_id,
                 'website'=>$this->company->website,
@@ -72,7 +79,7 @@ class projectControllerTest extends TestCase
                 'contact_number'=>$this->contact->contact_number,
                 'contact_email'=>$this->contact->email,
                 'contact_designation'=>$this->contact->designation,
-                'salesperson_name'=>'danny',
+                'salesperson_id'=>$sales->salesperson_id,
                 'project_category'=>$this->project->project_category,
                 'product'=>'VPS',
                 'value'=>$this->project->value,
@@ -80,55 +87,90 @@ class projectControllerTest extends TestCase
                 'sales_stage'=>$this->project->sales_stage,
                 'status'=>$this->project->status,
                 'tender'=>$this->project->tender,
-                'remark'=>$this->project->remarks
+                'remark'=>$this->project->remarks,
+                'close_at'=>date()
         ]; 
           $response = $this->actingAs($this->user)->post('/project',$data);
-          var_dump($response->getContent());
       
         $this->assertDatabaseHas('projects',['company_id'=>$this->company->company_id],'mysql2');
-        // $this->assertDatabaseHas('companies',['company_id'=>$this->company->company_id],'mysql2');
+        $this->assertDatabaseHas('companies',['company_id'=>$this->company->company_id],'mysql2');
         // $this->assertDatabaseHas('industries',['industry'=>$this->industry->industry],'mysql2');
         $this->assertEquals('success',$response->getContent(),'Expected to return success');
       
 
     }
 
-    public function test_project_is_stored_with_existing_company(){
-       
-        $data= [//'company_name'=>$this->company->company_name,
-        'company_id'=>$this->company->company_id,
-        // 'website'=>$this->company->website,
-        // 'office_number'=>$this->company->office_num,
-         //'industry'=>$this->industry->industry,
-        // 'contact_name'=>$this->contact->contact_name,
-        // 'contact_number'=>$this->contact->contact_number,
-        // 'contact_email'=>$this->contact->email,
-        // 'contact_designation'=>$this->contact->designation,
+    public function test_if_project_is_stored_with_existing_company(){
+        $project= factory(\App\Project::class)->make();   
+        $company= factory(\App\Company::class)->create(['company_id'=>'22222']);
+        $sales =factory(App\Salesperson::class)->create(['name'=>'danny']);
+        $product= factory(App\Product::class)->create(['product_name'=>'VPS']); 
+
+        $data= [
+        'company_id'=>$company->company_id,
         'salesperson_name'=>'danny',
-        'project_category'=>$this->project->project_category,
-        'product'=>'brodbrand',
-        'value'=>$this->project->value,
-        'project_type'=>$this->project->project_type,
-        'sales_stage'=>$this->project->sales_stage,
-        'status'=>$this->project->status,
+        'project_category'=>$project->project_category,
+        'product'=>'VPS',
+        'value'=>$project->value,
+        'project_type'=>$project->project_type,
+        'sales_stage'=>$project->sales_stage,
+        'status'=>$project->status,
         'tender'=>'Dis is a new tender',
-        'remark'=>$this->project->remarks
+        'remark'=>$project->remarks,
+        'close_at'=>date()
         ];  
         $response = $this->actingAs($this->user)->post('/project',$data);
-        var_dump($response->getContent());
     
       $this->assertDatabaseHas('projects',['tender'=>'Dis is a new tender'],'mysql2');
-    //   $this->assertDatabaseHas('companies',['company_id'=>$this->company->company_id],'mysql2');
-    //   $this->assertDatabaseHas('industries',['industry'=>$this->industry->industry],'mysql2');
-      $response->assertEquals('success',$response->getContent(),'Expected to return success');
+      $this->assertDatabaseHas('projects',['company_id'=>$company->company_id],'mysql2');
+      $this->assertEquals('success',$response->getContent(),'Expected to return success');
     }
+
+    public function test_if_project_is_created_as_deal(){
+        
+    }
+
+    public function test_if_edit_returns_record(){
+        $project= factory(\App\Project::class)->create();   
+
+        $response = $this->actingAs($this->user)->get(route('project.edit',['id'=>$project->id]));
+        var_dump($response->getContent());
+        $response->assertStatus(200);
+        $this->assertContains('project',$response->getContent());
+
+    }
+
+    public function test_if_edited_project_is_updated(){
+        $sales= factory(\App\Salesperson::class)->create();
+        $project= factory(\App\Project::class)->create();   
+        
+        $data = [
+            'salesperson_id'=>$sales->salesperson_id,
+            'project_category'=>$project->project_category,
+            'product'=>'VPS',
+            'value'=>$project->value,
+            'project_type'=>$project->project_type,
+            'sales_stage'=>'70',
+            'status'=>'pending',
+            'tender'=>$project->tender,
+            'remark'=>'This is an update to the exixting project',
+            'close_at'=>date('d-m-Y')
+        ];
+
+        $response = $this->actingAs($this->user)->put('/project/'.$project->id,$data);
+        var_dump($response->getContent());
+        
+        $this->assertDatabaseHas('projects',['sales_stage'=>'70'],'mysql2');
+        $this->assertDatabaseHas('projects',['status'=>'pending'],'mysql2');
+        $this->assertDatabaseHas('projects',['remarks'=>'This is an update to the exixting project'],'mysql2');
+    }
+
 
     private function createDB($database){
         $query = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME =  ?";
-        $db = DB::select($query, [$this->database]);
+        $db = DB::select($query, [$database]);
         if(empty($db)){
-            DB::statement('CREATE DATABASE '.$this->database );
-           // Artisan::call('migrate', ['--database' => 'mysql2','--path' => 'database/migrations','--force' => true]);
+            DB::statement('CREATE DATABASE '.$database );
         }
         Artisan::call('migrate', ['--database' => 'mysql2','--path' => 'database/migrations','--force' => true]);
     }
@@ -137,8 +179,8 @@ class projectControllerTest extends TestCase
         $this->project= factory(\App\Project::class)->make();   
         $this->company= factory(\App\Company::class)->make(['company_id'=>'22222']);
         $this->industry= factory(\App\Industry::class)->make();
-        $this->sales =factory(App\Salesperson::class)->create(['name'=>'danny']);
         $this->contact = factory(App\Contact::class)->make();
+        $this->sales =factory(App\Salesperson::class)->create(['name'=>'danny']);
         $this->product= factory(App\Product::class)->create(['product_name'=>'VPS']); 
     }
 }
