@@ -100,3 +100,12 @@ $factory->define(App\Product::class, function(faker\Generator $faker){
         'product_name' => $faker->word,
     ];
 });
+
+$factory->define(App\Deal::class, function(faker\Generator $faker){
+    
+        return [
+            'project_id'=>$faker->randomDigit,
+            'po_num' => $faker->ean8,
+            'po_date'=>$faker->date($format ='d-m-Y', $max ='now'),
+        ];
+    });

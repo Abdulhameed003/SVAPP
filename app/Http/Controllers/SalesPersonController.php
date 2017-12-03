@@ -59,7 +59,7 @@ class SalesPersonController extends Controller
                                    ['phone_num'=>$request->salesperson_number],
                                    ['position'=>$request->salesperson_position]
         );
-        $fullname = explode(' ',$request,2);
+        $fullname = explode(' ',$request->salesperson_name,2);
 
         //creates login record for new salesperson.
         $saleperson->user()->firstOrCreate(['email' => $request->email],

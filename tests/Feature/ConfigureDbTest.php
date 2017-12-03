@@ -34,11 +34,10 @@ class ConfigureDbTest extends TestCase
     }
      
     public function test_ConfigureDBConnection(){
-        $connection = Config::get('database.connection.mysql2');
-        $this->assertEquals('',$connection['database']);
-        $connection['database'] = 'NewDB';
-        Config::set('database.connection.mysql2',$connection);
-        $this->assertEquals('NewDB',$connection['database']);
-
+        $tenantDB = config('database.connections.mysql2');
+        $this->assertEquals('',$tenantDB['database']);
+        $tenantDB['database'] = 'NewDB';
+        config(['database.connections.mysql2'=>$tenantDB]);
+        $this->assertEquals('NewDB',$tenantDB['database']);
     }
 }

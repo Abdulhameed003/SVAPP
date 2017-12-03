@@ -84,7 +84,7 @@ class ProjectController extends Controller
             $product = Product::firstOrCreate(['product_name'=>$request->product]);
             
             //get salesperson 
-            $salesPerson = Salesperson::firstOrCreate(['name'=>$request->salesperson_name]);
+            $salesPerson = Salesperson::firstOrCreate(['salesperson_id'=>$request->salesperson_id]);
             $project = Project::create([
                     'project_category'=>$request->project_category,
                     'product'=>$product->id,
@@ -143,18 +143,6 @@ class ProjectController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $project = Project::with('company.industy','company.contact','salesperson')->where('id',$id)->get(); 
-        return $project;//view('pages.display_proj')->with('project', $project);
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -175,29 +163,32 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,$this->rule());
+        try{
+            $this->validate($request,$this->rule());
 
-        $salesPerson = Salesperson::where('salesperson_id',$request->salesperson_id)->first();
+            $salesPerson = Salesperson::where('salesperson_id',$request->salesperson_id)->first();
 
-        $project = Project::find($id);
-       
-        $project->project_category = $request->project_category;
-        $project->value =$request->value;
-        $project->project_type = $request->project_type;
-        $project->sales_stage = $request->sales_stage;
-        $project->status = $request->status;
-        $project->tender = $request->tender;
-        $project->remarks = $request->remark;
-        $project->close_at = $request->close_at;
-        $project->salesperson_id = $salesPerson->salesperson_id;
+            $project = Project::find($id);
         
-        if($request->has('PO_number')){
-           $project->deal->po_num = $request->PO_number;
-           $project->deal->po_date = $request->PO_date;
-           $project->deal->project_id = $project->id;
+            $project->project_category = $request->project_category;
+            $project->value =$request->value;
+            $project->project_type = $request->project_type;
+            $project->sales_stage = $request->sales_stage;
+            $project->status = $request->status;
+            $project->tender = $request->tender;
+            $project->remarks = $request->remark;
+            $project->close_at = $request->close_at;
+            $project->salesperson_id = $salesPerson->salesperson_id;
+            
+            if($request->has('PO_number')){
+                Deal::updateOrCreate(['project_id' => $project->id],
+                ['po_num' => $request->PO_number,
+                'po_date' => $request->PO_date]);
+            }
+            return $result = $project->save() ? $result ='success' : $result = 'failed';
+        }catch(\Exception $e){
+            return 'failed';
         }
-        return $result = $project->save() ? $result ='success' : $result = 'failed';
-      
     }
 
     /**
@@ -208,9 +199,14 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
+        try{
         $project = Project::find($id);
+        $project->deal()->where('project_id',$id)->delete();
         $project->delete();
-        return redirect('/project')->with('succes', 'Record has been deleted.');
+        return 'success';
+        }catch(\Exception $e){
+            return 'failed';
+        }
     }
 
 }

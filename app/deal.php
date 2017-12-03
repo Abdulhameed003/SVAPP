@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Deal extends ConfigureDB
 {
     public $table = 'deals';
+    protected $fillable=['project_id','po_num','po_date'];
     protected $connection = 'mysql2';
     //relationships 
 
     public function project() {
-        return $this->belongsTo('App\Project','project_id','id');
+        return $this->belongsTo('App\Project');
     }
 }

@@ -8,6 +8,12 @@ use App\Company;
 class CompanyController extends Controller
 {
     /**
+     * provide authorization control in this controller
+     */
+    public function __construct(){
+        $this->middleware('auth');
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -20,45 +26,6 @@ class CompanyController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        Commpany::create(['company_id'=>$request->company_id,
-        'industry_id'=>$industry->id,
-        'company_name'=>$request->company_name,
-        'website'=>$request->website,
-        'office_num'=>$request->office_number]);
-
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $company = Company::with(['industry','contacts','projects'])->where('id',$id)->get();
-        
-        return view('company_show')->with('company',$company);
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -67,7 +34,7 @@ class CompanyController extends Controller
     public function edit($id)
     {
         $company = Company::find($id);
-        return view('page.company_edit')->with('company',$company);
+        return $company;
     }
 
     /**

@@ -19,7 +19,7 @@ class Project extends ConfigureDB
     }
 
     public function deal(){
-        return $this->hasOne('App\deal','id','project_id');
+        return $this->hasOne('App\Deal');
     }
 
     public function salesperson(){
