@@ -2,7 +2,7 @@
 @section('content')
     <section id="salespersonsection" class="project" ng-class="{visible:showsalesperson}">
         <div>
-            <h1 class="sectiontitle">{{projectTitle}}</h1>
+            <h1 class="sectiontitle">@{{projectTitle}}</h1>
         </div>
         <div class="row">
             <div class="col-md-4 col-md-offset-3">
@@ -49,12 +49,12 @@
                                     <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#4E4EFD;position:relative;top:-3px;"></span>
                                 </a>
                             </div>
-                            {{sperson.No}}
+                            @{{sperson.No}}
                         </td>
-                        <td>{{sperson.name}}</td>
-                        <td>{{sperson.phone}}</td>
-                        <td>{{sperson.email}}</td>
-                        <td>{{sperson.position}}</td>
+                        <td>@{{sperson.name}}</td>
+                        <td>@{{sperson.phone}}</td>
+                        <td>@{{sperson.email}}</td>
+                        <td>@{{sperson.position}}</td>
 
                     </tr>
                 </tbody>
@@ -67,7 +67,7 @@
                         <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
                     </li>
                     <li>
-                        <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
+                        <span id="pagenumbers">Page @{{curPage + 1}} of @{{ numberOfPages() }}</span>
                     </li>
                     <li>
                         <button type="button" class="btn btn-primary" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"

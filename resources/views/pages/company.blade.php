@@ -2,7 +2,7 @@
 @section('content')
     <section id="companysection" class="project" ng-class="{visible:showcomp}">
         <div>
-            <h1 class="sectiontitle">{{projectTitle}}</h1>
+            <h1 class="sectiontitle">@{{projectTitle}}</h1>
         </div>
         <div class="row">
             <div class="col-md-4 col-md-offset-3">
@@ -51,14 +51,14 @@
                                     <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#4E4EFD;position:relative;top:-3px;"></span>
                                 </a>
                             </div>
-                            {{company.No}}
+                            @{{company.No}}
                         </td>
-                        <td>{{company.companyName}}</td>
-                        <td>{{company.contactPerson}}</td>
-                        <td>{{company.website}}</td>
-                        <td>{{company.phone}}</td>
-                        <td>{{company.industry}}</td>
-                        <td>{{company.address}}</td>
+                        <td>@{{company.companyName}}</td>
+                        <td>@{{company.contactPerson}}</td>
+                        <td>@{{company.website}}</td>
+                        <td>@{{company.phone}}</td>
+                        <td>@{{company.industry}}</td>
+                        <td>@{{company.address}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -70,7 +70,7 @@
                         <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
                     </li>
                     <li>
-                        <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
+                        <span id="pagenumbers">Page @{{curPage + 1}} of @{{ numberOfPages() }}</span>
                     </li>
                     <li>
                         <button type="button" class="btn btn-primary" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"

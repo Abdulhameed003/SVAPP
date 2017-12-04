@@ -6,11 +6,9 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Http\Controllers\ProjectController;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\MessageBag;
-use App;
+use Tests\TestSetup;
+
 
 class projectControllerTest extends TestCase
 { 
@@ -19,23 +17,15 @@ class projectControllerTest extends TestCase
     public function setUp(){
         parent::setUp();
         
-        $this->user = factory(\App\User::class)->create(['company_id'=>"12345"]); 
-        $this->database = 'db_'.$this->user->company_id;
+        $this->configEnv = new TestSetup;
 
-        $config = App::make('config'); // Dependency inversion/resolution
-        $connections = $config->get('database.connections');
-        $tenantConnection = $connections['mysql2'];
-        $newConnection = $tenantConnection;
-        $newConnection['database'] = $this->database;
-     
-        App::make('config')->set('database.connections.mysql2', $newConnection);
-
-        $this->createDB($this->database);
+        $this->configEnv->setUpDB();
+        $this->user = $this->configEnv->getUser();
 
     }
     
     public function tearDown(){
-      DB::statement('DROP DATABASE '.$this->database);
+        $this->configEnv->dropDB();
     }
 
     public function test_project_page_display(){
@@ -187,7 +177,7 @@ class projectControllerTest extends TestCase
             'PO_date'=>date('d-m-Y')
         ];
 
-        $response = $this->actingAs($this->user)->put('/project/'.$project->id,$data);
+        $response = $this->actingAs($this->user)->put("/project/{$project->id}",$data);
         
         $this->assertDatabaseHas('projects',['sales_stage'=>'70'],'mysql2');
         $this->assertDatabaseHas('projects',['status'=>'pending'],'mysql2');

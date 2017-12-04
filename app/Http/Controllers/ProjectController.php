@@ -200,10 +200,10 @@ class ProjectController extends Controller
     public function destroy($id)
     {
         try{
-        $project = Project::find($id);
-        $project->deal()->where('project_id',$id)->delete();
-        $project->delete();
-        return 'success';
+            $project = Project::find($id);
+            $project->deal()->where('project_id',$id)->delete();
+            $project->delete();
+            return 'success';
         }catch(\Exception $e){
             return 'failed';
         }

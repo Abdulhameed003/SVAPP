@@ -24,15 +24,7 @@ class SalesPersonController extends Controller
         return view('pages.salesperson')->with('salesperson',$salesperson);        
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -45,9 +37,9 @@ class SalesPersonController extends Controller
         $rules= ['salesperson_name'=>'required|string|max:255',
                  'salesperson_id'=>'required|string|max:255',
                  'salesperson_email'=>'reqired|email|string|max:255',
-                 'salesperson_number'=>'required|digit:11',
+                 'salesperson_number'=>'required|string',
                  'salesperson_position'=>'required|string|max:50',
-                 'Salesperson_password'=>'required|string|max:6'
+                 'Salesperson_password'=>'required|string'
         
                    
         ];
