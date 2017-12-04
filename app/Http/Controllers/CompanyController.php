@@ -22,7 +22,7 @@ class CompanyController extends Controller
     {
         $company = Company::with(['contacts','industry'])->
                         withCount('projects')->orderBy('company_name','asc')->get();
-        return $company;// view('pages.company');
+        return view('pages.company')->with('company',$company);
     }
 
     /**
@@ -46,24 +46,23 @@ class CompanyController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $rule = ['company_name'=>'required',
         'company_id'=>'required',
         'industry_id'=>'required',
         'website'=>'required|url',
-        'office_number'=>'required|numeric'];
+        'office_number'=>'required|string'];
 
         $this->validate($request,$rule);
           
         $company = Company::find($id);
-        $company->company_name = $request->compnay_name;
-        $company->company_id - $request->company_id;
-        $company->industry_id - $request->industry_id;
-        $company->website - $request->website;
-        $company->office_number - $request->office_number;
-        $company->save();
-
-        return redirect('/company')->withCookies('success','Upadte successfully');
-        
+        $company->company_name = $request->company_name;
+        $company->company_id =$request->company_id;
+        $company->industry_id = $request->industry_id;
+        $company->website = $request->website;
+        $company->office_num = $request->office_number;
+       
+        return $result = $company->save()? $result = 'success': $result = 'failed';
 
     }
 
@@ -76,11 +75,16 @@ class CompanyController extends Controller
      */
     public function destroy($id)
     {
-        $company = Company::find($id);
-        $company_name = $company->company_name;
-        $company->projects()->dissociate();
-        $company->contacts()->dissociate();
-        $company->delete();
-        return redirect('/company')->with('success',$company_name.' has been deleted');
+        try{
+            $company = Company::find($id);
+            $company_name = $company->company_name;
+            $company->projects()->where('company_id',$company->company_id)->delete();
+            $company->contacts()->where('company_id',$company->company_id)->delete();
+            $company->delete();
+            return 'success';
+        }catch(\Exception $e){
+
+            return 'failed';
+        }
     }
 }
