@@ -27,7 +27,8 @@ class ContactController extends Controller
      */
     public function create()
     {
-        return view('pages.contact_create');
+        $company = Company::all();
+        return $company;
     }
 
     /**
@@ -60,16 +61,6 @@ class ContactController extends Controller
         
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        
-    }
 
     /**
      * Show the form for editing the specified resource.

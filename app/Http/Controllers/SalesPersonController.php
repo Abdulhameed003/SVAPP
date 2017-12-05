@@ -36,33 +36,36 @@ class SalesPersonController extends Controller
     {
         $rules= ['salesperson_name'=>'required|string|max:255',
                  'salesperson_id'=>'required|string|max:255',
-                 'salesperson_email'=>'reqired|email|string|max:255',
+                 'salesperson_email'=>'required|email|string|max:255',
                  'salesperson_number'=>'required|string',
                  'salesperson_position'=>'required|string|max:50',
                  'Salesperson_password'=>'required|string'
-        
-                   
         ];
-        $this->validate($request,$rules);
-        //creats salesperson in the database
-        $salesperson = Salesperson::firstOrCreate(['saleperson_id'=>$request->salesperson_id],
-                                   ['name'=>$request->salesperson_name],
-                                   ['email'=>$request->salesperson_email],
-                                   ['phone_num'=>$request->salesperson_number],
-                                   ['position'=>$request->salesperson_position]
-        );
-        $fullname = explode(' ',$request->salesperson_name,2);
-
-        //creates login record for new salesperson.
-        $saleperson->user()->firstOrCreate(['email' => $request->email],
-                                    ['first_name' => $fullname[0]],
-                                    ['last_name' => !empty($fullname[1]) ? $fullname[1] : ' '],
-                                    ['password' => bcrypt($request->password)],
-                                    ['company_id' => auth()->User()->company_id],
-                                    ['user_role' => $salesperson->salesperson_position]
-        );
         
-        return redirect('/salesperson')->with('success','record added successfully');
+        $this->validate($request,$rules);
+        try{
+            //creats salesperson in the database
+            $salesperson = Salesperson::firstOrCreate(['salesperson_id'=>$request->salesperson_id],
+                                    ['name'=>$request->salesperson_name,
+                                    'email'=>$request->salesperson_email,
+                                    'phone_num'=>$request->salesperson_number,
+                                    'position'=>$request->salesperson_position]
+            );
+            $fullname = explode(' ',$request->salesperson_name,2);
+
+            //creates login record for new salesperson.
+            $salesperson->user()->firstOrCreate(['email' => $request->salesperson_email],
+                                        ['first_name' => $fullname[0],
+                                        'last_name' => !empty($fullname[1]) ? $fullname[1] : ' ',
+                                        'password' => bcrypt($request->password),
+                                        'company_id' => auth()->User()->company_id,
+                                        'user_role' => $salesperson->position]
+            );
+            
+            return 'success';
+        }catch(\Excetion $e){
+            return 'failed';
+        }
 
     }
 
@@ -88,10 +91,10 @@ class SalesPersonController extends Controller
     public function edit($id)
     {
         $salesperson = Salesperson::find($id);
-        if(auth()->User()->email !== $saleperson->email){
-            return redirect('/salesperson')->with('error','Unauthorized page');
+        if(auth()->User()->email !== $salesperson->email){
+            return 'failed';
         }
-        return view('pages.sales_edit')->with('saleperson',$saleperson);
+        return $salesperson;
 
     }
 
@@ -131,11 +134,18 @@ class SalesPersonController extends Controller
      */
     public function destroy($id)
     {
-        $saleperson = Salesperson::find($id);
-        $salesperson->user()->dissociate();
-        $salesperson->delete();
+        try{            
+            if(auth()->User()->user_role == 'Admin' ){
+                $salesperson = Salesperson::find($id);
+                $salesperson->user()->where('email',$salesperson->email)->delete();
+                $salesperson->delete();
+                return 'success';
+            }else{
+                return 'unauthorized';
+            }
 
-        return redirect('/salesperson')->with('success','Record has been deleted.');
-
+        }catch(\Exception $e){
+            return 'failed';
+        }
     }
 }

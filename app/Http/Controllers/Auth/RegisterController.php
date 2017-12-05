@@ -69,8 +69,7 @@ class RegisterController extends Controller
             'password' => 'required|string|min:6|confirmed',
             'company_id' => 'required|string|unique:tenants',
             'company_name' => 'required|string|max:255',
-            'company_phone' => 'required|string',
-            'user_role' => 'required|string',
+            'company_phone' => 'required|string'
         ]);
     }
 
@@ -84,7 +83,7 @@ class RegisterController extends Controller
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
                 'company_id' => $request->company_id,
-                'user_role' => $request->user_role
+                'user_role' => 'Admin'
             ]);
             return redirect('/login')->with('success','Please login with your new account');
       

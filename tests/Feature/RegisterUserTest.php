@@ -48,7 +48,6 @@ class RegisterUserTest extends TestCase
                 'company_id' => $this->company->company_id,
                 'company_name' => 'qwderf',
                 'company_phone' => '323223',
-                'user_role' => 'admin',
         ];  
 
        $response = $this->call('POST','/register',$data);
@@ -70,7 +69,6 @@ class RegisterUserTest extends TestCase
                 'company_id' => '61219021',
                 'company_name' => 'qwderf',
                 'company_phone' => '323223',
-                'user_role' => 'admin',
          ]; 
 
          $response = $this->call('POST','/register',$data);

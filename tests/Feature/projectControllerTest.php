@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\MessageBag;
 use Tests\TestSetup;
+Use App;
 
 
 class projectControllerTest extends TestCase
@@ -47,11 +48,11 @@ class projectControllerTest extends TestCase
     public function test_if_project_is_stored_with_new_company_entry(){
        
         //seed the data to be stored
-        $project= factory(\App\Project::class)->make();   
-        $company= factory(\App\Company::class)->make();
-        $industry= factory(\App\Industry::class)->make();
+        $project= factory(App\Project::class)->make();   
+        $company= factory(App\Company::class)->make();
+        $industry= factory(App\Industry::class)->make();
         $contact = factory(App\Contact::class)->make();
-        $sales =factory(App\Salesperson::class)->create(['salesperson_id'=>'1234567']);
+        $sales =factory(App\SalesPerson::class)->create(['salesperson_id'=>'1234567']);
         $product= factory(App\Product::class)->create(['product_name'=>'VPS']); 
 
         $data= ['company_name'=>$company->company_name,
@@ -84,9 +85,9 @@ class projectControllerTest extends TestCase
     }
 
     public function test_if_project_is_stored_with_existing_company(){
-        $project= factory(\App\Project::class)->make();   
-        $company= factory(\App\Company::class)->create(['company_id'=>'22222']);
-        $sales =factory(App\Salesperson::class)->create(['salesperson_id'=>'1234567']);
+        $project= factory(App\Project::class)->make();   
+        $company= factory(App\Company::class)->create(['company_id'=>'22222']);
+        $sales =factory(App\SalesPerson::class)->create(['salesperson_id'=>'1234567']);
         $product= factory(App\Product::class)->create(['product_name'=>'VPS']); 
 
         $data= [
@@ -110,12 +111,12 @@ class projectControllerTest extends TestCase
     }
 
     public function test_if_project_is_created_as_deal(){
-        $deal = factory(\App\Deal::class)->make();
-        $project= factory(\App\Project::class)->make();   
-        $company= factory(\App\Company::class)->make();
-        $industry= factory(\App\Industry::class)->make();
+        $deal = factory(App\Deal::class)->make();
+        $project= factory(App\Project::class)->make();   
+        $company= factory(App\Company::class)->make();
+        $industry= factory(App\Industry::class)->make();
         $contact = factory(App\Contact::class)->make();
-        $sales =factory(App\Salesperson::class)->create(['salesperson_id'=>'1234567']);
+        $sales = factory(App\SalesPerson::class)->create(['salesperson_id'=>'1234567']);
         $sproduct= factory(App\Product::class)->create(['product_name'=>'VPS']); 
 
         $data= ['company_name'=>$company->company_name,
@@ -149,7 +150,7 @@ class projectControllerTest extends TestCase
     }
 
     public function test_if_edit_returns_record(){
-        $project= factory(\App\Project::class)->create();   
+        $project= factory(App\Project::class)->create();   
 
         $response = $this->actingAs($this->user)->get(route('project.edit',['id'=>$project->id]));
         $response->assertStatus(200);
@@ -158,9 +159,9 @@ class projectControllerTest extends TestCase
     }
 
     public function test_if_edited_project_is_updated(){
-        $sales= factory(\App\Salesperson::class)->create();
-        $project= factory(\App\Project::class)->create();
-        $deal = factory(\App\Deal::class)->make();  
+        $sales= factory(App\SalesPerson::class)->create();
+        $project= factory(App\Project::class)->create();
+        $deal = factory(App\Deal::class)->make();  
         
         $data = [
             'salesperson_id'=>$sales->salesperson_id,
@@ -186,8 +187,8 @@ class projectControllerTest extends TestCase
     }
 
     public function test_delete_project(){
-        $project = factory(\App\Project::class)->create();
-        $deal = factory(\App\Deal::class)->create(['project_id'=>$project->id]);
+        $project = factory(App\Project::class)->create();
+        $deal = factory(App\Deal::class)->create(['project_id'=>$project->id]);
 
         $response = $this->actingAs($this->user)->delete('/project/'.$project->id);
         $this->assertDatabaseMissing('projects',['id'=>$project->id],'mysql2');

@@ -14,17 +14,15 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     static $password;
-
+    static $user_role;
     return [
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
-        'company_id' => $faker->ean8 ?: function(){ 
-                return factory(\App\Tenant::class)->make()->company_id;
-            },
-        'user_role' => $faker->word,
-       'remember_token' => str_random(10)
+        'company_id' => $faker->ean8, 
+        'user_role' => $user_role ?: $user_role = $faker->jobTitle,
+        'remember_token' => str_random(10)
     ];
 });
 
@@ -54,13 +52,12 @@ $factory->define(App\Project::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Salesperson::class, function (Faker\Generator $faker) {
+$factory->define(App\SalesPerson::class, function (Faker\Generator $faker) {
     static $password;
     return [ 
         'salesperson_id' =>$faker->ean8,
-        'name' => $faker->company,
+        'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'password'=>  $password ?: $password = bcrypt('secret'),
         'phone_num'=> $faker->e164PhoneNumber ,
         'position'=> $faker->jobTitle
     ];
