@@ -84,6 +84,7 @@ $factory->define(App\Company::class, function (Faker\Generator $faker) {
 $factory->define(App\Contact::class, function (Faker\Generator $faker) {
     
         return [
+            'company_id'=>$faker->ean8,
             'contact_name' => $faker->name,
             'contact_number'=>$faker->e164PhoneNumber,
             'email'=>$faker->unique()->safeEmail,

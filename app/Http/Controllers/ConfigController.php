@@ -9,10 +9,11 @@ use App\Product;
 class ConfigController extends Controller
 {
     public function show(){
-        $industry = Industry::orderBy('name','asc')->get();
+        $industry = Industry::orderBy('industry','asc')->get();
         $product = Product::orderBy('product_name','asc')->get();
 
         return response()->json(['industry'=>$industry,'product'=>$product]);
+
     }
     /**
      * stores a product into the system
@@ -25,19 +26,24 @@ class ConfigController extends Controller
                 'industry_name'=>'sometimes|required'];
 
         $this->validate($request,$rule);
-
-        if($request->exist('product_name')){
-            $product = new Product();
-            $product->product_name = $request->product_name;
-            $product->save();
+        try{
+            if($request->has('product')){
+                $product = new Product();
+                $product->product_name = $request->product;
+                $product->save();
+            }
+            if($request->has('industry')){
+                $industry = new Industry();
+                $industry->industry = $request->industry;
+                $industry->save();
+            }
+            return 'success';
+        }catch(Exception $e){
+            return 'failed';
         }
-        if($request->exist('industry_name')){
-            $industry = new Industry();
-            $industry->name = $request->industry_name;
-            $industry->save();
-        }
+        
 
-        return redirect()->back();
+       
     }
 
     public function deleteProduct($id)
@@ -45,7 +51,7 @@ class ConfigController extends Controller
         $product = Product::find($id);
         $product->delete();
         
-        return redirect()->back();
+        return 'success';
 
     }
 
@@ -53,8 +59,7 @@ class ConfigController extends Controller
     {
         $industry = Industry::find($id);
         $industry->delete();
-        
-        return redirect()->back();
+        return 'success';
 
     }
  

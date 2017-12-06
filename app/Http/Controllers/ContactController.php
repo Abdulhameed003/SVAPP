@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Contact;
 use App\Company;
+use Exception;
 
 class ContactController extends Controller
 {
@@ -39,7 +40,7 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        $rule = ['company_name'=>'required',
+        $rule = ['company_id'=>'required',
                  'contact_name' =>'required',
                  'contact_number'=>'required',
                  'contact_email' =>'required|email',
@@ -47,17 +48,21 @@ class ContactController extends Controller
         ];
 
         $this->validate($request, $rules);
+        try{
+            $company = Company::where('company_id',$request->company_id)->first();
+            
+            $company->contacts()->firstOrCreate(['company_id'=> $company->company_id],
+                                ['contact_name'=>$request->contact_name,
+                                'contact_number'=>$request->contact_number,
+                                'email'=>$request->contact_email,
+                                'designation'=>$request->contact_designation]);
+    
+            return 'success';
 
-        $company = Company::find($request->company_name);
-
-        $company->contacts()->create(['company_id'=> $company->company_id,
-                         'contact_name'=>$request->contact_name,
-                         'contact_number'=>$request->contact_number,
-                         'email'=>$request->contact_email,
-                         'designation'=>$request->contact_designation
-        ]);
-
-        return redirect('/contact')-with('success','contact created successfully.');
+        }catch(exception $e){
+            return 'failed';
+        }
+       
         
     }
 
@@ -70,8 +75,8 @@ class ContactController extends Controller
      */
     public function edit($id)
     {
-        $contact = Contact::with('company')->where('id',$id)->get();
-        return view('pages.contact_edit.')->with('contact',$contact);
+        $contact = Contact::with('company')->where('id',$id)->first();
+        return $contact;
     }
 
     /**
@@ -83,27 +88,25 @@ class ContactController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $rule = ['company_name'=>'required',
+        $rule = ['company_id'=>'required',
                 'contact_name' =>'required',
-                'contact_number'=>'required|digit:10',
+                'contact_number'=>'required',
                 'contact_email' =>'required|email',
                 'contact_designation'=>'required'
         ];
 
-        $this->validate($request, $rules);
 
-        $company = Company::find($request->company_name);
+        $this->validate($request, $rule);
 
-        $contact = $company->contacts();
-        $contact->company_id = $company->company_id;
+        $contact = Contact::find($id);
+        $contact->company_id = $request->company_id;
         $contact->contact_name = $request->contact_name;
         $contact->contact_number = $request->contact_number;
         $contact->email = $request->contact_email;
         $contact->designation = $request->contact_designation;
-        $contact->save();
-        
 
-        return redirect('/contact')->with('success','Update successful');
+        return $result = $contact->save()? 'success':'failed';
+        
 
     }
 
@@ -115,10 +118,14 @@ class ContactController extends Controller
      */
     public function destroy($id)
     {
-        $contact =Contact::find($id);
-        $contact_name = $contact->contact_name;
-        $contact->delete();
-        
-        return redirect('/contact')->with('success', $contact_name.'has be deleted.');
+        try{
+            $contact =Contact::find($id);
+            $contact->delete();
+            
+            return 'success';
+        }catch(Exception $e){
+            return 'failed';
+        }
+       
     }
 }

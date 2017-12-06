@@ -37,7 +37,7 @@ class projectControllerTest extends TestCase
     }
 
     public function test_load_variables_for_project_creation(){
-        $response = $this->actingAs($this->user)->withSession(['token'=>'testing12345'])->get('/project/create');
+        $response = $this->actingAs($this->user)->get('/project/create');
         $this->assertContains('company',$response->getContent());
         $this->assertContains('industry',$response->getContent());
         $this->assertContains('product',$response->getContent());

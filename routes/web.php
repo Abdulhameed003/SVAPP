@@ -24,4 +24,9 @@ Route::resource('/project', 'ProjectController');
 Route::resource('/company', 'CompanyController');
 Route::resource('/contact', 'ContactController');
 Route::resource('/salesperson', 'SalesPersonController');
-Route::get('/industry','ConfigController@show');
+Route::prefix('settings')->group(function() {
+    Route::get('/','ConfigController@show')->name('settings.show');
+    Route::post('/add','ConfigController@store')->name('settings.store');
+    Route::delete('/{id}/product','ConfigController@deleteProduct')->name('delete.product');
+    Route::delete('/{id}/industry','ConfigController@deleteIndustry')->name('delete.industry');
+});
