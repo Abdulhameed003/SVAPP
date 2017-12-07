@@ -1,3 +1,9 @@
+body {
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow-x: hidden;
+}
+
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
 #loginleftbox {

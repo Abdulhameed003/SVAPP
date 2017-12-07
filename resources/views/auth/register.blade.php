@@ -1,7 +1,88 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+    <div class="container">
+        <div id="loginleftbox">
+            <img class="img-responsive" src="{{asset('image/registerback.jpg')}}" />
+        </div>
+        <div class="box" style="left:68%;top:5%;">
+            <div>
+                <img id="loginlogo" src="image/logo-salesvision (2).png" />
+            </div>
+            <div class="pagetitle">Register</div>
+            <form name="signupForm" novalidate>
+                <div class="formcontent">
+                    <div class="form-group">
+                        <input type="text" ng-class="{submitting: signupForm.userfname.$error.required && signupForm.userfname.$touched }" ng-model="user.fname"
+                            name="userfname" class="form-control registertext" placeholder="Name" required>
+                        <div class="error">
+                            <div ng-show="signupForm.userfname.$error.required" ng-if="signupForm.userfname.$touched">Can't leave this empty.</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" ng-class="{submitting: signupForm.useremail.$error.email || signupForm.useremail.$error.required && signupForm.useremail.$touched}"
+                            ng-model="user.email" name="useremail" class="form-control registertext" placeholder="Email" required>
+
+                        <div ng-messages="signupForm.useremail.$error" class="error">
+                            <div ng-message="email" ng-if="signupForm.useremail.$touched">Wrong email format.</div>
+                            <div ng-message="required" ng-if="signupForm.useremail.$touched">Can't leave this empty.</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" ng-class="{submitting: signupForm.userphone.$error.required && signupForm.userphone.$touched }" ng-model="user.phone"
+                            name="userphone" class="form-control registertext" ng-pattern="/^[0-9]*$/" placeholder="Phone" required
+                            numbers-only disallow-spaces>
+                        <div class="error">
+                            <div ng-show="signupForm.userphone.$error.required" ng-if="signupForm.userphone.$touched">Can't leave this empty.</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="registerpassword">
+                        <input id="regpass" type="password" ng-class="{submitting: signupForm.userpassword.$error.minlength || signupForm.userpassword.$error.pattern || signupForm.userpassword.$error.required && signupForm.userpassword.$touched}"
+                            name="userpassword" ng-model="user.password" ng-minlength="8" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/"
+                            class="form-control registertext" placeholder="Password" aria-required="true" required popover="Passwords must be at least 8 characters and contain one lower &amp; one uppercase letter, and one non-alpha character (a number or a symbol.)"
+                            popover-placement="bottom" popover-trigger="mouseenter" />
+                        <div ng-messages="signupForm.userpassword.$error" class="error">
+                            <div ng-message="minlength && pattern" ng-if="signupForm.userpassword.$touched">Wrong password format.</div>
+                            <div ng-message="required" ng-if="signupForm.userpassword.$touched">Can't leave this empty.</div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <input id="regconfpass" type="password" ng-class="{submitting: ((signupForm.userpasswordconf.$error.required || signupForm.userpasswordconf.$error.compareTo && user.password)  && signupForm.userpasswordconf.$touched )}"
+                            name="userpasswordconf" ng-model="user.passconf" class="form-control registertext" placeholder="Confirm Password"
+                            compare-to="user.password" required>
+                        <div ng-messages="signupForm.userpasswordconf.$error" class="error">
+                            <div ng-message="required" ng-if="signupForm.userpasswordconf.$touched">Can't leave this empty.</div>
+                            <div ng-message="compareTo" ng-if="signupForm.userpasswordconf.$touched">Passwords do not match! </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" ng-class="{submitting: signupForm.usercompany.$error.required && signupForm.usercompany.$touched }" ng-model="user.ComName"
+                            name="usercompany" class="form-control registertext" placeholder="Company Name" required>
+                        <div class="error">
+                            <div ng-show="signupForm.usercompany.$error.required" ng-if="signupForm.usercompany.$touched">Can't leave this empty.</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" ng-class="{submitting: signupForm.userComID.$error.required && signupForm.userComID.$touched }" ng-model="user.ComID"
+                            name="userComID" class="form-control registertext" placeholder="Company Id" required>
+                        <div class="error">
+                            <div ng-show="signupForm.userComID.$error.required" ng-if="signupForm.userComID.$touched">Can't leave this empty.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" ng-model="register" class="button register" ng-click="postRegisterform(signupForm)">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+<!--<div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
@@ -143,5 +224,5 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
 @endsection

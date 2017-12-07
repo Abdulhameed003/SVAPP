@@ -2,15 +2,15 @@
 @section('content')
     <section id="defaultprojectview" class="project" ng-class="{visible:show}">
         <div>
-            <h1 class="sectiontitle">@{{projectTitle}}</h1>
+            <h1 class="sectiontitle">{{projectTitle}}</h1>
         </div>
         <div class="row">
             <div class="col-md-4 col-md-offset-3">
                 <form action="" class="search-form">
-                    <div class="form-group has-feedback" style="position:relative;left:425px;top:18px;">
+                    <div class="form-group has-feedback" style="position:relative;left:415px;top:20px;">
                         <label for="search" class="sr-only">Search</label>
                         <input type="text" class="form-control" name="search" id="filterText" ng-model="searchData" ng-change="checkLength()" placeholder="Search"
-                            style="font-family:sans-serif">
+                            style="font-family:'Lato', sans-serif">
                         <span class="glyphicon glyphicon-search form-control-feedback"></span>
                     </div>
                 </form>
@@ -27,12 +27,12 @@
                                 <a href="#" ng-click="sort('-No')" class="sortDir" ng-class="{ active: isSorted('-No' ) }">&#x25BC;</a>
                             </th>
 
-                            <th>Company name
+                            <th>Company Name
 
                                 <a href="#" ng-click="sort('companyName')" class="sortDir" ng-class="{ active: isSorted('companyName' ) }">&#x25B2;</a>
                                 <a href="#" ng-click="sort('-companyName')" class="sortDir" ng-class="{ active: isSorted('-companyName' ) }">&#x25BC;</a>
                             </th>
-                            <th ng-if="colContactPerson">Contact person</th>
+                            <th ng-if="colContactPerson">Contact Person</th>
                             <th ng-if="colEmail">Email</th>
                             <th ng-if="colPhone">Phone</th>
                             <th ng-if="colIndustry">Industry</th>
@@ -43,13 +43,13 @@
                             </th>
                             <th ng-if="colType">Type</th>
                             <th ng-if="colCategory">Category</th>
-                            <th ng-if="colStartdate">Start date
+                            <th ng-if="colStartdate">Start Date
                                 <a href="#" ng-click="sort('startDate')" class="sortDir" ng-class="{ active: isSorted('startDate' ) }">&#x25B2;</a>
                                 <a href="#" ng-click="sort('-startDate')" class="sortDir" ng-class="{ active: isSorted('-startDate' ) }">&#x25BC;</a>
                             </th>
-                            <th ng-if="colClosingdate">Closing date</th>
-                            <th ng-if="colSalesstage">Sales stage</th>
-                            <th ng-if="colLastupdate">Last update</th>
+                            <th ng-if="colClosingdate">Closing Date</th>
+                            <th ng-if="colSalesstage">Sales Stage</th>
+                            <th ng-if="colLastupdate">Last Update</th>
                             <th ng-if="colRemarks" style="width:250px;">Remarks</th>
                         </tr>
 
@@ -61,32 +61,32 @@
                                 <div style="float:left;">
                                     <input type="checkbox" name="rowID" class="squaredFour" checklist-model="projecttable.projects" checklist-value="proj.No"
                                         style="position:relative;top:-1px;" />
-                                    <a href="#" ng-click="openEdit('sm',proj)">
-                                        <span class="fa fa-pencil-square-o" style="font-size:19px;color:#4E4EFD ;position:relative;top:-2px;margin-left:3px;" popover="Edit this project"
+                                    <a id="projectrowedit" href="#" ng-click="openEdit('md',proj)">
+                                        <span class="fa fa-pencil-square-o" style="font-size:19px;color:#D32F2F ;position:relative;top:-2px;margin-left:3px;" popover="Edit this project"
                                             popover-trigger="mouseenter" popover-placement="right"></span>
                                     </a>
-                                    <a href="#" ng-click="openDelete('sm',proj)">
-                                        <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#4E4EFD;position:relative;top:-3px;margin-left:3px;"
+                                    <a id="projectrowdelete" href="#" ng-click="openDelete('sm',proj)">
+                                        <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#D32F2F;position:relative;top:-3px;margin-left:3px;"
                                             popover="Delete this project" popover-trigger="mouseenter" popover-placement="right"></span>
                                     </a>
                                 </div>
-                                @{{proj.No}}
+                                {{proj.No}}
                             </td>
 
-                            <td>@{{proj.companyName}}</td>
-                            <td ng-if="colContactPerson">@{{proj.contactPerson}}</td>
-                            <td ng-if="colEmail">@{{proj.email}}</td>
-                            <td ng-if="colPhone">@{{proj.phone}}</td>
-                            <td ng-if="colIndustry">@{{proj.industry}}</td>
-                            <td ng-if="colProduct">@{{proj.product}}</td>
-                            <td ng-if="colValue">@{{proj.value}}</td>
-                            <td ng-if="colType">@{{proj.type}}</td>
-                            <td ng-if="colCategory">@{{proj.category}}</td>
-                            <td ng-if="colStartdate">@{{proj.startDate}}</td>
-                            <td ng-if="colClosingdate">@{{proj.closingDate}}</td>
-                            <td ng-if="colSalesstage">@{{proj.salesStage}}</td>
-                            <td ng-if="colLastupdate">@{{proj.lastUpdate}}</td>
-                            <td ng-if="colRemarks">@{{proj.remarks}}</td>
+                            <td>{{proj.companyName}}</td>
+                            <td ng-if="colContactPerson">{{proj.contactPerson}}</td>
+                            <td ng-if="colEmail">{{proj.email}}</td>
+                            <td ng-if="colPhone">{{proj.phone}}</td>
+                            <td ng-if="colIndustry">{{proj.industry}}</td>
+                            <td ng-if="colProduct">{{proj.product}}</td>
+                            <td ng-if="colValue">{{proj.value}}</td>
+                            <td ng-if="colType">{{proj.type}}</td>
+                            <td ng-if="colCategory">{{proj.category}}</td>
+                            <td ng-if="colStartdate">{{proj.startDate}}</td>
+                            <td ng-if="colClosingdate">{{proj.closingDate}}</td>
+                            <td ng-if="colSalesstage">{{proj.salesStage}}</td>
+                            <td ng-if="colLastupdate">{{proj.lastUpdate}}</td>
+                            <td ng-if="colRemarks">{{proj.remarks}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -96,13 +96,13 @@
                 <div class="pagination pagination-centered" ng-show="rows.length">
                     <ul class="pagination-controle pagination">
                         <li>
-                            <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
+                            <button type="button" class="btn button" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
                         </li>
                         <li>
-                            <span id="pagenumbers">Page @{{curPage + 1}} of @{{ numberOfPages() }}</span>
+                            <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
                         </li>
                         <li>
-                            <button type="button" class="btn btn-primary" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
+                            <button type="button" class="btn button" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
                                 ng-click="curPage = curPage+1">&gt;&gt;</button>
                         </li>
                     </ul>
@@ -122,12 +122,12 @@
                                 <a href="#" ng-click="sort('-No')" class="sortDir" ng-class="{ active: isSorted('-No' ) }">&#x25BC;</a>
                             </th>
 
-                            <th>Company name
+                            <th>Company Name
 
                                 <a href="#" ng-click="sort('companyName')" class="sortDir" ng-class="{ active: isSorted('companyName' ) }">&#x25B2;</a>
                                 <a href="#" ng-click="sort('-companyName')" class="sortDir" ng-class="{ active: isSorted('-companyName' ) }">&#x25BC;</a>
                             </th>
-                            <th ng-if="colContactPerson">Contact person</th>
+                            <th ng-if="colContactPerson">Contact Person</th>
                             <th ng-if="colEmail">Email</th>
                             <th ng-if="colPhone">Phone</th>
                             <th ng-if="colIndustry">Industry</th>
@@ -138,11 +138,11 @@
                             </th>
                             <th ng-if="colType">Type</th>
                             <th ng-if="colCategory">Category</th>
-                            <th ng-if="colStartdate">Start date
+                            <th ng-if="colStartdate">Start Date
                                 <a href="#" ng-click="sort('startDate')" class="sortDir" ng-class="{ active: isSorted('startDate' ) }">&#x25B2;</a>
                                 <a href="#" ng-click="sort('-startDate')" class="sortDir" ng-class="{ active: isSorted('-startDate' ) }">&#x25BC;</a>
                             </th>
-                            <th ng-if="colClosingdate">Closing date</th>
+                            <th ng-if="colClosingdate">Closing Date</th>
                             <th ng-if="colSalesstage">Sales stage</th>
                             <th ng-if="colLastupdate">Last update</th>
                             <th ng-if="colPersonincharge">Person in charge</th>
@@ -160,10 +160,10 @@
                                         <div style="float:left;">
                                             <input type="checkbox" name="rowID" class="squaredFour" style="position:relative;top:-1px;" />
                                             <a href="#">
-                                                <span class="fa fa-pencil-square-o" style="font-size:19px;color:#4E4EFD ;position:relative;top:-2px;"></span>
+                                                <span class="fa fa-pencil-square-o" style="font-size:19px;color:#D32F2F ;position:relative;top:-2px;"></span>
                                             </a>
                                             <a href="#" ng-click="openDelete('sm',proj)">
-                                                <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#4E4EFD;position:relative;top:-3px;"></span>
+                                                <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#D32F2F;position:relative;top:-3px;"></span>
                                             </a>
                                         </div>
                             
@@ -195,13 +195,13 @@
                 <div class="pagination pagination-centered" ng-show="rows.length">
                     <ul class="pagination-controle pagination">
                         <li>
-                            <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
+                            <button type="button" class="btn button" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
                         </li>
                         <li>
-                            <span id="pagenumbers">Page @{{curPage + 1}} of @{{ numberOfPages() }}</span>
+                            <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
                         </li>
                         <li>
-                            <button type="button" class="btn btn-primary" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
+                            <button type="button" class="btn button" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
                                 ng-click="curPage = curPage+1">&gt;&gt;</button>
                         </li>
                     </ul>
@@ -221,12 +221,12 @@
                                 <a href="#" ng-click="sort('-No')" class="sortDir" ng-class="{ active: isSorted('-No' ) }">&#x25BC;</a>
                             </th>
 
-                            <th>Company name
+                            <th>Company Name
 
                                 <a href="#" ng-click="sort('companyName')" class="sortDir" ng-class="{ active: isSorted('companyName' ) }">&#x25B2;</a>
                                 <a href="#" ng-click="sort('-companyName')" class="sortDir" ng-class="{ active: isSorted('-companyName' ) }">&#x25BC;</a>
                             </th>
-                            <th ng-if="colContactPerson">Contact person</th>
+                            <th ng-if="colContactPerson">Contact Person</th>
                             <th ng-if="colEmail">Email</th>
                             <th ng-if="colPhone">Phone</th>
                             <th ng-if="colIndustry">Industry</th>
@@ -237,16 +237,16 @@
                             </th>
                             <th ng-if="colType">Type</th>
                             <th ng-if="colCategory">Category</th>
-                            <th ng-if="colStartdate">Start date
+                            <th ng-if="colStartdate">Start Date
                                 <a href="#" ng-click="sort('startDate')" class="sortDir" ng-class="{ active: isSorted('startDate' ) }">&#x25B2;</a>
                                 <a href="#" ng-click="sort('-startDate')" class="sortDir" ng-class="{ active: isSorted('-startDate' ) }">&#x25BC;</a>
                             </th>
-                            <th ng-if="colClosingdate">Closing date</th>
-                            <th ng-if="colSalesstage">Sales stage</th>
-                            <th ng-if="colLastupdate">Last update</th>
-                            <th ng-if="colPersonincharge">Person in charge</th>
-                            <th ng-if="colPOnum">PO-number</th>
-                            <th ng-if="colPOdate">PO-date</th>
+                            <th ng-if="colClosingdate">Closing Date</th>
+                            <th ng-if="colSalesstage">Sales Stage</th>
+                            <th ng-if="colLastupdate">Last Update</th>
+                            <th ng-if="colPersonincharge">Person in Charge</th>
+                            <th ng-if="colPOnum">PO-Number</th>
+                            <th ng-if="colPOdate">PO-Date</th>
                             <th ng-if="colRemarks">Remarks</th>
                         </tr>
 
@@ -259,10 +259,10 @@
                                         <div style="float:left;">
                                             <input type="checkbox" name="rowID" class="squaredFour" style="position:relative;top:-1px;" />
                                             <a href="#">
-                                                <span class="fa fa-pencil-square-o" style="font-size:19px;color:#4E4EFD ;position:relative;top:-2px;"></span>
+                                                <span class="fa fa-pencil-square-o" style="font-size:19px;color:#D32F2F ;position:relative;top:-2px;"></span>
                                             </a>
                                             <a href="#" ng-click="openDelete('sm',proj)">
-                                                <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#4E4EFD;position:relative;top:-3px;"></span>
+                                                <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#D32F2F;position:relative;top:-3px;"></span>
                                             </a>
                                         </div>
                             
@@ -294,13 +294,13 @@
                 <div class="pagination pagination-centered" ng-show="rows.length">
                     <ul class="pagination-controle pagination">
                         <li>
-                            <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
+                            <button type="button" class="btn button" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
                         </li>
                         <li>
-                            <span id="pagenumbers">Page @{{curPage + 1}} of @{{ numberOfPages() }}</span>
+                            <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
                         </li>
                         <li>
-                            <button type="button" class="btn btn-primary" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
+                            <button type="button" class="btn button" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
                                 ng-click="curPage = curPage+1">&gt;&gt;</button>
                         </li>
                     </ul>
@@ -322,7 +322,7 @@
                                 <a href="#" ng-click="sort('-No')" class="sortDir" ng-class="{ active: isSorted('-No' ) }">&#x25BC;</a>
                             </th>
 
-                            <th>Company name
+                            <th>Company Name
 
                                 <a href="#" ng-click="sort('companyName')" class="sortDir" ng-class="{ active: isSorted('companyName' ) }">&#x25B2;</a>
                                 <a href="#" ng-click="sort('-companyName')" class="sortDir" ng-class="{ active: isSorted('-companyName' ) }">&#x25BC;</a>
@@ -338,13 +338,13 @@
                             </th>
                             <th ng-if="colType">Type</th>
                             <th ng-if="colCategory">Category</th>
-                            <th ng-if="colStartdate">Start date
+                            <th ng-if="colStartdate">Start Date
                                 <a href="#" ng-click="sort('startDate')" class="sortDir" ng-class="{ active: isSorted('startDate' ) }">&#x25B2;</a>
                                 <a href="#" ng-click="sort('-startDate')" class="sortDir" ng-class="{ active: isSorted('-startDate' ) }">&#x25BC;</a>
                             </th>
-                            <th ng-if="colClosingdate">Closing date</th>
-                            <th ng-if="colSalesstage">Sales stage</th>
-                            <th ng-if="colLastupdate">Last update</th>
+                            <th ng-if="colClosingdate">Closing Date</th>
+                            <th ng-if="colSalesstage">Sales Stage</th>
+                            <th ng-if="colLastupdate">Last Update</th>
                             <th ng-if="colRemarks">Remarks</th>
                         </tr>
 
@@ -360,13 +360,13 @@
                 <div class="pagination pagination-centered" ng-show="rows.length">
                     <ul class="pagination-controle pagination">
                         <li>
-                            <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
+                            <button type="button" class="btn button" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
                         </li>
                         <li>
-                            <span id="pagenumbers">Page @{{curPage + 1}} of @{{ numberOfPages() }}</span>
+                            <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
                         </li>
                         <li>
-                            <button type="button" class="btn btn-primary" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
+                            <button type="button" class="btn button" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
                                 ng-click="curPage = curPage+1">&gt;&gt;</button>
                         </li>
                     </ul>
@@ -377,16 +377,16 @@
 
 
 
-        <div class="dropdown" style="position:fixed;top:14.2%; left:1225px;">
+        <div class="dropdown" style="position:relative;top:-25px;left:1200px;">
             <a href="" data-toggle="dropdown" class="dropdown-toggle" popover="Filter of table contents" popover-trigger="mouseenter"
                 popover-placement="bottom" ng-click="resetForm('filterForm')" id="showcontentdropdown">
-                <span class="glyphicon glyphicon-filter" style="font-size:28px;color:#4E4EFD"></span>
+                <span class="glyphicon glyphicon-filter" style="font-size:28px;color:#D32F2F"></span>
             </a>
 
             <div class="dropdown-menu" style="width:330px;height:310px;" id="contentdropdown">
                 <p>Please select the filtering option.</p>
                 <form id="filterForm" name="filterForm">
-                    <div style="position:absolute; top:70px;left:20px;">
+                    <div style="position:relative;top:10px;left:20px;">
                         <input type="checkbox" class="checkbox-default" ng-model="filterForm.deal" ng-click="checkboxRule1('deal')" />
                         <label for="checkbox">Deals</label>
                         <br>
@@ -414,7 +414,7 @@
                             </div>
                         </div>
                     </div>
-                    <div style="position:absolute; top:270px;left:35px;">
+                    <div style="position:absolute;top:270px;left:35px;">
                         <button type="button" class="btn-default btndef hidedropdown1" ng-click="filterContent()">Apply</button>
                         <button type="button" class="btn-default btndef hidedropdown1" ng-click="setDefault()">Show all</button>
                     </div>
@@ -423,10 +423,10 @@
             </div>
         </div>
 
-        <div class="dropdown" style="top:13.8%; left:1270px;">
+        <div class="dropdown" style="position:relative;top:-25px; left:1210px;" id="projectcolumns">
             <a href="#" data-toggle="dropdown" class="dropdown-toggle" popover="Filter of table columns" popover-trigger="mouseenter"
                 popover-placement="bottom" ng-click="resetForm('columnForm'); checkCategory()" id="showcolumndropdown">
-                <i class="fa fa-columns " style="font-size:33px;color:#4E4EFD"></i>
+                <i class="fa fa-columns " style="font-size:33px;color:#D32F2F"></i>
             </a>
             <div class="dropdown-menu" style="width:330px;height:420px;" id="columndropdown">
 
@@ -437,21 +437,21 @@
                         <span ng-repeat="column in columns |limitTo:9:0">
                             <div>
                                 <input type="checkbox" checklist-model="defaulttable.columns" checklist-value="column.id" ng-disabled="column.disabled" />
-                                <label>@{{column.name}}</label>
+                                <label>{{column.name}}</label>
                         </span>
 
                         </div>
                     </div>
 
-                    <div style="position:absolute; top:90px;left:175px;">
+                    <div style="position:absolute;top:90px;left:175px;">
                         <span ng-repeat="column in columns |limitTo:10:9">
                             <div>
                                 <input type="checkbox" checklist-model="defaulttable.columns" checklist-value="column.id" ng-disabled="column.disabled" />
-                                <label>@{{column.name}}</label>
+                                <label>{{column.name}}</label>
                         </span>
                         </div>
                     </div>
-                    <div style="position:absolute; top:375px;left:35px;">
+                    <div style="position:absolute;top:375px;left:35px;">
                         <button type="button" class="btn-default btndef hidedropdown2" ng-click="filtertablecolumns(defaulttable.columns.length,defaulttable.columns)">Apply</button>
                         <button type="button" class="btn-default btndef hidedropdown2" ng-click="setTabletoDefault()">Original Format</button>
                     </div>
@@ -460,10 +460,10 @@
             </form>
 
         </div>
-        <div ng-controller="MyControllerModal">
+        <div ng-controller="MyControllerModal" id="projectDelete">
             <a href="#" ng-click="openmultipledelete(projecttable.projects)" popover="Delete multiple projects" popover-trigger="mouseenter"
                 popover-placement="left">
-                <i class="fa fa-trash" style="position:fixed;top:13.5%;left:1320px;font-size:35px;color:#4E4EFD"></i>
+                <i class="fa fa-trash" style="position:relative;top:-60px;left:1290px;font-size:35px;color:#D32F2F"></i>
             </a>
         </div>
 

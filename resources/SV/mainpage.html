@@ -63,8 +63,7 @@
                 </div>
                 <!--not required for now
                 <a href="#" ng-click="opencontact('md')">Add Contact</a>
-
-!-->
+                !-->
                 <a href="#" ng-click="opensalesperson('md')">Add Sales Person</a>
             </div>
         </div>
@@ -866,6 +865,7 @@
             $("#contentdropdown").hide();
         });
     </script>
+    
     <!--not required for now
     <script type="text/ng-template" id="addcontact.html"> 
         <div class="modal-content">
@@ -907,7 +907,7 @@
             </a>
         </div>
     </script>
-!-->
+    !-->
 
     <script type="text/ng-template" id="addsalesperson.html">
         <div class="modal-content">
@@ -976,16 +976,7 @@
          <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
         </a>
         </div>
-     </script>
-
-
-
-
-
-
-
-
-
+    </script>
 
     <script type="text/ng-template" id="delete.html">
      <div class="modal-content">
@@ -1232,9 +1223,11 @@
 
     <script type="text/ng-template" id="dealproject.html">
         <div class="modal-content">
+
             <div class="modal-header" style="height:40px;">
                 <h3>New Deal</h3>
             </div>
+
             <form id="addDeal" name="addDeal" class="form-group">
                 <div class="modal-body" style="overflow-y: auto; max-height:450px;">
                     <h4> Please fill in the form to add new deal.</h4>
@@ -1249,107 +1242,112 @@
                                 <span id="addIcon" class="glyphicon glyphicon-plus-sign" ng-init="showAdd=false, " ng-click="showAdd=!showAdd; addcompany=!addcompany; resetSelect()"></span>
                             </a>
                         </div>
+
                         <div ng-show="showAdd">
-                         <div class="form-group">
-                            <div class="form-inline">
-                                <input class="forInput form-control" type="text" ng-model="addCompanyName" placeholder="Company Name">
-                                <input class="forInput form-control" type="text" placeholder=" Company website">
-                            </div>
-                        </div>
-                        <div class="form-group">
+                            <div class="form-group">
                                 <div class="form-inline">
-                                <input class="forInput form-control" type="text" placeholder="Company Office Number">
-                                <input class="forInput form-control" type="text" placeholder="Company Address">
+                                    <input class="forInput form-control" type="text" ng-model="addCompanyName" placeholder="Company Name">
+                                    <input class="forInput form-control" type="text" placeholder=" Company website">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
+
+                            <div class="form-group">
                                 <div class="form-inline">
-                                <select class="forInput form-control" ng-model="industry">
-                                    <option value="" default disabled selected>Select the Industry</option>
-                                </select>
-                                <input class="forInput form-control" type="text" placeholder="Contact Person Name">
+                                    <input class="forInput form-control" type="text" placeholder="Company Office Number">
+                                    <input class="forInput form-control" type="text" placeholder="Company Address">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
+
+                            <div class="form-group">
+                                    <div class="form-inline">
+                                        <select class="forInput form-control" ng-model="industry">
+                                            <option value="" default disabled selected>Select the Industry</option>
+                                        </select>
+                                        <input class="forInput form-control" type="text" placeholder="Contact Person Name">
+                                    </div>
+                            </div>
+
+                            <div class="form-group">
                                 <div class="form-inline">
-                                <input class="forInput form-control" type="text" placeholder=" Contact Person Email">
-                                <input class="forInput form-control" type="text" placeholder="Contact Person Phone">
+                                    <input class="forInput form-control" type="text" placeholder=" Contact Person Email">
+                                    <input class="forInput form-control" type="text" placeholder="Contact Person Phone">
+                                </div>
                             </div>
-                        </div>
-                           <div>
+
+                            <div>
                                 <input class="forInput form-control" type="text" placeholder="Contact Person Position">
                             </div>
                         </div>
                     </div>
+
                     <div class="SectionBox">
                         <h5>Deal Information:</h5>
                         <div class="form-group">
-                                <div class="form-inline">
-                            <select class="forInput form-control" ng-model="salesPerson">
-                                <option value="" default disabled selected>Select the Person in Charge</option>
-                            </select>
-                            <select class="forInput form-control" ng-model="project.typeID"  ng-options="type.id as type.name for type in types">
-                                    <option value="" default disabled selected>Select the Type</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
                             <div class="form-inline">
-                            <select class="forInput form-control">
-                                <option value="" default disabled selected>Select the Product</option>
-                            </select>
-                            <input class="forInput form-control" type="text" placeholder="Value">
+                                <select class="forInput form-control" ng-model="salesPerson">
+                                    <option value="" default disabled selected>Select the Person in Charge</option>
+                                </select>
+                                <select class="forInput form-control" ng-model="project.typeID"  ng-options="type.id as type.name for type in types">
+                                        <option value="" default disabled selected>Select the Type</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
+                        <div class="form-group">
                             <div class="form-inline">
-                            <input class="forInput form-control" type="text" placeholder="Sales Stage in Percentage">
-                            <input class="forInput form-control" id="ponumber" type="text" placeholder="PO-Number">
-        
+                                <select class="forInput form-control">
+                                    <option value="" default disabled selected>Select the Product</option>
+                                </select>
+                                <input class="forInput form-control" type="text" placeholder="Value">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-inline">
+                                <input class="forInput form-control" type="text" placeholder="Sales Stage in Percentage">
+                                <input class="forInput form-control" id="ponumber" type="text" placeholder="PO-Number">
                             </div>
                         </div>
                         <div id="sub-left">
-                             <textarea class="forInput form-control" wrap="soft" rows="6"  type="text" size="255" placeholder="Remarks" /> 
+                                <textarea class="forInput form-control" wrap="soft" rows="6"  type="text" size="255" placeholder="Remarks" /> 
                         </div>
-                     <div id="sub-right">
-                        <div class="datepicker modaldate" date-format="dd/MM/yyyy">
-                            <input class="forInput modaldatepicker form-control form-group" ng-model="POdate" type="text" placeholder="PO-Date">
-                            <i class="fa fa-calendar fafaPosititionondatepicker"></i>
-                            </input>
+                        <div id="sub-right">
+                            <div class="datepicker modaldate" date-format="dd/MM/yyyy">
+                                <input class="forInput modaldatepicker form-control form-group" ng-model="POdate" type="text" placeholder="PO-Date">
+                                <i class="fa fa-calendar fafaPosititionondatepicker"></i>
+                                </input>
+                            </div>
                         </div>
-                    </div>
-                    <div id="sub-right">
-                        <div class="datepicker modaldate" date-format="dd/MM/yyyy">
-                            <input class="forInput modaldatepicker form-control form-group" ng-model="leadstartdate" type="text" placeholder="Start Date">
-                            <i class="fa fa-calendar fafaPosititionondatepicker"></i>
-                            </input>
+
+                        <div id="sub-right">
+                            <div class="datepicker modaldate" date-format="dd/MM/yyyy">
+                                <input class="forInput modaldatepicker form-control form-group" ng-model="leadstartdate" type="text" placeholder="Start Date">
+                                <i class="fa fa-calendar fafaPosititionondatepicker"></i>
+                                </input>
+                            </div>
                         </div>
-                    </div>
-                    <div id="sub-right">
-                        <div class="datepicker modaldate" date-format="dd/MM/yyyy">
-                            <input class="forInput modaldatepicker form-control form-group" ng-model="leadenddate" type="text" placeholder="End Date">
-                            <i class="fa fa-calendar fafaPosititionondatepicker"></i>
-                            </input>
+                        
+                        <div id="sub-right">
+                            <div class="datepicker modaldate" date-format="dd/MM/yyyy">
+                                <input class="forInput modaldatepicker form-control form-group" ng-model="leadenddate" type="text" placeholder="End Date">
+                                <i class="fa fa-calendar fafaPosititionondatepicker"></i>
+                                </input>
+                            </div>
                         </div>
-                    </div>
-                    
-           
-                    <div class="clear-both"></div> 
+                        
+            
+                        <div class="clear-both"></div> 
     
                     </div>
                 </div>
-    <div>
+            
                 <div class="modal-footer">
                     <button type="submit" ng-click=close() class="button modalsubmit">Submit</button>
                 </div>
-    
+
                 <a href="#" ng-click=close() style=" position:absolute;top:10px;left:573px;">
                     <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
                 </a>
             </form>
-    
-    
-    
+
         </div>
     </script>
 
@@ -1699,6 +1697,7 @@
             <div class="modal-header" style="height:40px;">
                 <h3>New Lead</h3>
             </div>
+
             <form id="addLead" name="addLead" class="form-group">
                 <div class="modal-body" style="overflow-y: auto; max-height:450px;">
                     <h4> Please fill in the form to add new lead.</h4>
@@ -1785,7 +1784,7 @@
                             </select>
                         </div>
                     </div>
-    <div id="sub-left">
+                 <div id="sub-left">
                     <div class="datepicker modaldate" date-format="dd/MM/yyyy">
                             <input class=" form-group forInput form-control modaldatepicker" ng-model="leadstartdate" type="text" placeholder="Start Date">
                             <i class="fa fa-calendar fafaPosititionondatepicker"></i>
@@ -1793,8 +1792,8 @@
                    </div>
                        
                 </div>
-           <div id="sub-right">
-                   <div   class="datepicker modaldate" date-format="dd/MM/yyyy">
+             <div id="sub-right">
+                     <div   class="datepicker modaldate" date-format="dd/MM/yyyy">
                     <input  class="forInput form-control modaldatepicker" ng-model="leadenddate" type="text" placeholder="End Date">
                    
                     </input>
@@ -1819,7 +1818,7 @@
                 
                     </div>
         
-            </div>
+                 </div>
     
                 <div class="modal-footer">
                     <button type="submit" ng-click=close() class="button modalsubmit">Submit</button>
@@ -1831,10 +1830,7 @@
     
     
             </form>
-    
-    
         </div>
-    
     </script>
 
 
