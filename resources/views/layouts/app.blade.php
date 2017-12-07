@@ -30,16 +30,19 @@
 
 </head>
 <body ng-controller="mainCtrl">
-    
-        @include('inc/navbar')
-        @yield('content')
-  
+   
+    <div>
+        <img id="loginlogo" src="image/logo-salesvision (2).png" />
+    </div>
+
+    @include('inc/navbar')
+    @yield('content')
+   
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
-
+    <script src="{{asset('js/app.js') }}"></script>
     <script src="{{asset('js/angular.min.js')}}"></script>
-    <script src="js/angular-datepicker.js"></script>
+    <script src="{{asset('js/angular-datepicker.js')}}"></script>
     <script src="{{asset('js/ui-bootstrap-tpls-0.14.3.min.js')}}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <script src="{{asset('js/SV1.js')}}"></script>
