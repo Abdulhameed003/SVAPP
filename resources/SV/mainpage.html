@@ -4,37 +4,41 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/angular-datepicker.css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato" />
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/others//bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/style1.css">
     <script src="js/jquery.js"></script>
     <script src="js/angular.min.js"></script>
     <script src="js/ui-bootstrap-tpls-0.14.3.min.js"></script>
     <script src="js/angular-datepicker.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-    <script src="js/SV.js"></script>
+    <script src="js/SV1.js"></script>
     <script src="js/checklist-model.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="js/moment.js"></script>
     <style>
         body {
-            background-image: url("image/mainpage.png");
             background-repeat: no-repeat;
             background-size: cover;
+            overflow-x: hidden;
         }
     </style>
 </head>
 
 <body ng-controller="mainCtrl">
     <div class="container"></div>
-    <nav class="bar" style="height:50px;width:100%;position:fixed; top:3%;left:0%;">
-        <button type="button" class="btn btn-link mainbutton" ng-click="callProject(); setTabletoDefault()" style="position:fixed;top:3%;left:100px;">Projects</button>
-        <button type="button" class="btn btn-link mainbutton" style="position:fixed;top:3%;left:250px;" ng-click="callCompany()">Companies</button>
-        <button type="button" class="btn btn-link mainbutton" style="position:fixed;top:3%;left:400px;" ng-click="callContact()">Contacts</button>
-        <button type="button" class="btn btn-link mainbutton" style="position:fixed;top:3%;left:550px;" ng-click="callSalesperson()">Sales Persons</button>
-        <button type="button" class="btn btn-link mainbutton" style="position:fixed;top:3%;left:700px;">Dashboard</button>
+    <div>
+        <img id="loginlogo" src="image/logo-salesvision (2).png" />
+    </div>
+    <nav class="bar">
+        <button type="button" class="btn btn-link mainbutton" ng-click="callProject(); setTabletoDefault()" style="position:absolute;top:3%;left:100px;">Projects</button>
+        <button type="button" class="btn btn-link mainbutton" style="position:absolute;top:3%;left:250px;" ng-click="callCompany()">Companies</button>
+        <button type="button" class="btn btn-link mainbutton" style="position:absolute;top:3%;left:400px;" ng-click="callContact()">Contacts</button>
+        <button type="button" class="btn btn-link mainbutton" style="position:absolute;top:3%;left:550px;" ng-click="callSalesperson()">Sales Persons</button>
+        <button type="button" class="btn btn-link mainbutton" style="position:absolute;top:3%;left:700px;">Dashboard</button>
         <div class="dropdown navdropdown" style="top:3%;left:88%;" ng-controller="MyControllerModal">
             <button type="button" class="btn btn-link mainbutton1" id="usernamebtn">Username</button>
             <div class="dropdown-content">
@@ -43,7 +47,7 @@
             </div>
         </div>
 
-        <div class="dropdown navdropdown" style=" top:3%;left:84.3%;">
+        <div class="dropdown navdropdown" style="top:3%;left:84.3%;">
             <button class="btn-link mainbutton1 barIcon">
                 <span class="glyphicon glyphicon-plus-sign" style="color:white; font-size:20px; padding-top:5px;"></span>
             </button>
@@ -52,18 +56,20 @@
                     <a tabindex="-1" href="#">Add Project</a>
                     <div class="dropdown-content">
 
-                        <a tabindex="-1" href="#" ng-click="openL('sm')">Lead</a>
-                        <a href="#" ng-click="openD('sm')">Deal</a>
+                        <a tabindex="-1" href="#" ng-click="openL('md')">Lead</a>
+                        <a href="#" ng-click="openD('md')">Deal</a>
 
                     </div>
                 </div>
+                <!--not required for now
+                <a href="#" ng-click="opencontact('md')">Add Contact</a>
 
-                <a href="#" ng-click="opencontact('sm')">Add Contact</a>
-                <a href="#" ng-click="opensalesperson('sm')">Add Sales Person</a>
+!-->
+                <a href="#" ng-click="opensalesperson('md')">Add Sales Person</a>
             </div>
         </div>
 
-        <div class="dropdown navdropdown" style="top:3.1%;left:80.5%;" ng-controller="MyControllerModal">
+        <div class="dropdown navdropdown" style="top:3%;left:80.5%;" ng-controller="MyControllerModal">
             <button class="btn-link mainbutton1 barIcon">
                 <span>
                     <img src="image/settings.png" style="height:22px; width:22px;">
@@ -85,10 +91,10 @@
         <div class="row">
             <div class="col-md-4 col-md-offset-3">
                 <form action="" class="search-form">
-                    <div class="form-group has-feedback" style="position:relative;left:425px;top:18px;">
+                    <div class="form-group has-feedback" style="position:relative;left:415px;top:20px;">
                         <label for="search" class="sr-only">Search</label>
                         <input type="text" class="form-control" name="search" id="filterText" ng-model="searchData" ng-change="checkLength()" placeholder="Search"
-                            style="font-family:sans-serif">
+                            style="font-family:'Lato', sans-serif">
                         <span class="glyphicon glyphicon-search form-control-feedback"></span>
                     </div>
                 </form>
@@ -105,12 +111,12 @@
                                 <a href="#" ng-click="sort('-No')" class="sortDir" ng-class="{ active: isSorted('-No' ) }">&#x25BC;</a>
                             </th>
 
-                            <th>Company name
+                            <th>Company Name
 
                                 <a href="#" ng-click="sort('companyName')" class="sortDir" ng-class="{ active: isSorted('companyName' ) }">&#x25B2;</a>
                                 <a href="#" ng-click="sort('-companyName')" class="sortDir" ng-class="{ active: isSorted('-companyName' ) }">&#x25BC;</a>
                             </th>
-                            <th ng-if="colContactPerson">Contact person</th>
+                            <th ng-if="colContactPerson">Contact Person</th>
                             <th ng-if="colEmail">Email</th>
                             <th ng-if="colPhone">Phone</th>
                             <th ng-if="colIndustry">Industry</th>
@@ -121,13 +127,13 @@
                             </th>
                             <th ng-if="colType">Type</th>
                             <th ng-if="colCategory">Category</th>
-                            <th ng-if="colStartdate">Start date
+                            <th ng-if="colStartdate">Start Date
                                 <a href="#" ng-click="sort('startDate')" class="sortDir" ng-class="{ active: isSorted('startDate' ) }">&#x25B2;</a>
                                 <a href="#" ng-click="sort('-startDate')" class="sortDir" ng-class="{ active: isSorted('-startDate' ) }">&#x25BC;</a>
                             </th>
-                            <th ng-if="colClosingdate">Closing date</th>
-                            <th ng-if="colSalesstage">Sales stage</th>
-                            <th ng-if="colLastupdate">Last update</th>
+                            <th ng-if="colClosingdate">Closing Date</th>
+                            <th ng-if="colSalesstage">Sales Stage</th>
+                            <th ng-if="colLastupdate">Last Update</th>
                             <th ng-if="colRemarks" style="width:250px;">Remarks</th>
                         </tr>
 
@@ -139,12 +145,12 @@
                                 <div style="float:left;">
                                     <input type="checkbox" name="rowID" class="squaredFour" checklist-model="projecttable.projects" checklist-value="proj.No"
                                         style="position:relative;top:-1px;" />
-                                    <a href="#" ng-click="openEdit('sm',proj)">
-                                        <span class="fa fa-pencil-square-o" style="font-size:19px;color:#4E4EFD ;position:relative;top:-2px;margin-left:3px;" popover="Edit this project"
+                                    <a id="projectrowedit" href="#" ng-click="openEdit('md',proj)">
+                                        <span class="fa fa-pencil-square-o" style="font-size:19px;color:#D32F2F ;position:relative;top:-2px;margin-left:3px;" popover="Edit this project"
                                             popover-trigger="mouseenter" popover-placement="right"></span>
                                     </a>
-                                    <a href="#" ng-click="openDelete('sm',proj)">
-                                        <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#4E4EFD;position:relative;top:-3px;margin-left:3px;"
+                                    <a id="projectrowdelete" href="#" ng-click="openDelete('sm',proj)">
+                                        <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#D32F2F;position:relative;top:-3px;margin-left:3px;"
                                             popover="Delete this project" popover-trigger="mouseenter" popover-placement="right"></span>
                                     </a>
                                 </div>
@@ -174,13 +180,13 @@
                 <div class="pagination pagination-centered" ng-show="rows.length">
                     <ul class="pagination-controle pagination">
                         <li>
-                            <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
+                            <button type="button" class="btn button" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
                         </li>
                         <li>
                             <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
                         </li>
                         <li>
-                            <button type="button" class="btn btn-primary" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
+                            <button type="button" class="btn button" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
                                 ng-click="curPage = curPage+1">&gt;&gt;</button>
                         </li>
                     </ul>
@@ -200,12 +206,12 @@
                                 <a href="#" ng-click="sort('-No')" class="sortDir" ng-class="{ active: isSorted('-No' ) }">&#x25BC;</a>
                             </th>
 
-                            <th>Company name
+                            <th>Company Name
 
                                 <a href="#" ng-click="sort('companyName')" class="sortDir" ng-class="{ active: isSorted('companyName' ) }">&#x25B2;</a>
                                 <a href="#" ng-click="sort('-companyName')" class="sortDir" ng-class="{ active: isSorted('-companyName' ) }">&#x25BC;</a>
                             </th>
-                            <th ng-if="colContactPerson">Contact person</th>
+                            <th ng-if="colContactPerson">Contact Person</th>
                             <th ng-if="colEmail">Email</th>
                             <th ng-if="colPhone">Phone</th>
                             <th ng-if="colIndustry">Industry</th>
@@ -216,11 +222,11 @@
                             </th>
                             <th ng-if="colType">Type</th>
                             <th ng-if="colCategory">Category</th>
-                            <th ng-if="colStartdate">Start date
+                            <th ng-if="colStartdate">Start Date
                                 <a href="#" ng-click="sort('startDate')" class="sortDir" ng-class="{ active: isSorted('startDate' ) }">&#x25B2;</a>
                                 <a href="#" ng-click="sort('-startDate')" class="sortDir" ng-class="{ active: isSorted('-startDate' ) }">&#x25BC;</a>
                             </th>
-                            <th ng-if="colClosingdate">Closing date</th>
+                            <th ng-if="colClosingdate">Closing Date</th>
                             <th ng-if="colSalesstage">Sales stage</th>
                             <th ng-if="colLastupdate">Last update</th>
                             <th ng-if="colPersonincharge">Person in charge</th>
@@ -238,10 +244,10 @@
                                         <div style="float:left;">
                                             <input type="checkbox" name="rowID" class="squaredFour" style="position:relative;top:-1px;" />
                                             <a href="#">
-                                                <span class="fa fa-pencil-square-o" style="font-size:19px;color:#4E4EFD ;position:relative;top:-2px;"></span>
+                                                <span class="fa fa-pencil-square-o" style="font-size:19px;color:#D32F2F ;position:relative;top:-2px;"></span>
                                             </a>
                                             <a href="#" ng-click="openDelete('sm',proj)">
-                                                <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#4E4EFD;position:relative;top:-3px;"></span>
+                                                <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#D32F2F;position:relative;top:-3px;"></span>
                                             </a>
                                         </div>
                             
@@ -273,13 +279,13 @@
                 <div class="pagination pagination-centered" ng-show="rows.length">
                     <ul class="pagination-controle pagination">
                         <li>
-                            <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
+                            <button type="button" class="btn button" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
                         </li>
                         <li>
                             <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
                         </li>
                         <li>
-                            <button type="button" class="btn btn-primary" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
+                            <button type="button" class="btn button" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
                                 ng-click="curPage = curPage+1">&gt;&gt;</button>
                         </li>
                     </ul>
@@ -299,12 +305,12 @@
                                 <a href="#" ng-click="sort('-No')" class="sortDir" ng-class="{ active: isSorted('-No' ) }">&#x25BC;</a>
                             </th>
 
-                            <th>Company name
+                            <th>Company Name
 
                                 <a href="#" ng-click="sort('companyName')" class="sortDir" ng-class="{ active: isSorted('companyName' ) }">&#x25B2;</a>
                                 <a href="#" ng-click="sort('-companyName')" class="sortDir" ng-class="{ active: isSorted('-companyName' ) }">&#x25BC;</a>
                             </th>
-                            <th ng-if="colContactPerson">Contact person</th>
+                            <th ng-if="colContactPerson">Contact Person</th>
                             <th ng-if="colEmail">Email</th>
                             <th ng-if="colPhone">Phone</th>
                             <th ng-if="colIndustry">Industry</th>
@@ -315,16 +321,16 @@
                             </th>
                             <th ng-if="colType">Type</th>
                             <th ng-if="colCategory">Category</th>
-                            <th ng-if="colStartdate">Start date
+                            <th ng-if="colStartdate">Start Date
                                 <a href="#" ng-click="sort('startDate')" class="sortDir" ng-class="{ active: isSorted('startDate' ) }">&#x25B2;</a>
                                 <a href="#" ng-click="sort('-startDate')" class="sortDir" ng-class="{ active: isSorted('-startDate' ) }">&#x25BC;</a>
                             </th>
-                            <th ng-if="colClosingdate">Closing date</th>
-                            <th ng-if="colSalesstage">Sales stage</th>
-                            <th ng-if="colLastupdate">Last update</th>
-                            <th ng-if="colPersonincharge">Person in charge</th>
-                            <th ng-if="colPOnum">PO-number</th>
-                            <th ng-if="colPOdate">PO-date</th>
+                            <th ng-if="colClosingdate">Closing Date</th>
+                            <th ng-if="colSalesstage">Sales Stage</th>
+                            <th ng-if="colLastupdate">Last Update</th>
+                            <th ng-if="colPersonincharge">Person in Charge</th>
+                            <th ng-if="colPOnum">PO-Number</th>
+                            <th ng-if="colPOdate">PO-Date</th>
                             <th ng-if="colRemarks">Remarks</th>
                         </tr>
 
@@ -337,10 +343,10 @@
                                         <div style="float:left;">
                                             <input type="checkbox" name="rowID" class="squaredFour" style="position:relative;top:-1px;" />
                                             <a href="#">
-                                                <span class="fa fa-pencil-square-o" style="font-size:19px;color:#4E4EFD ;position:relative;top:-2px;"></span>
+                                                <span class="fa fa-pencil-square-o" style="font-size:19px;color:#D32F2F ;position:relative;top:-2px;"></span>
                                             </a>
                                             <a href="#" ng-click="openDelete('sm',proj)">
-                                                <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#4E4EFD;position:relative;top:-3px;"></span>
+                                                <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#D32F2F;position:relative;top:-3px;"></span>
                                             </a>
                                         </div>
                             
@@ -372,13 +378,13 @@
                 <div class="pagination pagination-centered" ng-show="rows.length">
                     <ul class="pagination-controle pagination">
                         <li>
-                            <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
+                            <button type="button" class="btn button" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
                         </li>
                         <li>
                             <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
                         </li>
                         <li>
-                            <button type="button" class="btn btn-primary" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
+                            <button type="button" class="btn button" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
                                 ng-click="curPage = curPage+1">&gt;&gt;</button>
                         </li>
                     </ul>
@@ -400,7 +406,7 @@
                                 <a href="#" ng-click="sort('-No')" class="sortDir" ng-class="{ active: isSorted('-No' ) }">&#x25BC;</a>
                             </th>
 
-                            <th>Company name
+                            <th>Company Name
 
                                 <a href="#" ng-click="sort('companyName')" class="sortDir" ng-class="{ active: isSorted('companyName' ) }">&#x25B2;</a>
                                 <a href="#" ng-click="sort('-companyName')" class="sortDir" ng-class="{ active: isSorted('-companyName' ) }">&#x25BC;</a>
@@ -416,13 +422,13 @@
                             </th>
                             <th ng-if="colType">Type</th>
                             <th ng-if="colCategory">Category</th>
-                            <th ng-if="colStartdate">Start date
+                            <th ng-if="colStartdate">Start Date
                                 <a href="#" ng-click="sort('startDate')" class="sortDir" ng-class="{ active: isSorted('startDate' ) }">&#x25B2;</a>
                                 <a href="#" ng-click="sort('-startDate')" class="sortDir" ng-class="{ active: isSorted('-startDate' ) }">&#x25BC;</a>
                             </th>
-                            <th ng-if="colClosingdate">Closing date</th>
-                            <th ng-if="colSalesstage">Sales stage</th>
-                            <th ng-if="colLastupdate">Last update</th>
+                            <th ng-if="colClosingdate">Closing Date</th>
+                            <th ng-if="colSalesstage">Sales Stage</th>
+                            <th ng-if="colLastupdate">Last Update</th>
                             <th ng-if="colRemarks">Remarks</th>
                         </tr>
 
@@ -438,13 +444,13 @@
                 <div class="pagination pagination-centered" ng-show="rows.length">
                     <ul class="pagination-controle pagination">
                         <li>
-                            <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
+                            <button type="button" class="btn button" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
                         </li>
                         <li>
                             <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
                         </li>
                         <li>
-                            <button type="button" class="btn btn-primary" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
+                            <button type="button" class="btn button" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
                                 ng-click="curPage = curPage+1">&gt;&gt;</button>
                         </li>
                     </ul>
@@ -455,16 +461,16 @@
 
 
 
-        <div class="dropdown" style="position:fixed;top:14.2%; left:1225px;">
+        <div class="dropdown" style="position:relative;top:-25px;left:1200px;">
             <a href="" data-toggle="dropdown" class="dropdown-toggle" popover="Filter of table contents" popover-trigger="mouseenter"
                 popover-placement="bottom" ng-click="resetForm('filterForm')" id="showcontentdropdown">
-                <span class="glyphicon glyphicon-filter" style="font-size:28px;color:#4E4EFD"></span>
+                <span class="glyphicon glyphicon-filter" style="font-size:28px;color:#D32F2F"></span>
             </a>
 
             <div class="dropdown-menu" style="width:330px;height:310px;" id="contentdropdown">
                 <p>Please select the filtering option.</p>
                 <form id="filterForm" name="filterForm">
-                    <div style="position:absolute; top:70px;left:20px;">
+                    <div style="position:relative;top:10px;left:20px;">
                         <input type="checkbox" class="checkbox-default" ng-model="filterForm.deal" ng-click="checkboxRule1('deal')" />
                         <label for="checkbox">Deals</label>
                         <br>
@@ -492,7 +498,7 @@
                             </div>
                         </div>
                     </div>
-                    <div style="position:absolute; top:270px;left:35px;">
+                    <div style="position:absolute;top:270px;left:35px;">
                         <button type="button" class="btn-default btndef hidedropdown1" ng-click="filterContent()">Apply</button>
                         <button type="button" class="btn-default btndef hidedropdown1" ng-click="setDefault()">Show all</button>
                     </div>
@@ -501,10 +507,10 @@
             </div>
         </div>
 
-        <div class="dropdown" style="top:13.8%; left:1270px;">
+        <div class="dropdown" style="position:relative;top:-25px; left:1210px;" id="projectcolumns">
             <a href="#" data-toggle="dropdown" class="dropdown-toggle" popover="Filter of table columns" popover-trigger="mouseenter"
                 popover-placement="bottom" ng-click="resetForm('columnForm'); checkCategory()" id="showcolumndropdown">
-                <i class="fa fa-columns " style="font-size:33px;color:#4E4EFD"></i>
+                <i class="fa fa-columns " style="font-size:33px;color:#D32F2F"></i>
             </a>
             <div class="dropdown-menu" style="width:330px;height:420px;" id="columndropdown">
 
@@ -521,7 +527,7 @@
                         </div>
                     </div>
 
-                    <div style="position:absolute; top:90px;left:175px;">
+                    <div style="position:absolute;top:90px;left:175px;">
                         <span ng-repeat="column in columns |limitTo:10:9">
                             <div>
                                 <input type="checkbox" checklist-model="defaulttable.columns" checklist-value="column.id" ng-disabled="column.disabled" />
@@ -529,7 +535,7 @@
                         </span>
                         </div>
                     </div>
-                    <div style="position:absolute; top:375px;left:35px;">
+                    <div style="position:absolute;top:375px;left:35px;">
                         <button type="button" class="btn-default btndef hidedropdown2" ng-click="filtertablecolumns(defaulttable.columns.length,defaulttable.columns)">Apply</button>
                         <button type="button" class="btn-default btndef hidedropdown2" ng-click="setTabletoDefault()">Original Format</button>
                     </div>
@@ -538,10 +544,10 @@
             </form>
 
         </div>
-        <div ng-controller="MyControllerModal">
+        <div ng-controller="MyControllerModal" id="projectDelete">
             <a href="#" ng-click="openmultipledelete(projecttable.projects)" popover="Delete multiple projects" popover-trigger="mouseenter"
                 popover-placement="left">
-                <i class="fa fa-trash" style="position:fixed;top:13.5%;left:1320px;font-size:35px;color:#4E4EFD"></i>
+                <i class="fa fa-trash" style="position:relative;top:-60px;left:1290px;font-size:35px;color:#D32F2F"></i>
             </a>
         </div>
 
@@ -555,9 +561,9 @@
         <div class="row">
             <div class="col-md-4 col-md-offset-3">
                 <form action="" class="search-form">
-                    <div class="form-group has-feedback" style="position:relative;left:525px;top:18px;">
+                    <div class="form-group has-feedback" style="position:relative;left:505px;top:18px;">
                         <label for="search" class="sr-only">Search</label>
-                        <input type="text" class="form-control" name="search" id="search" placeholder="Search" ng-model="searchKeyword" style="font-family:sans-serif">
+                        <input type="text" class="form-control" name="search" id="search" placeholder="Search" ng-model="searchKeyword" style="font-family:'lato', sans-serif">
                         <span class="glyphicon glyphicon-search form-control-feedback"></span>
                     </div>
                 </form>
@@ -573,12 +579,12 @@
                             <a href="#" ng-click="sort('-No')" class="sortDir" ng-class="{ active: isSorted('-No' ) }">&#x25BC;</a>
                         </th>
 
-                        <th>Company name
+                        <th>Company Name
 
                             <a href="#" ng-click="sort('companyName')" class="sortDir" ng-class="{ active: isSorted('companyName' ) }">&#x25B2;</a>
                             <a href="#" ng-click="sort('-companyName')" class="sortDir" ng-class="{ active: isSorted('-companyName' ) }">&#x25BC;</a>
                         </th>
-                        <th>Contact person</th>
+                        <th>Contact Person</th>
                         <th>Website</th>
                         <th>Phone</th>
                         <th>Industry</th>
@@ -592,11 +598,13 @@
                             <div style="float:left;">
                                 <input type="checkbox" class="squaredFour" checklist-model="companytable.companylist" checklist-value="company.No" style="position:relative;top:-1px;"
                                 />
-                                <a href="#" ng-click="openEditcomp('sm',company)" popover="Edit this company" popover-trigger="mouseenter" popover-placement="right">
-                                    <span class="fa fa-pencil-square-o" style="font-size:19px;color:#4E4EFD ;position:relative;top:-2px;"></span>
+                                <a id="companyrowedit" href="#" ng-click="openEditcomp('sm',company)">
+                                    <span class="fa fa-pencil-square-o" style="font-size:19px;color:#D32F2F ;position:relative;top:-2px;" popover="Edit this company"
+                                        popover-trigger="mouseenter" popover-placement="right"></span>
                                 </a>
-                                <a href="#" ng-click="openDeletecomp('sm',company)" popover="Delete this company" popover-trigger="mouseenter" popover-placement="right">
-                                    <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#4E4EFD;position:relative;top:-3px;"></span>
+                                <a id="companyrowdelete" href="#" ng-click="openDeletecomp('sm',company)">
+                                    <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#D32F2F;position:relative;top:-3px;" popover="Delete this company"
+                                        popover-trigger="mouseenter" popover-placement="right"></span>
                                 </a>
                             </div>
                             {{company.No}}
@@ -615,22 +623,22 @@
             <div class="pagination pagination-centered" ng-show="rows.length">
                 <ul class="pagination-controle pagination">
                     <li>
-                        <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
+                        <button type="button" class="btn button" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
                     </li>
                     <li>
                         <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
                     </li>
                     <li>
-                        <button type="button" class="btn btn-primary" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
+                        <button type="button" class="btn button" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
                             ng-click="curPage = curPage+1">&gt;&gt;</button>
                     </li>
                 </ul>
             </div>
         </div>
-        <div ng-controller="MyControllerModal">
+        <div ng-controller="MyControllerModal" class="deletinghover">
             <a href="#" ng-click="openmultiplecompanydelete(companytable.companylist)" popover="Delete multiple companies" popover-trigger="mouseenter"
                 popover-placement="left">
-                <i class="fa fa-trash" style="position:fixed;top:13.3%;left:1320px;font-size:35px;color:#4E4EFD"></i>
+                <i class="fa fa-trash" style="position:absolute;top:2.5%;left:1290px;font-size:35px;color:#D32F2F"></i>
             </a>
         </div>
 
@@ -644,9 +652,9 @@
         <div class="row">
             <div class="col-md-4 col-md-offset-3">
                 <form action="" class="search-form">
-                    <div class="form-group has-feedback" style="position:relative;left:525px;top:18px;">
+                    <div class="form-group has-feedback" style="position:relative;left:505px;top:18px;">
                         <label for="search" class="sr-only">Search</label>
-                        <input type="text" class="form-control" name="search" id="search" placeholder="Search" ng-model="searchKeyword" style="font-family:sans-serif">
+                        <input type="text" class="form-control" name="search" id="search" placeholder="Search" ng-model="searchKeyword" style="font-family:'lato', sans-serif">
                         <span class="glyphicon glyphicon-search form-control-feedback"></span>
                     </div>
                 </form>
@@ -685,10 +693,10 @@
                                 <input type="checkbox" class="squaredFour" checklist-model="contacttable.contacts" checklist-value="contact.No" style="position:relative;top:-1px;"
                                 />
                                 <a href="#" ng-click="openEditcont('sm',contact)" popover="Edit this contact" popover-trigger="mouseenter" popover-placement="right">
-                                    <span class="fa fa-pencil-square-o" style="font-size:19px;color:#4E4EFD;position:relative;top:-2px;"></span>
+                                    <span class="fa fa-pencil-square-o" style="font-size:19px;color:#D32F2F;position:relative;top:-2px;"></span>
                                 </a>
                                 <a href="#" ng-click="openDeletecont('sm',contact)" popover="delete this contact" popover-trigger="mouseenter" popover-placement="right">
-                                    <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#4E4EFD;position:relative;top:-3px;"></span>
+                                    <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#D32F2F;position:relative;top:-3px;"></span>
                                 </a>
                             </div>
                             {{contact.No}}
@@ -707,22 +715,22 @@
             <div class="pagination pagination-centered" ng-show="rows.length">
                 <ul class="pagination-controle pagination">
                     <li>
-                        <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
+                        <button type="button" class="btn button" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
                     </li>
                     <li>
                         <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
                     </li>
                     <li>
-                        <button type="button" class="btn btn-primary" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
+                        <button type="button" class="btn button" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
                             ng-click="curPage = curPage+1">&gt;&gt;</button>
                     </li>
                 </ul>
             </div>
         </div>
-        <div ng-controller="MyControllerModal">
+        <div ng-controller="MyControllerModal" class="deletinghover">
             <a href="#" ng-click="openmultiplecontactdelete(contacttable.contacts)" popover="Delete multiple contacts" popover-trigger="mouseenter"
                 popover-placement="left">
-                <i class="fa fa-trash" style="position:fixed;top:13.3%;left:1320px;font-size:35px;color:#4E4EFD"></i>
+                <i class="fa fa-trash" style="position:absolute;top:2.5%;left:1290px;font-size:35px;color:#D32F2F"></i>
             </a>
         </div>
 
@@ -736,16 +744,16 @@
         <div class="row">
             <div class="col-md-4 col-md-offset-3">
                 <form action="" class="search-form">
-                    <div class="form-group has-feedback" style="position:relative;left:525px;top:18px;">
+                    <div class="form-group has-feedback" style="position:relative;left:505px;top:18px;">
                         <label for="search" class="sr-only">Search</label>
-                        <input type="text" class="form-control" name="search" id="search" placeholder="Search" ng-model="searchKeyword" style="font-family:sans-serif">
+                        <input type="text" class="form-control" name="search" id="search" placeholder="Search" ng-model="searchKeyword" style="font-family:'lato', sans-serif">
                         <span class="glyphicon glyphicon-search form-control-feedback"></span>
                     </div>
                 </form>
             </div>
         </div>
         <div class="table-wrapper companiestable" id="companyTable">
-            <table class="table table-hover table-bordered table-responsive">
+            <table class="table table-condensed table-bordered table-striped table-responsive table-hover">
                 <thead>
                     <tr>
 
@@ -762,6 +770,7 @@
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Position</th>
+                        <th>Total Projects</th>
                     </tr>
 
                 </thead>
@@ -772,10 +781,10 @@
                                 <input type="checkbox" class="squaredFour" checklist-model="spersontable.spersonlist" checklist-value="sperson.No" style="position:relative;top:-1px;"
                                 />
                                 <a href="#" ng-click="openEditsperson('sm',sperson)" popover="Edit this sales person" popover-trigger="mouseenter" popover-placement="right">
-                                    <span class="fa fa-pencil-square-o" style="font-size:19px;color:#4E4EFD;position:relative;top:-2px;"></span>
+                                    <span class="fa fa-pencil-square-o" style="font-size:19px;color:#D32F2F;position:relative;top:-2px;"></span>
                                 </a>
                                 <a href="#" ng-click="openDeletesperson('sm',sperson)" popover="Delete this sales person" popover-trigger="mouseenter" popover-placement="right">
-                                    <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#4E4EFD;position:relative;top:-3px;"></span>
+                                    <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#D32F2F;position:relative;top:-3px;"></span>
                                 </a>
                             </div>
                             {{sperson.No}}
@@ -784,6 +793,7 @@
                         <td>{{sperson.phone}}</td>
                         <td>{{sperson.email}}</td>
                         <td>{{sperson.position}}</td>
+                        <td>{{sperson.total}}</td>
 
                     </tr>
                 </tbody>
@@ -793,23 +803,23 @@
             <div class="pagination pagination-centered" ng-show="rows.length">
                 <ul class="pagination-controle pagination">
                     <li>
-                        <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
+                        <button type="button" class="btn button" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
                     </li>
                     <li>
                         <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
                     </li>
                     <li>
-                        <button type="button" class="btn btn-primary" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
+                        <button type="button" class="btn button" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
                             ng-click="curPage = curPage+1">&gt;&gt;</button>
                     </li>
                 </ul>
             </div>
         </div>
         </div>
-        <div ng-controller="MyControllerModal">
+        <div ng-controller="MyControllerModal" id="salespersondelete" class="deletinghover">
             <a href="#" ng-click="openmultiplespersondelete(spersontable.spersonlist)" popover="Delete multiple sales persons" popover-trigger="mouseenter"
                 popover-placement="left">
-                <i class="fa fa-trash" style="position:fixed;top:13.3%;left:1320px;font-size:35px;color:#4E4EFD"></i>
+                <i class="fa fa-trash" style="position:absolute;top:2.5%;left:1290px;font-size:35px;color:#D32F2F"></i>
             </a>
         </div>
 
@@ -856,32 +866,33 @@
             $("#contentdropdown").hide();
         });
     </script>
-
+    <!--not required for now
     <script type="text/ng-template" id="addcontact.html"> 
         <div class="modal-content">
             <div class="modal-header" style="height:40px;">
-                <h3>New contact</h3>
+                <h3>New Contact</h3>
             </div>
-            <form>
+            <form id="addContact" name="addContact">
         
                 <div class="modal-body">
                     <h4> Pleas fill the form to add new contact.</h4>
                     <div class="SectionBox">
-                        <div class="spacinga">
+                        <div class="form-group spacinga">
+                            <div class="form-inline">
                             <select class="forInput form-control" ng-model="item.companyID"  ng-options="company.id as company.name for company in companies">
-                                <option value="" default disabled selected>Select the company</option>
+                                <option value="" default disabled selected>Select the Company</option>
                             </select>
-                        </div>
-                        <div class="spacing">
                             <input class="forInput form-control" type="text" placeholder="Name">
                         </div>
-                        <div class="spacing">
+                    </div>
+
+                    <div class="form-group">
+                            <div class="form-inline">
                             <input class="forInput form-control" type="text" placeholder="Email">
+                            <input class="forInput form-control" type="text" placeholder="Phone">
                         </div>
-                        <div class="spacing">
-                            <input class="forInput form-control" type="text" placeholder="phone">
-                        </div>
-                        <div class="spacing">
+                    </div>
+                        <div >
                             <input class="forInput form-control" type="text" placeholder="Position">
                         </div>
         
@@ -891,41 +902,42 @@
                     <button type="submit" ng-click=close() class="button modalsubmit">Submit</button>
                 </div>
             </form>
-            <a href="#" ng-click=close() style=" position:fixed;top:10px;left:273px;">
+            <a href="#" ng-click=close() style=" position:absolute;top:10px;left:573px;">
                 <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
             </a>
         </div>
     </script>
+!-->
 
     <script type="text/ng-template" id="addsalesperson.html">
         <div class="modal-content">
-        <div class="modal-header" >
+        <div class="modal-header"  style="height:40px;">
             <h3>New sales person</h3>
         </div>
-        <form>
+        <form id="addSalespersonform" name="addSalespersonform">
             <div class="modal-body">
-                    <h4> Pleas fill the form to add new sales person.</h4>
+                    <h4> Please fill in the form to add new sales person.</h4>
              <div class="SectionBox">   
-                <div class="spacinga">
+                    <div class="form-group spacinga">
+                      <div class="form-inline">
                     <input class="forInput form-control" type="text" placeholder="Name">
-                </div>
-                <div class="spacing">
                     <input class="forInput form-control" type="text" placeholder="Id">
                 </div>
-                <div class="spacing">
+            </div>
+            <div class="form-group">
+                    <div class="form-inline">
                     <input class="forInput form-control" type="text" placeholder="Email">
+                    <input class="forInput form-control" type="text" placeholder="Phone">
                 </div>
-                <div class="spacing">
-                    <input class="forInput form-control" type="text" placeholder="phone">
-                </div>
-                <div class="spacing">
+            </div>
+            <div class="form-group">
+                    <div class="form-inline">
                     <input class="forInput form-control" type="text" placeholder="Position">
-                </div>
-                <div class="spacing">
                     <input class="forInput form-control" type="password" placeholder="Password">
                 </div>
-                <div class="spacing">
-                    <input class="forInput form-control" type="password" placeholder="Confirm password">
+            </div>
+                <div style="margin-left:270px;">
+                    <input class="forInput form-control" type="password" placeholder="Confirm Password" >
                 </div>
             </div>
             </div>
@@ -933,7 +945,7 @@
                 <button type="submit" ng-click=close() class="button modalsubmit">Submit</button>
             </div>
         </form>
-        <a href="#" ng-click=close() style=" position:fixed;top:10px;left:273px;">
+        <a href="#" ng-click=close() style=" position:absolute;top:10px;left:573px;">
             <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
         </a>
         </div>
@@ -946,18 +958,21 @@
         </div>
         <form class="form-group">
             <div class="modal-body">
+                    <div class="spacing">
+                            <input type="password" ng-model="pass" class="forInput form-control" placeholder="Old Password" style="position:relative; left:10px;width:250px;">
+                        </div>
                 <div class="spacing">
                     <input type="password" ng-model="pass" class="forInput form-control" placeholder="New Password" style="position:relative; left:10px;width:250px;">
                 </div>
                 <div class="spacing">
-                    <input type="password" ng-model="confpass" class="forInput form-control" placeholder="Confirm password" style="position:relative;left:10px;width:250px;">
+                    <input type="password" ng-model="confpass" class="forInput form-control" placeholder="Confirm Password" style="position:relative;left:10px;width:250px;">
                 </div>
             </div>
             <div class="modal-footer">
-                    <button type="submit" ng-click=close() class="button modalsubmit">Submit</button>
+                    <button type="submit" ng-click=close() class="button modalsubmit1">Submit</button>
             </div>
         </form>
-        <a href="#" ng-click="close()" style=" position:fixed;top:10px;left:273px;">
+        <a href="#" ng-click="close()" style=" position:absolute;top:10px;left:273px;">
          <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
         </a>
         </div>
@@ -965,123 +980,14 @@
 
 
 
-   
-     <script type="text/ng-template" id="dealproject.html">
-        <div class="modal-content">
-         <div class="modal-header" style="height:40px;">
-        <h3>New Deal</h3>
-        </div>
-        <form id="addDeal" name="addDeal" class="form-group">
-           <div class="modal-body" style="overflow-y: auto; max-height:400px;">
-                <h4> Pleas fill the form to add new deal.</h4>
-                <div class="SectionBox">
-                   <h5>Company and contact:</h5>
-                <div>
-                    <select class="forInput form-control"  id="companyselect" ng-model="item.companyID" ng-selected="0" ng-options="company.id as company.name for company in companies"
-                        ng-disabled="addcompany">
-
-                    </select>
-                    <a href="#" id="addIcon">
-                        <span id="addIcon" class="glyphicon glyphicon-plus-sign" ng-init="showAdd=false, " ng-click="showAdd=!showAdd; addcompany=!addcompany; resetSelect()"></span>
-                    </a>
-                </div>
-                <div ng-show="showAdd">
-                    <div class="spacing">
-                        <input class="forInput form-control" type="text" ng-model="addCompanyName" placeholder="Company name">
-                    </div>
-                    <div class="spacing">
-                        <input class="forInput form-control" type="text" placeholder=" Company website">
-                    </div>
-                    <div class="spacing">
-                        <input class="forInput form-control" type="text" placeholder="Company office number">
-                    </div>
-                    <div class="spacing">
-                        <input class="forInput form-control" type="text" placeholder="Company address">
-                    </div>
-                    <div class="spacing">
-                        <select class="forInput form-control" ng-model="industry">
-                            <option>Select the Industry</option>
-
-                        </select>
-                    </div>
-                    <div class="spacing">
-                        <input class="forInput form-control" type="text" placeholder="Contact person name">
-                    </div>
-                    <div class="spacing">
-                        <input class="forInput form-control" type="text" placeholder=" Contact person Email">
-                    </div>
-                    <div class="spacing">
-                        <input class="forInput form-control" type="text" placeholder="Contact person phone">
-                    </div>
-                    <div class="spacing">
-                        <input class="forInput form-control" type="text" placeholder="Contact person position">
-                    </div>
-                </div>
-            </div>
-            <div class="SectionBox">
-                <h5>Deal Information:</h5>
-                <div>
-                    <select class="forInput form-control" ng-model="salesPerson">
-                        <option>Select the person in charge</option>
-
-                    </select>
-
-                </div>
-                <div class="spacing">
-                    <select class="forInput form-control" ng-model="project.typeID" ng-selected="0" ng-options="type.id as type.name for type in types">
-                    </select>
-                </div>
-                <div class="spacing">
-                    <select class="forInput form-control">
-                        <option>Select the product</option>
-                    </select>
-                </div>
-                <div class="spacing">
-                    <input class="forInput form-control" type="text" placeholder="Value">
-                </div>
-                <div class="spacing">
-                    <input class="forInput form-control" type="text" placeholder="Sales stage in percentage">
-                </div>
-                <div class="spacing">
-                        <textarea class="forInput form-control" wrap="soft" rows="5"  type="text" size="255" placeholder="Remarks" />
-                    </div>
-                <div class="spacing">
-                    <input class="forInput form-control" id="ponumber" type="text" placeholder="PO-Number">
-                </div>
-                <div class="datepicker modalpodate" date-format="dd/MM/yyyy">
-                    <input class="forInput form-control  modaldatepicker" ng-model="POdate" type="text" placeholder="PO-date">
-                    <i class="fa fa-calendar fafaPosititionondatepicker"></i>
-                    </input>
-                </div>
-                <div class="datepicker modalstartdate" date-format="dd/MM/yyyy">
-                    <input class=" modaldatepicker form-control " ng-model="leadstartdate" type="text" placeholder="Start date">
-                    <i class="fa fa-calendar fafaPosititionondatepicker"></i>
-                    </input>
-                </div>
-                <div class="datepicker modalenddate" date-format="dd/MM/yyyy">
-                    <input class=" modaldatepicker form-control" ng-model="leadenddate" type="text" placeholder="End date">
-                    <i class="fa fa-calendar fafaPosititionondatepicker"></i>
-                    </input>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="modal-footer">
-            <button type="submit" ng-click=close() class="button modalsubmit">Submit</button>
-        </div>
-
-        <a href="#" ng-click=close() style=" position:fixed;top:10px;left:273px;">
-            <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
-        </a>
-     </form>
-     </div>
-     </script>
 
 
 
-    
-     <script type="text/ng-template" id="delete.html">
+
+
+
+
+    <script type="text/ng-template" id="delete.html">
      <div class="modal-content">
         <div class="modal-header" style="height:40px;">
                 <h3>{{deleteHeader}}</h3>
@@ -1092,7 +998,7 @@
         <div class="modal-footer">
                 <button type="submit" ng-click="close(); removeRow()" class="button deletemodalsubmit">Yes</button>
         </div>
-        <a href="#" ng-click=close() style="position:fixed;top:10px;left:273px;">
+        <a href="#" ng-click=close() style="position:absolute;top:10px;left:273px;">
                 <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
         </a>
 
@@ -1133,7 +1039,7 @@
                 <button type="submit" ng-click="close()" class="button modalsubmit">Submit</button>
             </div>
 
-            <a href="#" ng-click="close()" style=" position:fixed;top:10px;left:273px;">
+            <a href="#" ng-click="close()" style=" position:absolute;top:10px;left:273px;">
                 <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
             </a>
 
@@ -1174,7 +1080,7 @@
                     <button type="submit" ng-click="close()" class="button modalsubmit">Submit</button>
                 </div>
         
-                <a href="#" ng-click="close()" style=" position:fixed;top:10px;left:273px;">
+                <a href="#" ng-click="close()" style=" position:absolute;top:10px;left:273px;">
                     <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
                 </a>
         
@@ -1188,67 +1094,132 @@
     <script type="text/ng-template" id="editdeal.html">
         <div class="modal-content">
             <div class="modal-header" style="height:40px;">
-                <h3>Edit deal</h3>
+                <h3>Edit Deal</h3>
             </div>
             <form id="editdeal" name="editDeal" class="form-group">
                 <div class="modal-body" style="overflow-y: auto; max-height:450px;">
-    
+                    <div class="form-inline spacingedit">
+                    <div class="form-group">
+                    <div>    
+                    <label class="convertToblack">Company Name:</label>
+                    </div>
                     <select class="forInput form-control" ng-model="item.companyID"  ng-options="company.id as company.name for company in companies"
                     ng-disabled="addcompany">
-                    <option value="" default disabled selected>Select the company</option>
-    
-                </select>
-                    <div class="spacing">
+                    <option value="" default disabled selected>Select the Company</option>
+                    </select>
+
+                </div>
+                    <div class="form-group">
+                            <div>    
+                                    <label class="convertToblack">Person in Charge:</label>
+                                    </div>
                         <select class="forInput form-control" ng-model="dealsalesPerson">
-                            <option value="" default disabled selected>Select the person in charge</option>
+                            <option value="" default disabled selected>Select the Person in Charge</option>
     
                         </select>
                     </div>
-                    <div class="spacing">
+                </div>
+
+                <div class="form-inline spacingedit">
+                    <div class="form-group">
+                            <div>    
+                                    <label class="convertToblack">Project Type:</label>
+                                    </div>
                         <select class="forInput form-control" ng-model="leadproject.typeID"  ng-options="type.id as type.name for type in types">
-                                <option value="" default disabled selected>Select the type</option>
+                                <option value="" default disabled selected>Select the Type</option>
                         </select>
                     </div>
-                    <div class="spacing">
+                    <div class="form-group">
+                            <div>    
+                                    <label class="convertToblack">Product:</label>
+                                    </div>
                         <select class="forInput form-control">
-                            <option value="" default disabled selected>Select the product</option>
+                            <option value="" default disabled selected>Select the Product</option>
                         </select>
                     </div>
-                    <div class="spacing">
+                </div>
+
+                <div class="form-inline spacingedit">
+                    <div class=" form-group">
+                            <div>    
+                                    <label class="convertToblack">Value:</label>
+                                    </div>
                         <input class="forInput form-control" type="text" placeholder="Value" ng-model="dealValue">
                     </div>
-                    <div class="spacing">
-                        <input class="forInput form-control" type="text" placeholder="Sales stage in percentage" ng-model="dealsalesstage">
+                    <div class="form-group">
+                            <div>    
+                                    <label class="convertToblack">Sales Stage:</label>
+                                    </div>
+                        <input class="forInput form-control" type="text" placeholder="Sales Stage in Percentage" ng-model="dealsalesstage">
                     </div>
-                    <div class="spacing">
+                </div>
+
+                <div class="spacingedit" id="sub-left">
+                    <div class="form-group">
+                            <div>    
+                                    <label class="convertToblack">Remarks:</label>
+                                    </div>
                             <textarea class="forInput form-control" wrap="soft" rows="5"  type="text" size="255" placeholder="Remarks" ng-model="dealRemarks" />
                         </div>
+                    </div>
                     
-                    <div class="spacing">
+                    <div class="spacingedit"  id="sub-rightedit">  
+                    <div class="form-group">
+                            <div>    
+                                    <label class="convertToblack">PO-Number:</label>
+                                    </div>
                         <input class="forInput form-control" id="ponumber" type="text" placeholder="PO-Number" ng-model="POnum">
                     </div>
+                </div>
+
+                <div class="spacing"  id="sub-rightedit">  
+                    <div class="form-group"> 
+                            <div>    
+                                    <label class="convertToblack">PO-Date:</label>
+                                    </div>
                     <div class="datepicker modaldate " date-format="dd/MM/yyyy">
-                        <input class="forInput modaldatepicke form-control" ng-model="POdate" type="text" placeholder="PO-date">
-                        <i class="fa fa-calendar fafaPosititionondatepicker"></i>
-                        </input>
-                    </div>
-                    <div class="datepicker modaldate" date-format="dd/MM/yyyy">
-                        <input class="forInput modaldatepicker form-control" ng-model="dealstartdate" type="text" placeholder="Start date">
-                        <i class="fa fa-calendar fafaPosititionondatepicker"></i>
-                        </input>
-                    </div>
-                    <div class="datepicker modaldate" date-format="dd/MM/yyyy">
-                        <input class="forInput modaldatepicker form-control" ng-model="dealenddate" type="text" placeholder="End date">
+                        <input class="forInput modaldatepicke form-control" ng-model="POdate" type="text" placeholder="PO-Date">
                         <i class="fa fa-calendar fafaPosititionondatepicker"></i>
                         </input>
                     </div>
                 </div>
+            </div>
+            <div class="clear-both"></div>
+
+            <div   id="sub-left">  
+                    <div class="form-group"> 
+                            <div>    
+                                    <label class="convertToblack">Start Date:</label>
+                                    </div>
+                    <div class="datepicker modaldate" date-format="dd/MM/yyyy">
+                        <input class="forInput modaldatepicker form-control" ng-model="dealstartdate" type="text" placeholder="Start Date">
+                        <i class="fa fa-calendar fafaPosititionondatepicker"></i>
+                        </input>
+                    </div>
+                </div>
+            </div>
+            <div  id="sub-rightedit">  
+                    <div class="form-group"> 
+                            <div>    
+                                    <label class="convertToblack">End Date:</label>
+                                    </div>
+
+                    <div class="datepicker modaldate" date-format="dd/MM/yyyy">
+                        <input class="forInput modaldatepicker form-control" ng-model="dealenddate" type="text" placeholder="End Date">
+                        <i class="fa fa-calendar fafaPosititionondatepicker"></i>
+                        </input>
+                    </div>
+                </div>
+            </div>
+            <div class="clear-both"></div>
+                </div>
+
     
                 <div class="modal-footer">
                     <button type="submit" ng-click="close()" class="button modalsubmit">Submit</button>
                 </div>
     
-                <a href="#" ng-click="close()" style=" position:fixed;top:10px;left:273px;">
+                <a href="#" ng-click="close()" style=" position:absolute;top:10px; left:573px;">
                     <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
                 </a>
             </form>
@@ -1265,107 +1236,114 @@
                 <h3>New Deal</h3>
             </div>
             <form id="addDeal" name="addDeal" class="form-group">
-                <div class="modal-body" style="overflow-y: auto; max-height:400px;">
-                    <h4> Pleas fill the form to add new deal.</h4>
+                <div class="modal-body" style="overflow-y: auto; max-height:450px;">
+                    <h4> Please fill in the form to add new deal.</h4>
                     <div class="SectionBox">
                         <h5>Company and contact:</h5>
                         <div>
-                            <select class="forInput form-control" id="companyselect" ng-model="item.companyID"  ng-options="company.id as company.name for company in companies"
+                            <select class="forInput form-control form-group" id="companyselect" ng-model="item.companyID"  ng-options="company.id as company.name for company in companies"
                                 ng-disabled="addcompany">
-                                <option value="" default disabled selected>Select the company</option>
+                                <option value="" default disabled selected>Select the Company</option>
                             </select>
                             <a href="#" id="addIcon">
                                 <span id="addIcon" class="glyphicon glyphicon-plus-sign" ng-init="showAdd=false, " ng-click="showAdd=!showAdd; addcompany=!addcompany; resetSelect()"></span>
                             </a>
                         </div>
                         <div ng-show="showAdd">
-                            <div class="spacing">
-                                <input class="forInput form-control" type="text" ng-model="addCompanyName" placeholder="Company name">
-                            </div>
-                            <div class="spacing">
+                         <div class="form-group">
+                            <div class="form-inline">
+                                <input class="forInput form-control" type="text" ng-model="addCompanyName" placeholder="Company Name">
                                 <input class="forInput form-control" type="text" placeholder=" Company website">
                             </div>
-                            <div class="spacing">
-                                <input class="forInput form-control" type="text" placeholder="Company office number">
+                        </div>
+                        <div class="form-group">
+                                <div class="form-inline">
+                                <input class="forInput form-control" type="text" placeholder="Company Office Number">
+                                <input class="forInput form-control" type="text" placeholder="Company Address">
                             </div>
-                            <div class="spacing">
-                                <input class="forInput form-control" type="text" placeholder="Company address">
-                            </div>
-                            <div class="spacing">
+                        </div>
+                        <div class="form-group">
+                                <div class="form-inline">
                                 <select class="forInput form-control" ng-model="industry">
-                                    <option value="" default disabled selected>Select the industry</option>
-    
+                                    <option value="" default disabled selected>Select the Industry</option>
                                 </select>
+                                <input class="forInput form-control" type="text" placeholder="Contact Person Name">
                             </div>
-                            <div class="spacing">
-                                <input class="forInput form-control" type="text" placeholder="Contact person name">
+                        </div>
+                        <div class="form-group">
+                                <div class="form-inline">
+                                <input class="forInput form-control" type="text" placeholder=" Contact Person Email">
+                                <input class="forInput form-control" type="text" placeholder="Contact Person Phone">
                             </div>
-                            <div class="spacing">
-                                <input class="forInput form-control" type="text" placeholder=" Contact person Email">
-                            </div>
-                            <div class="spacing">
-                                <input class="forInput form-control" type="text" placeholder="Contact person phone">
-                            </div>
-                            <div class="spacing">
-                                <input class="forInput form-control" type="text" placeholder="Contact person position">
+                        </div>
+                           <div>
+                                <input class="forInput form-control" type="text" placeholder="Contact Person Position">
                             </div>
                         </div>
                     </div>
                     <div class="SectionBox">
                         <h5>Deal Information:</h5>
-                        <div>
+                        <div class="form-group">
+                                <div class="form-inline">
                             <select class="forInput form-control" ng-model="salesPerson">
-                                <option value="" default disabled selected>Select the person in charge</option>
-    
+                                <option value="" default disabled selected>Select the Person in Charge</option>
                             </select>
-    
-                        </div>
-                        <div class="spacing">
                             <select class="forInput form-control" ng-model="project.typeID"  ng-options="type.id as type.name for type in types">
-                                    <option value="" default disabled selected>Select the type</option>
+                                    <option value="" default disabled selected>Select the Type</option>
                             </select>
                         </div>
-                        <div class="spacing">
+                    </div>
+                    <div class="form-group">
+                            <div class="form-inline">
                             <select class="forInput form-control">
-                                <option value="" default disabled selected>Select the product</option>
+                                <option value="" default disabled selected>Select the Product</option>
                             </select>
-                        </div>
-                        <div class="spacing">
                             <input class="forInput form-control" type="text" placeholder="Value">
                         </div>
-                        <div class="spacing">
-                            <input class="forInput form-control" type="text" placeholder="Sales stage in percentage">
-                        </div>
-                        <div class="spacing">
-                                <textarea class="forInput form-control" wrap="soft" rows="5"  type="text" size="255" placeholder="Remarks" />
-                            </div>
-                        <div class="spacing">
+                    </div>
+                    <div class="form-group">
+                            <div class="form-inline">
+                            <input class="forInput form-control" type="text" placeholder="Sales Stage in Percentage">
                             <input class="forInput form-control" id="ponumber" type="text" placeholder="PO-Number">
+        
+                            </div>
                         </div>
+                        <div id="sub-left">
+                             <textarea class="forInput form-control" wrap="soft" rows="6"  type="text" size="255" placeholder="Remarks" /> 
+                        </div>
+                     <div id="sub-right">
                         <div class="datepicker modaldate" date-format="dd/MM/yyyy">
-                            <input class="forInput modaldatepicker form-control" ng-model="POdate" type="text" placeholder="PO-date">
+                            <input class="forInput modaldatepicker form-control form-group" ng-model="POdate" type="text" placeholder="PO-Date">
                             <i class="fa fa-calendar fafaPosititionondatepicker"></i>
                             </input>
                         </div>
+                    </div>
+                    <div id="sub-right">
                         <div class="datepicker modaldate" date-format="dd/MM/yyyy">
-                            <input class="forInput modaldatepicker form-control" ng-model="leadstartdate" type="text" placeholder="Start date">
+                            <input class="forInput modaldatepicker form-control form-group" ng-model="leadstartdate" type="text" placeholder="Start Date">
                             <i class="fa fa-calendar fafaPosititionondatepicker"></i>
                             </input>
                         </div>
+                    </div>
+                    <div id="sub-right">
                         <div class="datepicker modaldate" date-format="dd/MM/yyyy">
-                            <input class="forInput modaldatepicker form-control" ng-model="leadenddate" type="text" placeholder="End date">
+                            <input class="forInput modaldatepicker form-control form-group" ng-model="leadenddate" type="text" placeholder="End Date">
                             <i class="fa fa-calendar fafaPosititionondatepicker"></i>
                             </input>
                         </div>
+                    </div>
+                    
+           
+                    <div class="clear-both"></div> 
     
                     </div>
                 </div>
-    
+    <div>
                 <div class="modal-footer">
                     <button type="submit" ng-click=close() class="button modalsubmit">Submit</button>
                 </div>
     
-                <a href="#" ng-click=close() style=" position:fixed;top:10px;left:273px;">
+                <a href="#" ng-click=close() style=" position:absolute;top:10px;left:573px;">
                     <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
                 </a>
             </form>
@@ -1379,31 +1357,31 @@
     <script type="text/ng-template" id="editindustry.html">
         <div class="modal-content">
             <div class="modal-header" style="height:40px;">
-                <h3>Edit Industry list</h3>
+                <h3>Edit Industry List</h3>
             </div>
             <form class="form-group">
-                <div class="modal-body" style="overflow-y: auto; max-height:200px;min-height:200px;">
+                <div class="modal-body" style="overflow-y: auto; max-height:400px;min-height:400px;">
                     <div>
-                        <input class="forInput form-control " id="industrytxf" type="text" placeholder="Industry name">
+                        <input class="forInput form-control " id="industrytxf" type="text" placeholder="Industry Name">
                         <a href="#" id="addIcon">
                             <span id="addIcon" class="glyphicon glyphicon-plus-sign"></span>
                         </a>
                     </div>
                     <div ng-repeat="industry in industryList" class="spacing">
-                        <div style="background-color:rgb(227, 227, 228);">
+                        <div style="background-color:rgb(227, 227, 228);" class="listtext">
                             {{industry.name}}
                             <a href="#" ng-click="deleteSelected($index)">
-                                <span class="glyphicon glyphicon-remove" style="color:red;font-size:13px;float:right;"></span>
+                                <span class="glyphicon glyphicon-remove" style="color:#D32F2F;font-size:13px;float:right;"></span>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="button modalsubmit" ng-click="close()">Submit</button>
+                    <button type="submit" class="button modalsubmit1" ng-click="close()">Submit</button>
                 </div>
             </form>
         
         
-            <a href="#" ng-click="close()" style=" position:fixed;top:10px;left:273px;">
+            <a href="#" ng-click="close()" style=" position:absolute;top:10px;left:273px;">
                 <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
             </a>
         </div>
@@ -1414,91 +1392,169 @@
             <div class="modal-header" style="height:40px;">
                 <h3>Edit lead</h3>
             </div>
-            <form id="addLead" name="addLead" class="form-group">
-                <div class="modal-body" style="overflow-y: auto; max-height:400px;">
-    
+            <form id="editlead" name="editlead" class="form-group">
+            <div class="modal-body" style="overflow-y: auto; max-height:400px;">
+                    
+            <div class="form-inline spacingedit"> 
+            <div class="form-group"> 
+                    <div>
+                        <lable class="converToblack">Company Name:</label>
+                    </div>
                     <select class="forInput form-control" ng-model="item.companyID"  ng-options="company.id as company.name for company in companies">
-                    <option value="" default disabled selected>Select the company</option>
+                    <option value="" default disabled selected>Select the Company</option>
                 </select>
-    
-                    <div class="spacing" ng-hide="projectCat.catID =='2'">
-                        <select class="forInput form-control" ng-model="leadsalesPerson">
-                                <option value="" default disabled selected>Select the person in charge</option>
-    
-                        </select>
-    
-                    </div>
-                    <div class="spacing">
-                        <select class="forInput form-control" ng-model="leadproject.typeID"  ng-options="type.id as type.name for type in types">
-                                <option value="" default disabled selected>Select the type of project</option>
+            </div>
+            <div class="form-group"> 
+                    <div>
+                        <lable class="converToblack">Project Type:</label>
+                     </div>
+                <select class="forInput form-control" ng-model="leadproject.typeID"  ng-options="type.id as type.name for type in types">
+                        <option value="" default disabled selected>Select the Type of Project</option>
+                </select>
+            </div>
+            </div>
+            <div class="form-inline spacingedit"> 
+                    <div class="form-group"> 
+                             <div>
+                                 <lable class="converToblack">Product:</label>
+                                 </div>
+                     <select class="forInput form-control">
+                         <option value="" default disabled selected>Select the Product</option>
+                     </select>
+                     </div>
+           
+                     <div class="form-group"> 
+                     <div>
+                         <lable class="converToblack">Value:</label>
+                         </div>
+                     <input class="forInput form-control" type="text" placeholder="Value" ng-model="leadValue">
+                     </div>
+                     </div>
 
-                        </select>
-                    </div>
-                    <div class="spacing">
-                        <select class="forInput form-control">
-                            <option value="" default disabled selected>Select the product</option>
-                        </select>
-                    </div>
-                    <div class="spacing">
-                        <input class="forInput form-control" type="text" placeholder="Value" ng-model="leadValue">
-                    </div>
-                    <div class="spacing">
-                        <input class="forInput form-control" type="text" placeholder="Sales stage in percentage" ng-model="leadStage">
-                    </div>
-                    <div class="spacing" ng-hide="projectCat.catID !='0'">
-                        <select class="forInput form-control" ng-model="lead.statusID"  ng-options="status.id as status.name for status in statuses">
-                                <option value="" default disabled selected>Select the status</option>
-                        </select>
-                    </div>
-                    <div ng-hide="projectCat.catID !='0'">
-                        <h6 class="spacing">Tender:</h6>
-    
-                        <input type="checkbox" class="checkbox-default" ng-model="tenderYes" ng-click="checkboxRule('tenderYes')" />
-                        <label class="convertToblack">Yes</label>
-    
-    
-                        <input type="checkbox" class="checkbox-default Dealcheckbox" ng-model="tenderNo" ng-click="checkboxRule('tenderNo')" />
-                        <label class="convertToblack">No</label>
-    
-                        <input type="checkbox" class="checkbox-default Dealcheckbox" ng-model="tenderPossibly" ng-click="checkboxRule('tenderPossibly')"
-                        />
-                        <label class="convertToblack">Possibly</label>
-                    </div>
-                    <div class="spacing">
-                        <textarea class="forInput form-control" wrap="soft" rows="5" type="text" size="255" placeholder="Remarks" ng-model="leadremarks" />
-                    </div>
-                    <div class="spacing">
-                        <select class="forInput form-control" id="ponumber" ng-model="projectCat.catID" ng-options="cat.id as cat.name for cat in cats" >
-                                <option value="" default disabled selected>Select the category</option>
-                        </select>
-                    </div>
-    
-                    <div ng-show="projectCat.catID=='1'">
-                     <div >
-                     <input class="forInpu form-control"  id="ponumber" type="text" placeholder="PO-number" ng-model="POnum">
-                     </div>
-                     <div class="datepicker modaldate" date-format="dd/MM/yyyy">
-                     <input class="forInput form-control modaldatepicker" ng-model="POdate" type="text" placeholder="PO-date">
-                     <i class="fa fa-calendar fafaPosititionondatepicker"></i>
-                     </input>
-                     </div>
-                     </div>
+             <div class="form-inline spacingedit"> 
+                    <div class="form-group"> 
+                                     <div>
+                                         <lable class="converToblack">Sales Stage:</label>
+                                         </div>
+                                <input class="forInput form-control" type="text" placeholder="Sales Stage in Percentage" ng-model="leadStage">
+                            </div>
+                            <div class="form-group">
+                                    <div>
+                                            <lable class="converToblack">Project Category:</label>
+                                            </div>
+                                    <select class="forInput form-control" id="ponumber" ng-model="projectCat.catID" ng-options="cat.id as cat.name for cat in cats" >
+                                            <option value="" default disabled selected>Select the Category</option>
+                                    </select>
+                                </div>
+             </div>
+
+            <div class="form-inline spacingedit"> 
+                     <div class="form-group"> 
+                         <div>
+                            <lable class="converToblack">Start Date:</label>
+                         </div>              
                     <div class="datepicker modaldate" date-format="dd/MM/yyyy">
-                        <input class="forInput form-control modaldatepicker" id="startdate" ng-model="leadstartdate" type="text" placeholder="Start date">
-                        <i class="fa fa-calendar fafaPosititionondatepicker"></i>
-                        </input>
-                    </div>
-                    <div class="datepicker modaldate" date-format="dd/MM/yyyy">
-                        <input class="forInput form-control modaldatepicker" ng-model="leadenddate" type="text" placeholder="End date">
+                        <input class="forInput form-control modaldatepicker" id="startdate" ng-model="leadstartdate" type="text" placeholder="Start Date">
                         <i class="fa fa-calendar fafaPosititionondatepicker"></i>
                         </input>
                     </div>
                 </div>
+                <div class="form-group"> 
+                        <div>
+                           <lable class="converToblack">End Date:</label>
+                        </div>  
+                    <div class="datepicker modaldate" date-format="dd/MM/yyyy">
+                        <input class="forInput form-control modaldatepicker" ng-model="leadenddate" type="text" placeholder="End Date">
+                        <i class="fa fa-calendar fafaPosititionondatepicker"></i>
+                        </input>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-show="projectCat.catID=='1'">
+                                    <div class="form-inline spacingedit"> 
+                                     <div class="form-group"> 
+                                     <div>
+                                         <lable class="converToblack">PO-Number:</label>
+                                     </div>
+                                     <div>
+                                     <input class="forInput form-control"  id="ponumber" type="text" placeholder="PO-Number" ng-model="POnum">
+                                     </div>
+                                    </div>
+                                    <div class="form-group"> 
+                                            <div>
+                                                <lable class="converToblack">PO-Date:</label>
+                                            </div>
+                                     <div class="datepicker modaldate" date-format="dd/MM/yyyy">
+                                     <input class="forInput form-control modaldatepicker" ng-model="POdate" type="text" placeholder="PO-date">
+                                     <i class="fa fa-calendar fafaPosititionondatepicker"></i>
+                                     </input>
+                                     </div>
+                                     </div>
+                                    </div>
+             </div>
+
+
+             <div ng-hide="projectCat.catID !='0'">
+                    <div class="form-inline spacingedit"> 
+                            <div class="form-group"> 
+                                                 <div>
+                                                        <lable class="converToblack">Status:</label>
+                                                 </div>
+                                            <select class="forInput form-control" ng-model="lead.statusID"  ng-options="status.id as status.name for status in statuses">
+                                                    <option value="" default disabled selected>Select the status</option>
+                                            </select>
+                            </div>
+                               
+                            <div class="form-group"> 
+                                            <div>
+                                            <label class="convertToblack">Tender:</label>
+                                            </div>
+                                       <div  class="form-inline" style="margin-left:10px;">
+                                            <input type="checkbox" class="checkbox-default" ng-model="tenderYes" ng-click="checkboxRule('tenderYes')" />
+                                            <label class="convertToblack">Yes</label>
+                        
+                        
+                                            <input type="checkbox" class="checkbox-default Dealcheckbox" ng-model="tenderNo" ng-click="checkboxRule('tenderNo')" />
+                                            <label class="convertToblack">No</label>
+                        
+                                            <input type="checkbox" class="checkbox-default Dealcheckbox" ng-model="tenderPossibly" ng-click="checkboxRule('tenderPossibly')"
+                                            />
+                                            <label class="convertToblack">Possibly</label>
+                                       </div >
+                            </div>
+                     </div>
+                </div>
+                <div id="sub-left"> 
+                        <div class="spacingedit form-group"> 
+                            <div>
+                                   <lable class="convertToblack">Remarks:</label>
+                            </div>
+                            <textarea class="forInput form-control" wrap="soft" rows="5" type="text" size="255" placeholder="Remarks" ng-model="leadremarks" />
+                        </div> 
+                    </div>
+                
+                    <div class="spacingedit" ng-hide="projectCat.catID =='2'">
+                            <div id="sub-rightedit">
+                                    <div class="form-group"> 
+                                            <div>
+                                                   <lable class="converToblack">Person in Charge:</label>
+                                            </div>
+                                    <select class="forInput form-control" ng-model="leadsalesPerson">
+                                            <option value="" default disabled selected>Select the Person in Charge</option>
+                
+                                    </select>
+                                </div>
+                            </div>
+                    </div>
+        
+           </div>
+     
                 <div class="modal-footer">
                     <button type="submit" ng-click="close()" class="button modalsubmit">Submit</button>
                 </div>
     
-                <a href="#" ng-click="close()" style=" position:fixed;top:10px;left:273px;">
+                <a href="#" ng-click="close()" style=" position:absolute;top:10px;left:573px;">
                     <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
                 </a>
     
@@ -1557,7 +1613,7 @@
                     <button type="submit" ng-click="close()" class="button modalsubmit">Submit</button>
                 </div>
     
-                <a href="#" ng-click="close()" style=" position:fixed;top:10px;left:273px;">
+                <a href="#" ng-click="close()" style=" position:absolute;top:10px;left:273px;">
                     <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
                 </a>
     
@@ -1571,31 +1627,31 @@
     <script type="text/ng-template" id="editproduct.html">
         <div class="modal-content">
             <div class="modal-header" style="height:40px;">
-                <h3>Edit product list</h3>
+                <h3>Edit Product List</h3>
             </div>
             <form class="form-group">
-                <div class="modal-body" style="overflow-y: auto; max-height:200px;min-height:200px;">
+                <div class="modal-body" style="overflow-y: auto; max-height:400px;min-height:400px;">
                     <div>
-                        <input class="forInput form-control" id="industrytxf" type="text" placeholder="Product name">
+                        <input class="forInput form-control" id="industrytxf" type="text" placeholder="Product Name">
                         <a href="#" id="addIcon">
                             <span id="addIcon" class="glyphicon glyphicon-plus-sign"></span>
                         </a>
                     </div>
                     <div ng-repeat="product in productList" class="spacing">
-                        <div style="background-color:rgb(227, 227, 228);">
+                        <div style="background-color:rgb(227, 227, 228);" class="listtext">
                             {{product.name}}
                             <a href="#" ng-click="deleteSelected($index)">
-                                <span class="glyphicon glyphicon-remove" style="color: red;font-size:13px;float:right;"></span>
+                                <span class="glyphicon glyphicon-remove" style="color:#D32F2F;font-size:13px;float:right;"></span>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="button modalsubmit" ng-click="close()">Submit</button>
+                    <button type="submit" class="button modalsubmit1" ng-click="close()">Submit</button>
                 </div>
             </form>
         
         
-            <a href="#" ng-click="close()" style=" position:fixed;top:10px;left:273px;">
+            <a href="#" ng-click="close()" style=" position:absolute;top:10px;left:273px;">
                 <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
             </a>
         </div>
@@ -1626,7 +1682,7 @@
                     <button type="submit" ng-click="close()" class="button modalsubmit">Submit</button>
                 </div>
         
-                <a href="#" ng-click="close()" style=" position:fixed;top:10px;left:273px;">
+                <a href="#" ng-click="close()" style=" position:absolute;top:10px;left:273px;">
                     <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
                 </a>
         
@@ -1644,117 +1700,132 @@
                 <h3>New Lead</h3>
             </div>
             <form id="addLead" name="addLead" class="form-group">
-                <div class="modal-body" style="overflow-y: auto; max-height:400px;">
-                    <h4> Pleas fill the form to add new lead.</h4>
+                <div class="modal-body" style="overflow-y: auto; max-height:450px;">
+                    <h4> Please fill in the form to add new lead.</h4>
                     <div class="SectionBox">
-                        <h5>Company and contact:</h5>
+                        <h5>Company and Contact:</h5>
                         <div>
-                            <select class="forInput form-control" id="companyselect" ng-model="item.companyID"  ng-options="company.id as company.name for company in companies"
+                            <select  class="forInput form-control form-group" id="companyselect" ng-model="item.companyID"  ng-options="company.id as company.name for company in companies"
                                 ng-disabled="addcompany">
-                                <option value="" default disabled selected>Select the company</option>
+                                <option value="" default disabled selected>Select the Company</option>
                             </select>
                             <a href="#" id="addIcon">
                                 <span id="addIcon" class="glyphicon glyphicon-plus-sign" ng-init="showAdd=false, " ng-click="showAdd=!showAdd; addcompany=!addcompany; resetSelect()"></span>
                             </a>
                         </div>
                         <div ng-show="showAdd">
-                            <div class="spacing">
+                            <div class="form-group">
+                            <div class="form-inline">
                                 <input class="forInput form-control" type="text" ng-model="addCompanyName" placeholder="Company name">
+                        
+                                <input class="forInput form-control" type="text" placeholder="Company Website">
                             </div>
-                            <div class="spacing">
-                                <input class="forInput form-control" type="text" placeholder="Company website">
+                        </div>
+                        <div class="form-group">
+                                <div class="form-inline">
+                                <input class="forInput form-control" type="text" placeholder="Company Office Number">
+                          
+                   
+                                <input class="forInput form-control" type="text" placeholder="Company Address">
                             </div>
-                            <div class="spacing">
-                                <input class="forInput form-control" type="text" placeholder="Company office number">
-                            </div>
-                            <div class="spacing">
-                                <input class="forInput form-control" type="text" placeholder="Company address">
-                            </div>
-                            <div class="spacing">
+                        </div>
+                        <div class="form-group">
+                                <div class="form-inline">
                                 <select class="forInput form-control" ng-model="industry">
-                                    <option value="" default disabled selected>Select the industry</option>
+                                    <option value="" default disabled selected>Select the Industry</option>
     
                                 </select>
+                   
+                                <input class="forInput form-control" type="text" placeholder="Contact Person Name">
                             </div>
-                            <div class="spacing">
-                                <input class="forInput form-control" type="text" placeholder="Contact person name">
+                        </div>
+                        <div class="form-group">
+                                <div class="form-inline">
+                                <input class="forInput form-control" type="text" placeholder="Contact Person Email">
+                    
+                                <input class="forInput form-control" type="text" placeholder="Contact Person Phone">
                             </div>
-                            <div class="spacing">
-                                <input class="forInput form-control" type="text" placeholder="Contact person email">
-                            </div>
-                            <div class="spacing">
-                                <input class="forInput form-control" type="text" placeholder="Contact person phone">
-                            </div>
-                            <div class="spacing">
-                                <input class="forInput form-control" type="text" placeholder="Contact person position">
+                        </div>
+                            <div>
+                                <input class="forInput form-control" type="text" placeholder="Contact Person Position">
                             </div>
                         </div>
                     </div>
+                 
                     <div class="SectionBox">
                         <h5>Lead Information:</h5>
-                        <div>
+                        <div class="form-group">
+                                <div class="form-inline">
                             <select class="forInput form-control" ng-model="salesPerson">
-                                <option value="" default disabled selected>Select the person in charge</option>
+                                <option value="" default disabled selected>Select the Person in Charge</option>
                             </select>
     
-                        </div>
-                        <div class="spacing">
+                 
                             <select class="forInput form-control" ng-model="project.typeID"  ng-options="type.id as type.name for type in types">
-                                    <option value="" default disabled selected>Select the type of project</option>
+                                    <option value="" default disabled selected>Select the Type of Project</option>
                             </select>
                         </div>
-                        <div class="spacing">
+                    </div>
+                    <div class="form-group">
+                            <div class="form-inline">
                             <select class="forInput form-control">
-                                <option value="" default disabled selected>Select the product</option>
+                                <option value="" default disabled selected>Select the Product</option>
                             </select>
-                        </div>
-                        <div class="spacing">
+                 
                             <input class="forInput form-control" type="text" placeholder="Value">
                         </div>
-                        <div class="spacing">
-                            <input class="forInput form-control" type="text" placeholder="Sales stage in percentage">
-                        </div>
-                        <div class="spacing">
+                    </div>
+                   
+                    <div class="form-group">
+                            <div class="form-inline">
+                            <input class="forInput form-control" type="text" placeholder="Sales Stage in Percentage">
+                     
                             <select class="forInput form-control" ng-model="lead.statusID"  ng-options="status.id as status.name for status in statuses">
-                                    <option value="" default disabled selected>Select the status</option>
+                                    <option value="" default disabled selected>Select the Status</option>
                             </select>
                         </div>
-                        <div>
-                            <h6 class="spacing">Tender:</h6>
-    
+                    </div>
+    <div id="sub-left">
+                    <div class="datepicker modaldate" date-format="dd/MM/yyyy">
+                            <input class=" form-group forInput form-control modaldatepicker" ng-model="leadstartdate" type="text" placeholder="Start Date">
+                            <i class="fa fa-calendar fafaPosititionondatepicker"></i>
+                            </input>
+                   </div>
+                       
+                </div>
+           <div id="sub-right">
+                   <div   class="datepicker modaldate" date-format="dd/MM/yyyy">
+                    <input  class="forInput form-control modaldatepicker" ng-model="leadenddate" type="text" placeholder="End Date">
+                   
+                    </input>
+                    </div>
+                </div>
+                <i class="fa fa-calendar fafaPosititionondatepickerend"></i>
+                <div class="clear-both"></div> 
+                <div class="form-inline">
+                    <label class="convertToblack" style="padding-right:10px;">Tender:</label>
                             <input type="checkbox" class="checkbox-default" ng-model="tenderYes" ng-click="checkboxRule('tenderYes')" />
                             <label class="convertToblack">Yes</label>
-    
-    
+
                             <input type="checkbox" class="checkbox-default Dealcheckbox" ng-model="tenderNo" ng-click="checkboxRule('tenderNo')" />
                             <label class="convertToblack">No</label>
-    
+
                             <input type="checkbox" class="checkbox-default Dealcheckbox" ng-model="tenderPossibly" ng-click="checkboxRule('tenderPossibly')"
                             />
                             <label class="convertToblack">Possibly</label>
-                        </div>
-                        <div class="spacing" id="ponumber">
-                                <textarea class="forInput form-control" wrap="soft" rows="5"  type="text" size="255" placeholder="Remarks" />
-                            </div>
-                        <div class="datepicker modaldate" date-format="dd/MM/yyyy">
-                            <input class="forInput form-control modaldatepicker" ng-model="leadstartdate" type="text" placeholder="Start date">
-                            <i class="fa fa-calendar fafaPosititionondatepicker"></i>
-                            </input>
-                        </div>
-                        <div class="datepicker modaldate" date-format="dd/MM/yyyy">
-                            <input class="forInput form-control modaldatepicker" ng-model="leadenddate" type="text" placeholder="End date">
-                            <i class="fa fa-calendar fafaPosititionondatepicker"></i>
-                            </input>
-                        </div>
+                                        
+                            <textarea  class="forInput form-control" wrap="soft" rows="5"  type="text" size="255" placeholder="Remarks" style="margin-left:17px;" />
+                 </div>
+                
                     </div>
-    
-                </div>
+        
+            </div>
     
                 <div class="modal-footer">
                     <button type="submit" ng-click=close() class="button modalsubmit">Submit</button>
                 </div>
     
-                <a href="#" ng-click=close() style=" position:fixed;top:10px;left:273px;">
+                <a href="#" ng-click=close() style=" position:absolute;top:10px;left:573px;">
                     <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
                 </a>
     
@@ -1779,7 +1850,7 @@
             <div class="modal-footer">
                 <button type="submit" ng-click="close(); removeSelectedRows()" class="button deletemodalsubmit">Yes</button>
             </div>
-            <a href="#" ng-click=close() style="position:fixed;top:10px;left:273px;">
+            <a href="#" ng-click=close() style="position:absolute;top:10px;left:273px;">
                 <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
             </a>
     
@@ -1799,7 +1870,7 @@
             <div class="modal-footer">
                 <button type="submit" ng-click="close()" class="button deletemodalsubmit">Ok</button>
             </div>
-            <a href="#" ng-click="close()" style="position:fixed;top:10px;left:273px;">
+            <a href="#" ng-click="close()" style="position:absolute;top:10px;left:273px;">
                 <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
             </a>
         </div>

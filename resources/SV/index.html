@@ -4,53 +4,66 @@
 <head>
 
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato" />
     <script src="js/angular.min.js"></script>
     <script src="js/ui-bootstrap-tpls-0.14.3.min.js"></script>
-    <script src="js/SV.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
- 
-    
-<style>
-    body{
-    /* The image used */
-    background-image: url("image/design.png") !important;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-</style>
+    <script src="js/SV1.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style1.css">
+
+
+    <style>
+        html {
+            min-height: 100%;
+            /* make sure it is at least as tall as the viewport */
+            position: relative;
+        }
+
+        body {
+            height: 100%;
+            /* force the BODY element to match the height of the HTML element */
+        }
+  
+    </style>
 
 
 </head>
 
 <body ng-app="myApp" ng-controller="mainCtrl">
+    <div  id="loginleftbox" >
+    <img   class="img-responsive" src="image/loginback1.jpg" />
+    </div>
 
-
-    <div class="box" style="left: 60%; top: 15%;">
-        <div class="bar" style="width: 400px; height: 50px;border-radius: 25px 25px 0px 0px;">
-            <h2> Login to SalesVision </h2>
+    <div class="box" style="left: 68%; top: 15%;">
+        <div>
+        <img  id="loginlogo" src="image/logo-salesvision (2).png" />
         </div>
-        <form class="form-group">
+        <div class="pagetitle">Login</div>
+        <form>
+            <div class="formcontent">
+                <div class="form-group">
+                    <input type="email" ng-model="Username" class="form-control registertext" placeholder="Email" />
+                </div>
+                <div class="form-group">
+                    <input type="password" ng-model="password" class="form-control registertext" placeholder="Password">
+                </div>
 
-            <input type="email" ng-model="Username" class="form-control" id="txf1" placeholder="Email" />
+                <div class="form-group">
+                    <input type="text" ng-model="companyID" class="form-control registertext" placeholder="Company Id">
+                </div>
 
-            <div>
-                <input type="password" ng-model="password" class="form-control" id="txf2" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <button type="submit" ng-model="login" class="button register">Sign In</button>
+                <div>
+                    <button type="button" ng-click="open('sm')" class="btn btn-link" id="forget-pass">Forgot your Password?</button>
+
+                    <a href="RegisterPage.html" target="blank">
+                        <button type="button" class="btn btn-link" id="sign-up">Register</button>
+                    </a>
+                </div>
             </div>
 
-            <div>
-                <input type="text" ng-model="companyID" id="txf3" class="form-control"  placeholder="Company Id">
-            </div>
-            <div>
-                <button type="submit" ng-model="login" class="button login">Sign In</button>
-            </div>
 
-            <div>
-                <button type="button" ng-click="open('sm')" class="btn btn-link" id="forget-pass">Forgot your Password?</button>
-
-                <a href="RegisterPage.html" target="blank">
-                    <button type="button" class="btn btn-link" id="sign-up">Sign Up</button>
-                </a>
-            </div>
         </form>
     </div>
     <script type="text/ng-template" id="forgotpass.html"> 
@@ -70,9 +83,10 @@
     
                     </div>
                     <div class="modal-footer" style="height:60px;">
-                            <button type="passwordSubmit" id="passwordSubmit" class="button">Submit</button>
+                        <!--for now we just close it later need to change the function!-->
+                            <button type="passwordSubmit" ng-click="close()" id="passwordSubmit" class="button">Submit</button>
                     </div>
-                    <a href="#" ng-click=close() style=" position:fixed;top:10px;left:273px;">
+                    <a href="#" ng-click="close()" style=" position:fixed;top:10px;left:273px;">
                             <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
                     </a>
     

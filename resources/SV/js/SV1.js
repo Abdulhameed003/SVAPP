@@ -1,3 +1,4 @@
+
 /**index.html */
 
 angular.module('myApp', ['ui.bootstrap']);
@@ -11,6 +12,7 @@ angular.module('myApp').controller('mainCtrl', ['$scope', '$modal', function ($s
             size: size
         });
     }
+
 }]);
 
 angular.module('myApp').controller('PopupCont', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
@@ -38,7 +40,7 @@ app.controller('mainCtrl', function ($scope) {
         $scope.showlostcasetable = false;
         $scope.show = true;
         $scope.showprojecttable = true;
-        $scope.projectTitle = "Project table: All categories";
+        $scope.projectTitle = "Project Table: All Categories";
     }
     /**calling the company section */
     $scope.callCompany = function () {
@@ -46,7 +48,7 @@ app.controller('mainCtrl', function ($scope) {
         $scope.showsalesperson = false;
         $scope.showcontact = false;
         $scope.showcomp = true;
-        $scope.projectTitle = "Companies table";
+        $scope.projectTitle = "Companies Table";
     }
     /**calling the contact section */
     $scope.callContact = function () {
@@ -54,7 +56,7 @@ app.controller('mainCtrl', function ($scope) {
         $scope.showsalesperson = false;
         $scope.showcomp = false;
         $scope.showcontact = true;
-        $scope.projectTitle = "Contacts table";
+        $scope.projectTitle = "Contacts Table";
     }
     /**calling the salesperson section */
     $scope.callSalesperson = function () {
@@ -63,7 +65,7 @@ app.controller('mainCtrl', function ($scope) {
         $scope.showcomp = false;
         $scope.showcontact = false;
         $scope.showsalesperson = true;
-        $scope.projectTitle = "Sales person table";
+        $scope.projectTitle = "Sales Person Table";
     }
 
 
@@ -526,6 +528,7 @@ app.controller('mainCtrl', function ($scope) {
         phone: '2736495',
         email: 'sfdsdfdsgf',
         position: 'f',
+        total: 5
 
     }, {
         No: 12,
@@ -533,6 +536,7 @@ app.controller('mainCtrl', function ($scope) {
         phone: '2736495',
         email: 'sfdsdfdsgf',
         position: 'f',
+        total: 3
     },
 
     {
@@ -541,6 +545,7 @@ app.controller('mainCtrl', function ($scope) {
         phone: '2736495',
         email: 'sfdsdfdsgf',
         position: 'f',
+        total: 2
     },
     {
         No: 3,
@@ -548,6 +553,7 @@ app.controller('mainCtrl', function ($scope) {
         phone: '2736495',
         email: 'sfdsdfdsgf',
         position: 'f',
+        total: 4
     },
     {
         No: 5,
@@ -555,6 +561,7 @@ app.controller('mainCtrl', function ($scope) {
         phone: '2736495',
         email: 'sfdsdfdsgf',
         position: 'f',
+        total: 7
     },
     {
         No: 7,
@@ -562,13 +569,15 @@ app.controller('mainCtrl', function ($scope) {
         phone: '2736495',
         email: 'sfdsdfdsgf',
         position: 'f',
+        total: 5
     },
     {
-        No: 2,
+        No: 70,
         name: 'x',
         phone: '2736495',
         email: 'sfdsdfdsgf',
         position: 'f',
+        total: 0
     }
     ];
 
@@ -601,25 +610,25 @@ app.controller('mainCtrl', function ($scope) {
     /**checkbox names */
 
     $scope.columns = [
-        { id: 1, name: 'Company name' },
-        { id: 2, name: 'Contact person' },
+        { id: 1, name: 'Company Name' },
+        { id: 2, name: 'Contact Person' },
         { id: 3, name: 'Industry' },
         { id: 4, name: 'Product' },
         { id: 5, name: 'Type' },
         { id: 6, name: 'Value' },
         { id: 7, name: 'Category' },
-        { id: 8, name: 'Sales stage' },
-        { id: 9, name: 'Last update' },
-        { id: 10, name: 'Person in charge' },
-        { id: 11, name: 'Start date' },
-        { id: 12, name: 'Closing date' },
+        { id: 8, name: 'Sales Stage' },
+        { id: 9, name: 'Last Update' },
+        { id: 10, name: 'Person in Charge' },
+        { id: 11, name: 'Start Date' },
+        { id: 12, name: 'Closing Date' },
         { id: 13, name: 'Status' },
         { id: 14, name: 'Email' },
         { id: 15, name: 'Phone' },
         { id: 16, name: 'Tender' },
         { id: 17, name: 'Remarks' },
-        { id: 18, name: 'PO-date' },
-        { id: 19, name: 'PO-number' }
+        { id: 18, name: 'PO-Date' },
+        { id: 19, name: 'PO-Number' }
 
     ];
 
@@ -658,7 +667,7 @@ app.controller('mainCtrl', function ($scope) {
 
     $scope.setDefault = function () {
         category = "";
-        $scope.projectTitle = "Project table: All categories";
+        $scope.projectTitle = "Project Table: All Categories";
         $scope.showprojecttable = true;
         $scope.showdealtable = false;
         $scope.showleadtable = false;
@@ -684,7 +693,7 @@ app.controller('mainCtrl', function ($scope) {
 
         if ($scope.filterForm.lead) {
             category = "lead";
-            $scope.projectTitle = "Project table: Leads category";
+            $scope.projectTitle = "Project Table: Leads Category";
             $scope.showprojecttable = false;
             $scope.showdealtable = false;
             $scope.showlostcasetable = false;
@@ -710,7 +719,7 @@ app.controller('mainCtrl', function ($scope) {
 
         if ($scope.filterForm.deal) {
             category = "deal";
-            $scope.projectTitle = "Project table: Deals category";
+            $scope.projectTitle = "Project Table: Deals Category";
             $scope.showdealtable = true;
             $scope.showlostcasetable = false;
             $scope.showprojecttable = false;
@@ -737,7 +746,7 @@ app.controller('mainCtrl', function ($scope) {
         }
         if ($scope.filterForm.lostCase) {
             category = "lostcase";
-            $scope.projectTitle = "Project table: Lost cases category";
+            $scope.projectTitle = "Project Table: Lost Cases Category";
             $scope.showdealtable = false;
             $scope.showprojecttable = false;
             $scope.showleadtable = false;
@@ -949,7 +958,7 @@ app.controller('MyControllerModal', ['$scope', '$modal', function ($scope, $moda
         });
 
     }
-
+/**not required for now 
     $scope.opencontact = function (size) {
         var modalInstance = $modal.open({
             controller: 'forCloseContact',
@@ -960,7 +969,8 @@ app.controller('MyControllerModal', ['$scope', '$modal', function ($scope, $moda
 
         });
 
-    }
+
+    }*/
 
     $scope.opensalesperson = function (size) {
         var modalInstance = $modal.open({
@@ -1322,7 +1332,7 @@ app.controller('forCloseDeal', ['$scope', '$modalInstance', function ($scope, $m
 }]);
 
 app.controller('forCloseDelete', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
-    $scope.deleteHeader = "Delete a project";
+    $scope.deleteHeader = "Delete a Project";
     $scope.deleteTitle = "Are you sure to delete this project?";
     $scope.removeRow = function () {
         var currentid = $modalInstance.id;
@@ -1564,7 +1574,7 @@ app.controller('forCloseEditlostcase', ['$scope', '$modalInstance', function ($s
 
 }]);
 
-
+/** for now its not required
 app.controller('forCloseContact', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
 
 
@@ -1590,6 +1600,7 @@ app.controller('forCloseContact', ['$scope', '$modalInstance', function ($scope,
 
 
 }]);
+*/
 
 app.controller('forCloseSalesperson', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
 
@@ -1602,7 +1613,7 @@ app.controller('forCloseSalesperson', ['$scope', '$modalInstance', function ($sc
 }]);
 
 app.controller('forCloseMultipledelete', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
-    $scope.deleteHeaderrows = "Delete projects";
+    $scope.deleteHeaderrows = "Delete Projects";
     $scope.deleteMessage = "Are you sure to delete the selected projects?";
 
     $scope.removeSelectedRows = function () {
@@ -1630,7 +1641,7 @@ app.controller('forCloseMultipledelete', ['$scope', '$modalInstance', function (
 }]);
 
 app.controller('forCloseMultipledeleteErrormessage', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
-    $scope.deleteHeaderrows = "Delete projects";
+    $scope.deleteHeaderrows = "Delete Projects";
     $scope.deleteErrorMessage = "No project is selected. Please select the projects first.";
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
@@ -1651,7 +1662,7 @@ app.controller('forCloseEditcont', ['$scope', '$modalInstance', function ($scope
 }]);
 
 app.controller('forCloseDeletecont', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
-    $scope.deleteHeader = "Delete a contact";
+    $scope.deleteHeader = "Delete a Contact";
     $scope.deleteTitle = "Are you sure to delete this contact?";
     $scope.removeRow = function () {
         var currentid = $modalInstance.contlist;
@@ -1667,8 +1678,8 @@ app.controller('forCloseDeletecont', ['$scope', '$modalInstance', function ($sco
 }]);
 
 app.controller('forCloseMultipledeletecontErrormessage', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
-    $scope.deleteHeaderrows = "Delete contacts";
-    $scope.deleteErrorMessage = "No contact is selected. please select the contact first.";
+    $scope.deleteHeaderrows = "Delete a Contact";
+    $scope.deleteErrorMessage = "No contact is selected. Please select the contacts first.";
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
     };
@@ -1677,7 +1688,7 @@ app.controller('forCloseMultipledeletecontErrormessage', ['$scope', '$modalInsta
 }]);
 
 app.controller('forCloseMultiplecontdelete', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
-    $scope.deleteHeaderrows = "Delete contacts";
+    $scope.deleteHeaderrows = "Delete Contacts";
     $scope.deleteMessage = "Are you sure to delete the selected contacts?";
 
     $scope.removeSelectedRows = function () {
@@ -1716,8 +1727,8 @@ app.controller('forCloseEditcomp', ['$scope', '$modalInstance', function ($scope
 }]);
 
 app.controller('forCloseDeletecomp', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
-    $scope.deleteHeader = "Delete a company";
-    $scope.deleteTitle = "Deleting this company will delete all the related projects and contacts.Do you want to proceed?";
+    $scope.deleteHeader = "Delete a Company";
+    $scope.deleteTitle = "Deleting this company will delete all the related projects and contacts. Do you want to proceed?";
     $scope.removeRow = function () {
         var currentid = $modalInstance.comlist;
         var index = $scope.companylist.indexOf(currentid);
@@ -1733,8 +1744,8 @@ app.controller('forCloseDeletecomp', ['$scope', '$modalInstance', function ($sco
 
 
 app.controller('forCloseMultipledeletecompErrormessage', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
-    $scope.deleteHeaderrows = "Delete companies";
-    $scope.deleteErrorMessage = "No company is selected. please select the company first.";
+    $scope.deleteHeaderrows = "Delete Companies";
+    $scope.deleteErrorMessage = "No company is selected. Please select the companies first.";
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
     };
@@ -1744,8 +1755,8 @@ app.controller('forCloseMultipledeletecompErrormessage', ['$scope', '$modalInsta
 
 
 app.controller('forCloseMultiplecompdelete', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
-    $scope.deleteHeaderrows = "Delete companies";
-    $scope.deleteMessage = "Deleting these companies will delete all the related project and contacts.Do you want to proceed?";
+    $scope.deleteHeaderrows = "Delete Companies";
+    $scope.deleteMessage = "Deleting these companies will delete all the related project and contacts. Do you want to proceed?";
 
     $scope.removeSelectedRows = function () {
         var rows = $modalInstance.list;
@@ -1785,7 +1796,7 @@ app.controller('forCloseEditpers', ['$scope', '$modalInstance', function ($scope
 }]);
 
 app.controller('forCloseDeletepers', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
-    $scope.deleteHeader = "Delete a sales person";
+    $scope.deleteHeader = "Delete a Sales Person";
     $scope.deleteTitle = "Are you sure to delete this sales person?";
     $scope.removeRow = function () {
         var currentid = $modalInstance.list;
@@ -1802,8 +1813,8 @@ app.controller('forCloseDeletepers', ['$scope', '$modalInstance', function ($sco
 
 
 app.controller('forCloseMultipledeletepersErrormessage', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
-    $scope.deleteHeaderrows = "Delete sales persons";
-    $scope.deleteErrorMessage = "No sales person is selected. please select the sales person first.";
+    $scope.deleteHeaderrows = "Delete Sales Persons";
+    $scope.deleteErrorMessage = "No sales person is selected. Please select the sales persons first.";
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
     };
@@ -1813,7 +1824,7 @@ app.controller('forCloseMultipledeletepersErrormessage', ['$scope', '$modalInsta
 
 
 app.controller('forCloseMultiplepersdelete', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
-    $scope.deleteHeaderrows = "Delete sales persons";
+    $scope.deleteHeaderrows = "Delete Sales Persons";
     $scope.deleteMessage = "Are you sure to delete the selected sales persons?";
 
     $scope.removeSelectedRows = function () {

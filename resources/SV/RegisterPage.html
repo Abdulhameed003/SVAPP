@@ -4,57 +4,196 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato" />
     <script src="js/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <script src="js/ui-bootstrap-tpls-0.14.3.min.js"></script>
-    <script src="js/SV.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-messages.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/style1.css">
     <style>
-        body{
-        /* The image used */
-        background-image: url("image/design.png") !important;
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
+
+
+       html {
+        height:750px;
+            overflow-y: auto;
+            
+            /* force the BODY element to match the height of the HTML element */
+        }
     </style>
+    <script>
+
+        var app = angular.module('app', ['ngMessages', 'ui.bootstrap']);
+        app.directive('disallowSpaces', function () {
+            return {
+                restrict: 'A',
+
+                link: function ($scope, $element) {
+                    $element.bind('keydown', function (e) {
+                        if (e.which === 32) {
+                            e.preventDefault();
+                        }
+                    });
+                }
+            }
+        });
+        app.directive('numbersOnly', function () {
+            return {
+                require: 'ngModel',
+                link: function (scope, element, attr, ngModelCtrl) {
+                    function fromUser(text) {
+                        if (text) {
+                            var transformedInput = text.replace(/[^0-9]/g, '');
+
+                            if (transformedInput !== text) {
+                                ngModelCtrl.$setViewValue(transformedInput);
+                                ngModelCtrl.$render();
+                            }
+                            return transformedInput;
+                        }
+                        return undefined;
+                    }
+                    ngModelCtrl.$parsers.push(fromUser);
+                }
+            };
+        });
+        var compareTo = function () {
+            return {
+                require: "ngModel",
+                scope: {
+                    otherModelValue: "=compareTo"
+                },
+                link: function (scope, element, attributes, ngModel) {
+
+                    ngModel.$validators.compareTo = function (modelValue) {
+                        return modelValue == scope.otherModelValue;
+                    };
+
+                    scope.$watch("otherModelValue", function () {
+                        ngModel.$validate();
+                    });
+                }
+            };
+        };
+        app.directive("compareTo", compareTo);
+
+        app.controller('homeCtrl', function ($scope) {
+
+
+            var original = angular.copy($scope.user);
+            $scope.postRegisterform = function (form) {
+
+                if (form.$valid) {
+                    alert('can submit');
+                    $scope.user = angular.copy(original);
+                    $scope.signupForm.$setPristine();
+                    $scope.signupForm.$setValidity();
+                    $scope.signupForm.$setUntouched();
+
+                }
+                if (form.$invalid) {
+
+                    angular.forEach($scope.signupForm.$error, function (field) {
+                        angular.forEach(field, function (errorField) {
+                            errorField.$setTouched();
+                        })
+                    });
+
+                }
+
+
+            };
+        });
+
+
+    </script>
 </head>
 
-<body ng-app="RegisterPage" ng-controller="regController">
-
+<body ng-app="app" ng-controller="homeCtrl">
     <div class="container">
-        <form name="myForm" class="box" style="height:550px;left: 60%;top: 5%;">
-
-            <div class="form-group">
-                <div class="bar" style="width: 400px; height: 50px;border-radius: 25px 25px 0px 0px;" >
-                    <h2> Register an Account </h2>
-                </div>
-                <input type="text" ng-model="fname" class="form-control" id="txf1" placeholder="Name">
-
-                <div class="form-group">
-                    <input type="email" ng-model="email" class="form-control" id="txf2" placeholder="Email">
-                </div>
-                <div class="form-group">
-                    <input type="text" ng-model="phone" class="form-control" id="txf4" placeholder="Phone">
-                </div>
-                <div class="form-group">
-                    <input type="password" ng-model="pass" class="form-control" id="txf5" placeholder="Password">
-                </div>
-                <div class="form-group">
-                    <input type="password" name="confirmPassword" ng-model="confpass" class="form-control" id="txf6" placeholder="Confirm password">
-                </div>
-                <div class="form-group">
-                    <input type="password" ng-model="ComName" class="form-control" id="txf7" placeholder="Company name">
-                </div>
-                <div class="form-group">
-                    <input type="password" ng-model="ComID" class="form-control" id="txf8" placeholder="Company id">
-                </div>
-                <div class="form-group">
-                    <button type="submit" ng-model="register" class="button register">Register</button>
-                </div>
+        <div id="loginleftbox">
+            <img class="img-responsive" src="image/registerback.jpg" />
+        </div>
+        <div class="box" style="left:68%;top:5%;">
+            <div>
+                <img id="loginlogo" src="image/logo-salesvision (2).png" />
             </div>
+            <div class="pagetitle">Register</div>
+            <form name="signupForm" novalidate>
+                <div class="formcontent">
+                    <div class="form-group">
+                        <input type="text" ng-class="{submitting: signupForm.userfname.$error.required && signupForm.userfname.$touched }" ng-model="user.fname"
+                            name="userfname" class="form-control registertext" placeholder="Name" required>
+                        <div class="error">
+                            <div ng-show="signupForm.userfname.$error.required" ng-if="signupForm.userfname.$touched">Can't leave this empty.</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" ng-class="{submitting: signupForm.useremail.$error.email || signupForm.useremail.$error.required && signupForm.useremail.$touched}"
+                            ng-model="user.email" name="useremail" class="form-control registertext" placeholder="Email" required>
 
-        </form>
+                        <div ng-messages="signupForm.useremail.$error" class="error">
+                            <div ng-message="email" ng-if="signupForm.useremail.$touched">Wrong email format.</div>
+                            <div ng-message="required" ng-if="signupForm.useremail.$touched">Can't leave this empty.</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" ng-class="{submitting: signupForm.userphone.$error.required && signupForm.userphone.$touched }" ng-model="user.phone"
+                            name="userphone" class="form-control registertext" ng-pattern="/^[0-9]*$/" placeholder="Phone" required
+                            numbers-only disallow-spaces>
+                        <div class="error">
+                            <div ng-show="signupForm.userphone.$error.required" ng-if="signupForm.userphone.$touched">Can't leave this empty.</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="registerpassword">
+                        <input id="regpass" type="password" ng-class="{submitting: signupForm.userpassword.$error.minlength || signupForm.userpassword.$error.pattern || signupForm.userpassword.$error.required && signupForm.userpassword.$touched}"
+                            name="userpassword" ng-model="user.password" ng-minlength="8" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/"
+                            class="form-control registertext" placeholder="Password" aria-required="true" required popover="Passwords must be at least 8 characters and contain one lower &amp; one uppercase letter, and one non-alpha character (a number or a symbol.)"
+                            popover-placement="bottom" popover-trigger="mouseenter" />
+                        <div ng-messages="signupForm.userpassword.$error" class="error">
+                            <div ng-message="minlength && pattern" ng-if="signupForm.userpassword.$touched">Wrong password format.</div>
+                            <div ng-message="required" ng-if="signupForm.userpassword.$touched">Can't leave this empty.</div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <input id="regconfpass" type="password" ng-class="{submitting: ((signupForm.userpasswordconf.$error.required || signupForm.userpasswordconf.$error.compareTo && user.password)  && signupForm.userpasswordconf.$touched )}"
+                            name="userpasswordconf" ng-model="user.passconf" class="form-control registertext" placeholder="Confirm Password"
+                            compare-to="user.password" required>
+                        <div ng-messages="signupForm.userpasswordconf.$error" class="error">
+                            <div ng-message="required" ng-if="signupForm.userpasswordconf.$touched">Can't leave this empty.</div>
+                            <div ng-message="compareTo" ng-if="signupForm.userpasswordconf.$touched">Passwords do not match! </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" ng-class="{submitting: signupForm.usercompany.$error.required && signupForm.usercompany.$touched }" ng-model="user.ComName"
+                            name="usercompany" class="form-control registertext" placeholder="Company Name" required>
+                        <div class="error">
+                            <div ng-show="signupForm.usercompany.$error.required" ng-if="signupForm.usercompany.$touched">Can't leave this empty.</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" ng-class="{submitting: signupForm.userComID.$error.required && signupForm.userComID.$touched }" ng-model="user.ComID"
+                            name="userComID" class="form-control registertext" placeholder="Company Id" required>
+                        <div class="error">
+                            <div ng-show="signupForm.userComID.$error.required" ng-if="signupForm.userComID.$touched">Can't leave this empty.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" ng-model="register" class="button register" ng-click="postRegisterform(signupForm)">Register</button>
+                </div>
+            </form>
+        </div>
     </div>
+
 </body>
+
+
 
 </html>
