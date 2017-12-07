@@ -20,11 +20,11 @@ class RegisterUserTest extends TestCase
         parent::setUp();
         $this->company =factory(\App\Tenant::class)->make();
         $this->user = factory(\App\User::class)->make();
-        
+        $this->DBname = 'db_'.$this->company->company_id;
     }
  
     public function tearDown(){
-       
+       DB::statement("DROP DATABASE {$this->DBname}");
     }
 
     public function test_registration_display(){
@@ -45,11 +45,10 @@ class RegisterUserTest extends TestCase
                 'company_phone' => '323223',
         ];  
 
-        $response = $this->call('POST','/register',$data);
+        $response = $this->post('/register',$data);
         $response->assertRedirect('/login');
         $this->assertDatabaseHas('tenants',['company_id'=>$this->company->company_id],'mysql');
         $this->assertDatabaseHas('users',['email'=>$this->user->email],'mysql');
-
         
     }
 
