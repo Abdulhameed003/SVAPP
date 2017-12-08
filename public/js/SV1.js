@@ -32,6 +32,7 @@ app.controller('mainCtrl', function ($scope) {
 
     /**calling the project section */
     $scope.callProject = function () {
+        
         $scope.showcomp = false;
         $scope.showcontact = false;
         $scope.showsalesperson = false;
@@ -67,7 +68,6 @@ app.controller('mainCtrl', function ($scope) {
         $scope.showsalesperson = true;
         $scope.projectTitle = "Sales Person Table";
     }
-
 
     $scope.setTabletoDefault = function () {
         $scope.defaulttable = {
@@ -130,7 +130,6 @@ app.controller('mainCtrl', function ($scope) {
 
     };
 
-
     /**reseting forms */
     $scope.resetForm = function (id) {
         if (id == 'filterForm')
@@ -164,8 +163,8 @@ app.controller('mainCtrl', function ($scope) {
 
 
 
-    var projects = [{
-
+    var projects = [
+        {
         No: 5,
         companyName: 'f',
         contactPerson: 's',
@@ -181,8 +180,8 @@ app.controller('mainCtrl', function ($scope) {
         salesStage: '40%',
         lastUpdate: '22/11/2017',
         pincharge: 'Iulia',
-        remarks: 'sdddd'
-    }, {
+        remarks: 'sdddd'}, 
+        {
         No: 2,
         companyName: 'z',
         contactPerson: 'q',
@@ -198,9 +197,9 @@ app.controller('mainCtrl', function ($scope) {
         salesStage: '40%',
         lastUpdate: '22/11/2018',
         remarks: 'sdddd'
-    },
+        },
 
-    {
+        {
         No: 3,
         companyName: 'z',
         contactPerson: 'q',
@@ -216,8 +215,8 @@ app.controller('mainCtrl', function ($scope) {
         salesStage: '40%',
         lastUpdate: '22/11/2018',
         remarks: 'sdddd'
-    },
-    {
+        },
+        {
         No: 7,
         companyName: 'z',
         contactPerson: 'q',
@@ -233,8 +232,8 @@ app.controller('mainCtrl', function ($scope) {
         salesStage: '40%',
         lastUpdate: '22/11/2018',
         remarks: 'sdddd'
-    },
-    {
+        },
+        {
         No: 20,
         companyName: 'z',
         contactPerson: 'q',
@@ -250,8 +249,8 @@ app.controller('mainCtrl', function ($scope) {
         salesStage: '40%',
         lastUpdate: '22/11/2018',
         remarks: 'sdddd'
-    },
-    {
+        },
+        {
         No: 18,
         companyName: 'z',
         contactPerson: 'q',
@@ -267,8 +266,8 @@ app.controller('mainCtrl', function ($scope) {
         salesStage: '40%',
         lastUpdate: '22/11/2018',
         remarks: 'sdddd'
-    },
-    {
+        },
+        {
         No: 13,
         companyName: 'z',
         contactPerson: 'q',
@@ -284,8 +283,8 @@ app.controller('mainCtrl', function ($scope) {
         salesStage: '40%',
         lastUpdate: '22/11/2018',
         remarks: 'sdddd'
-    },
-    {
+        },
+        {
         No: 9,
         companyName: 'z',
         contactPerson: 'q',
@@ -301,8 +300,8 @@ app.controller('mainCtrl', function ($scope) {
         salesStage: '40%',
         lastUpdate: '22/11/2018',
         remarks: 'sdddd'
-    },
-    {
+        },
+        {
         No: 10,
         companyName: 'z',
         contactPerson: 'q',
@@ -318,8 +317,8 @@ app.controller('mainCtrl', function ($scope) {
         salesStage: '40%',
         lastUpdate: '22/11/2018',
         remarks: 'sdddd'
-    },
-    {
+        },
+        {
         No: 22,
         companyName: 'z',
         contactPerson: 'q',
@@ -335,8 +334,8 @@ app.controller('mainCtrl', function ($scope) {
         salesStage: '40%',
         lastUpdate: '22/11/2018',
         remarks: 'sdddd'
-    },
-    {
+        },
+        {
         No: 33,
         companyName: 'z',
         contactPerson: 'q',
@@ -352,8 +351,8 @@ app.controller('mainCtrl', function ($scope) {
         salesStage: '40%',
         lastUpdate: '22/11/2018',
         remarks: 'sdddd'
-    },
-    {
+        },
+        {
         No: 34,
         companyName: 'z',
         contactPerson: 'q',
@@ -369,7 +368,7 @@ app.controller('mainCtrl', function ($scope) {
         salesStage: '40%',
         lastUpdate: '22/11/2018',
         remarks: 'sdddd'
-    },
+        },
 
 
     ];
@@ -393,192 +392,192 @@ app.controller('mainCtrl', function ($scope) {
 
     $scope.companylist = [{
 
-        No: 1,
-        companyName: 'f',
-        contactPerson: 's',
-        website: 'sfdsdfdsgf',
-        phone: '2736495',
-        industry: 'f',
-        address: 'sdfcdf'
+            No: 1,
+            companyName: 'f',
+            contactPerson: 's',
+            website: 'sfdsdfdsgf',
+            phone: '2736495',
+            industry: 'f',
+            address: 'sdfcdf'
 
-    }, {
-        No: 12,
-        companyName: 'a',
-        contactPerson: 's',
-        website: 'sfdsdfdsgf',
-        phone: '2736495',
-        industry: 'f',
-        address: 'sdfcdf'
-    },
+        }, {
+            No: 12,
+            companyName: 'a',
+            contactPerson: 's',
+            website: 'sfdsdfdsgf',
+            phone: '2736495',
+            industry: 'f',
+            address: 'sdfcdf'
+        },
 
-    {
-        No: 5,
-        companyName: 'y',
-        contactPerson: 's',
-        website: 'sfdsdfdsgf',
-        phone: '2736495',
-        industry: 'f',
-        address: 'sdfcdf'
-    },
-    {
-        No: 3,
-        companyName: 'y',
-        contactPerson: 's',
-        website: 'sfdsdfdsgf',
-        phone: '2736495',
-        industry: 'f',
-        address: 'sdfcdf'
-    },
-    {
-        No: 9,
-        companyName: 'y',
-        contactPerson: 's',
-        website: 'sfdsdfdsgf',
-        phone: '2736495',
-        industry: 'f',
-        address: 'sdfcdf'
-    },
-    {
-        No: 35,
-        companyName: 'y',
-        contactPerson: 's',
-        website: 'sfdsdfdsgf',
-        phone: '2736495',
-        industry: 'f',
-        address: 'sdfcdf'
-    },
-    {
-        No: 19,
-        companyName: 'y',
-        contactPerson: 's',
-        website: 'sfdsdfdsgf',
-        phone: '2736495',
-        industry: 'f',
-        address: 'sdfcdf'
-    }
+        {
+            No: 5,
+            companyName: 'y',
+            contactPerson: 's',
+            website: 'sfdsdfdsgf',
+            phone: '2736495',
+            industry: 'f',
+            address: 'sdfcdf'
+        },
+        {
+            No: 3,
+            companyName: 'y',
+            contactPerson: 's',
+            website: 'sfdsdfdsgf',
+            phone: '2736495',
+            industry: 'f',
+            address: 'sdfcdf'
+        },
+        {
+            No: 9,
+            companyName: 'y',
+            contactPerson: 's',
+            website: 'sfdsdfdsgf',
+            phone: '2736495',
+            industry: 'f',
+            address: 'sdfcdf'
+        },
+        {
+            No: 35,
+            companyName: 'y',
+            contactPerson: 's',
+            website: 'sfdsdfdsgf',
+            phone: '2736495',
+            industry: 'f',
+            address: 'sdfcdf'
+        },
+        {
+            No: 19,
+            companyName: 'y',
+            contactPerson: 's',
+            website: 'sfdsdfdsgf',
+            phone: '2736495',
+            industry: 'f',
+            address: 'sdfcdf'
+        }
     ];
 
 
 
     $scope.contacts = [{
 
-        No: 1,
-        companyName: 'y',
-        name: 'v',
-        phone: '2736495',
-        email: 'sfdsdfdsgf',
-        position: 'f',
+            No: 1,
+            companyName: 'y',
+            name: 'v',
+            phone: '2736495',
+            email: 'sfdsdfdsgf',
+            position: 'f',
 
-    }, {
-        No: 12,
-        companyName: 'a',
-        name: 'r',
-        phone: '2736495',
-        email: 'sfdsdfdsgf',
-        position: 'f',
-    },
+        }, {
+            No: 12,
+            companyName: 'a',
+            name: 'r',
+            phone: '2736495',
+            email: 'sfdsdfdsgf',
+            position: 'f',
+        },
 
-    {
-        No: 10,
-        companyName: 'z',
-        name: 'f',
-        phone: '2736495',
-        email: 'sfdsdfdsgf',
-        position: 'f',
-    },
-    {
-        No: 3,
-        companyName: 'p',
-        name: 'q',
-        phone: '2736495',
-        email: 'sfdsdfdsgf',
-        position: 'f',
-    },
-    {
-        No: 5,
-        companyName: 'c',
-        name: 'o',
-        phone: '2736495',
-        email: 'sfdsdfdsgf',
-        position: 'f',
-    },
-    {
-        No: 7,
-        companyName: 'f',
-        name: 'i',
-        phone: '2736495',
-        email: 'sfdsdfdsgf',
-        position: 'f',
-    },
-    {
-        No: 2,
-        companyName: 'n',
-        name: 'x',
-        phone: '2736495',
-        email: 'sfdsdfdsgf',
-        position: 'f',
-    }
+        {
+            No: 10,
+            companyName: 'z',
+            name: 'f',
+            phone: '2736495',
+            email: 'sfdsdfdsgf',
+            position: 'f',
+        },
+        {
+            No: 3,
+            companyName: 'p',
+            name: 'q',
+            phone: '2736495',
+            email: 'sfdsdfdsgf',
+            position: 'f',
+        },
+        {
+            No: 5,
+            companyName: 'c',
+            name: 'o',
+            phone: '2736495',
+            email: 'sfdsdfdsgf',
+            position: 'f',
+        },
+        {
+            No: 7,
+            companyName: 'f',
+            name: 'i',
+            phone: '2736495',
+            email: 'sfdsdfdsgf',
+            position: 'f',
+        },
+        {
+            No: 2,
+            companyName: 'n',
+            name: 'x',
+            phone: '2736495',
+            email: 'sfdsdfdsgf',
+            position: 'f',
+        }
     ];
 
 
     $scope.spersonlist = [{
 
-        No: 1,
-        name: 'v',
-        phone: '2736495',
-        email: 'sfdsdfdsgf',
-        position: 'f',
-        total: 5
+            No: 1,
+            name: 'v',
+            phone: '2736495',
+            email: 'sfdsdfdsgf',
+            position: 'f',
+            total: 5
 
-    }, {
-        No: 12,
-        name: 'r',
-        phone: '2736495',
-        email: 'sfdsdfdsgf',
-        position: 'f',
-        total: 3
-    },
+        }, {
+            No: 12,
+            name: 'r',
+            phone: '2736495',
+            email: 'sfdsdfdsgf',
+            position: 'f',
+            total: 3
+        },
 
-    {
-        No: 10,
-        name: 'f',
-        phone: '2736495',
-        email: 'sfdsdfdsgf',
-        position: 'f',
-        total: 2
-    },
-    {
-        No: 3,
-        name: 'q',
-        phone: '2736495',
-        email: 'sfdsdfdsgf',
-        position: 'f',
-        total: 4
-    },
-    {
-        No: 5,
-        name: 'o',
-        phone: '2736495',
-        email: 'sfdsdfdsgf',
-        position: 'f',
-        total: 7
-    },
-    {
-        No: 7,
-        name: 'i',
-        phone: '2736495',
-        email: 'sfdsdfdsgf',
-        position: 'f',
-        total: 5
-    },
-    {
-        No: 70,
-        name: 'x',
-        phone: '2736495',
-        email: 'sfdsdfdsgf',
-        position: 'f',
-        total: 0
-    }
+        {
+            No: 10,
+            name: 'f',
+            phone: '2736495',
+            email: 'sfdsdfdsgf',
+            position: 'f',
+            total: 2
+        },
+        {
+            No: 3,
+            name: 'q',
+            phone: '2736495',
+            email: 'sfdsdfdsgf',
+            position: 'f',
+            total: 4
+        },
+        {
+            No: 5,
+            name: 'o',
+            phone: '2736495',
+            email: 'sfdsdfdsgf',
+            position: 'f',
+            total: 7
+        },
+        {
+            No: 7,
+            name: 'i',
+            phone: '2736495',
+            email: 'sfdsdfdsgf',
+            position: 'f',
+            total: 5
+        },
+        {
+            No: 70,
+            name: 'x',
+            phone: '2736495',
+            email: 'sfdsdfdsgf',
+            position: 'f',
+            total: 0
+        }
     ];
 
 
@@ -631,7 +630,6 @@ app.controller('mainCtrl', function ($scope) {
         { id: 19, name: 'PO-Number' }
 
     ];
-
 
     $scope.columns[0].disabled = true;
 
@@ -886,8 +884,7 @@ app.controller('mainCtrl', function ($scope) {
         start = +start;
         return input.slice(start);
     };
-}
-    );
+});
 
 
 

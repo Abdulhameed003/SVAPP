@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
+<html lang="{{ app()->getLocale() }}" ng-app="app">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,25 +20,12 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
-    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
-    <link href="//fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css" /> -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
+    <link href="//fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css" /> 
 
     <!-- Angular -->
     <link href="{{asset('css/angular-datepicker.css')}}" rel="stylesheet" type="text/css" >
-   
-
-
-</head>
-<body ng-controller="mainCtrl">
-   
-    <div>
-        <img id="loginlogo" src="image/logo-salesvision (2).png" />
-    </div>
-
-    @include('inc/navbar')
-    @yield('content')
-   
-
+    
     <!-- Scripts -->
     <script src="{{asset('js/app.js') }}"></script>
     <script src="{{asset('js/angular.min.js')}}"></script>
@@ -51,6 +38,16 @@
 
     <!--<script src="{{asset('js/bootstrap.js')}}"></script>
     <script src="{{asset('js/jquery.js')}}"></script> -->
+
+</head>
+<body ng-controller="mainCtrl">
+   
+    @include('inc/navbar')
+    @include('pages/project')
+   
+    
+    
+
     
 
     <!-- Modal pages scripts section -->

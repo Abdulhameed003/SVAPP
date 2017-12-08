@@ -1,9 +1,14 @@
+     <div>
+        <img id="loginlogo" src="image/logo-salesvision (2).png" />
+    </div>
+    
     <nav class="bar">
-        <button type="button" class="btn btn-link mainbutton" ng-click="callProject(); setTabletoDefault()" style="position:absolute;top:3%;left:100px;">Projects</button>
+        <button type="button" class="btn btn-link mainbutton" style="position:absolute;top:3%;left:100px;" ng-click="callProject(); setTabletoDefault()" >Projects</button>
         <button type="button" class="btn btn-link mainbutton" style="position:absolute;top:3%;left:250px;" ng-click="callCompany()">Companies</button>
         <button type="button" class="btn btn-link mainbutton" style="position:absolute;top:3%;left:400px;" ng-click="callContact()">Contacts</button>
         <button type="button" class="btn btn-link mainbutton" style="position:absolute;top:3%;left:550px;" ng-click="callSalesperson()">Sales Persons</button>
         <button type="button" class="btn btn-link mainbutton" style="position:absolute;top:3%;left:700px;">Dashboard</button>
+        
         <div class="dropdown navdropdown" style="top:3%;left:88%;" ng-controller="MyControllerModal">
             <button type="button" class="btn btn-link mainbutton1" id="usernamebtn">Username</button>
             <div class="dropdown-content">
