@@ -1,4 +1,5 @@
-
+@extends('layouts.mainapp')
+@section('content')
     <section id="defaultprojectview" class="project" ng-class="{visible:show}">
         <div>
             <h1 class="sectiontitle">@{{projectTitle}}</h1>
@@ -467,4 +468,4 @@
         </div>
 
     </section>
-
+@endsection

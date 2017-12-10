@@ -955,7 +955,7 @@ app.controller('MyControllerModal', ['$scope', '$modal', function ($scope, $moda
         });
 
     }
-/**not required for now 
+    /**not required for now 
     $scope.opencontact = function (size) {
         var modalInstance = $modal.open({
             controller: 'forCloseContact',

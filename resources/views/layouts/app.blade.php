@@ -42,8 +42,8 @@
 </head>
 <body ng-controller="mainCtrl">
    
-    @include('inc/navbar')
-    @include('pages/project')
+   
+    @yield('content')
    
     
     
