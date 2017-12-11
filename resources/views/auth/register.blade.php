@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container" ng-app="app" ng-controller="homeCtrl">
         <div id="loginleftbox">
             <img class="img-responsive" src="{{asset('image/registerback.jpg')}}" />
         </div>
@@ -14,66 +14,66 @@
                 {{ csrf_field() }}
                 <div class="formcontent">
                     <div class="form-group">
-                        <input type="text" ng-class="{submitting: signupForm.userfname.$error.required && signupForm.userfname.$touched }" ng-model="user.fname"
+                        <input type="text" ng-class="{submitting: signupForm.first_name.$error.required && signupForm.first_name.$touched }" ng-model="user.fname"
                             name="first_name" class="form-control registertext" placeholder="Name" required>
-                        <div class="error">
-                            <div ng-show="signupForm.userfname.$error.required" ng-if="signupForm.userfname.$touched">Can't leave this empty.</div>
+                     <div ng-messages="signupForm.first_name.$error" class="error">
+                            <div ng-message="required" ng-if="signupForm.first_name.$touched">Can't leave this empty.</div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <input type="email" ng-class="{submitting: signupForm.useremail.$error.email || signupForm.useremail.$error.required && signupForm.useremail.$touched}"
+                        <input type="email" ng-class="{submitting: signupForm.email.$error.email || signupForm.email.$error.required && signupForm.email.$touched}"
                             ng-model="user.email" name="email" class="form-control registertext" placeholder="Email" required>
 
-                        <div ng-messages="signupForm.useremail.$error" class="error">
-                            <div ng-message="email" ng-if="signupForm.useremail.$touched">Wrong email format.</div>
-                            <div ng-message="required" ng-if="signupForm.useremail.$touched">Can't leave this empty.</div>
+                        <div ng-messages="signupForm.email.$error" class="error">
+                            <div ng-message="email" ng-if="signupForm.email.$touched">Wrong email format.</div>
+                            <div ng-message="required" ng-if="signupForm.email.$touched">Can't leave this empty.</div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <input type="text" ng-class="{submitting: signupForm.userphone.$error.required && signupForm.userphone.$touched }" ng-model="user.phone"
-                            name="number" class="form-control registertext" ng-pattern="/^[0-9]*$/" placeholder="Phone" required
-                            numbers-only disallow-spaces>
-                        <div class="error">
-                            <div ng-show="signupForm.userphone.$error.required" ng-if="signupForm.userphone.$touched">Can't leave this empty.</div>
+                        <input type="text" ng-class="{submitting: signupForm.company_phone.$error.required && signupForm.company_phone.$touched }" ng-model="user.phone"
+                            name="company_phone" class="form-control registertext" ng-pattern="/^[0-9]*$/" placeholder="Phone" required
+                            company_phones-only disallow-spaces>
+                         <div ng-messages="signupForm.company_phone.$error" class="error">
+                            <div ng-message="required" ng-if="signupForm.company_phone.$touched">Can't leave this empty.</div>
                         </div>
                     </div>
 
                     <div class="form-group" id="registerpassword">
-                        <input id="regpass" type="password" ng-class="{submitting: signupForm.userpassword.$error.minlength || signupForm.userpassword.$error.pattern || signupForm.userpassword.$error.required && signupForm.userpassword.$touched}"
+                        <input id="regpass" type="password" ng-class="{submitting: signupForm.password.$error.minlength || signupForm.password.$error.pattern || signupForm.password.$error.required && signupForm.password.$touched}"
                             name="password" ng-model="user.password" ng-minlength="8" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/"
-                            class="form-control registertext" placeholder="Password" aria-required="true" required popover="Passwords must be at least 8 characters and contain one lower &amp; one uppercase letter, and one non-alpha character (a number or a symbol.)"
+                            class="form-control registertext" placeholder="Password" aria-required="true" required popover="Passwords must be at least 8 characters and contain one lower &amp; one uppercase letter, and one non-alpha character (a company_phone or a symbol.)"
                             popover-placement="bottom" popover-trigger="mouseenter" />
-                        <div ng-messages="signupForm.userpassword.$error" class="error">
-                            <div ng-message="minlength && pattern" ng-if="signupForm.userpassword.$touched">Wrong password format.</div>
-                            <div ng-message="required" ng-if="signupForm.userpassword.$touched">Can't leave this empty.</div>
+                        <div ng-messages="signupForm.password.$error" class="error">
+                            <div ng-message="minlength && pattern" ng-if="signupForm.password.$touched">Wrong password format.</div>
+                            <div ng-message="required" ng-if="signupForm.password.$touched">Can't leave this empty.</div>
                         </div>
                     </div>
 
 
                     <div class="form-group">
-                        <input id="regconfpass" type="password" ng-class="{submitting: ((signupForm.userpasswordconf.$error.required || signupForm.userpasswordconf.$error.compareTo && user.password)  && signupForm.userpasswordconf.$touched )}"
-                            name="comfirm-password" ng-model="user.passconf" class="form-control registertext" placeholder="Confirm Password"
+                        <input id="regconfpass" type="password" ng-class="{submitting: ((signupForm.password_confirmation.$error.required || signupForm.password_confirmation.$error.compareTo && user.password)  && signupForm.password_confirmation.$touched )}"
+                            name="password_confirmation" ng-model="user.passconf" class="form-control registertext" placeholder="Confirm Password"
                             compare-to="user.password" required>
-                        <div ng-messages="signupForm.userpasswordconf.$error" class="error">
-                            <div ng-message="required" ng-if="signupForm.userpasswordconf.$touched">Can't leave this empty.</div>
-                            <div ng-message="compareTo" ng-if="signupForm.userpasswordconf.$touched">Passwords do not match! </div>
+                        <div ng-messages="signupForm.password_confirmation.$error" class="error">
+                            <div ng-message="required" ng-if="signupForm.password_confirmation.$touched">Can't leave this empty.</div>
+                            <div ng-message="compareTo" ng-if="signupForm.password_confirmation.$touched">Passwords do not match! </div>
 
                         </div>
 
                     </div>
 
                     <div class="form-group">
-                        <input type="text" ng-class="{submitting: signupForm.usercompany.$error.required && signupForm.usercompany.$touched }" ng-model="user.ComName"
+                        <input type="text" ng-class="{submitting: signupForm.company_name.$error.required && signupForm.company_name.$touched }" ng-model="user.ComName"
                             name="company_name" class="form-control registertext" placeholder="Company Name" required>
-                        <div class="error">
-                            <div ng-show="signupForm.usercompany.$error.required" ng-if="signupForm.usercompany.$touched">Can't leave this empty.</div>
+                         <div ng-messages="signupForm.company_name.$error" class="error">
+                            <div ng-message="required" ng-if="signupForm.company_name.$touched">Can't leave this empty.</div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <input type="text" ng-class="{submitting: signupForm.userComID.$error.required && signupForm.userComID.$touched }" ng-model="user.ComID"
-                            name="company_id    " class="form-control registertext" placeholder="Company Id" required>
+                        <input type="text" ng-class="{submitting: signupForm.company_id.$error.required && signupForm.company_id.$touched }" ng-model="user.ComID"
+                            name="company_id"   class="form-control registertext" placeholder="Company Id" required>
                         <div class="error">
-                            <div ng-show="signupForm.userComID.$error.required" ng-if="signupForm.userComID.$touched">Can't leave this empty.</div>
+                            <div ng-show="signupForm.company_id.$error.required" ng-if="signupForm.company_id.$touched">Can't leave this empty.</div>
                         </div>
                     </div>
                 </div>
