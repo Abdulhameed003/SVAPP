@@ -1,7 +1,46 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class "container" ng-app="myApp" ng-controller="mainCtrl">   
+    <div  id="loginleftbox" >
+        <img   class="img-responsive" src="image/loginback1.jpg" />
+    </div>
+
+    <div class="box" style="left: 68%; top: 15%;">
+        <div>
+        <img  id="loginlogo" src="image/logo-salesvision (2).png" />
+        </div>
+        <div class="pagetitle">Login</div>
+        <form>
+            <div class="formcontent">
+                <div class="form-group">
+                    <input type="email" ng-model="Username" class="form-control registertext" placeholder="Email" />
+                </div>
+                <div class="form-group">
+                    <input type="password" ng-model="password" class="form-control registertext" placeholder="Password">
+                </div>
+
+                <div class="form-group">
+                    <input type="text" ng-model="companyID" class="form-control registertext" placeholder="Company Id">
+                </div>
+
+            </div>
+            <div class="form-group">
+                <button type="submit" ng-model="login" class="button register">Sign In</button>
+                <div>
+                    <button type="button" ng-click="open('sm')" class="btn btn-link" id="forget-pass">Forgot your Password?</button>
+
+                    <a href="RegisterPage.html" target="blank">
+                        <button type="button" class="btn btn-link" id="sign-up">Register</button>
+                    </a>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+<!--div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
@@ -79,5 +118,5 @@
             </div>
         </div>
     </div>
-</div>
+</div-->
 @endsection

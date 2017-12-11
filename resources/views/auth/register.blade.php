@@ -10,14 +10,21 @@
                 <img id="loginlogo" src="image/logo-salesvision (2).png" />
             </div>
             <div class="pagetitle">Register</div>
-            <form name="signupForm" method="POST" action="{{ route('register') }}" novalidate>
+            <form name="signupForm" ng-submit ="postRegisterform(signupForm)" novalidate>
                 {{ csrf_field() }}
                 <div class="formcontent">
                     <div class="form-group">
                         <input type="text" ng-class="{submitting: signupForm.first_name.$error.required && signupForm.first_name.$touched }" ng-model="user.fname"
-                            name="first_name" class="form-control registertext" placeholder="Name" required>
-                     <div ng-messages="signupForm.first_name.$error" class="error">
+                            name="first_name" class="form-control registertext" placeholder="First Name" required>
+                        <div ng-messages="signupForm.first_name.$error" class="error">
                             <div ng-message="required" ng-if="signupForm.first_name.$touched">Can't leave this empty.</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" ng-class="{submitting: signupForm.first_name.$error.required && signupForm.last_name.$touched }" ng-model="user.lname"
+                            name="last_name" class="form-control registertext" placeholder="Last Name" required>
+                        <div ng-messages="signupForm.last_name.$error" class="error">
+                            <div ng-message="required" ng-if="signupForm.last_name.$touched">Can't leave this empty.</div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -29,15 +36,7 @@
                             <div ng-message="required" ng-if="signupForm.email.$touched">Can't leave this empty.</div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <input type="text" ng-class="{submitting: signupForm.company_phone.$error.required && signupForm.company_phone.$touched }" ng-model="user.phone"
-                            name="company_phone" class="form-control registertext" ng-pattern="/^[0-9]*$/" placeholder="Phone" required
-                            company_phones-only disallow-spaces>
-                         <div ng-messages="signupForm.company_phone.$error" class="error">
-                            <div ng-message="required" ng-if="signupForm.company_phone.$touched">Can't leave this empty.</div>
-                        </div>
-                    </div>
-
+                    
                     <div class="form-group" id="registerpassword">
                         <input id="regpass" type="password" ng-class="{submitting: signupForm.password.$error.minlength || signupForm.password.$error.pattern || signupForm.password.$error.required && signupForm.password.$touched}"
                             name="password" ng-model="user.password" ng-minlength="8" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/"
@@ -76,9 +75,25 @@
                             <div ng-show="signupForm.company_id.$error.required" ng-if="signupForm.company_id.$touched">Can't leave this empty.</div>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <input type="text" ng-class="{submitting: signupForm.company_phone.$error.required && signupForm.company_phone.$touched }" ng-model="user.phone"
+                            name="company_phone" class="form-control registertext" ng-pattern="/^[0-9]*$/" placeholder="Phone" required
+                            company_phones-only disallow-spaces>
+                         <div ng-messages="signupForm.company_phone.$error" class="error">
+                            <div ng-message="required" ng-if="signupForm.company_phone.$touched">Can't leave this empty.</div>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <button type="submit" ng-model="register" class="button register" ng-click="postRegisterform(signupForm)">Register</button>
+                        <input type="text" ng-class="{submitting: signupForm.company_phone.$error.required && signupForm.company_phone.$touched }" ng-model="user.phone"
+                            name="company_phone" class="form-control registertext" ng-pattern="/^[0-9]*$/" placeholder="Phone" required
+                            company_phones-only disallow-spaces>
+                         <div ng-messages="signupForm.company_phone.$error" class="error">
+                            <div ng-message="required" ng-if="signupForm.company_phone.$touched">Can't leave this empty.</div>
+                        </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" ng-model="register" class="button register" >Register</button>
                 </div>
             </form>
         </div>

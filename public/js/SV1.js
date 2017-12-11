@@ -26,7 +26,8 @@ angular.module('myApp').controller('PopupCont', ['$scope', '$modalInstance', fun
 
 var app = angular.module('app', ['ui.bootstrap', '720kb.datepicker', 'checklist-model']);
 
-app.controller('mainCtrl', function ($scope) {
+
+app.controller('mainCtrl',['$scope','$http'], function ($scope, $http) {
     var category = "";
     var projectTitle = "";
 
