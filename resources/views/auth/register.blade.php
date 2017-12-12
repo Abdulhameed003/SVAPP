@@ -15,14 +15,14 @@
                 <div class="formcontent">
                     <div class="form-group">
                         <input type="text" ng-class="{submitting: signupForm.first_name.$error.required && signupForm.first_name.$touched }" ng-model="user.fname"
-                            name="first_name" class="form-control registertext" placeholder="First Name" required>
+                            name="first_name" class="form-control registertext" placeholder="First Name" required only-letters-input>
                         <div ng-messages="signupForm.first_name.$error" class="error">
                             <div ng-message="required" ng-if="signupForm.first_name.$touched">Can't leave this empty.</div>
                         </div>
                     </div>
                     <div class="form-group">
                         <input type="text" ng-class="{submitting: signupForm.first_name.$error.required && signupForm.last_name.$touched }" ng-model="user.lname"
-                            name="last_name" class="form-control registertext" placeholder="Last Name" required>
+                            name="last_name" class="form-control registertext" placeholder="Last Name" required only-letters-input>
                         <div ng-messages="signupForm.last_name.$error" class="error">
                             <div ng-message="required" ng-if="signupForm.last_name.$touched">Can't leave this empty.</div>
                         </div>
@@ -77,10 +77,11 @@
                     </div>
                     <div class="form-group">
                         <input type="text" ng-class="{submitting: signupForm.company_phone.$error.required && signupForm.company_phone.$touched }" ng-model="user.phone"
-                            name="company_phone" class="form-control registertext" ng-pattern="/^[0-9]*$/" placeholder="Phone" required
-                            company_phones-only disallow-spaces>
+                            name="company_phone" class="form-control registertext" ng-maxlength="10" placeholder="Phone" required
+                          restrict-to="[0-9]">
                          <div ng-messages="signupForm.company_phone.$error" class="error">
                             <div ng-message="required" ng-if="signupForm.company_phone.$touched">Can't leave this empty.</div>
+                             <div ng-message="maxlength" ng-if="signupForm.company_phone.$touched">Maximum length is 10 numbers.</div>
                         </div>
                     </div>
                 </div>
