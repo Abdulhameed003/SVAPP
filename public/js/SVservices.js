@@ -8,7 +8,7 @@ SalesVisionServices.factory('userService', ['$http', 'localStorageService', func
                 return true;
             else
                 return false;
-    
+                
         }
     
         function register(formdata, onSuccess, onError) {

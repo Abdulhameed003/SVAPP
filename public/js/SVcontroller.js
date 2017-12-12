@@ -21,10 +21,8 @@ salesVisionControllers.controller('LoginController', ['$scope', '$http','userSer
                         $scope.signupForm.$setUntouched();
                     },
                     function(response){
-                        scope.error = response.data.error;
+                        scope.error = response.data;
                 });
-
-               
 
             }
             if (form.$invalid) {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
+<html lang="{{ app()->getLocale() }}" ng-app="app">
 
 <head>
 	<meta charset="utf-8">
@@ -32,20 +32,21 @@
 	<script src="{{asset('bower_components/angular/angular.min.js')}}"></script>
 	<script src="{{asset('bower_components/dist/angular-datepicker.js')}}"></script>
 	<script src="{{asset('js/ui-bootstrap-tpls-0.14.3.min.js')}}"></script>
-	<script src="{{asset('js/SV1.js')}}"></script>
 	<script src="{{asset('bower_components/checklist-model.js')}}"></script>
-
-
 	<script src="{{asset('bower_components/bootstrap/dist/js/bootstrap.js')}}"></script>
 	<script src="{{asset('bower_components/jquery/dist/jquery.js')}}"></script>
-	<!--script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-messages.js"></script-->
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-messages.js"></script>
 	<script src="{{asset('bower_components/angular-messages/angular-messages.js')}}"></script>
 	<script src="{{asset('bower_components/angular-route/angular-route.min.js')}}"></script>
 	<script src="{{asset('bower_components/angular-local-storage/dist/angular-local-storage.min.js')}}"></script>
 	<script src="{{asset('bower_components/restangular/dist/restangular.min.js')}}"></script>
 
-	<script>
-		var app = angular.module('app', ['ngMessages', 'ui.bootstrap']);
+	<script src="{{asset('js/SV1.js')}}"></script>
+	<script src="{{asset('js/SVcontroller.js')}}"></script>
+	<script src="{{asset('js/SVservices.js')}}"></script>
+	
+	<!--script>
+		/*var app = angular.module('app', ['ngMessages', 'ui.bootstrap']);
         (function() {
             
               app.directive('onlyLettersInput', onlyLettersInput);
@@ -70,7 +71,7 @@
             
             })();
         app.directive('restrictTo', function() {
-    return {
+    	return {
         restrict: 'A',
         link: function (scope, element, attrs) {
             var re = RegExp(attrs.restrictTo);
@@ -82,8 +83,8 @@
                 }
             });
         }
-    }
-});
+		}
+		});
         var compareTo = function () {
             return {
                 require: "ngModel",
@@ -102,7 +103,7 @@
                 }
             };
         };
-        app.directive("compareTo", compareTo);
+        app.directive("compareTo", compareTo);*/
 
         app.controller('homeCtrl', function ($scope) {
  
@@ -134,9 +135,9 @@
 
             };
         });
-	</script>
+	</script -->
 
-</head>
+</head >
 
 <body>
 
