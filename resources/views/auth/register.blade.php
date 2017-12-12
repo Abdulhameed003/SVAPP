@@ -7,7 +7,7 @@
         </div>
         <div class="box" style="left:68%;top:5%;">
             <div>
-                <img id="loginlogo" src="image/logo-salesvision (2).png" />
+                <img id="loginlogo" src="{{asset('image/logo-salesvision (2).png')}}" />
             </div>
             <div class="pagetitle">Register</div>
             <form name="signupForm" ng-submit ="postRegisterform(signupForm)" novalidate>
@@ -85,14 +85,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                        <input type="text" ng-class="{submitting: signupForm.company_phone.$error.required && signupForm.company_phone.$touched }" ng-model="user.phone"
-                            name="company_phone" class="form-control registertext" ng-pattern="/^[0-9]*$/" placeholder="Phone" required
-                            company_phones-only disallow-spaces>
-                         <div ng-messages="signupForm.company_phone.$error" class="error">
-                            <div ng-message="required" ng-if="signupForm.company_phone.$touched">Can't leave this empty.</div>
-                        </div>
-                </div>
+               
                 <div class="form-group">
                     <button type="submit" ng-model="register" class="button register" >Register</button>
                 </div>
