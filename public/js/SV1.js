@@ -24,16 +24,71 @@ angular.module('myApp').controller('PopupCont', ['$scope', '$modalInstance', fun
 
 /**mainpage.html */
 
-var app = angular.module('app', ['ui.bootstrap', '720kb.datepicker', 'checklist-model']);
+var app = angular.module('app', ['ngMessages', 'ui.bootstrap', '720kb.datepicker', 'checklist-model']);
+app.directive('restrictTo', function() {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attrs) {
+            var re = RegExp(attrs.restrictTo);
+            var exclude = /Backspace|Enter|Tab|Delete|Del|ArrowUp|Up|ArrowDown|Down|ArrowLeft|Left|ArrowRight|Right/;
 
+            element[0].addEventListener('keydown', function(event) {
+                if (!exclude.test(event.key) && !re.test(event.key)) {
+                    event.preventDefault();
+                }
+            });
+        }
+    }
+});
+(function() {
+    
+      app.directive('onlyLettersInput', onlyLettersInput);
+      
+      function onlyLettersInput() {
+          return {
+            require: 'ngModel',
+            link: function(scope, element, attr, ngModelCtrl) {
+              function fromUser(text) {
+                var transformedInput = text.replace(/[^a-zA-Z]/g, '');
+                //console.log(transformedInput);
+                if (transformedInput !== text) {
+                  ngModelCtrl.$setViewValue(transformedInput);
+                  ngModelCtrl.$render();
+                }
+                return transformedInput;
+              }
+              ngModelCtrl.$parsers.push(fromUser);
+            }
+          };
+        };
+    
+    })();
+var compareTo = function () {
+    return {
+        require: "ngModel",
+        scope: {
+            otherModelValue: "=compareTo"
+        },
+        link: function (scope, element, attributes, ngModel) {
 
-app.controller('mainCtrl',['$scope','$http'], function ($scope, $http) {
+            ngModel.$validators.compareTo = function (modelValue) {
+                return modelValue == scope.otherModelValue;
+            };
+
+            scope.$watch("otherModelValue", function () {
+                ngModel.$validate();
+            });
+        }
+    };
+};
+app.directive("compareTo", compareTo);
+
+app.controller('mainCtrl', function ($scope) {
     var category = "";
     var projectTitle = "";
 
     /**calling the project section */
     $scope.callProject = function () {
-        
         $scope.showcomp = false;
         $scope.showcontact = false;
         $scope.showsalesperson = false;
@@ -69,6 +124,7 @@ app.controller('mainCtrl',['$scope','$http'], function ($scope, $http) {
         $scope.showsalesperson = true;
         $scope.projectTitle = "Sales Person Table";
     }
+
 
     $scope.setTabletoDefault = function () {
         $scope.defaulttable = {
@@ -131,6 +187,7 @@ app.controller('mainCtrl',['$scope','$http'], function ($scope, $http) {
 
     };
 
+
     /**reseting forms */
     $scope.resetForm = function (id) {
         if (id == 'filterForm')
@@ -164,8 +221,8 @@ app.controller('mainCtrl',['$scope','$http'], function ($scope, $http) {
 
 
 
-    var projects = [
-        {
+    var projects = [{
+
         No: 5,
         companyName: 'f',
         contactPerson: 's',
@@ -181,8 +238,8 @@ app.controller('mainCtrl',['$scope','$http'], function ($scope, $http) {
         salesStage: '40%',
         lastUpdate: '22/11/2017',
         pincharge: 'Iulia',
-        remarks: 'sdddd'}, 
-        {
+        remarks: 'sdddd'
+    }, {
         No: 2,
         companyName: 'z',
         contactPerson: 'q',
@@ -198,9 +255,9 @@ app.controller('mainCtrl',['$scope','$http'], function ($scope, $http) {
         salesStage: '40%',
         lastUpdate: '22/11/2018',
         remarks: 'sdddd'
-        },
+    },
 
-        {
+    {
         No: 3,
         companyName: 'z',
         contactPerson: 'q',
@@ -216,8 +273,8 @@ app.controller('mainCtrl',['$scope','$http'], function ($scope, $http) {
         salesStage: '40%',
         lastUpdate: '22/11/2018',
         remarks: 'sdddd'
-        },
-        {
+    },
+    {
         No: 7,
         companyName: 'z',
         contactPerson: 'q',
@@ -233,8 +290,8 @@ app.controller('mainCtrl',['$scope','$http'], function ($scope, $http) {
         salesStage: '40%',
         lastUpdate: '22/11/2018',
         remarks: 'sdddd'
-        },
-        {
+    },
+    {
         No: 20,
         companyName: 'z',
         contactPerson: 'q',
@@ -250,8 +307,8 @@ app.controller('mainCtrl',['$scope','$http'], function ($scope, $http) {
         salesStage: '40%',
         lastUpdate: '22/11/2018',
         remarks: 'sdddd'
-        },
-        {
+    },
+    {
         No: 18,
         companyName: 'z',
         contactPerson: 'q',
@@ -267,8 +324,8 @@ app.controller('mainCtrl',['$scope','$http'], function ($scope, $http) {
         salesStage: '40%',
         lastUpdate: '22/11/2018',
         remarks: 'sdddd'
-        },
-        {
+    },
+    {
         No: 13,
         companyName: 'z',
         contactPerson: 'q',
@@ -284,8 +341,8 @@ app.controller('mainCtrl',['$scope','$http'], function ($scope, $http) {
         salesStage: '40%',
         lastUpdate: '22/11/2018',
         remarks: 'sdddd'
-        },
-        {
+    },
+    {
         No: 9,
         companyName: 'z',
         contactPerson: 'q',
@@ -301,8 +358,8 @@ app.controller('mainCtrl',['$scope','$http'], function ($scope, $http) {
         salesStage: '40%',
         lastUpdate: '22/11/2018',
         remarks: 'sdddd'
-        },
-        {
+    },
+    {
         No: 10,
         companyName: 'z',
         contactPerson: 'q',
@@ -318,8 +375,8 @@ app.controller('mainCtrl',['$scope','$http'], function ($scope, $http) {
         salesStage: '40%',
         lastUpdate: '22/11/2018',
         remarks: 'sdddd'
-        },
-        {
+    },
+    {
         No: 22,
         companyName: 'z',
         contactPerson: 'q',
@@ -335,8 +392,8 @@ app.controller('mainCtrl',['$scope','$http'], function ($scope, $http) {
         salesStage: '40%',
         lastUpdate: '22/11/2018',
         remarks: 'sdddd'
-        },
-        {
+    },
+    {
         No: 33,
         companyName: 'z',
         contactPerson: 'q',
@@ -352,8 +409,8 @@ app.controller('mainCtrl',['$scope','$http'], function ($scope, $http) {
         salesStage: '40%',
         lastUpdate: '22/11/2018',
         remarks: 'sdddd'
-        },
-        {
+    },
+    {
         No: 34,
         companyName: 'z',
         contactPerson: 'q',
@@ -369,7 +426,7 @@ app.controller('mainCtrl',['$scope','$http'], function ($scope, $http) {
         salesStage: '40%',
         lastUpdate: '22/11/2018',
         remarks: 'sdddd'
-        },
+    },
 
 
     ];
@@ -393,192 +450,192 @@ app.controller('mainCtrl',['$scope','$http'], function ($scope, $http) {
 
     $scope.companylist = [{
 
-            No: 1,
-            companyName: 'f',
-            contactPerson: 's',
-            website: 'sfdsdfdsgf',
-            phone: '2736495',
-            industry: 'f',
-            address: 'sdfcdf'
+        No: 1,
+        companyName: 'f',
+        contactPerson: 's',
+        website: 'sfdsdfdsgf',
+        phone: '2736495',
+        industry: 'f',
+        address: 'sdfcdf'
 
-        }, {
-            No: 12,
-            companyName: 'a',
-            contactPerson: 's',
-            website: 'sfdsdfdsgf',
-            phone: '2736495',
-            industry: 'f',
-            address: 'sdfcdf'
-        },
+    }, {
+        No: 12,
+        companyName: 'a',
+        contactPerson: 's',
+        website: 'sfdsdfdsgf',
+        phone: '2736495',
+        industry: 'f',
+        address: 'sdfcdf'
+    },
 
-        {
-            No: 5,
-            companyName: 'y',
-            contactPerson: 's',
-            website: 'sfdsdfdsgf',
-            phone: '2736495',
-            industry: 'f',
-            address: 'sdfcdf'
-        },
-        {
-            No: 3,
-            companyName: 'y',
-            contactPerson: 's',
-            website: 'sfdsdfdsgf',
-            phone: '2736495',
-            industry: 'f',
-            address: 'sdfcdf'
-        },
-        {
-            No: 9,
-            companyName: 'y',
-            contactPerson: 's',
-            website: 'sfdsdfdsgf',
-            phone: '2736495',
-            industry: 'f',
-            address: 'sdfcdf'
-        },
-        {
-            No: 35,
-            companyName: 'y',
-            contactPerson: 's',
-            website: 'sfdsdfdsgf',
-            phone: '2736495',
-            industry: 'f',
-            address: 'sdfcdf'
-        },
-        {
-            No: 19,
-            companyName: 'y',
-            contactPerson: 's',
-            website: 'sfdsdfdsgf',
-            phone: '2736495',
-            industry: 'f',
-            address: 'sdfcdf'
-        }
+    {
+        No: 5,
+        companyName: 'y',
+        contactPerson: 's',
+        website: 'sfdsdfdsgf',
+        phone: '2736495',
+        industry: 'f',
+        address: 'sdfcdf'
+    },
+    {
+        No: 3,
+        companyName: 'y',
+        contactPerson: 's',
+        website: 'sfdsdfdsgf',
+        phone: '2736495',
+        industry: 'f',
+        address: 'sdfcdf'
+    },
+    {
+        No: 9,
+        companyName: 'y',
+        contactPerson: 's',
+        website: 'sfdsdfdsgf',
+        phone: '2736495',
+        industry: 'f',
+        address: 'sdfcdf'
+    },
+    {
+        No: 35,
+        companyName: 'y',
+        contactPerson: 's',
+        website: 'sfdsdfdsgf',
+        phone: '2736495',
+        industry: 'f',
+        address: 'sdfcdf'
+    },
+    {
+        No: 19,
+        companyName: 'y',
+        contactPerson: 's',
+        website: 'sfdsdfdsgf',
+        phone: '2736495',
+        industry: 'f',
+        address: 'sdfcdf'
+    }
     ];
 
 
 
     $scope.contacts = [{
 
-            No: 1,
-            companyName: 'y',
-            name: 'v',
-            phone: '2736495',
-            email: 'sfdsdfdsgf',
-            position: 'f',
+        No: 1,
+        companyName: 'y',
+        name: 'v',
+        phone: '2736495',
+        email: 'sfdsdfdsgf',
+        position: 'f',
 
-        }, {
-            No: 12,
-            companyName: 'a',
-            name: 'r',
-            phone: '2736495',
-            email: 'sfdsdfdsgf',
-            position: 'f',
-        },
+    }, {
+        No: 12,
+        companyName: 'a',
+        name: 'r',
+        phone: '2736495',
+        email: 'sfdsdfdsgf',
+        position: 'f',
+    },
 
-        {
-            No: 10,
-            companyName: 'z',
-            name: 'f',
-            phone: '2736495',
-            email: 'sfdsdfdsgf',
-            position: 'f',
-        },
-        {
-            No: 3,
-            companyName: 'p',
-            name: 'q',
-            phone: '2736495',
-            email: 'sfdsdfdsgf',
-            position: 'f',
-        },
-        {
-            No: 5,
-            companyName: 'c',
-            name: 'o',
-            phone: '2736495',
-            email: 'sfdsdfdsgf',
-            position: 'f',
-        },
-        {
-            No: 7,
-            companyName: 'f',
-            name: 'i',
-            phone: '2736495',
-            email: 'sfdsdfdsgf',
-            position: 'f',
-        },
-        {
-            No: 2,
-            companyName: 'n',
-            name: 'x',
-            phone: '2736495',
-            email: 'sfdsdfdsgf',
-            position: 'f',
-        }
+    {
+        No: 10,
+        companyName: 'z',
+        name: 'f',
+        phone: '2736495',
+        email: 'sfdsdfdsgf',
+        position: 'f',
+    },
+    {
+        No: 3,
+        companyName: 'p',
+        name: 'q',
+        phone: '2736495',
+        email: 'sfdsdfdsgf',
+        position: 'f',
+    },
+    {
+        No: 5,
+        companyName: 'c',
+        name: 'o',
+        phone: '2736495',
+        email: 'sfdsdfdsgf',
+        position: 'f',
+    },
+    {
+        No: 7,
+        companyName: 'f',
+        name: 'i',
+        phone: '2736495',
+        email: 'sfdsdfdsgf',
+        position: 'f',
+    },
+    {
+        No: 2,
+        companyName: 'n',
+        name: 'x',
+        phone: '2736495',
+        email: 'sfdsdfdsgf',
+        position: 'f',
+    }
     ];
 
 
     $scope.spersonlist = [{
 
-            No: 1,
-            name: 'v',
-            phone: '2736495',
-            email: 'sfdsdfdsgf',
-            position: 'f',
-            total: 5
+        No: 1,
+        name: 'v',
+        phone: '2736495',
+        email: 'sfdsdfdsgf',
+        position: 'f',
+        total: 5
 
-        }, {
-            No: 12,
-            name: 'r',
-            phone: '2736495',
-            email: 'sfdsdfdsgf',
-            position: 'f',
-            total: 3
-        },
+    }, {
+        No: 12,
+        name: 'r',
+        phone: '2736495',
+        email: 'sfdsdfdsgf',
+        position: 'f',
+        total: 3
+    },
 
-        {
-            No: 10,
-            name: 'f',
-            phone: '2736495',
-            email: 'sfdsdfdsgf',
-            position: 'f',
-            total: 2
-        },
-        {
-            No: 3,
-            name: 'q',
-            phone: '2736495',
-            email: 'sfdsdfdsgf',
-            position: 'f',
-            total: 4
-        },
-        {
-            No: 5,
-            name: 'o',
-            phone: '2736495',
-            email: 'sfdsdfdsgf',
-            position: 'f',
-            total: 7
-        },
-        {
-            No: 7,
-            name: 'i',
-            phone: '2736495',
-            email: 'sfdsdfdsgf',
-            position: 'f',
-            total: 5
-        },
-        {
-            No: 70,
-            name: 'x',
-            phone: '2736495',
-            email: 'sfdsdfdsgf',
-            position: 'f',
-            total: 0
-        }
+    {
+        No: 10,
+        name: 'f',
+        phone: '2736495',
+        email: 'sfdsdfdsgf',
+        position: 'f',
+        total: 2
+    },
+    {
+        No: 3,
+        name: 'q',
+        phone: '2736495',
+        email: 'sfdsdfdsgf',
+        position: 'f',
+        total: 4
+    },
+    {
+        No: 5,
+        name: 'o',
+        phone: '2736495',
+        email: 'sfdsdfdsgf',
+        position: 'f',
+        total: 7
+    },
+    {
+        No: 7,
+        name: 'i',
+        phone: '2736495',
+        email: 'sfdsdfdsgf',
+        position: 'f',
+        total: 5
+    },
+    {
+        No: 70,
+        name: 'x',
+        phone: '2736495',
+        email: 'sfdsdfdsgf',
+        position: 'f',
+        total: 0
+    }
     ];
 
 
@@ -631,6 +688,7 @@ app.controller('mainCtrl',['$scope','$http'], function ($scope, $http) {
         { id: 19, name: 'PO-Number' }
 
     ];
+
 
     $scope.columns[0].disabled = true;
 
@@ -885,7 +943,8 @@ app.controller('mainCtrl',['$scope','$http'], function ($scope, $http) {
         start = +start;
         return input.slice(start);
     };
-});
+}
+    );
 
 
 
@@ -930,7 +989,6 @@ app.controller('MyControllerModal', ['$scope', '$modal', function ($scope, $moda
             size: size
 
         });
-
     }
 
     $scope.openindustry = function (size) {
@@ -957,18 +1015,18 @@ app.controller('MyControllerModal', ['$scope', '$modal', function ($scope, $moda
 
     }
     /**not required for now 
-    $scope.opencontact = function (size) {
-        var modalInstance = $modal.open({
-            controller: 'forCloseContact',
-            templateUrl: 'addcontact.html',
-            backdrop: "static",
-            scope: $scope,
-            size: size
-
-        });
-
-
-    }*/
+        $scope.opencontact = function (size) {
+            var modalInstance = $modal.open({
+                controller: 'forCloseContact',
+                templateUrl: 'addcontact.html',
+                backdrop: "static",
+                scope: $scope,
+                size: size
+    
+            });
+    
+    
+        }*/
 
     $scope.opensalesperson = function (size) {
         var modalInstance = $modal.open({
@@ -1162,7 +1220,7 @@ app.controller('MyControllerModal', ['$scope', '$modal', function ($scope, $moda
     /**salesperson modals */
     $scope.openEditsperson = function (size, sperson) {
         var modalInstance = $modal.open({
-            controller: 'forCloseEditcont',
+            controller: 'forCloseEditpers',
             templateUrl: 'editsalesperson.html',
             backdrop: "static",
             scope: $scope,
@@ -1220,72 +1278,118 @@ app.controller('MyControllerModal', ['$scope', '$modal', function ($scope, $moda
 
 /** project modal controllers */
 app.controller('forCloseLead', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
-  
+
     $scope.companies = [
-    {
-        "id": "114",
+        {
+            "id": "114",
 
-        "name": "Company 1"
-    },
-    {
-        "id": "126",
+            "name": "Company 1"
+        },
+        {
+            "id": "126",
 
-        "name": "Company 2"
-    },
-    {
-        "id": "149",
-        "name": "Company 3"
-    }];
+            "name": "Company 2"
+        },
+        {
+            "id": "149",
+            "name": "Company 3"
+        }];
 
- 
+
     $scope.project = {
         "typeID": "0",
 
     }
     $scope.types = [
-    {
-        "id": "1",
-        "name": "New Sale"
-    },
-    {
-        "id": "2",
-        "name": "Renewal"
-    }
+        {
+            "id": "1",
+            "name": "New Sale"
+        },
+        {
+            "id": "2",
+            "name": "Renewal"
+        }
 
     ];
 
- 
+
     $scope.statuses = [
-    {
-        "id": "1",
-        "name": "In progress"
-    },
-    {
-        "id": "2",
-        "name": "Successful"
-    },
-    {
-        "id": "3",
-        "name": "Terminated"
-    }
+        {
+            "id": "1",
+            "name": "In progress"
+        },
+        {
+            "id": "2",
+            "name": "Successful"
+        },
+        {
+            "id": "3",
+            "name": "Terminated"
+        }
 
 
     ];
 
-    $scope.checkboxRule = function (checkbox) {
-        if (checkbox == 'tenderYes') {
-            $scope.tenderNo = false;
-            $scope.tenderPossibly = false;
+    $scope.tenders = [{
+        name: 'Yes',
+        id:0
+    }, {
+        name: 'No',
+        id:1
+    }, {
+        name: 'Possibly',
+        id:2
+    }
+    ];
+
+
+    var original = angular.copy($scope.leadproj);
+    $scope.postAddLeadForm = function (form) {
+        
+
+        if (form.$valid) {
+            alert('can submit');
+            $scope.leadproj = angular.copy(original);
+            $scope.addLead.$setPristine();
+            $scope.addLead.$setValidity();
+            $scope.addLead.$setUntouched();
+
         }
-        if (checkbox == 'tenderNo') {
-            $scope.tenderYes = false;
-            $scope.tenderPossibly = false;
+        if (form.$invalid) {
+
+            angular.forEach($scope.addLead.$error, function (field) {
+                angular.forEach(field, function (errorField) {
+                    errorField.$setTouched();
+                })
+            });
+
         }
-        if (checkbox == 'tenderPossibly') {
-            $scope.tenderYes = false;
-            $scope.tenderNo = false;
-        }
+
+
     };
+
+    $scope.resetSelect = function () {
+        $scope.leadproj.companyID = $scope.default;
+        $scope.addLead.addCompanyName.$setUntouched();
+        $scope.addLead.companyWebsite.$setUntouched();
+        $scope.addLead.companyPhone.$setUntouched();
+        $scope.addLead.companyAddress.$setUntouched();
+        $scope.addLead.industry.$setUntouched();
+        $scope.addLead.contactPerson.$setUntouched();
+        $scope.addLead.contPerEmail.$setUntouched();
+        $scope.addLead.contPerPhone.$setUntouched();
+        $scope.addLead.contPerPos.$setUntouched();
+        $scope.leadproj.addCompanyName='';
+        $scope.leadproj.companyWebsite='';
+        $scope.leadproj.companyPhone='';
+        $scope.leadproj.companyAddress='';
+        $scope.leadproj.industry='';
+        $scope.leadproj.contactPerson='';
+        $scope.leadproj.contPerEmail='';
+        $scope.leadproj.contPerPhone='';
+        $scope.leadproj.contPerPos='';
+    };
+
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
     };
@@ -1293,35 +1397,83 @@ app.controller('forCloseLead', ['$scope', '$modalInstance', function ($scope, $m
 }]);
 
 app.controller('forCloseDeal', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
-  
+
     $scope.companies = [
-    {
-        "id": "114",
+        {
+            "id": "114",
 
-        "name": "Company 1"
-    },
-    {
-        "id": "126",
+            "name": "Company 1"
+        },
+        {
+            "id": "126",
 
-        "name": "Company 2"
-    },
-    {
-        "id": "149",
-        "name": "Company 3"
-    }];
+            "name": "Company 2"
+        },
+        {
+            "id": "149",
+            "name": "Company 3"
+        }];
 
 
     $scope.types = [
-    {
-        "id": "1",
-        "name": "New Sale"
-    },
-    {
-        "id": "2",
-        "name": "Renewal"
-    }
+        {
+            "id": "1",
+            "name": "New Sale"
+        },
+        {
+            "id": "2",
+            "name": "Renewal"
+        }
 
     ];
+    var original = angular.copy($scope.Dealproj);
+    $scope.postAddDealForm = function (form) {
+        
+
+        if (form.$valid) {
+            alert('can submit');
+            $scope.Dealproj = angular.copy(original);
+            $scope.addDeal.$setPristine();
+            $scope.addDeal.$setValidity();
+            $scope.addDeal.$setUntouched();
+
+        }
+        if (form.$invalid) {
+
+            angular.forEach($scope.addDeal.$error, function (field) {
+                angular.forEach(field, function (errorField) {
+                    errorField.$setTouched();
+                })
+            });
+
+        }
+
+
+    };
+
+    $scope.resetSelect = function () {
+        $scope.Dealproj.companyID = $scope.default;
+        $scope.addDeal.addCompanyName.$setUntouched();
+        $scope.addDeal.companyWebsite.$setUntouched();
+        $scope.addDeal.companyPhone.$setUntouched();
+        $scope.addDeal.companyAddress.$setUntouched();
+        $scope.addDeal.industry.$setUntouched();
+        $scope.addDeal.contactPerson.$setUntouched();
+        $scope.addDeal.contPerEmail.$setUntouched();
+        $scope.addDeal.contPerPhone.$setUntouched();
+        $scope.addDeal.contPerPos.$setUntouched();
+        $scope.Dealproj.addCompanyName='';
+        $scope.Dealproj.companyWebsite='';
+        $scope.Dealproj.companyPhone='';
+        $scope.Dealproj.companyAddress='';
+        $scope.Dealproj.industry='';
+        $scope.Dealproj.contactPerson='';
+        $scope.Dealproj.contPerEmail='';
+        $scope.Dealproj.contPerPhone='';
+        $scope.Dealproj.contPerPos='';
+    };
+
+
 
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
@@ -1348,6 +1500,30 @@ app.controller('forCloseDelete', ['$scope', '$modalInstance', function ($scope, 
 
 
 app.controller('forClosePassword', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+
+    var original = angular.copy($scope.user);
+    $scope.postchpassformin = function (form) {
+
+        if (form.$valid) {
+            alert('can submit');
+            $scope.user = angular.copy(original);
+            $scope.changepassformin.$setPristine();
+            $scope.changepassformin.$setValidity();
+            $scope.changepassformin.$setUntouched();
+
+        }
+        if (form.$invalid) {
+
+            angular.forEach($scope.changepassformin.$error, function (field) {
+                angular.forEach(field, function (errorField) {
+                    errorField.$setTouched();
+                })
+            });
+
+        }
+
+
+    };
 
 
 
@@ -1453,19 +1629,19 @@ app.controller('forCloseEditlead', ['$scope', '$modalInstance', function ($scope
             "id": "3",
             "name": "Terminated"
         }
-    
-    
-        ];
+
+
+    ];
 
     $scope.types = [
-    {
-        "id": "1",
-        "name": "New sale"
-    },
-    {
-        "id": "2",
-        "name": "Renewal"
-    }
+        {
+            "id": "1",
+            "name": "New sale"
+        },
+        {
+            "id": "2",
+            "name": "Renewal"
+        }
 
     ];
 
@@ -1489,14 +1665,53 @@ app.controller('forCloseEditlead', ['$scope', '$modalInstance', function ($scope
 
     ];
 
+    $scope.tenders = [{
+        name: 'Yes',
+        id:0
+    }, {
+        name: 'No',
+        id:1
+    }, {
+        name: 'Possibly',
+        id:2
+    }
+    ];
 
-    $scope.editcomname = $modalInstance.leadproject.companyName;
-    $scope.leadstartdate = $modalInstance.leadproject.startDate;
-    $scope.leadenddate = $modalInstance.leadproject.closingDate;
-    $scope.leadremarks = $modalInstance.leadproject.remarks;
-    $scope.leadValue = $modalInstance.leadproject.value;
-    $scope.leadStage = $modalInstance.leadproject.salesStage;
-    $scope.leadproject.typeID = $modalInstance.leadproject.type;
+
+
+$scope.selectedItemChanged=function(){
+
+    if( $scope.projectCat.catID != 1){
+        $scope.editLead.podate.$setUntouched();
+        $scope.editLead.podate.$setValidity();
+        $scope.editLead.podate.$setPristine();
+        $scope.editLead.ponumber.$setUntouched();
+        $scope.editLead.ponumber.$setValidity();
+        $scope.editLead.ponumber.$setPristine();
+        $scope.editLeadProj.ponumber='';
+        $scope.editLeadProj.podate='';
+        }
+
+    if( $scope.projectCat.catID != 0){
+            $scope.editLead.tender.$setUntouched();
+            $scope.editLead.tender.$setValidity();
+            $scope.editLead.tender.$setPristine();
+            $scope.editLead.statusID.$setUntouched();
+            $scope.editLead.statusID.$setValidity();
+            $scope.editLead.statusID.$setPristine();
+            }
+
+   if( $scope.projectCat.catID != 2){
+                $scope.editLead.salesPerson.$setUntouched();
+                $scope.editLead.salesPersonr.$setValidity();
+                $scope.editLead.salesPerson.$setPristine();
+           
+                }
+    
+
+};
+
+ 
 
     /*
    $scope.leadsalesPerson = $modalInstance.leadproject.pincharge;    
@@ -1504,10 +1719,26 @@ $scope.lead.statusID = $modalInstance.leadproject.status;
 write if else for tender scope;
 
 **/
-    $scope.EditRow = function () {
-        /**call to update database */
+var original = angular.copy($scope.editLeadProj);
+$scope.editLeadRow = function (form) {
+    /**call to update database */
+    if (form.$valid) {
+        alert('can submit');
+        $scope.editLeadProj = angular.copy(original);
+        $scope.editLead.$setPristine();
+        $scope.editLead.$setValidity();
+        $scope.editLead.$setUntouched();
 
-    };
+    }
+    if (form.$invalid) {
+
+        angular.forEach($scope.editLead.$error, function (field) {
+            angular.forEach(field, function (errorField) {
+                errorField.$setTouched();
+            })
+        });
+    }
+};
 
 
     $scope.close = function () {
@@ -1522,10 +1753,7 @@ write if else for tender scope;
 
 
 app.controller('forCloseEditdeal', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
-    $scope.dealcomname = $modalInstance.dealproject.companyName;
-    $scope.dealstartdate = $modalInstance.dealproject.startDate;
-    $scope.dealenddate = $modalInstance.dealproject.closingDate;
-    $scope.dealRemarks = $modalInstance.dealproject.remarks;
+//$scope.dealcomname = $modalInstance.dealproject.companyName; (example of how pass the data to edit fields)
     $scope.types = [
         {
             "id": "1",
@@ -1535,19 +1763,37 @@ app.controller('forCloseEditdeal', ['$scope', '$modalInstance', function ($scope
             "id": "2",
             "name": "Renewal"
         }
-    
-        ];
 
-    $scope.EditRow = function () {
+    ];
+    var original = angular.copy($scope.editDealProj);
+    $scope.editDealRow = function (form) {
         /**call to update database */
-    };
+        if (form.$valid) {
+            alert('can submit');
+            $scope.editDealProj = angular.copy(original);
+            $scope.editDeal.$setPristine();
+            $scope.editDeal.$setValidity();
+            $scope.editDeal.$setUntouched();
 
+        }
+        if (form.$invalid) {
+
+            angular.forEach($scope.editDeal.$error, function (field) {
+                angular.forEach(field, function (errorField) {
+                    errorField.$setTouched();
+                })
+            });
+        }
+    };
+    
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
     };
 
 
 }]);
+
+
 app.controller('forCloseEditlostcase', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
     $scope.types = [
         {
@@ -1558,11 +1804,28 @@ app.controller('forCloseEditlostcase', ['$scope', '$modalInstance', function ($s
             "id": "2",
             "name": "Renewal"
         }
-    
-        ];
 
-    $scope.EditRow = function () {
+    ];
+
+    var original = angular.copy($scope.editLostProj);
+    $scope.editLostRow = function (form) {
         /**call to update database */
+        if (form.$valid) {
+            alert('can submit');
+            $scope.editLostProj = angular.copy(original);
+            $scope.editlostcase.$setPristine();
+            $scope.editlostcase.$setValidity();
+            $scope.editlostcase.$setUntouched();
+
+        }
+        if (form.$invalid) {
+
+            angular.forEach($scope.editlostcase.$error, function (field) {
+                angular.forEach(field, function (errorField) {
+                    errorField.$setTouched();
+                })
+            });
+        }
     };
 
     $scope.close = function () {
@@ -1601,7 +1864,29 @@ app.controller('forCloseContact', ['$scope', '$modalInstance', function ($scope,
 */
 
 app.controller('forCloseSalesperson', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+    var original = angular.copy($scope.Sperson);
+    $scope.postAddSalesPerson = function (form) {
 
+        if (form.$valid) {
+            alert('can submit');
+            $scope.Sperson = angular.copy(original);
+            $scope.addSalespersonform.$setPristine();
+            $scope.addSalespersonform.$setValidity();
+            $scope.addSalespersonform.$setUntouched();
+
+        }
+        if (form.$invalid) {
+
+            angular.forEach($scope.addSalespersonform.$error, function (field) {
+                angular.forEach(field, function (errorField) {
+                    errorField.$setTouched();
+                })
+            });
+
+        }
+
+
+    };
 
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
@@ -1784,8 +2069,27 @@ app.controller('forCloseMultiplecompdelete', ['$scope', '$modalInstance', functi
 
 /**company modal controllers */
 app.controller('forCloseEditpers', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+    var original = angular.copy($scope.editSperson);
+    $scope.editPersRow = function (form) {
+        /**call to update database */
+        if (form.$valid) {
+            alert('can submit');
+            $scope.editSperson = angular.copy(original);
+            $scope.editsalesperson.$setPristine();
+            $scope.editsalesperson.$setValidity();
+            $scope.editsalesperson.$setUntouched();
 
+        }
+        if (form.$invalid) {
 
+            angular.forEach($scope.editsalesperson.$error, function (field) {
+                angular.forEach(field, function (errorField) {
+                    errorField.$setTouched();
+                })
+            });
+        }
+    };
+    
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
     };
