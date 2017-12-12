@@ -16,7 +16,7 @@ SalesVisionServices.factory('userService', ['$http', 'localStorageService', func
             $http.post('/register', 
             {
                 first_name: formdata.first_name,
-                last_name: formdata,last_name,
+                last_name: formdata.last_name,
                 email: formdata.email,
                 password: formdata.password,
                 password_confirmation: formdata.password_confirmation,
