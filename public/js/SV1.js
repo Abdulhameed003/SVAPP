@@ -1,45 +1,4 @@
-
-/**index.html */
-
-angular.module('myApp', ['ui.bootstrap']);
-angular.module('myApp').controller('mainCtrl', ['$scope', '$modal', function ($scope, $modal) {
-    $scope.open = function (size) {
-        var modalInstance = $modal.open({
-            controller: 'PopupCont',
-            templateUrl: 'forgotpass.html',
-            backdrop: "static",
-            scope: $scope,
-            size: size
-        });
-    }
-
-}]);
-
-angular.module('myApp').controller('PopupCont', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
-    $scope.close = function () {
-        $modalInstance.dismiss('cancel');
-    };
-}]);
-
-
-/**mainpage.html */
-
 var app = angular.module('app', ['ngMessages', 'ui.bootstrap', '720kb.datepicker', 'checklist-model']);
-app.directive('restrictTo', function() {
-    return {
-        restrict: 'A',
-        link: function (scope, element, attrs) {
-            var re = RegExp(attrs.restrictTo);
-            var exclude = /Backspace|Enter|Tab|Delete|Del|ArrowUp|Up|ArrowDown|Down|ArrowLeft|Left|ArrowRight|Right/;
-
-            element[0].addEventListener('keydown', function(event) {
-                if (!exclude.test(event.key) && !re.test(event.key)) {
-                    event.preventDefault();
-                }
-            });
-        }
-    }
-});
 (function() {
     
       app.directive('onlyLettersInput', onlyLettersInput);
@@ -63,6 +22,22 @@ app.directive('restrictTo', function() {
         };
     
     })();
+app.directive('restrictTo', function() {
+return {
+restrict: 'A',
+link: function (scope, element, attrs) {
+    var re = RegExp(attrs.restrictTo);
+    var exclude = /Backspace|Enter|Tab|Delete|Del|ArrowUp|Up|ArrowDown|Down|ArrowLeft|Left|ArrowRight|Right/;
+
+    element[0].addEventListener('keydown', function(event) {
+        if (!exclude.test(event.key) && !re.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+}
+}
+});
+
 var compareTo = function () {
     return {
         require: "ngModel",
@@ -82,6 +57,89 @@ var compareTo = function () {
     };
 };
 app.directive("compareTo", compareTo);
+
+/**Changepassword.html controller */
+
+app.controller('changepassctrl', function ($scope) {
+    
+    
+                var original = angular.copy($scope.user);
+                $scope.postchpassform = function (form) {
+    
+                    if (form.$valid) {
+                        alert('can submit');
+                        $scope.user = angular.copy(original);
+                        $scope.changepassform.$setPristine();
+                        $scope.changepassform.$setValidity();
+                        $scope.changepassform.$setUntouched();
+    
+                    }
+                    if (form.$invalid) {
+    
+                        angular.forEach($scope.changepassform.$error, function (field) {
+                            angular.forEach(field, function (errorField) {
+                                errorField.$setTouched();
+                            })
+                        });
+    
+                    }
+    
+    
+                };
+            });
+
+/**index.html  controller*/
+
+app.controller('indexCtrl', ['$scope', '$modal', function ($scope, $modal) {
+    $scope.open = function (size) {
+        var modalInstance = $modal.open({
+            controller: 'PopupCont',
+            templateUrl: 'forgotpass.html',
+            backdrop: "static",
+            scope: $scope,
+            size: size
+        });
+    }
+
+}]);
+
+app.controller('PopupCont', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+    $scope.close = function () {
+        $modalInstance.dismiss('cancel');
+    };
+}]);
+
+/**Register.html  controller*/
+app.controller('homeCtrl', function ($scope) {
+    
+       
+                var original = angular.copy($scope.user);
+                $scope.postRegisterform = function (form) {
+    
+                    if (form.$valid) {
+                        alert('can submit');
+                        $scope.user = angular.copy(original);
+                        $scope.signupForm.$setPristine();
+                        $scope.signupForm.$setValidity();
+                        $scope.signupForm.$setUntouched();
+    
+                    }
+                    if (form.$invalid) {
+    
+                        angular.forEach($scope.signupForm.$error, function (field) {
+                            angular.forEach(field, function (errorField) {
+                                errorField.$setTouched();
+                            })
+                        });
+    
+                    }
+    
+    
+                };
+            });
+
+
+/**mainpage.html controller */
 
 app.controller('mainCtrl', function ($scope) {
     var category = "";
