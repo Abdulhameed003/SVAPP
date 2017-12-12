@@ -36,8 +36,8 @@
 	<script src="{{asset('bower_components/checklist-model.js')}}"></script>
 
 
-	<script src="{{asset('/bower_components/bootstrap/dist/js/bootstrap.js')}}"></script>
-	<script src="{{asset('bower_components/dist/jquery.js')}}"></script>
+	<script src="{{asset('bower_components/bootstrap/dist/js/bootstrap.js')}}"></script>
+	<script src="{{asset('bower_components/jquery/dist/jquery.js')}}"></script>
 	<!--script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-messages.js"></script-->
 	<script src="{{asset('bower_components/angular-messages/angular-messages.js')}}"></script>
 	<script src="{{asset('bower_components/angular-route/angular-route.min.js')}}"></script>
@@ -104,7 +104,7 @@
         };
         app.directive("compareTo", compareTo);
 
-        app.controller('homeCtrl', function ($scope $http) {
+        app.controller('homeCtrl', function ($scope) {
  
 
             var original = angular.copy($scope.user);
