@@ -13,9 +13,9 @@
 
 	<!-- Styles -->
 
-	<link href="{{asset('bower_components/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
-	<!--link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{asset('css/others/bootstrap.min.css')}}" rel="stylesheet" type="text/css" -->
+	<link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
+	<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{asset('css/others/bootstrap.min.css')}}" rel="stylesheet" type="text/css" >
 	<link href="{{asset('css/style1.css')}}" rel="stylesheet" type="text/css">
 
 	<!-- Fonts -->
@@ -29,18 +29,11 @@
 
 	<!-- Scripts -->
 	<!--script src="{{asset('js/app.js') }}"></script-->
-	<script src="{{asset('bower_components/angular/angular.min.js')}}"></script>
-	<script src="{{asset('bower_components/dist/angular-datepicker.js')}}"></script>
-	<script src="{{asset('js/ui-bootstrap-tpls-0.14.3.min.js')}}"></script>
-	<script src="{{asset('bower_components/checklist-model.js')}}"></script>
-	<script src="{{asset('bower_components/bootstrap/dist/js/bootstrap.js')}}"></script>
-	<script src="{{asset('bower_components/jquery/dist/jquery.js')}}"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-messages.js"></script>
-	<script src="{{asset('bower_components/angular-messages/angular-messages.js')}}"></script>
-	<script src="{{asset('bower_components/angular-route/angular-route.min.js')}}"></script>
-	<script src="{{asset('bower_components/angular-local-storage/dist/angular-local-storage.min.js')}}"></script>
-	<script src="{{asset('bower_components/restangular/dist/restangular.min.js')}}"></script>
-
+	<script src="{{asset('js/angular.min.js')}}"></script>
+	<script src="{{asset('js/angular-datepicker.js')}}"></script>
+	<script src="{{asset('js/ui-bootstrap-tpls-0.14.3.min.js')}}"></script>
+	<script src="{{asset('js/checklist-model.js')}}"></script> 
 	<script src="{{asset('js/SV1.js')}}"></script>
 	<script src="{{asset('js/SVcontroller.js')}}"></script>
 	<script src="{{asset('js/SVservices.js')}}"></script>
@@ -142,6 +135,10 @@
 <body>
 
 	@yield('content')
+
+
+	<script src="{{asset('js/bootstrap.js')}}"></script>
+	<script src="{{asset('js/jquery.js')}}"></script>
 
 	<!-- Modal pages scripts section -->
 	<script type="text/javascript">
