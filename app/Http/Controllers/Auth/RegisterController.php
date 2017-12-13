@@ -85,7 +85,7 @@ class RegisterController extends Controller
                 'company_id' => $request->company_id,
                 'user_role' => 'Admin'
             ]);
-            return redirect('/login')->with('success','Please login with your new account');
+            return redirect('/login');
       
     }
     

@@ -1,6 +1,7 @@
-var SalesVisionServices = angular.module('SalesVisionServices',[]);
 
-SalesVisionServices.factory('userService', ['$http', 'localStorageService', function($http, localStorageService) {
+var salesVisionServices = angular.module('salesVisionServices',['LocalStorageModule']);
+
+salesVisionServices.factory('userService', ['$http', 'localStorageService', function($http, localStorageService) {
     
         function checkIfLoggedIn() {
     
@@ -12,26 +13,16 @@ SalesVisionServices.factory('userService', ['$http', 'localStorageService', func
         }
     
         function register(formdata, onSuccess, onError) {
+           
+            $http.post('/register',formdata)
+            .then(function(response) {
     
-            $http.post('/register', 
-            {
-                first_name: formdata.first_name,
-                last_name: formdata.last_name,
-                email: formdata.email,
-                password: formdata.password,
-                password_confirmation: formdata.password_confirmation,
-                company_id:formdata.company_id,
-                company_name:formdata.company_name,
-                company_number:formdata.company_number
-            }).
-            then(function(response) {
-    
-                localStorageService.set('token', response.data.token);
-                onSuccess(response);
+                //localStorageService.set('token', response.data.token);
+                onSuccess(response.data);
     
             }, function(response) {
     
-                onError(response);
+                onError(response.data);
     
             });
     
@@ -70,7 +61,7 @@ SalesVisionServices.factory('userService', ['$http', 'localStorageService', func
     
         return {
             checkIfLoggedIn: checkIfLoggedIn,
-            signup: signup,
+            register: register,
             login: login,
             logout: logout,
             getCurrentToken: getCurrentToken
