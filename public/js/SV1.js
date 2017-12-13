@@ -1,5 +1,4 @@
-var app = angular.module('app', ['ngMessages', 'ui.bootstrap','salesVisionControllers']);
-
+var app = angular.module('app', ['ngMessages', 'ui.bootstrap', '720kb.datepicker', 'checklist-model']);
 (function() {
     
       app.directive('onlyLettersInput', onlyLettersInput);
@@ -23,21 +22,20 @@ var app = angular.module('app', ['ngMessages', 'ui.bootstrap','salesVisionContro
         };
     
     })();
-
 app.directive('restrictTo', function() {
-    return {
-    restrict: 'A',
-    link: function (scope, element, attrs) {
-            var re = RegExp(attrs.restrictTo);
-            var exclude = /Backspace|Enter|Tab|Delete|Del|ArrowUp|Up|ArrowDown|Down|ArrowLeft|Left|ArrowRight|Right/;
+return {
+restrict: 'A',
+link: function (scope, element, attrs) {
+    var re = RegExp(attrs.restrictTo);
+    var exclude = /Backspace|Enter|Tab|Delete|Del|ArrowUp|Up|ArrowDown|Down|ArrowLeft|Left|ArrowRight|Right/;
 
-            element[0].addEventListener('keydown', function(event) {
-                if (!exclude.test(event.key) && !re.test(event.key)) {
-                    event.preventDefault();
-                }
-            });
+    element[0].addEventListener('keydown', function(event) {
+        if (!exclude.test(event.key) && !re.test(event.key)) {
+            event.preventDefault();
         }
-    }
+    });
+}
+}
 });
 
 var compareTo = function () {

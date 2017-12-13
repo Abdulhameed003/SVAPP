@@ -29,11 +29,15 @@
 
 	<!-- Scripts -->
 	<!--script src="{{asset('js/app.js') }}"></script-->
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-messages.js"></script>
 	<script src="{{asset('js/angular.min.js')}}"></script>
 	<script src="{{asset('js/angular-datepicker.js')}}"></script>
 	<script src="{{asset('js/ui-bootstrap-tpls-0.14.3.min.js')}}"></script>
-	<script src="{{asset('js/checklist-model.js')}}"></script> 
+	<script src="{{asset('js/checklist-model.js')}}"></script>
+	<script src="{{asset('js/bootstrap.js')}}"></script>
+	<script src="{{asset('js/jquery.js')}}"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-messages.js"></script>
+	
+
 	<script src="{{asset('js/SV1.js')}}"></script>
 	<script src="{{asset('js/SVcontroller.js')}}"></script>
 	<script src="{{asset('js/SVservices.js')}}"></script>
@@ -135,10 +139,6 @@
 <body>
 
 	@yield('content')
-
-
-	<script src="{{asset('js/bootstrap.js')}}"></script>
-	<script src="{{asset('js/jquery.js')}}"></script>
 
 	<!-- Modal pages scripts section -->
 	<script type="text/javascript">
