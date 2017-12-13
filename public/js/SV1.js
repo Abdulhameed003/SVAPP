@@ -1994,7 +1994,29 @@ app.controller('forCloseMultipledeleteErrormessage', ['$scope', '$modalInstance'
 /**contact modal controllers */
 app.controller('forCloseEditcont', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
 
+    var original = angular.copy($scope.editcont);
+    $scope.postEditContact = function (form) {
 
+        if (form.$valid) {
+            alert('can submit');
+            $scope.editcont = angular.copy(original);
+            $scope.editContact.$setPristine();
+            $scope.editContact.$setValidity();
+            $scope.editContact.$setUntouched();
+
+        }
+        if (form.$invalid) {
+
+            angular.forEach($scope.editContact.$error, function (field) {
+                angular.forEach(field, function (errorField) {
+                    errorField.$setTouched();
+                })
+            });
+
+        }
+
+
+    };
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
     };
@@ -2058,7 +2080,29 @@ app.controller('forCloseMultiplecontdelete', ['$scope', '$modalInstance', functi
 
 /**company modal controllers */
 app.controller('forCloseEditcomp', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+    var original = angular.copy($scope.editcom);
+    $scope.postEditCompany = function (form) {
 
+        if (form.$valid) {
+            alert('can submit');
+            $scope.editcom = angular.copy(original);
+            $scope.editcompany.$setPristine();
+            $scope.editcompany.$setValidity();
+            $scope.editcompany.$setUntouched();
+
+        }
+        if (form.$invalid) {
+
+            angular.forEach($scope.editcompany.$error, function (field) {
+                angular.forEach(field, function (errorField) {
+                    errorField.$setTouched();
+                })
+            });
+
+        }
+
+
+    };
 
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
