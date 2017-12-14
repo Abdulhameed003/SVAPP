@@ -7,13 +7,14 @@ salesVisionControllers.controller('LoginController', ['$scope', '$http','userSer
            
     }]);
     
-    salesVisionControllers.controller('RegisterController', ['$scope', '$http','userService', function ($scope, $http, userService) {
+    salesVisionControllers.controller('RegisterController', ['$scope', '$http','userService','$location','$window', function ($scope, $http, userService,$location,$window) {
         var original = angular.copy($scope.user);
         $scope.postRegisterform = function (form) {
             
             if (form.$valid) {
                 userService.register($scope.user,
                     function(response){
+                        $window.location.href = "/login";
                         alert( $scope.user.company_name +' has been successfully registered login with your registed email');
                         $scope.user = angular.copy(original);
                         $scope.signupForm.$setPristine();
