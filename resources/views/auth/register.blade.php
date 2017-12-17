@@ -69,10 +69,11 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <input type="text" ng-class="{submitting: signupForm.company_id.$error.required && signupForm.company_id.$touched }" ng-model="user.company_id"
-                            name="company_id"   class="form-control registertext" placeholder="Company Id" required>
+                        <input type="text" ng-class="{submitting: signupForm.company_id.$error.required && signupForm.company_id.$touched && error}" ng-model="user.company_id"
+                            name="company_id"   class="form-control registertext" placeholder="Company ID" required>
                         <div class="error">
                             <div ng-show="signupForm.company_id.$error.required" ng-if="signupForm.company_id.$touched">Can't leave this empty.</div>
+                            <div ng-show="error">@{{errorMessage_CID}}</div>   
                         </div>
                     </div>
                     <div class="form-group">

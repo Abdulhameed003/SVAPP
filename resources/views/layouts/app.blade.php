@@ -38,9 +38,9 @@
     <script src="{{asset('bower_components/angular-local-storage/dist/angular-local-storage.js')}}"></script>
     <script src="{{asset('bower_components/restangular/dist/restangular.min.js')}}"></script>
 
-	<script src="{{asset('js/SV1.js')}}"></script>
+    <script src="{{asset('js/SVservices.js')}}"></script>
 	<script src="{{asset('js/SVcontroller.js')}}"></script>
-	<script src="{{asset('js/SVservices.js')}}"></script>
+    <script src="{{asset('js/SV1.js')}}"></script>
 </head >
 
 <body>

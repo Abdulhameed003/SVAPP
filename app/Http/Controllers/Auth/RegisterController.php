@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\MessageBag;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Artisan;
 
@@ -63,19 +63,18 @@ class RegisterController extends Controller
     protected function validator($request)
     {
         return Validator::make($request, [
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255',
-            'password' => 'required|string|min:6|confirmed',
-            'company_id' => 'required|string|unique:tenants',
-            'company_name' => 'required|string|max:255',
-            'company_phone' => 'required|string'
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|confirmed',
+            'company_id' => 'required|unique:tenants',
+            'company_name' => 'required',
+            'company_phone' => 'required'
         ]);
     }
 
     public function register(request $request){
-        $this->validator($request->all())->validate();
-
+        $verify = $this->validator($request->all())->validate();
             $this->CreateCompany($request);
             User::create([
                 'first_name' => $request->first_name,
@@ -85,7 +84,7 @@ class RegisterController extends Controller
                 'company_id' => $request->company_id,
                 'user_role' => 'Admin'
             ]);
-            return redirect('/login');
+            return 'success';
       
     }
     

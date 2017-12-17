@@ -13,7 +13,14 @@
             <button type="button" class="btn btn-link mainbutton1" id="usernamebtn">Username</button>
             <div class="dropdown-content">
                 <a href="#" ng-click="openchangepassword('sm')">Change password</a>
-                <a href="index.html">Sign out</a>
+                <a href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                    Logout
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                </form>
             </div>
         </div>
 
