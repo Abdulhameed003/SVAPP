@@ -1,4 +1,4 @@
-@extends('layouts.mainapp')
+@extends('layouts.app')
 @section('content')
     <section id="defaultprojectview" class="project" ng-class="{visible:show}">
         <div>

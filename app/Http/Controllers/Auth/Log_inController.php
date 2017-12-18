@@ -21,12 +21,9 @@ class Log_inController extends Controller
         return  '/dashboard';
     }
 
-
-    
     public function __construct(){
         $this->middleware('guest')->except('logout');
     }
-
 
     public function show(){
         return view('auth.login');
@@ -47,10 +44,20 @@ class Log_inController extends Controller
             return redirect()->intended(route('dashboard.show'));
         }
 
-        return redirect()->back()->withInput($request->only('email','remember','company_id'))->withError($errors);
+        return redirect()->back()->withInput($request->only('email','remember','company_id'));
     }
 
     private function Credentials(request $request ){
         return $request->only('email','password','company_id');
+    }
+
+    
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        return redirect('/');
     }
 }

@@ -44,7 +44,7 @@
 </head >
 
 <body>
-
+    @includeWhen(!Auth::guest(),'inc.navbar')
 	@yield('content')
 
     <script src="{{asset('js/jquery.js')}}"></script>
@@ -1558,6 +1558,33 @@
             </div>
         </script>
 
+        <script type="text/ng-template" id="forgotpass.html"> 
+            <div>
+                <div class="modal-header" style="height:40px;">
+                        <h3 id="forgoth3">Forgot your Password?</h3>
+                </div>
+                <form class="form-group">
+                        <div class="modal-body" style="height:110px;">
+
+                                <h4 id="forgoth4"> Pleas enter your registered email. The link of changing password will be sent to your email.</h4>
+                                <div>
+
+                                        <input class="form-control" id="email" type="email" placeholder="Email" style="font-family:sans-serif">
+                                </div>
+
+
+                        </div>
+                        <div class="modal-footer" style="height:60px;">
+                            <!--for now we just close it later need to change the function!-->
+                                <button type="button" ng-click="emailSubmit()" id="passwordSubmit" class="button">Submit</button>
+                        </div>
+                        <a href="#" ng-click="close()" style=" position:fixed;top:10px;left:273px;">
+                                <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
+                        </a>
+
+                    </form>
+            </div>
+        </script>
 
     <!-- Modal pages scripts section end  -->
 

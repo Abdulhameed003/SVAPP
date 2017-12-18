@@ -15,10 +15,10 @@ Route::get('/', function(){
     return view('auth.login');
 });
 
-
 Auth::routes();
 Route::get('login','Auth\Log_inController@show')->name('log_in.show');
 Route::post('login','Auth\Log_inController@login')->name('log_in.submit');
+Route::post('logout','Auth\Log_inController@logout')->name('log_out');
 Route::get('dashboard', 'DashboardController@index')->name('dashboard.show');
 Route::resource('/project', 'ProjectController');
 Route::resource('/company', 'CompanyController');

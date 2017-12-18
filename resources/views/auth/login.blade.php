@@ -14,11 +14,11 @@
 
         <form method="POST" action="{{ route('log_in.submit') }}" novalidate>
             
-            <div class="formcontent">
+            <div id="login_form" class="formcontent">
                 {{ csrf_field() }}
                 <div class="form-group{{ $errors->has('company_id') ? ' has-error' : '' }}">
                     <div >
-                        <input id="company_id" ng-model="company_id" type="text" class="form-control registertext" name="company_id" placeholder="Company ID" value="{{ old('company_id') }}" required autofocus>
+                        <input id="company_id"  type="text" class="form-control registertext" name="company_id"  value="{{ old('company_id') }}" placeholder="Company ID" required autofocus>
 
                         @if ($errors->has('company_id'))
                             <span class="help-block">
@@ -31,7 +31,7 @@
 
                 <div class="form-group{{$errors->has('email') ? ' has-error' : '' }}">
                     <div>
-                        <input ng-model="Username" type="email" class="form-control registertext" name="email" placeholder="Email" required>
+                        <input  type="email" class="form-control registertext" name="email" value="{{old('email') }}" placeholder="Email"  required>
 
                         @if ($errors->has('email'))
                             <span class="help-block">
@@ -44,7 +44,7 @@
 
                 <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                     <div>
-                        <input id="password" ng-model="password" type="password" class="form-control registertext" name="password" placeholder="Password" required>
+                        <input id="password" type="password" class="form-control registertext" name="password" placeholder="Password" required>
 
                         @if ($errors->has('password'))
                             <span class="help-block">
@@ -58,8 +58,8 @@
                 <div class="form-group">
                     <div>
                         <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="remember" style="color:black" {{ old('remember') ? 'checked' : '' }}> Remember Me
+                            <label style="color:#455A64">
+                                <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
                             </label>
                         </div>
                     </div>
@@ -68,11 +68,11 @@
             </div>
             <div class="form-group">
                 <button type="submit" ng-model="login" class="button register">Sign In</button>
-                <div>
+                <div ng-controller="forgetPasswordController">
                     <button type="button" ng-click="open('sm')" class="btn btn-link" id="forget-pass">Forgot your Password?</button>
 
-                    <a href="RegisterPage.html" target="blank">
-                        <button type="button" class="btn btn-link" id="sign-up">Register</button>
+                    <a class="btn btn-link" id="sign-up" href="{{route('register')}}">
+                        Register
                     </a>
                 </div>
             </div>

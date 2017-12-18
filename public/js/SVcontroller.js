@@ -2,11 +2,7 @@
 
 var salesVisionControllers = angular.module('salesVisionControllers',[]);
 
-    salesVisionControllers.controller('LoginController', ['$scope', '$http','userService', function ($scope, $http, userService) {
-        
-           
-    }]);
-    
+
     salesVisionControllers.controller('RegisterController', ['$scope', '$http','userService','$location','$window', function ($scope, $http, userService,$location,$window) {
         var original = angular.copy($scope.user);
         $scope.error = false;
@@ -82,12 +78,12 @@ salesVisionControllers.controller('changepassctrl', function ($scope) {
                 };
             });
 
-/**index.html  controller*/
+/**forgot password controller*/
 
-salesVisionControllers.controller('indexCtrl', ['$scope', '$modal', function ($scope, $modal) {
+salesVisionControllers.controller('forgetPasswordController', ['$scope', '$modal', function ($scope, $modal) {
     $scope.open = function (size) {
-        var modalInstance = $modal.open({
-            controller: 'PopupCont',
+        $scope.modalInstance = $modal.open({
+            controller: 'forgetPasswordController',
             templateUrl: 'forgotpass.html',
             backdrop: "static",
             scope: $scope,
@@ -95,13 +91,19 @@ salesVisionControllers.controller('indexCtrl', ['$scope', '$modal', function ($s
         });
     }
 
+
+    $scope.close = function () {
+        $scope.modalInstance.dismiss('cancel');
+    };
+
+    $scope.emailSubmit = function(){
+
+        $scope.modalInstance.dismiss('cancel');
+    };
+
 }]);
 
-salesVisionControllers.controller('PopupCont', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
-    $scope.close = function () {
-        $modalInstance.dismiss('cancel');
-    };
-}]);
+
 
 /**Register.html  controller*/
 salesVisionControllers.controller('homeCtrl',['$scope','userService', function ($scope,userService) {
@@ -136,7 +138,7 @@ salesVisionControllers.controller('homeCtrl',['$scope','userService', function (
     
     
                 };
-            }]);
+}]);
 
 
 /**mainpage.html controller */

@@ -2,7 +2,7 @@
         <img id="loginlogo" src="image/logo-salesvision (2).png" />
     </div>
     
-    <nav class="bar">
+    <nav class="bar" ng-contrller="mainCtrl">
         <button type="button" class="btn btn-link mainbutton" style="position:absolute;top:3%;left:100px;" ng-click="callProject(); setTabletoDefault()" >Projects</button>
         <button type="button" class="btn btn-link mainbutton" style="position:absolute;top:3%;left:250px;" ng-click="callCompany()">Companies</button>
         <button type="button" class="btn btn-link mainbutton" style="position:absolute;top:3%;left:400px;" ng-click="callContact()">Contacts</button>
@@ -10,15 +10,15 @@
         <button type="button" class="btn btn-link mainbutton" style="position:absolute;top:3%;left:700px;">Dashboard</button>
         
         <div class="dropdown navdropdown" style="top:3%;left:88%;" ng-controller="MyControllerModal">
-            <button type="button" class="btn btn-link mainbutton1" id="usernamebtn">Username</button>
+            <button type="button" class="btn btn-link mainbutton1" id="usernamebtn">{{Auth::user()->first_name}}</button>
             <div class="dropdown-content">
                 <a href="#" ng-click="openchangepassword('sm')">Change password</a>
-                <a href="{{ route('logout') }}"
+                <a href="{{ route('log_out') }}"
                     onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
                     Logout
                 </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                <form id="logout-form" action="{{ route('log_out') }}" method="POST" style="display: none;">
                         {{ csrf_field() }}
                 </form>
             </div>

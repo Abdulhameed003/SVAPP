@@ -114,6 +114,10 @@ body {
     color: white;
 }
 
+#login_form span{
+    margin-left: 20px;
+}
+
 .register {
     width: 352px;
     height: 40px;
@@ -1022,4 +1026,7 @@ background-color: #D32F2F;
     color:rgb(59, 59, 59);
 }
 
+.has-error{
+    
+}
 
