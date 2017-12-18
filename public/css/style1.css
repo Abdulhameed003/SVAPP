@@ -114,9 +114,6 @@ body {
     color: white;
 }
 
-#login_form span{
-    margin-left: 20px;
-}
 
 .register {
     width: 352px;
@@ -1026,7 +1023,16 @@ background-color: #D32F2F;
     color:rgb(59, 59, 59);
 }
 
-.has-error{
+/*  Login form style */
+#login_form span{
+    margin-left: 20px;
+    color:red;
+    font-family: 'Lato', sans-serif;
+    font-size:13px;
+}
+
+#login_form .has-error .form-control{
+    border-color:red;
     
 }
 
