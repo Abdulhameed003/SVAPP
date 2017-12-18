@@ -2,27 +2,34 @@
 
 var salesVisionControllers = angular.module('salesVisionControllers',[]);
 
-salesVisionControllers.controller('LoginController', ['$scope', '$http','userService', function ($scope, $http, userService) {
+    salesVisionControllers.controller('LoginController', ['$scope', '$http','userService', function ($scope, $http, userService) {
         
            
     }]);
     
     salesVisionControllers.controller('RegisterController', ['$scope', '$http','userService','$location','$window', function ($scope, $http, userService,$location,$window) {
         var original = angular.copy($scope.user);
+        $scope.error = false;
+        
         $scope.postRegisterform = function (form) {
-            
             if (form.$valid) {
                 userService.register($scope.user,
                     function(response){
-                        $window.location.href = "/login";
-                        alert( $scope.user.company_name +' has been successfully registered login with your registed email');
-                        $scope.user = angular.copy(original);
-                        $scope.signupForm.$setPristine();
-                        $scope.signupForm.$setValidity();
-                        $scope.signupForm.$setUntouched();
+                        if(response.data== 'success'){
+                            $scope.user = angular.copy(original);
+                            $scope.signupForm.$setPristine();
+                            $scope.signupForm.$setValidity();
+                            $scope.signupForm.$setUntouched();
+                            window.location = "/login";
+                            alert( $scope.user.company_name +' has been successfully registered login with your registed email');
+                        }
+                        
                     },
                     function(response){
-                        $scope.error = response.data;
+                        if(response.status==422){
+                            $scope.error =true;
+                            $scope.errorMessage_CID = response.data.company_id[0];
+                        }
                 });
 
             }

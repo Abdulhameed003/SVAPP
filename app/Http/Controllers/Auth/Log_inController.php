@@ -47,7 +47,7 @@ class Log_inController extends Controller
             return redirect()->intended(route('dashboard.show'));
         }
 
-        return redirect()->back()->withinput($request->only('email','remember','company_id'))->with('error',"Login Failed");
+        return redirect()->back()->withInput($request->only('email','remember','company_id'))->withError($errors);
     }
 
     private function Credentials(request $request ){

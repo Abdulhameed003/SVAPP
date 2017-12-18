@@ -8,20 +8,61 @@
 
     <div class="box" style="left: 68%; top: 15%;">
         <div>
-        <img  id="loginlogo" src="image/logo-salesvision (2).png" />
+            <img  id="loginlogo" src="image/logo-salesvision (2).png" />
         </div>
         <div class="pagetitle">Login</div>
-        <form>
+
+        <form method="POST" action="{{ route('log_in.submit') }}" novalidate>
+            
             <div class="formcontent">
-                <div class="form-group">
-                    <input type="email" ng-model="Username" class="form-control registertext" placeholder="Email" />
+                {{ csrf_field() }}
+                <div class="form-group{{ $errors->has('company_id') ? ' has-error' : '' }}">
+                    <div >
+                        <input id="company_id" ng-model="company_id" type="text" class="form-control registertext" name="company_id" placeholder="Company ID" value="{{ old('company_id') }}" required autofocus>
+
+                        @if ($errors->has('company_id'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('company_id') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                    <!--input type="text" ng-model="company_id" class="form-control registertext" placeholder="Company Id"-->
                 </div>
-                <div class="form-group">
-                    <input type="password" ng-model="password" class="form-control registertext" placeholder="Password">
+
+                <div class="form-group{{$errors->has('email') ? ' has-error' : '' }}">
+                    <div>
+                        <input ng-model="Username" type="email" class="form-control registertext" name="email" placeholder="Email" required>
+
+                        @if ($errors->has('email'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('email') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                    <!--input type="email" name="email" ng-model="Username" class="form-control registertext" placeholder="Email" -->
+                </div>
+
+                <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                    <div>
+                        <input id="password" ng-model="password" type="password" class="form-control registertext" name="password" placeholder="Password" required>
+
+                        @if ($errors->has('password'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('password') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                    <!--input type="password" name="password" ng-model="password" class="form-control registertext" placeholder="Password"-->
                 </div>
 
                 <div class="form-group">
-                    <input type="text" ng-model="companyID" class="form-control registertext" placeholder="Company Id">
+                    <div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="remember" style="color:black" {{ old('remember') ? 'checked' : '' }}> Remember Me
+                            </label>
+                        </div>
+                    </div>
                 </div>
 
             </div>

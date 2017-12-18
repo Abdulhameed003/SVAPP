@@ -1,4 +1,5 @@
 var app = angular.module('app', ['ngMessages', 'ui.bootstrap', '720kb.datepicker', 'checklist-model','salesVisionControllers','salesVisionServices']);
+
 (function() {
     
       app.directive('onlyLettersInput', onlyLettersInput);

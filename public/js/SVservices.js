@@ -17,12 +17,12 @@ salesVisionServices.factory('userService', ['$http', 'localStorageService', func
             $http.post('/register',formdata)
             .then(function(response) {
     
-                //localStorageService.set('token', response.data.token);
-                onSuccess(response.data);
+                localStorageService.set('token', response.data.token);
+                onSuccess(response);
     
             }, function(response) {
     
-                onError(response.data);
+                onError(response);
     
             });
     
@@ -30,17 +30,12 @@ salesVisionServices.factory('userService', ['$http', 'localStorageService', func
     
         function login(formdata, onSuccess, onError){
     
-            $http.post('/login', 
-            {
-                company_id:formdata.company_id,
-                email: formdata.email,
-                password: formdata.password
-            }).
+            $http.post('/login',formdata).
             then(function(response) {
     
                 localStorageService.set('token', response.data.token);
                 onSuccess(response);
-    
+                
             }, function(response) {
     
                 onError(response);
