@@ -144,651 +144,475 @@ salesVisionControllers.controller('homeCtrl',['$scope','userService', function (
 /**mainpage.html controller */
 
 salesVisionControllers.controller('mainCtrl', function ($scope) {
-        var category = "";
-        var projectTitle = "";
+    var category = "";
+    var projectTitle = "";
+    $scope.showdashboard = true;
+    $scope.projectTitle = "Dashboard";
+    var myEl = angular.element(document.querySelector('#dash'));
+    myEl.addClass('active');
 
-        /**calling the project section */
-        $scope.callProject = function () {
-            $scope.showcomp = false;
-            $scope.showcontact = false;
-            $scope.showsalesperson = false;
-            $scope.showdealtable = false;
-            $scope.showleadtable = false;
-            $scope.showlostcasetable = false;
-            $scope.show = true;
-            $scope.showprojecttable = true;
-            $scope.projectTitle = "Project Table: All Categories";
-        }
-        /**calling the company section */
-        $scope.callCompany = function () {
-            $scope.show = false;
-            $scope.showsalesperson = false;
-            $scope.showcontact = false;
-            $scope.showcomp = true;
-            $scope.projectTitle = "Companies Table";
-        }
-        /**calling the contact section */
-        $scope.callContact = function () {
-            $scope.show = false;
-            $scope.showsalesperson = false;
-            $scope.showcomp = false;
-            $scope.showcontact = true;
-            $scope.projectTitle = "Contacts Table";
-        }
-        /**calling the salesperson section */
-        $scope.callSalesperson = function () {
-            $scope.show = false;
-            $scope.showsalesperson = false;
-            $scope.showcomp = false;
-            $scope.showcontact = false;
-            $scope.showsalesperson = true;
-            $scope.projectTitle = "Sales Person Table";
-        }
+    test = [{
+        label: "Total New Sales",
+        value: "138000"
+    },
 
+    {
+        label: "Total Renewals",
+        value: "602000"
+    }];
 
-        $scope.setTabletoDefault = function () {
-            $scope.defaulttable = {
-                columns: [1]
-            };
-            if ((category != 'lead') && (category != 'deal')) {
-                $scope.colContactPerson = true;
-                $scope.colEmail = false;
-                $scope.colPhone = false;
-                $scope.colIndustry = true;
-                $scope.colProduct = true;
-                $scope.colValue = true;
-                $scope.colType = true;
-                $scope.colCategory = true;
-                $scope.colStartdate = true;
-                $scope.colClosingdate = true;
-                $scope.colSalesstage = true;
-                $scope.colLastupdate = true;
-                $scope.colRemarks = true;
-            }
+    $scope.totalWonCases = {
+        chart: {
+            caption: "Won Cases",
+            subCaption: "Total Won cases by Values",
+            numberPrefix: "RM",
+            yAxisName: "Value (in Ringit)",
+            theme: "fint",
+            paletteColors: "#E53935,#FFEB3B,#4CAF50,#FF9800,#2196F3",
+            usePlotGradientColor: "0",
+            valueFontColor: "#212121",
+            toolTipBgColor: "#263238",
+            placeValuesInside: "0",
+            bgcolor: "#EEEEEE",
+        },
+        data: test
+    };
 
-            if (category == 'lead') {
-                $scope.colContactPerson = true;
-                $scope.colEmail = false;
-                $scope.colPhone = false;
-                $scope.colIndustry = true;
-                $scope.colProduct = true;
-                $scope.colValue = true;
-                $scope.colType = true;
-                $scope.colCategory = true;
-                $scope.colStartdate = true;
-                $scope.colClosingdate = true;
-                $scope.colSalesstage = true;
-                $scope.colLastupdate = true;
-                $scope.colRemarks = true;
-                $scope.colStatus = true;
-                $scope.colPersonincharge = true;
-                $scope.colTender = true;
-            }
+    $scope.totalRenewals = {
+        chart: {
+            caption: " Total Renewals",
+            numberPrefix: "RM",
+            yAxisName: "Value (in Ringit)",
+            paletteColors: "#2196F3,#E53935,#FFEB3B,#4CAF50,#FF9800",
+            usePlotGradientColor: "0",
+            theme: "fint",
+            valueFontColor: "#212121",
+            placeValuesInside: "0",
+            bgcolor: "#EEEEEE"
+        },
+        categories: [{
+            category: [{
+                label: "Office 365"
+            }, {
+                label: "Cloud SVR"
+            }, {
+                label: "Broadband"
+            }, {
+                label: "HRM"
+            }]
+        }],
+        dataset: [{
+            data: [{
+                value: "6000"
+            }, {
+                value: "12800"
+            }, {
+                value: "18000"
+            }, {
+                value: "19000"
+            }]
 
+        }]
 
-            if (category == 'deal') {
-                $scope.colContactPerson = true;
-                $scope.colEmail = false;
-                $scope.colPhone = false;
-                $scope.colIndustry = true;
-                $scope.colProduct = true;
-                $scope.colValue = true;
-                $scope.colType = true;
-                $scope.colCategory = true;
-                $scope.colStartdate = true;
-                $scope.colClosingdate = true;
-                $scope.colSalesstage = true;
-                $scope.colLastupdate = true;
-                $scope.colRemarks = true;
-                $scope.colPOdate = true;
-                $scope.colPersonincharge = true;
-                $scope.colPOnum = true;
-            }
+    };
 
-        };
+    $scope.totalNewsales = {
+        chart: {
+            caption: " Total New Sales",
+            numberPrefix: "RM",
+            yAxisName: "Value (in Ringit)",
+            paletteColors: "#E53935,#FFEB3B,#4CAF50,#FF9800,#2196F3",
+            usePlotGradientColor: "0",
+            theme: "fint",
+            valueFontColor: "#212121",
+            placeValuesInside: "0",
+            bgcolor: "#EEEEEE"
+        },
+        categories: [{
+            category: [{
+                label: "Office 365"
+            }, {
+                label: "Cloud SVR"
+            }, {
+                label: "Broadband"
+            }, {
+                label: "HRM"
+            }]
+        }],
+        dataset: [{
+            data: [{
+                value: "3000"
+            }, {
+                value: "6800"
+            }, {
+                value: "10000"
+            }, {
+                value: "19000"
+            }]
 
+        }]
+    };
 
-        /**reseting forms */
-        $scope.resetForm = function (id) {
-            if (id == 'filterForm')
-                $scope.filterForm = {};
-
-            if (id == 'columnForm')
-                $scope.defaulttable = {
-                    columns: [1]
-                };
-
-
-        }
-
-        $scope.resetDate = function () {
-            $scope.startdate = "";
-            $scope.enddate = "";
-        }
-
-
-        /**Sort table */
-
-        $scope.predicate = 'No';
-
-        $scope.sort = function (predicate) {
-            $scope.predicate = predicate;
-        }
-
-        $scope.isSorted = function (predicate) {
-            return ($scope.predicate == predicate)
-        }
-
-
-
-        var projects = [{
-
-            No: 5,
-            companyName: 'f',
-            contactPerson: 's',
-            email: 'sfdsdfdsgf',
-            phone: '2736495',
-            industry: 'f',
-            product: 'f',
-            value: '1000',
-            type: '1',
-            category: 'Lead',
-            startDate: '10/03/2017',
-            closingDate: '02/8/2017',
-            salesStage: '40%',
-            lastUpdate: '22/11/2017',
-            pincharge: 'Iulia',
-            remarks: 'sdddd'
+    $scope.totalwonComparison = {
+        chart: {
+            caption: "Total Opportunities vs Won Cases",
+            subCaption: "Last year",
+            xAxisname: "Month",
+            yAxisName: "Value (In Ringit)",
+            numberPrefix: "RM",
+            theme: "fint",
+            paletteColors: "#4CAF50,#FFEB3B,",
+            usePlotGradientColor: "0",
+            bgcolor: "#EEEEEE"
+        },
+        categories: [{
+            category: [{
+                label: "Jan"
+            }, {
+                label: "Feb"
+            }, {
+                label: "Mar"
+            }, {
+                label: "Apr"
+            }, {
+                label: "May"
+            }, {
+                label: "Jun"
+            }, {
+                label: "Jul"
+            }, {
+                label: "Aug"
+            }, {
+                label: "Sep"
+            }, {
+                label: "Oct"
+            }, {
+                label: "Nov"
+            }, {
+                label: "Dec"
+            }]
+        }],
+        dataset: [{
+            seriesName: "Total Oppotunities",
+            data: [{
+                value: "16000"
+            }, {
+                value: "20000"
+            }, {
+                value: "18000"
+            }, {
+                value: "19000"
+            }, {
+                value: "15000"
+            }, {
+                value: "21000"
+            }, {
+                value: "16000"
+            }, {
+                value: "20000"
+            }, {
+                value: "17000"
+            }, {
+                value: "25000"
+            }, {
+                value: "19000"
+            }, {
+                value: "23000"
+            }]
         }, {
-            No: 2,
-            companyName: 'z',
-            contactPerson: 'q',
-            email: 'sfdsdfdsgf',
-            phone: '2736495',
-            industry: 'p',
-            product: 'f',
-            value: '300',
-            type: 'new sale',
-            category: 'Deal',
-            startDate: '10/03/2016',
-            closingDate: '02/8/2020',
-            salesStage: '40%',
-            lastUpdate: '22/11/2018',
-            remarks: 'sdddd'
-        },
+            seriesName: "Won Cases",
+            renderAs: "area",
+            showValues: "0",
+            data: [{
+                value: "4000"
+            }, {
+                value: "5000"
+            }, {
+                value: "3000"
+            }, {
+                value: "4000"
+            }, {
+                value: "1000"
+            }, {
+                value: "7000"
+            }, {
+                value: "1000"
+            }, {
+                value: "4000"
+            }, {
+                value: "1000"
+            }, {
+                value: "8000"
+            }, {
+                value: "2000"
+            }, {
+                value: "7000"
+            }]
+        }],
+        data: [{
 
-        {
-            No: 3,
-            companyName: 'z',
-            contactPerson: 'q',
-            email: 'sfdsdfdsgf',
-            phone: '2736495',
-            industry: 'p',
-            product: 'f',
-            value: '300',
-            type: 'new sale',
-            category: 'Lost case',
-            startDate: '10/03/2016',
-            closingDate: '02/8/2020',
-            salesStage: '40%',
-            lastUpdate: '22/11/2018',
-            remarks: 'sdddd'
+            value: "2000"
         },
         {
-            No: 7,
-            companyName: 'z',
-            contactPerson: 'q',
-            email: 'sfdsdfdsgf',
-            phone: '2736495',
-            industry: 'p',
-            product: 'f',
-            value: '300',
-            type: 'new sale',
-            category: 'Lost case',
-            startDate: '10/03/2016',
-            closingDate: '02/8/2020',
-            salesStage: '40%',
-            lastUpdate: '22/11/2018',
-            remarks: 'sdddd'
+
+            value: "8000"
         },
         {
-            No: 20,
-            companyName: 'z',
-            contactPerson: 'q',
-            email: 'sfdsdfdsgf',
-            phone: '2736495',
-            industry: 'p',
-            product: 'f',
-            value: '300',
-            type: 'new sale',
-            category: 'Lost case',
-            startDate: '10/03/2016',
-            closingDate: '02/8/2020',
-            salesStage: '40%',
-            lastUpdate: '22/11/2018',
-            remarks: 'sdddd'
+
+            value: "4500"
         },
         {
-            No: 18,
-            companyName: 'z',
-            contactPerson: 'q',
-            email: 'sfdsdfdsgf',
-            phone: '2736495',
-            industry: 'p',
-            product: 'f',
-            value: '300',
-            type: 'new sale',
-            category: 'Lost case',
-            startDate: '10/03/2016',
-            closingDate: '02/8/2020',
-            salesStage: '40%',
-            lastUpdate: '22/11/2018',
-            remarks: 'sdddd'
+
+            value: "24000"
+        }],
+
+        trendlines: [{
+            line: [{
+                startvalue: "50000",
+                color: "#E53935",
+                valueOnRight: "1",
+                tooltext: "2017 Target",
+                displayvalue: "Target - RM200k"
+            }]
+        }]
+
+    };
+    $scope.QuarterWoncase = {
+        chart: {
+            caption: "Won Cases vs Lost Cases",
+            subCaption: "By Quarters",
+            numberPrefix: "RM",
+            yAxisName: "Value (In Ringit)",
+            theme: "fint",
+            paletteColors: "#2196F3,#FF9800",
+            usePlotGradientColor: "0",
+            valueFontColor: "#212121",
+            placeValuesInside: "0",
+            bgcolor: "#EEEEEE"
+        },
+        categories: [{
+            category: [{
+                label: "Q1"
+            }, {
+                label: "Q2"
+            }, {
+                label: "Q3"
+            }, {
+                label: "Q4"
+            }]
+        }],
+        dataset: [
+            {
+                seriesname: "Won Cases",
+
+                data: [{
+
+                    value: "2000"
+                },
+                {
+
+                    value: "8000"
+                },
+                {
+
+                    value: "4500"
+                },
+                {
+
+                    value: "24000"
+                }]
+            },
+            {
+                seriesname: "Lost Cases",
+
+                data: [{
+
+                    value: "500"
+                },
+                {
+
+                    value: "8400"
+                },
+                {
+
+                    value: "100"
+                },
+                {
+
+                    value: "5000"
+                }]
+            }]
+    };
+    $scope.Salesvaluebycustomers = {
+        chart: {
+            caption: "Sales Value by Customers",
+            numberPrefix: "RM",
+            theme: "fint",
+            showPercentValues: "1",
+            showPercentInTooltip: "0",
+            decimals: "1",
+            //paletteColors: "#3F51B5",
+            valueFontColor: "#212121",
+            toolTipBgColor: "#263238",
+            placeValuesInside: "0",
+            showToolTip: "1",
+            showLegend: "1",
+            useDataPlotColorForLabels: "1",
+            bgcolor: "#EEEEEE"
+        },
+        data: [{
+            label: "Office 365",
+            value: "2000"
         },
         {
-            No: 13,
-            companyName: 'z',
-            contactPerson: 'q',
-            email: 'sfdsdfdsgf',
-            phone: '2736495',
-            industry: 'p',
-            product: 'f',
-            value: '300',
-            type: 'new sale',
-            category: 'Lost case',
-            startDate: '10/03/2016',
-            closingDate: '02/8/2020',
-            salesStage: '40%',
-            lastUpdate: '22/11/2018',
-            remarks: 'sdddd'
+            label: "Cloud SVR",
+            value: "8000"
         },
         {
-            No: 9,
-            companyName: 'z',
-            contactPerson: 'q',
-            email: 'sfdsdfdsgf',
-            phone: '2736495',
-            industry: 'p',
-            product: 'f',
-            value: '300',
-            type: 'new sale',
-            category: 'Lost case',
-            startDate: '10/03/2016',
-            closingDate: '02/8/2020',
-            salesStage: '40%',
-            lastUpdate: '22/11/2018',
-            remarks: 'sdddd'
+            label: "Broadband",
+            value: "4500"
         },
         {
-            No: 10,
-            companyName: 'z',
-            contactPerson: 'q',
-            email: 'sfdsdfdsgf',
-            phone: '2736495',
-            industry: 'p',
-            product: 'f',
-            value: '300',
-            type: 'new sale',
-            category: 'Lost case',
-            startDate: '10/03/2016',
-            closingDate: '02/8/2020',
-            salesStage: '40%',
-            lastUpdate: '22/11/2018',
-            remarks: 'sdddd'
+            label: "HRM",
+            value: "24000"
+        }]
+    };
+    $scope.Salesvaluebyindustry = {
+        chart: {
+            caption: "Sales Value by Industries",
+            numberPrefix: "RM",
+            theme: "fint",
+            showPercentValues: "1",
+            showPercentInTooltip: "0",
+            decimals: "1",
+            //paletteColors: "#3F51B5",
+            valueFontColor: "#212121",
+            toolTipBgColor: "#263238",
+            placeValuesInside: "0",
+            showToolTip: "1",
+            showLegend: "1",
+            useDataPlotColorForLabels: "1",
+            bgcolor: "#EEEEEE"
+        },
+        data: [{
+            label: "Reseller",
+            value: "2000"
         },
         {
-            No: 22,
-            companyName: 'z',
-            contactPerson: 'q',
-            email: 'sfdsdfdsgf',
-            phone: '2736495',
-            industry: 'p',
-            product: 'f',
-            value: '300',
-            type: 'new sale',
-            category: 'Lost case',
-            startDate: '10/03/2016',
-            closingDate: '02/8/2020',
-            salesStage: '40%',
-            lastUpdate: '22/11/2018',
-            remarks: 'sdddd'
+            label: "Health",
+            value: "24000"
         },
         {
-            No: 33,
-            companyName: 'z',
-            contactPerson: 'q',
-            email: 'sfdsdfdsgf',
-            phone: '2736495',
-            industry: 'p',
-            product: 'f',
-            value: '300',
-            type: 'new sale',
-            category: 'Lost case',
-            startDate: '10/03/2016',
-            closingDate: '02/8/2020',
-            salesStage: '40%',
-            lastUpdate: '22/11/2018',
-            remarks: 'sdddd'
+            label: "Education",
+            value: "4500"
         },
         {
-            No: 34,
-            companyName: 'z',
-            contactPerson: 'q',
-            email: 'sfdsdfdsgf',
-            phone: '2736495',
-            industry: 'p',
-            product: 'f',
-            value: '300',
-            type: 'new sale',
-            category: 'Lost case',
-            startDate: '10/03/2016',
-            closingDate: '02/8/2020',
-            salesStage: '40%',
-            lastUpdate: '22/11/2018',
-            remarks: 'sdddd'
+            label: "Retail",
+            value: "5000"
+        }]
+    };
+
+    $scope.totalclosingbyquarter = {
+        chart: {
+            caption: "Total Closing Opportunities",
+            subCaption: "By Quarters",
+            numberPrefix: "#",
+            theme: "fint",
+            xAxisName: "Quarters of year",
+            yAxisName: "No. of Total closing Opportunities ",
+            //paletteColors: "#3F51B5",
+            valueFontColor: "#212121",
+            toolTipBgColor: "#263238",
+            placeValuesInside: "0",
+            showLegend: "1",
+            bgcolor: "#EEEEEE"
         },
+        data: [{
+            label: "Q1",
+            value: "5"
+        },
+        {
+            label: "Q2",
+            value: "10"
+        },
+        {
+            label: "Q3",
+            value: "1"
+        },
+        {
+            label: "Q4",
+            value: "12"
+        }]
+    };
 
 
-        ];
 
-        $scope.searchData = '';
-        $scope.rows = projects;
-        $scope.filteredRows = projects;
+    /**calling the project section */
+    $scope.callProject = function () {
+        $scope.showcomp = false;
+        $scope.showcontact = false;
+        $scope.showsalesperson = false;
+        $scope.show = true;
+        $scope.showprojecttable = true;
+        $scope.showdashboard = false;
+        $scope.extend = false;
+        myEl.removeClass('active');
+        $scope.projectTitle = "Project Table: All Categories";
+    }
+    /**calling the company section */
+    $scope.callCompany = function () {
+        $scope.show = false;
+        $scope.showsalesperson = false;
+        $scope.showcontact = false;
+        $scope.showcomp = true;
+        $scope.showdashboard = false;
+        $scope.extend = false;
+        myEl.removeClass('active');
+        $scope.projectTitle = "Companies Table";
+    }
+    /**calling the contact section */
+    $scope.callContact = function () {
+        $scope.show = false;
+        $scope.showsalesperson = false;
+        $scope.showcomp = false;
+        $scope.showcontact = true;
+        $scope.showdashboard = false;
+        $scope.extend = false;
+        myEl.removeClass('active');
+        $scope.projectTitle = "Contacts Table";
+    }
+    /**calling the salesperson section */
+    $scope.callSalesperson = function () {
+        $scope.show = false;
+        $scope.showsalesperson = false;
+        $scope.showcomp = false;
+        $scope.showcontact = false;
+        $scope.showsalesperson = true;
+        $scope.showdashboard = false;
+        $scope.extend = false;
+        myEl.removeClass('active');
+        $scope.projectTitle = "Sales Person Table";
+    }
 
-        $scope.checkLength = function () {
 
-            $scope.curPage = 0;
+    /**calling the dashboard section */
+    $scope.callDashboard = function () {
+        $scope.show = false;
+        $scope.showsalesperson = false;
+        $scope.showcomp = false;
+        $scope.showcontact = false;
+        $scope.showsalesperson = false;
+        $scope.showdashboard = true;
+        $scope.projectTitle = "Dashboard";
+        $scope.extend = true;
+    }
 
+
+    $scope.setTabletoDefault = function () {
+        $scope.defaulttable = {
+            columns: [1]
         };
-
-        $scope.curPage = 0;
-        $scope.pageSize = 11;
-        $scope.numberOfPages = function () {
-            return Math.ceil($scope.rows.length / $scope.pageSize);
-        };
-
-
-        $scope.companylist = [{
-
-            No: 1,
-            companyName: 'f',
-            contactPerson: 's',
-            website: 'sfdsdfdsgf',
-            phone: '2736495',
-            industry: 'f',
-            address: 'sdfcdf'
-
-        }, {
-            No: 12,
-            companyName: 'a',
-            contactPerson: 's',
-            website: 'sfdsdfdsgf',
-            phone: '2736495',
-            industry: 'f',
-            address: 'sdfcdf'
-        },
-
-        {
-            No: 5,
-            companyName: 'y',
-            contactPerson: 's',
-            website: 'sfdsdfdsgf',
-            phone: '2736495',
-            industry: 'f',
-            address: 'sdfcdf'
-        },
-        {
-            No: 3,
-            companyName: 'y',
-            contactPerson: 's',
-            website: 'sfdsdfdsgf',
-            phone: '2736495',
-            industry: 'f',
-            address: 'sdfcdf'
-        },
-        {
-            No: 9,
-            companyName: 'y',
-            contactPerson: 's',
-            website: 'sfdsdfdsgf',
-            phone: '2736495',
-            industry: 'f',
-            address: 'sdfcdf'
-        },
-        {
-            No: 35,
-            companyName: 'y',
-            contactPerson: 's',
-            website: 'sfdsdfdsgf',
-            phone: '2736495',
-            industry: 'f',
-            address: 'sdfcdf'
-        },
-        {
-            No: 19,
-            companyName: 'y',
-            contactPerson: 's',
-            website: 'sfdsdfdsgf',
-            phone: '2736495',
-            industry: 'f',
-            address: 'sdfcdf'
-        }
-        ];
-
-
-
-        $scope.contacts = [{
-
-            No: 1,
-            companyName: 'y',
-            name: 'v',
-            phone: '2736495',
-            email: 'sfdsdfdsgf',
-            position: 'f',
-
-        }, {
-            No: 12,
-            companyName: 'a',
-            name: 'r',
-            phone: '2736495',
-            email: 'sfdsdfdsgf',
-            position: 'f',
-        },
-
-        {
-            No: 10,
-            companyName: 'z',
-            name: 'f',
-            phone: '2736495',
-            email: 'sfdsdfdsgf',
-            position: 'f',
-        },
-        {
-            No: 3,
-            companyName: 'p',
-            name: 'q',
-            phone: '2736495',
-            email: 'sfdsdfdsgf',
-            position: 'f',
-        },
-        {
-            No: 5,
-            companyName: 'c',
-            name: 'o',
-            phone: '2736495',
-            email: 'sfdsdfdsgf',
-            position: 'f',
-        },
-        {
-            No: 7,
-            companyName: 'f',
-            name: 'i',
-            phone: '2736495',
-            email: 'sfdsdfdsgf',
-            position: 'f',
-        },
-        {
-            No: 2,
-            companyName: 'n',
-            name: 'x',
-            phone: '2736495',
-            email: 'sfdsdfdsgf',
-            position: 'f',
-        }
-        ];
-
-
-        $scope.spersonlist = [{
-
-            No: 1,
-            name: 'v',
-            phone: '2736495',
-            email: 'sfdsdfdsgf',
-            position: 'f',
-            total: 5
-
-        }, {
-            No: 12,
-            name: 'r',
-            phone: '2736495',
-            email: 'sfdsdfdsgf',
-            position: 'f',
-            total: 3
-        },
-
-        {
-            No: 10,
-            name: 'f',
-            phone: '2736495',
-            email: 'sfdsdfdsgf',
-            position: 'f',
-            total: 2
-        },
-        {
-            No: 3,
-            name: 'q',
-            phone: '2736495',
-            email: 'sfdsdfdsgf',
-            position: 'f',
-            total: 4
-        },
-        {
-            No: 5,
-            name: 'o',
-            phone: '2736495',
-            email: 'sfdsdfdsgf',
-            position: 'f',
-            total: 7
-        },
-        {
-            No: 7,
-            name: 'i',
-            phone: '2736495',
-            email: 'sfdsdfdsgf',
-            position: 'f',
-            total: 5
-        },
-        {
-            No: 70,
-            name: 'x',
-            phone: '2736495',
-            email: 'sfdsdfdsgf',
-            position: 'f',
-            total: 0
-        }
-        ];
-
-
-        /**checkboxrule */
-
-        $scope.checkboxRule1 = function (checkbox) {
-            if (checkbox == 'lead') {
-                $scope.filterForm.deal = false;
-                $scope.filterForm.lostCase = false;
-                $scope.filterForm.date = false;
-            }
-            if (checkbox == 'deal') {
-                $scope.filterForm.lead = false;
-                $scope.filterForm.lostCase = false;
-                $scope.filterForm.date = false;
-            }
-            if (checkbox == 'lostCase') {
-                $scope.filterForm.deal = false;
-                $scope.filterForm.lead = false;
-                $scope.filterForm.date = false;
-            }
-            if (checkbox == 'date') {
-                $scope.filterForm.deal = false;
-                $scope.filterForm.lead = false;
-                $scope.filterForm.lostCase = false;
-            }
-        };
-
-        /**checkbox names */
-
-        $scope.columns = [
-            { id: 1, name: 'Company Name' },
-            { id: 2, name: 'Contact Person' },
-            { id: 3, name: 'Industry' },
-            { id: 4, name: 'Product' },
-            { id: 5, name: 'Type' },
-            { id: 6, name: 'Value' },
-            { id: 7, name: 'Category' },
-            { id: 8, name: 'Sales Stage' },
-            { id: 9, name: 'Last Update' },
-            { id: 10, name: 'Person in Charge' },
-            { id: 11, name: 'Start Date' },
-            { id: 12, name: 'Closing Date' },
-            { id: 13, name: 'Status' },
-            { id: 14, name: 'Email' },
-            { id: 15, name: 'Phone' },
-            { id: 16, name: 'Tender' },
-            { id: 17, name: 'Remarks' },
-            { id: 18, name: 'PO-Date' },
-            { id: 19, name: 'PO-Number' }
-
-        ];
-
-
-        $scope.columns[0].disabled = true;
-
-        /**define whether the checkboxes should be disable depending on project category */
-
-        $scope.checkCategory = function () {
-
-            $scope.columns[12].disabled = true;
-            $scope.columns[15].disabled = true;
-            $scope.columns[17].disabled = true;
-            $scope.columns[18].disabled = true;
-            $scope.columns[9].disabled = true;
-
-            if (category == 'lead') {
-                $scope.columns[17].disabled = true;
-                $scope.columns[18].disabled = true;
-                $scope.columns[12].disabled = false;
-                $scope.columns[15].disabled = false;
-                $scope.columns[9].disabled = false;
-
-            }
-            if (category == 'deal') {
-
-                $scope.columns[12].disabled = true;
-                $scope.columns[15].disabled = true;
-                $scope.columns[17].disabled = false;
-                $scope.columns[18].disabled = false;
-                $scope.columns[9].disabled = false;
-            }
-
-        };
-
-
-        $scope.setDefault = function () {
-            category = "";
-            $scope.projectTitle = "Project Table: All Categories";
-            $scope.showprojecttable = true;
-            $scope.showdealtable = false;
-            $scope.showleadtable = false;
-            $scope.showlostcasetable = false;
+        if ((category != 'lead') && (category != 'deal')) {
             $scope.colContactPerson = true;
             $scope.colEmail = false;
             $scope.colPhone = false;
@@ -802,209 +626,726 @@ salesVisionControllers.controller('mainCtrl', function ($scope) {
             $scope.colSalesstage = true;
             $scope.colLastupdate = true;
             $scope.colRemarks = true;
+        }
 
-        };
-
-        /**filter the table content */
-        $scope.filterContent = function () {
-
-            if ($scope.filterForm.lead) {
-                category = "lead";
-                $scope.projectTitle = "Project Table: Leads Category";
-                $scope.showprojecttable = false;
-                $scope.showdealtable = false;
-                $scope.showlostcasetable = false;
-                $scope.showleadtable = true;
-                $scope.colPersonincharge = true;
-                $scope.colStatus = true;
-                $scope.colTender = true;
-                $scope.colContactPerson = true;
-                $scope.colEmail = false;
-                $scope.colPhone = false;
-                $scope.colIndustry = true;
-                $scope.colProduct = true;
-                $scope.colValue = true;
-                $scope.colType = true;
-                $scope.colCategory = true;
-                $scope.colStartdate = true;
-                $scope.colClosingdate = true;
-                $scope.colSalesstage = true;
-                $scope.colLastupdate = true;
-                $scope.colRemarks = true;
-
-            }
-
-            if ($scope.filterForm.deal) {
-                category = "deal";
-                $scope.projectTitle = "Project Table: Deals Category";
-                $scope.showdealtable = true;
-                $scope.showlostcasetable = false;
-                $scope.showprojecttable = false;
-                $scope.showleadtable = false;
-                $scope.colPersonincharge = true;
-                $scope.colStatus = false;
-                $scope.colTender = false;
-                $scope.colContactPerson = true;
-                $scope.colEmail = false;
-                $scope.colPhone = false;
-                $scope.colIndustry = true;
-                $scope.colProduct = true;
-                $scope.colValue = true;
-                $scope.colType = true;
-                $scope.colCategory = true;
-                $scope.colStartdate = true;
-                $scope.colClosingdate = true;
-                $scope.colSalesstage = true;
-                $scope.colLastupdate = true;
-                $scope.colRemarks = true;
-                $scope.colPOnum = true;
-                $scope.colPOdate = true;
-
-            }
-            if ($scope.filterForm.lostCase) {
-                category = "lostcase";
-                $scope.projectTitle = "Project Table: Lost Cases Category";
-                $scope.showdealtable = false;
-                $scope.showprojecttable = false;
-                $scope.showleadtable = false;
-                $scope.showlostcasetable = true;
-                $scope.colContactPerson = true;
-                $scope.colEmail = false;
-                $scope.colPhone = false;
-                $scope.colIndustry = true;
-                $scope.colProduct = true;
-                $scope.colValue = true;
-                $scope.colType = true;
-                $scope.colCategory = true;
-                $scope.colStartdate = true;
-                $scope.colClosingdate = true;
-                $scope.colSalesstage = true;
-                $scope.colLastupdate = true;
-                $scope.colRemarks = true;
-            }
-        };
-
-
-        /**filtering table columns */
-        var list = [];
-        var list1 = [];
-        var total = 0;
-        var total1 = 0;
-
-        $scope.filtertablecolumns = function (number, list) {
-
-            $scope.list = list;
-            total = number;
-
-            $scope.colContactPerson = false;
+        if (category == 'lead') {
+            $scope.colContactPerson = true;
             $scope.colEmail = false;
             $scope.colPhone = false;
-            $scope.colIndustry = false;
-            $scope.colProduct = false;
-            $scope.colValue = false;
-            $scope.colType = false;
-            $scope.colCategory = false;
-            $scope.colStartdate = false;
-            $scope.colClosingdate = false;
-            $scope.colSalesstage = false;
-            $scope.colLastupdate = false;
-            $scope.colRemarks = false;
-            $scope.colStatus = false;
-            $scope.colTender = false;
+            $scope.colIndustry = true;
+            $scope.colProduct = true;
+            $scope.colValue = true;
+            $scope.colType = true;
+            $scope.colCategory = true;
+            $scope.colStartdate = true;
+            $scope.colClosingdate = true;
+            $scope.colSalesstage = true;
+            $scope.colLastupdate = true;
+            $scope.colRemarks = true;
+            $scope.colStatus = true;
+            $scope.colPersonincharge = true;
+            $scope.colTender = true;
+        }
+
+
+        if (category == 'deal') {
+            $scope.colContactPerson = true;
+            $scope.colEmail = false;
+            $scope.colPhone = false;
+            $scope.colIndustry = true;
+            $scope.colProduct = true;
+            $scope.colValue = true;
+            $scope.colType = true;
+            $scope.colCategory = true;
+            $scope.colStartdate = true;
+            $scope.colClosingdate = true;
+            $scope.colSalesstage = true;
+            $scope.colLastupdate = true;
+            $scope.colRemarks = true;
+            $scope.colPOdate = true;
+            $scope.colPersonincharge = true;
+            $scope.colPOnum = true;
+        }
+
+    };
+
+
+    /**reseting forms */
+    $scope.resetForm = function (id) {
+        if (id == 'filterForm')
+            $scope.filterForm = {};
+
+        if (id == 'columnForm')
+            $scope.defaulttable = {
+                columns: [1]
+            };
+
+
+    }
+
+    $scope.resetDate = function () {
+        $scope.startdate = "";
+        $scope.enddate = "";
+    }
+
+
+    /**Sort table */
+
+    $scope.predicate = 'No';
+
+    $scope.sort = function (predicate) {
+        $scope.predicate = predicate;
+    }
+
+    $scope.isSorted = function (predicate) {
+        return ($scope.predicate == predicate)
+    }
+
+
+    //dummy data
+
+    var companylist = [{
+
+        No: 1,
+        companyName: 'University Kebangsaan',
+        contactPerson: 'Shaharom',
+        website: '',
+        phone: '',
+        industry: 'Education',
+        address: ''
+
+    }, {
+        No: 2,
+        companyName: 'Pengurusan Air Selangor Sdn Bhd',
+        contactPerson: 'Raja Ahmad Hidzir',
+        website: '',
+        phone: '',
+        industry: 'Hospitality/Services',
+        address: ''
+    },
+
+    {
+        No: 3,
+        companyName: 'Numa Solution',
+        contactPerson: 'Aizuddin',
+        website: '',
+        phone: '',
+        industry: 'Reseller',
+        address: ''
+    },
+    {
+        No: 4,
+        companyName: 'Abeam Consulting',
+        contactPerson: 'See Mun',
+        website: '',
+        phone: '',
+        industry: 'HOSPITALITY / SERVICES',
+        address: ''
+    },
+    {
+        No: 5,
+        companyName: 'Cornerstone',
+        contactPerson: 'Victoria',
+        website: '',
+        phone: '',
+        industry: 'Industrial',
+        address: ''
+    },
+    {
+        No: 6,
+        companyName: 'Alfredo Biagio',
+        contactPerson: 'Alfredo',
+        website: '',
+        phone: '',
+        industry: 'Hospitality/Services',
+        address: ''
+    },
+    {
+        No: 7,
+        companyName: 'E-Treasure BPO',
+        contactPerson: 'Kelvin Silva',
+        website: '',
+        phone: '',
+        industry: 'Telecommunication',
+        address: ''
+    }, {
+        No: 8,
+        companyName: 'PeopleQuest (Risda)',
+        contactPerson: 'Yew',
+        website: '',
+        phone: '',
+        industry: 'GOV / GLC',
+        address: ''
+    }
+    ];
+
+    var contacts = [{
+
+        No: 1,
+        companyName: 'University Kebangsaan',
+        name: 'Shaharom',
+        phone: '',
+        email: '',
+        position: ''
+
+    }, {
+        No: 2,
+        companyName: 'Pengurusan Air Selangor Sdn Bhd',
+        name: 'Raja Ahmad Hidzir',
+        phone: '',
+        email: '',
+        position: ''
+
+    },
+
+    {
+        No: 3,
+        companyName: 'Numa Solution',
+        name: 'Aizuddin',
+        phone: '',
+        email: 'aizzuddin@numasolution.com',
+        position: ''
+
+    },
+    {
+        No: 4,
+        companyName: 'Abeam Consulting',
+        name: 'See Mun',
+        phone: '',
+        email: 'sleong@abeam.com',
+        position: ''
+
+    },
+    {
+        No: 5,
+        companyName: 'Cornerstone',
+        name: 'Victoria',
+        phone: '',
+        email: 'victoria@cstone.com.my',
+        position: ''
+
+    },
+    {
+        No: 6,
+        companyName: 'Alfredo Biagio',
+        name: 'Alfredo',
+        phone: '',
+        email: 'a.biagio@vfemail.net',
+        position: ''
+
+    },
+    {
+        No: 7,
+        companyName: 'E-Treasure BPO',
+        name: 'Kelvin Silva',
+        phone: '',
+        email: 'kelvin092108@yahoo.com',
+        position: ''
+
+    }, {
+        No: 8,
+        companyName: 'PeopleQuest (Risda)',
+        name: 'Yew',
+        phone: '',
+        email: 'th.yew@peoplequest.com.my',
+        position: ''
+    }
+    ];
+
+    var sperson = [{
+        No:'1',
+        name: 'Iulia',
+        phone: '',
+        email: '',
+        position: 'Business development manager',
+        total: '8'
+    }];
+
+
+    var projects = [{
+
+        No: 1,
+        companyName: 'University Kebangsaan',
+        contactPerson: 'Shaharom',
+        email: '',
+        phone: '012-950 4084',
+        industry: 'Education',
+        product: 'Cloud Svr',
+        value: 'N/A',
+        type: 'New Sales',
+        category: 'Lead',
+        startDate: '03/01/2017',
+        closingDate: '',
+        salesStage: '10%',
+        lastUpdate: '16/01/2017',
+        pincharge: 'Iulia',
+        remarks: ' 15/1 - Scoping for requirement'
+
+    }, {
+        No: 2,
+        companyName: 'Pengurusan Air Selangor Sdn Bhd',
+        contactPerson: 'Raja Ahmad Hidzir',
+        email: '',
+        phone: '123777131',
+        industry: 'Hospitality/Services',
+        product: 'HRM',
+        value: '1600000.00',
+        type: ' New Sales ',
+        category: 'Lead',
+        startDate: '24/02/2017',
+        closingDate: '',
+        salesStage: '20%',
+        lastUpdate: '04/05/2017',
+        remarks: '*Group head human resource admin meet up *Meeting initiated'
+    },
+
+    {
+        No: 3,
+        companyName: 'Numa Solution',
+        contactPerson: 'Aizuddin',
+        email: 'aizzuddin@numasolution.com',
+        phone: '0322842500 ',
+        industry: 'Reseller',
+        product: 'Co-Lo',
+        value: '6360.00',
+        type: 'New Sales',
+        category: 'Lead',
+        startDate: '06/02/2017',
+        closingDate: '01/05/2017',
+        salesStage: '50%',
+        lastUpdate: '10/02/2017',
+        remarks: '06/02 - Site visit10/02 - Quoted'
+    },
+    {
+        No: 4,
+        companyName: 'Abeam Consulting',
+        contactPerson: 'See Mun',
+        email: 'sleong@abeam.com',
+        phone: '0162553311',
+        industry: 'HOSPITALITY / SERVICES',
+        product: 'Cloud Svr',
+        value: ' 37,468.00',
+        type: 'Renewal',
+        category: 'Deal',
+        startDate: '01/05/2017',
+        closingDate: '01/07/2017',
+        salesStage: '100%',
+        lastUpdate: '29/06/2017',
+        remarks: ''
+    },
+    {
+        No: 5,
+        companyName: 'Cornerstone',
+        contactPerson: 'Victoria',
+        email: 'victoria@cstone.com.my',
+        phone: '03-7725 2120',
+        industry: 'Industrial',
+        product: 'HW/SW',
+        value: ' 500.00',
+        type: 'New Sales',
+        category: 'Deal',
+        startDate: '27/01/2017',
+        closingDate: '01/02/2017',
+        salesStage: '100%',
+        lastUpdate: '27/01/2017',
+        remarks: '27/02 - PO Received.'
+    },
+    {
+        No: 6,
+        companyName: 'Alfredo Biagio',
+        contactPerson: 'Alfredo',
+        email: 'a.biagio@vfemail.net',
+        phone: '946803116',
+        industry: 'Hospitality/Services',
+        product: 'Cloud Svr',
+        value: ' 5,760.00',
+        type: 'New Sales',
+        category: 'Deal',
+        startDate: '23/10/2016',
+        closingDate: '02/8/2020',
+        salesStage: '100%',
+        lastUpdate: '21/12/2016',
+        remarks: '23/10 - Scoping requirement. Gathering customer background information. 21/12 - Quoting '
+    },
+    {
+        No: 7,
+        companyName: 'E-Treasure BPO',
+        contactPerson: 'Kelvin Silva',
+        email: 'kelvin092108@yahoo.com',
+        phone: '039238025443',
+        industry: 'Telecommunication',
+        product: 'Co-Lo',
+        value: '51516.00',
+        type: 'New Sales',
+        category: 'Lost Case',
+        startDate: '10/02/2017',
+        closingDate: 'N/A',
+        salesStage: '10%',
+        lastUpdate: '10/02/2017',
+        remarks: '10/02 - Required 1rack, 20 IP, 3Mbps of Colo - Competitor'
+    },
+    {
+        No: 8,
+        companyName: 'PeopleQuest (Risda)',
+        contactPerson: 'Yew',
+        email: 'th.yew@peoplequest.com.my',
+        phone: '0162381726',
+        industry: 'GOV / GLC',
+        product: 'Cloud Svr',
+        value: '110000.00',
+        type: 'new sale',
+        category: 'Lost Case',
+        startDate: '12/11/2016',
+        closingDate: '01/02/2027',
+        salesStage: '50%',
+        lastUpdate: '06/02/2017',
+        remarks: '10/12 - Scoping for requirement. 13/12 - Quoting Peoplequest.- Yew lost the deal to HR2000.'
+    }
+    ];
+
+
+
+
+
+
+    //pagination
+    $scope.searchData = '';
+    $scope.searchKeyword = '';
+    $scope.searchKeyword1 = '';
+    $scope.searchKeyword2 = '';
+    $scope.rows = projects;
+    $scope.filteredRows = projects;
+
+
+    $scope.rows4 = companylist;
+    $scope.filteredRows4 = companylist;
+
+    $scope.rows5 = contacts;
+    $scope.filteredRows5 = contacts;
+
+    $scope.rows6 = sperson;
+    $scope.filteredRows6 = sperson;
+
+
+    $scope.checkLength = function () {
+
+        $scope.curPage = 0;
+
+    };
+
+    $scope.curPage = 0;
+    $scope.pageSize = 11;
+    $scope.numberOfPages = function () {
+        return Math.ceil($scope.rows.length / $scope.pageSize);
+        return Math.ceil($scope.rows4.length / $scope.pageSize);
+        return Math.ceil($scope.rows5.length / $scope.pageSize);
+        return Math.ceil($scope.rows6.length / $scope.pageSize);
+    };
+
+
+
+    /**checkboxrule */
+
+    $scope.checkboxRule1 = function (checkbox) {
+        if (checkbox == 'lead') {
+            $scope.filterForm.deal = false;
+            $scope.filterForm.lostCase = false;
+            $scope.filterForm.date = false;
+        }
+        if (checkbox == 'deal') {
+            $scope.filterForm.lead = false;
+            $scope.filterForm.lostCase = false;
+            $scope.filterForm.date = false;
+        }
+        if (checkbox == 'lostCase') {
+            $scope.filterForm.deal = false;
+            $scope.filterForm.lead = false;
+            $scope.filterForm.date = false;
+        }
+        if (checkbox == 'date') {
+            $scope.filterForm.deal = false;
+            $scope.filterForm.lead = false;
+            $scope.filterForm.lostCase = false;
+        }
+    };
+
+    /**checkbox names */
+
+    $scope.columns = [
+        { id: 1, name: 'Company Name' },
+        { id: 2, name: 'Contact Person' },
+        { id: 3, name: 'Industry' },
+        { id: 4, name: 'Product' },
+        { id: 5, name: 'Type' },
+        { id: 6, name: 'Value' },
+        { id: 7, name: 'Category' },
+        { id: 8, name: 'Sales Stage' },
+        { id: 9, name: 'Last Update' },
+        { id: 10, name: 'Person in Charge' },
+        { id: 11, name: 'Start Date' },
+        { id: 12, name: 'Closing Date' },
+        { id: 13, name: 'Status' },
+        { id: 14, name: 'Email' },
+        { id: 15, name: 'Phone' },
+        { id: 16, name: 'Tender' },
+        { id: 17, name: 'Remarks' },
+        { id: 18, name: 'PO-Date' },
+        { id: 19, name: 'PO-Number' }
+
+    ];
+
+
+    $scope.columns[0].disabled = true;
+
+    /**define whether the checkboxes should be disable depending on project category */
+
+    $scope.checkCategory = function () {
+
+        $scope.columns[12].disabled = true;
+        $scope.columns[15].disabled = true;
+        $scope.columns[17].disabled = true;
+        $scope.columns[18].disabled = true;
+        $scope.columns[9].disabled = true;
+
+        if (category == 'lead') {
+            $scope.columns[17].disabled = true;
+            $scope.columns[18].disabled = true;
+            $scope.columns[12].disabled = false;
+            $scope.columns[15].disabled = false;
+            $scope.columns[9].disabled = false;
+
+        }
+        if (category == 'deal') {
+
+            $scope.columns[12].disabled = true;
+            $scope.columns[15].disabled = true;
+            $scope.columns[17].disabled = false;
+            $scope.columns[18].disabled = false;
+            $scope.columns[9].disabled = false;
+        }
+
+    };
+
+
+    $scope.setDefault = function () {
+        category = "";
+        $scope.projectTitle = "Project Table: All Categories";
+        $scope.showprojecttable = true;
+        $scope.colContactPerson = true;
+        $scope.colEmail = false;
+        $scope.colPhone = false;
+        $scope.colIndustry = true;
+        $scope.colProduct = true;
+        $scope.colValue = true;
+        $scope.colType = true;
+        $scope.colCategory = true;
+        $scope.colStartdate = true;
+        $scope.colClosingdate = true;
+        $scope.colSalesstage = true;
+        $scope.colLastupdate = true;
+        $scope.colRemarks = true;
+
+    };
+
+    /**filter the table content */
+    $scope.filterContent = function () {
+
+        if ($scope.filterForm.lead) {
+            category = "lead";
+            $scope.projectTitle = "Project Table: Leads Category";
+            $scope.showprojecttable = true;
+            $scope.colPersonincharge = true;
+            $scope.colStatus = true;
+            $scope.colTender = true;
+            $scope.colContactPerson = true;
+            $scope.colEmail = false;
+            $scope.colPhone = false;
+            $scope.colIndustry = true;
+            $scope.colProduct = true;
+            $scope.colValue = true;
+            $scope.colType = true;
+            $scope.colCategory = true;
+            $scope.colStartdate = true;
+            $scope.colClosingdate = true;
+            $scope.colSalesstage = true;
+            $scope.colLastupdate = true;
+            $scope.colRemarks = true;
             $scope.colPOnum = false;
             $scope.colPOdate = false;
 
-            for (var i = 0; i < total; i++) {
+        }
 
-                if (list[i] == 2)
-                    $scope.colContactPerson = true;
+        if ($scope.filterForm.deal) {
+            category = "deal";
+            $scope.projectTitle = "Project Table: Deals Category";
+            $scope.showprojecttable = true;
+            $scope.colPersonincharge = true;
+            $scope.colStatus = false;
+            $scope.colTender = false;
+            $scope.colContactPerson = true;
+            $scope.colEmail = false;
+            $scope.colPhone = false;
+            $scope.colIndustry = true;
+            $scope.colProduct = true;
+            $scope.colValue = true;
+            $scope.colType = true;
+            $scope.colCategory = true;
+            $scope.colStartdate = true;
+            $scope.colClosingdate = true;
+            $scope.colSalesstage = true;
+            $scope.colLastupdate = true;
+            $scope.colRemarks = true;
+            $scope.colPOnum = true;
+            $scope.colPOdate = true;
 
-                if (list[i] == 3)
-                    $scope.colIndustry = true;
 
-                if (list[i] == 4)
-                    $scope.colProduct = true;
+        }
+        if ($scope.filterForm.lostCase) {
+            category = "lostcase";
+            $scope.projectTitle = "Project Table: Lost Cases Category";
+            $scope.showprojecttable = true;
+            $scope.colContactPerson = true;
+            $scope.colEmail = false;
+            $scope.colPhone = false;
+            $scope.colIndustry = true;
+            $scope.colProduct = true;
+            $scope.colValue = true;
+            $scope.colType = true;
+            $scope.colCategory = true;
+            $scope.colStartdate = true;
+            $scope.colClosingdate = true;
+            $scope.colSalesstage = true;
+            $scope.colLastupdate = true;
+            $scope.colRemarks = true;
+            $scope.colPOnum = false;
+            $scope.colPOdate = false;
+            $scope.colPersonincharge = false;
+            $scope.colStatus = false;
+            $scope.colTender = false;
 
-                if (list[i] == 5)
-                    $scope.colType = true;
-
-                if (list[i] == 6)
-                    $scope.colValue = true;
-
-                if (list[i] == 7)
-                    $scope.colCategory = true;
-
-                if (list[i] == 8)
-                    $scope.colSalesstage = true;
-
-                if (list[i] == 9)
-                    $scope.colLastupdate = true;
+        }
+    };
 
 
-                if (list[i] == 11)
-                    $scope.colStartdate = true;
+    /**filtering table columns */
+    var list = [];
+    var list1 = [];
+    var total = 0;
+    var total1 = 0;
 
-                if (list[i] == 12)
-                    $scope.colClosingdate = true;
+    $scope.filtertablecolumns = function (number, list) {
 
-                if (list[i] == 13) {
-                    if (category == 'lead')
-                        $scope.colStatus = true;
-                }
+        $scope.list = list;
+        total = number;
 
-                if (list[i] == 14)
-                    $scope.colEmail = true;
+        $scope.colContactPerson = false;
+        $scope.colEmail = false;
+        $scope.colPhone = false;
+        $scope.colIndustry = false;
+        $scope.colProduct = false;
+        $scope.colValue = false;
+        $scope.colType = false;
+        $scope.colCategory = false;
+        $scope.colStartdate = false;
+        $scope.colClosingdate = false;
+        $scope.colSalesstage = false;
+        $scope.colLastupdate = false;
+        $scope.colRemarks = false;
+        $scope.colStatus = false;
+        $scope.colTender = false;
+        $scope.colPOnum = false;
+        $scope.colPOdate = false;
 
-                if (list[i] == 15)
-                    $scope.colPhone = true;
+        for (var i = 0; i < total; i++) {
 
-                if (list[i] == 16) {
-                    if (category == 'lead')
-                        $scope.colTender = true;
-                }
+            if (list[i] == 2)
+                $scope.colContactPerson = true;
 
-                if (list[i] == 17)
-                    $scope.colRemarks = true;
+            if (list[i] == 3)
+                $scope.colIndustry = true;
 
-                if (list[i] == 18) {
-                    if (category == 'deal')
-                        $scope.colPOnum = true;
-                }
+            if (list[i] == 4)
+                $scope.colProduct = true;
 
-                if (list[i] == 19) {
-                    if (category == 'deal')
-                        $scope.colPOdate = true;
-                }
+            if (list[i] == 5)
+                $scope.colType = true;
 
+            if (list[i] == 6)
+                $scope.colValue = true;
+
+            if (list[i] == 7)
+                $scope.colCategory = true;
+
+            if (list[i] == 8)
+                $scope.colSalesstage = true;
+
+            if (list[i] == 9)
+                $scope.colLastupdate = true;
+
+
+            if (list[i] == 11)
+                $scope.colStartdate = true;
+
+            if (list[i] == 12)
+                $scope.colClosingdate = true;
+
+            if (list[i] == 13) {
+                if (category == 'lead')
+                    $scope.colStatus = true;
             }
 
+            if (list[i] == 14)
+                $scope.colEmail = true;
 
-            /** Lead table */
-            /** Deal table */
-            /** lost cases table */
+            if (list[i] == 15)
+                $scope.colPhone = true;
 
-        };
-        $scope.projecttable = {
-            projects: []
-        };
-        $scope.companytable = {
-            companylist: []
-        };
-        $scope.contacttable = {
-            contacts: []
-        };
+            if (list[i] == 16) {
+                if (category == 'lead')
+                    $scope.colTender = true;
+            }
 
-        $scope.spersontable = {
-            spersonlist: []
-        };
+            if (list[i] == 17)
+                $scope.colRemarks = true;
 
-    }).filter('pagination', function () {
-        return function (input, start) {
-            start = +start;
-            return input.slice(start);
-        };
-    }
-        );
+            if (list[i] == 18) {
+                if (category == 'deal')
+                    $scope.colPOnum = true;
+            }
+
+            if (list[i] == 19) {
+                if (category == 'deal')
+                    $scope.colPOdate = true;
+            }
+
+        }
+
+
+        /** Lead table */
+        /** Deal table */
+        /** lost cases table */
+
+    };
+    $scope.projecttable = {
+        projects: []
+    };
+    $scope.companytable = {
+        companylist: []
+    };
+    $scope.contacttable = {
+        contacts: []
+    };
+
+    $scope.spersontable = {
+        spersonlist: []
+    };
+
+}).filter('pagination', function () {
+    return function (input, start) {
+        start = +start;
+        return input.slice(start);
+    };
+});
 
 
 
@@ -2007,8 +2348,8 @@ salesVisionControllers.controller('forCloseDeletecont', ['$scope', '$modalInstan
     $scope.deleteTitle = "Are you sure to delete this contact?";
     $scope.removeRow = function () {
         var currentid = $modalInstance.contlist;
-        var index = $scope.contacts.indexOf(currentid);
-        $scope.contacts.splice(index, 1);
+        var index = $scope.rows5.indexOf(currentid);
+        $scope.rows5.splice(index, 1);
     };
 
     $scope.close = function () {
@@ -2036,10 +2377,10 @@ salesVisionControllers.controller('forCloseMultiplecontdelete', ['$scope', '$mod
         var rows = $modalInstance.list;
         var numbers = $modalInstance.list.length;
         for (var i = 0; i < numbers; i++) {
-            angular.forEach($scope.contacts, function (value) {
+            angular.forEach($scope.rows5, function (value) {
                 if (value.No == rows[i]) {
-                    var index = $scope.contacts.indexOf(value);
-                    $scope.contacts.splice(index, 1);
+                    var index = $scope.rows5.indexOf(value);
+                    $scope.rows5.splice(index, 1);
                 }
 
 
@@ -2072,8 +2413,8 @@ salesVisionControllers.controller('forCloseDeletecomp', ['$scope', '$modalInstan
     $scope.deleteTitle = "Deleting this company will delete all the related projects and contacts. Do you want to proceed?";
     $scope.removeRow = function () {
         var currentid = $modalInstance.comlist;
-        var index = $scope.companylist.indexOf(currentid);
-        $scope.companylist.splice(index, 1);
+        var index = $scope.rows4.indexOf(currentid);
+        $scope.rows4.splice(index, 1);
     };
 
     $scope.close = function () {
@@ -2103,10 +2444,10 @@ salesVisionControllers.controller('forCloseMultiplecompdelete', ['$scope', '$mod
         var rows = $modalInstance.list;
         var numbers = $modalInstance.list.length;
         for (var i = 0; i < numbers; i++) {
-            angular.forEach($scope.companylist, function (value) {
+            angular.forEach($scope.rows4, function (value) {
                 if (value.No == rows[i]) {
-                    var index = $scope.companylist.indexOf(value);
-                    $scope.companylist.splice(index, 1);
+                    var index = $scope.rows4.indexOf(value);
+                    $scope.rows4.splice(index, 1);
                 }
 
 
@@ -2117,7 +2458,7 @@ salesVisionControllers.controller('forCloseMultiplecompdelete', ['$scope', '$mod
 
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
-        $scope.companytable.companylist = 0;
+        $scope.companytable.rows4= 0;
     };
 
 
@@ -2160,8 +2501,8 @@ salesVisionControllers.controller('forCloseDeletepers', ['$scope', '$modalInstan
     $scope.deleteTitle = "Are you sure to delete this sales person?";
     $scope.removeRow = function () {
         var currentid = $modalInstance.list;
-        var index = $scope.spersonlist.indexOf(currentid);
-        $scope.spersonlist.splice(index, 1);
+        var index = $scope.rows6.indexOf(currentid);
+        $scope.rows6.splice(index, 1);
     };
 
     $scope.close = function () {
@@ -2191,10 +2532,10 @@ salesVisionControllers.controller('forCloseMultiplepersdelete', ['$scope', '$mod
         var rows = $modalInstance.list;
         var numbers = $modalInstance.list.length;
         for (var i = 0; i < numbers; i++) {
-            angular.forEach($scope.spersonlist, function (value) {
+            angular.forEach($scope.rows6, function (value) {
                 if (value.No == rows[i]) {
-                    var index = $scope.spersonlist.indexOf(value);
-                    $scope.spersonlist.splice(index, 1);
+                    var index = $scope.rows6.indexOf(value);
+                    $scope.rows6.splice(index, 1);
                 }
 
 
@@ -2205,7 +2546,7 @@ salesVisionControllers.controller('forCloseMultiplepersdelete', ['$scope', '$mod
 
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
-        $scope.spersontable.spersonlist = 0;
+        $scope.spersontable.rows6 = 0;
     };
 
 
