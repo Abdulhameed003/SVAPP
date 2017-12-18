@@ -3,7 +3,7 @@
 var salesVisionControllers = angular.module('salesVisionControllers',[]);
 
 
-    salesVisionControllers.controller('RegisterController', ['$scope', '$http','userService','$location','$window', function ($scope, $http, userService,$location,$window) {
+    salesVisionControllers.controller('registerController', ['$scope', '$http','userService','$location','$window', function ($scope, $http, userService,$location,$window) {
         var original = angular.copy($scope.user);
         $scope.error = false;
         

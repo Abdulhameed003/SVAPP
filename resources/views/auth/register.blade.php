@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container" ng-controller="RegisterController">
+    <div class="container" ng-controller="registerController">
         <div id="loginleftbox">
             <img class="img-responsive" src="{{asset('image/registerback.jpg')}}" />
         </div>
