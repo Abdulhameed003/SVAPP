@@ -621,7 +621,6 @@ display:block !important;
 
 ._720kb-datepicker-calendar {
 width:200px;
-
 }
 
 
@@ -934,6 +933,7 @@ border-radius: 3px 3px 3px 3px;
     position:fixed;
     top:50px;
     left:18px;
+    width:200px;
 }
 
 

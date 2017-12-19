@@ -27,6 +27,16 @@ salesVisionServices.factory('userService', ['$http', 'localStorageService', func
             });
     
         }
+        
+        function forgotPassword(formdata){
+            $http.post('/',)
+            
+        }
+
+        function resetPassword(){
+
+        }
+
     
         function login(formdata, onSuccess, onError){
     

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <section id="defaultprojectview" class="project" ng-class="{visible:show}">
+    <section id="defaultprojectview" class="project" ng-class="{visible:show}" ng-controller="mainCtrl">
         <div>
             <h1 class="sectiontitle">@{{projectTitle}}</h1>
         </div>

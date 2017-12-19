@@ -31,7 +31,7 @@ class ProjectController extends Controller
     {
         $projects = Project::loadProjects();
         
-        return view('pages.project')->with('projects', $projects);
+        return view('pages.project');
     }
 
     /**
