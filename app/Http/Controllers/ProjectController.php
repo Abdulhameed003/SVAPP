@@ -30,8 +30,8 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::loadProjects();
-        
-        return view('pages.project');
+        return $projects;
+       
     }
 
     /**

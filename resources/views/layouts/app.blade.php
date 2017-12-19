@@ -8,7 +8,7 @@
 
 	<!-- CSRF Token -->
 	<meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <base href="/">
 	<title>{{ config('app.name', 'SalesVision') }}</title>
 
 	<!-- Styles -->
@@ -29,68 +29,194 @@
 
 	<!-- Scripts -->
 	
-	<script src="{{asset('js/angular.min.js')}}"></script>
+	<script src="{{asset('bower_components/angular/angular.min.js')}}"></script>
 	<script src="{{asset('js/angular-datepicker.js')}}"></script>
 	<script src="{{asset('js/ui-bootstrap-tpls-0.14.3.min.js')}}"></script>
 	<script src="{{asset('js/checklist-model.js')}}"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-messages.js"></script>
-
+    <script src="{{asset('bower_components/angular-route/angular-route.min.js')}}"></script>
     <script src="{{asset('bower_components/angular-local-storage/dist/angular-local-storage.js')}}"></script>
-    <script src="{{asset('bower_components/restangular/dist/restangular.min.js')}}"></script>
+    <script src="{{('bower_components/angular-route/angular-route.min.js')}}"></script>
 
+    <script src="{{asset('js/angular-fusioncharts.min.js')}}"></script>
+    <script src="{{asset('js/fusioncharts.charts.js')}}"></script>
+    <script src="{{asset('js/fusioncharts.js')}}"></script>
+    <script src="{{asset('js/fusioncharts.widgets.js')}}"></script>
+    <script src="{{asset('js/fusioncharts.theme.fint.js')}}"></script>
     <script src="{{asset('js/SVservices.js')}}"></script>
 	<script src="{{asset('js/SVcontroller.js')}}"></script>
     <script src="{{asset('js/SV1.js')}}"></script>
 </head >
 
-<body>
-    @includeWhen(!Auth::guest(),'inc.navbar')
-	@yield('content')
+<body ng-controller="{{Auth::guest() ? 'registerController' : 'mainCtrl'}}">
+    
+    @includeWhen(Auth::user(),'inc.navbar')
+    @if(Auth::guest())
+        @yield('content')
+    @endif
+    <div ng-view></div>
+
 
     <script src="{{asset('js/jquery.js')}}"></script>
 	<script src="{{asset('js/bootstrap.js')}}"></script>
 	
     <!-- Modal pages scripts section -->
-        <script type="text/javascript">
-            var yourbuttons = document.getElementsByClassName('mainbutton');
-                for (var i = yourbuttons.length - 1; i >= 0; i--) {
-                    var currentbtn;
-                    yourbuttons[i].onclick = function () {
-                        if (currentbtn) {
-                            currentbtn.classList.remove("active");
-                        }
-                        this.classList.add("active");
-                        currentbtn = this;
-                    }
+    <script type="text/javascript">
 
-                };
+        var yourbuttons = document.getElementsByClassName('mainbutton');
+        for (var i = yourbuttons.length - 1; i >= 0; i--) {
+            var currentbtn;
+            yourbuttons[i].onclick = function () {
+                if (currentbtn) {
+                    currentbtn.classList.remove("active");
+                }
+                this.classList.add("active");
+                currentbtn = this;
+            }
 
-                $(document).click(function () {
-                    $(".dropdown-menu").hide();
-                });
+        };
 
-                $(".dropdown-menu").click(function (e) {
-                    e.stopPropagation();
-                });
+        $(document).click(function () {
+            $(".dropdown-menu").hide();
+        });
 
-                $(".hidedropdown1").click(function () {
-                    $("#contentdropdown").hide();
-                });
-                $(".hidedropdown2").click(function () {
-                    $("#columndropdown").hide();
-                });
+        $(".dropdown-menu").click(function (e) {
+            e.stopPropagation();
+        });
 
-                $("#showcontentdropdown").click(function () {
-                    $("#contentdropdown").show();
-                    $("#columndropdown").hide();
-                });
+        $(".hidedropdown1").click(function () {
+            $("#contentdropdown").hide();
+        });
+        $(".hidedropdown2").click(function () {
+            $("#columndropdown").hide();
+        });
+
+        $("#showcontentdropdown").click(function () {
+            $("#contentdropdown").show();
+            $("#columndropdown").hide();
+        });
 
 
-                $("#showcolumndropdown").click(function () {
-                    $("#columndropdown").show();
-                    $("#contentdropdown").hide();
-                });
-        </script>
+        $("#showcolumndropdown").click(function () {
+            $("#columndropdown").show();
+            $("#contentdropdown").hide();
+        });
+        $(document).ready(function () {
+
+            $('#examplebut').click(function (event) {
+                $("#example").toggleClass("style_prevu_kit1");
+                if ($("#example").hasClass("style_prevu_kit1")) {
+                    $(".forfade").css("display", "block");
+                    $("#examplebut").removeClass("fa-search-plus");
+                    $("#examplebut").addClass("fa-remove");
+                }
+                if (!$("#example").hasClass("style_prevu_kit1")) {
+                    $(".forfade").css("display", "none");
+                    $("#examplebut").addClass("fa-search-plus");
+                    $("#examplebut").removeClass("fa-remove");
+                }
+            });
+
+            $('#example1but').click(function () {
+
+                $("#example1").toggleClass("style_prevu_kit");
+                if ($("#example1").hasClass("style_prevu_kit")) {
+                    $(".forfade").css("display", "block");
+                    $("#example1but").addClass("fa-remove");
+                    $("#example1but").removeClass("fa-search-plus");
+                }
+                if (!$("#example1").hasClass("style_prevu_kit")) {
+                    $(".forfade").css("display", "none");
+                    $("#example1but").addClass("fa-search-plus");
+                    $("#example1but").removeClass("fa-remove");
+                }
+            });
+
+            $('#example2but').click(function () {
+                $("#example2").toggleClass("style_prevu_kit2");
+                if ($("#example2").hasClass("style_prevu_kit2")) {
+                    $(".forfade").css("display", "block");
+                    $("#example2but").addClass("fa-remove");
+                    $("#example2but").removeClass("fa-search-plus");
+                }
+                if (!$("#example2").hasClass("style_prevu_kit2")) {
+                    $(".forfade").css("display", "none");
+                    $("#example2but").addClass("fa-search-plus");
+                    $("#example2but").removeClass("fa-remove");
+                }
+            });
+
+            $('#example3but').click(function (event) {
+
+                $("#example3").toggleClass("style_prevu_kit1");
+                if ($("#example3").hasClass("style_prevu_kit1")) {
+                    $(".forfade").css("display", "block");
+                    $("#example3but").addClass("fa-remove");
+                    $("#example3but").removeClass("fa-search-plus");
+                }
+                if (!$("#example3").hasClass("style_prevu_kit1")) {
+                    $(".forfade").css("display", "none");
+                    $("#example3but").addClass("fa-search-plus");
+                    $("#example3but").removeClass("fa-remove");
+                }
+            });
+
+            $('#example4but').click(function (event) {
+                $("#example4").toggleClass("style_prevu_kit");
+                if ($("#example4").hasClass("style_prevu_kit")) {
+                    $(".forfade").css("display", "block");
+                    $("#example4but").addClass("fa-remove");
+                    $("#example4but").removeClass("fa-search-plus");
+                }
+                if (!$("#example4").hasClass("style_prevu_kit")) {
+                    $(".forfade").css("display", "none");
+                    $("#example4but").addClass("fa-search-plus");
+                    $("#example4but").removeClass("fa-remove");
+                }
+            });
+            $('#example5but').click(function (event) {
+                $("#example5").toggleClass("style_prevu_kit2");
+                if ($("#example5").hasClass("style_prevu_kit2")) {
+                    $(".forfade").css("display", "block");
+                    $("#example5but").addClass("fa-remove");
+                    $("#example5but").removeClass("fa-search-plus");
+                }
+                if (!$("#example5").hasClass("style_prevu_kit2")) {
+                    $(".forfade").css("display", "none");
+                    $("#example5but").addClass("fa-search-plus");
+                    $("#example5but").removeClass("fa-remove");
+                }
+
+            });
+            $('#example6but').click(function (event) {
+                $("#example6").toggleClass("style_prevu_kit1");
+                if ($("#example6").hasClass("style_prevu_kit1")) {
+                    $(".forfade").css("display", "block");
+                    $("#example6but").addClass("fa-remove");
+                    $("#example6but").removeClass("fa-search-plus");
+                }
+                if (!$("#example6").hasClass("style_prevu_kit1")) {
+                    $(".forfade").css("display", "none");
+                    $("#example6but").addClass("fa-search-plus");
+                    $("#example6but").removeClass("fa-remove");
+                }
+            });
+
+            $('#example7but').click(function (event) {
+                $("#example7").toggleClass("style_prevu_kit");
+                if ($("#example7").hasClass("style_prevu_kit")) {
+                    $(".forfade").css("display", "block");
+                    $("#example7but").addClass("fa-remove");
+                    $("#example7but").removeClass("fa-search-plus");
+                }
+                if (!$("#example7").hasClass("style_prevu_kit")) {
+                    $(".forfade").css("display", "none");
+                    $("#example7but").addClass("fa-search-plus");
+                    $("#example7but").removeClass("fa-remove");
+                }
+            });
+        });
+    </script>
 
         <!--not required for now
             <script type="text/ng-template" id="addcontact.html"> 
@@ -136,81 +262,81 @@
             !-->
 
         <script type="text/ng-template" id="addsalesperson.html">
-            <div class="modal-content">
-            <div class="modal-header"  style="height:40px;">
-                <h3>New sales person</h3>
-            </div>
-            <form id="addSalespersonform" name="addSalespersonform" novalidate>
-            <div class="modal-body">
-                        <h4> Please fill in the form to add new sales person.</h4>
-            <div class="SectionBox"> 
-            <div class-"container">
-            <div class="row">
-            <div class="col-xs-6">
-                <div  class="form-group spacinga" >   
-                        <input class="forInput form-control"  only-letters-input type="text" name="salespername" ng-model="Sperson.name" ng-class="{submitting: addSalespersonform.salespername.$error.required && addSalespersonform.salespername.$touched }" placeholder="Name" required>
-                        <div class="errormainpage" ng-show="addSalespersonform.salespername.$error.required" ng-if="addSalespersonform.salespername.$touched">Can't leave this empty.</div>
+                <div class="modal-content">
+                <div class="modal-header"  style="height:40px;">
+                    <h3>New sales person</h3>
                 </div>
-                <div  class="form-group spacinga" >   
-                        <input class="forInput form-control" type="email" name="salesperemail" ng-model="Sperson.email" ng-class="{submitting: addSalespersonform.salesperemail.$error.required && addSalespersonform.salesperemail.$touched }" placeholder="Email" required>
-                        <div ng-messages="addSalespersonform.salesperemail.$error" class="errormainpage">
-                                <div ng-message="email" ng-if="addSalespersonform.salesperemail.$touched">Wrong email format.</div>
-                                <div ng-message="required" ng-if="addSalespersonform.salesperemail.$touched">Can't leave this empty.</div>
+                <form id="addSalespersonform" name="addSalespersonform" novalidate>
+                <div class="modal-body">
+                            <h4> Please fill in the form to add new sales person.</h4>
+                <div class="SectionBox"> 
+                <div class-"container">
+                <div class="row">
+                <div class="col-xs-6">
+                    <div  class="form-group spacinga" >   
+                            <input class="forInput form-control"  only-letters-input type="text" name="salespername" ng-model="Sperson.name" ng-class="{submitting: addSalespersonform.salespername.$error.required && addSalespersonform.salespername.$touched }" placeholder="Name" required>
+                            <div class="errormainpage" ng-show="addSalespersonform.salespername.$error.required" ng-if="addSalespersonform.salespername.$touched">Can't leave this empty.</div>
+                    </div>
+                    <div  class="form-group spacinga" >   
+                            <input class="forInput form-control" type="email" name="salesperemail" ng-model="Sperson.email" ng-class="{submitting: addSalespersonform.salesperemail.$error.required && addSalespersonform.salesperemail.$touched }" placeholder="Email" required>
+                            <div ng-messages="addSalespersonform.salesperemail.$error" class="errormainpage">
+                                    <div ng-message="email" ng-if="addSalespersonform.salesperemail.$touched">Wrong email format.</div>
+                                    <div ng-message="required" ng-if="addSalespersonform.salesperemail.$touched">Can't leave this empty.</div>
+                                </div>
+                        </div>
+                        <div  class=" form-group spacinga" > 
+                                <input class="forInput form-control" type="text" only-letters-input name="salesperpos" ng-model="Sperson.pos" ng-class="{submitting: addSalespersonform.salesperpos.$error.required && addSalespersonform.salesperpos.$touched }" placeholder="Position" required>
+                                <div class="errormainpage" ng-show="addSalespersonform.salesperpos.$error.required" ng-if="addSalespersonform.salesperpos.$touched">Can't leave this empty.</div>
+                        </div>
+                    </div>
+        
+                    <div class="col-xs-6">
+                                <div  class="form-group spacinga" >
+                                        <input class="forInput form-control" type="text" name="salesperId" ng-model="Sperson.Id" ng-class="{submitting: addSalespersonform.salesperId.$error.required && addSalespersonform.salesperId.$touched }"
+                                        placeholder="ID" required>
+                                        <div class="errormainpage" ng-show="addSalespersonform.salesperId.$error.required" ng-if="addSalespersonform.salesperId.$touched">Can't leave this empty.</div>
+                                </div>
+                                <div  class="form-group spacinga" id="registerpassword">
+                                    <input class="forInput form-control" type="text" name="salesperphone" ng-model="Sperson.phone" ng-class="{submitting: addSalespersonform.salesperphone.$error.required && addSalespersonform.salesperphone.$touched }"
+                                    restrict-to="[0-9]" placeholder="Phone" required popover="Example: 0172345464"
+                                    popover-placement="bottom" popover-trigger="mouseenter">
+                                    <div class="errormainpage" ng-show="addSalespersonform.salesperphone.$error.required" ng-if="addSalespersonform.salesperphone.$touched">Can't leave this empty.</div>
                             </div>
-                    </div>
-                    <div  class=" form-group spacinga" > 
-                            <input class="forInput form-control" type="text" only-letters-input name="salesperpos" ng-model="Sperson.pos" ng-class="{submitting: addSalespersonform.salesperpos.$error.required && addSalespersonform.salesperpos.$touched }" placeholder="Position" required>
-                            <div class="errormainpage" ng-show="addSalespersonform.salesperpos.$error.required" ng-if="addSalespersonform.salesperpos.$touched">Can't leave this empty.</div>
-                    </div>
-            </div>
-    
-            <div class="col-xs-6">
-                        <div  class="form-group spacinga" >
-                                <input class="forInput form-control" type="text" name="salesperId" ng-model="Sperson.Id" ng-class="{submitting: addSalespersonform.salesperId.$error.required && addSalespersonform.salesperId.$touched }"
-                                placeholder="ID" required>
-                                <div class="errormainpage" ng-show="addSalespersonform.salesperId.$error.required" ng-if="addSalespersonform.salesperId.$touched">Can't leave this empty.</div>
-                        </div>
-                        <div  class="form-group spacinga" id="registerpassword">
-                            <input class="forInput form-control" type="text" name="salesperphone" ng-model="Sperson.phone" ng-class="{submitting: addSalespersonform.salesperphone.$error.required && addSalespersonform.salesperphone.$touched }"
-                            restrict-to="[0-9]" placeholder="Phone" required popover="Example: 0172345464"
-                            popover-placement="bottom" popover-trigger="mouseenter">
-                            <div class="errormainpage" ng-show="addSalespersonform.salesperphone.$error.required" ng-if="addSalespersonform.salesperphone.$touched">Can't leave this empty.</div>
-                    </div>
-            
-                    <div  class="form-group spacinga" id="registerpassword">
-                        <input id="regpass" type="password" ng-class="{submitting: addSalespersonform.salesperpassword.$error.minlength || addSalespersonform.salesperpassword.$error.pattern || addSalespersonform.salesperpassword.$error.required && addSalespersonform.salesperpassword.$touched}"
-                        name="salesperpassword" ng-model="Sperson.password" ng-minlength="8" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/"
-                        class="form-control forInput" placeholder="Password"  required popover="Passwords must be at least 8 characters and contain one lower &amp; one uppercase letter, and one non-alpha character (a number or a symbol.)"
-                        popover-placement="bottom" popover-trigger="mouseenter" />
-                    <div ng-messages="addSalespersonform.salesperpassword.$error" class="errormainpage">
-                        <div ng-message="minlength && pattern" ng-if="addSalespersonform.salesperpassword.$touched">Wrong password format.</div>
-                        <div ng-message="required" ng-if="addSalespersonform.salesperpassword.$touched">Can't leave this empty.</div>
-                    </div>
-                    </div>
-                    <div   class="form-group spacinga" >
-                            <input  type="password" ng-class="{submitting: ((addSalespersonform.salesperpasswordconf.$error.required || addSalespersonform.salesperpasswordconf.$error.compareTo && Sperson.password)  && addSalespersonform.salesperpasswordconf.$touched )}"
-                            name="salesperpasswordconf" ng-model="Sperson.passconf" class="form-control forInput" placeholder="Confirm Password"
-                            compare-to="Sperson.password" required>
-                        <div ng-messages="addSalespersonform.salesperpasswordconf.$error" class="errormainpage">
-                            <div ng-message="required" ng-if="addSalespersonform.salesperpasswordconf.$touched">Can't leave this empty.</div>
-                            <div ng-message="compareTo" ng-if="addSalespersonform.salesperpasswordconf.$touched">Passwords do not match! </div>
+                    
+                            <div  class="form-group spacinga" id="registerpassword">
+                                <input id="regpass" type="password" ng-class="{submitting: addSalespersonform.salesperpassword.$error.minlength || addSalespersonform.salesperpassword.$error.pattern || addSalespersonform.salesperpassword.$error.required && addSalespersonform.salesperpassword.$touched}"
+                                name="salesperpassword" ng-model="Sperson.password" ng-minlength="8" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/"
+                                class="form-control forInput" placeholder="Password"  required popover="Passwords must be at least 8 characters and contain one lower &amp; one uppercase letter, and one non-alpha character (a number or a symbol.)"
+                                popover-placement="bottom" popover-trigger="mouseenter" />
+                            <div ng-messages="addSalespersonform.salesperpassword.$error" class="errormainpage">
+                                <div ng-message="minlength && pattern" ng-if="addSalespersonform.salesperpassword.$touched">Wrong password format.</div>
+                                <div ng-message="required" ng-if="addSalespersonform.salesperpassword.$touched">Can't leave this empty.</div>
+                            </div>
+                            </div>
+                            <div   class="form-group spacinga" >
+                                    <input  type="password" ng-class="{submitting: ((addSalespersonform.salesperpasswordconf.$error.required || addSalespersonform.salesperpasswordconf.$error.compareTo && Sperson.password)  && addSalespersonform.salesperpasswordconf.$touched )}"
+                                    name="salesperpasswordconf" ng-model="Sperson.passconf" class="form-control forInput" placeholder="Confirm Password"
+                                    compare-to="Sperson.password" required>
+                                <div ng-messages="addSalespersonform.salesperpasswordconf.$error" class="errormainpage">
+                                    <div ng-message="required" ng-if="addSalespersonform.salesperpasswordconf.$touched">Can't leave this empty.</div>
+                                    <div ng-message="compareTo" ng-if="addSalespersonform.salesperpasswordconf.$touched">Passwords do not match! </div>
 
+                                </div>
+                            </div>
+                        </div>
+                        </div>
                         </div>
                     </div>
                 </div>
+                    
+                    <div class="modal-footer" style="height:70px;">
+                        <button type="submit" ng-click="postAddSalesPerson(addSalespersonform)" class="button modalsubmit">Submit</button>
+                    </div>
+                </form>
+                <a href="#" ng-click=close() style=" position:absolute;top:10px;left:573px;">
+                    <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
+                </a>
                 </div>
-                </div>
-            </div>
-        </div>
-                
-                <div class="modal-footer" style="height:70px;">
-                    <button type="submit" ng-click="postAddSalesPerson(addSalespersonform)" class="button modalsubmit">Submit</button>
-                </div>
-            </form>
-            <a href="#" ng-click=close() style=" position:absolute;top:10px;left:573px;">
-                <span class="glyphicon glyphicon-remove" style="color: white;font-size:17px;"></span>
-            </a>
-            </div>
         </script>
 
         <script type="text/ng-template" id="delete.html">
@@ -230,7 +356,6 @@
     
             </div>
         </script>
-    
     
         <script type="text/ng-template" id="changepasswordmodal.html">  
             <div class="modal-content">
@@ -280,9 +405,6 @@
             </div>
         </script>
 
-    
-
-        
         <script type="text/ng-template" id="editcompany.html">
         
             <div class="modal-content">
@@ -837,7 +959,6 @@
             </div>
         </script>
 
-
         <script type="text/ng-template" id="editindustry.html">
             <div class="modal-content">
                 <div class="modal-header" style="height:40px;">
@@ -1304,7 +1425,7 @@
                                     <option value="" default selected>Select the Company</option>
                                 </select>
                                 <a href="#" id="addIcon">
-                                    <span id="addIcon" class="glyphicon glyphicon-plus-sign" ng-init="showAdd=false, " ng-click="showAdd=!showAdd; addcompany=!addcompany; resetSelect()"></span>
+                                    <span id="addIcon" class="glyphicon glyphicon-plus-sign" ng-init="showAdd=false " ng-click="showAdd=!showAdd; addcompany=!addcompany; resetSelect()"></span>
                                 </a>
                                 <div class="errormainpage form-group">
                                     <div ng-show="addLead.companyName.$error.required" ng-if="(addLead.companyName.$touched && (!leadproj.addCompanyName || !leadproj.companyWebsite || !leadproj.companyPhone 
@@ -1531,7 +1652,6 @@
                 
         </script>
 
-
         <script type="text/ng-template" id="multipledelete.html">
             <div class="modal-content">
                 <div class="modal-header" style="height:40px;">
@@ -1550,7 +1670,6 @@
         
             </div>
         </script>
-
 
         <script type="text/ng-template" id="multipledelete2.html">
             <div class="modal-content">

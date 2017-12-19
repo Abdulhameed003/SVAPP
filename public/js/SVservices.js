@@ -28,37 +28,24 @@ salesVisionServices.factory('userService', ['$http', 'localStorageService', func
     
         }
         
-        function forgotPassword(formdata){
-            $http.post('/',)
-            
+        function forgotPassword(formdata, onSuccess,onError){
+            $http.post('/password/email',formdata)
+            .then(function(response){
+                onSuccess(response);
+            },function(response){
+                onError(response);
+            });
         }
 
         function resetPassword(){
-
-        }
-
-    
-        function login(formdata, onSuccess, onError){
-    
-            $http.post('/login',formdata).
-            then(function(response) {
-    
-                localStorageService.set('token', response.data.token);
+            $http.post('/password/reset',formdata)
+            .then(function(response){
                 onSuccess(response);
-                
-            }, function(response) {
-    
+            },function(response){
                 onError(response);
-    
             });
-    
         }
-    
-        function logout(){
-    
-            localStorageService.remove('token');
-    
-        }
+
     
         function getCurrentToken(){
             return localStorageService.get('token');
@@ -67,9 +54,38 @@ salesVisionServices.factory('userService', ['$http', 'localStorageService', func
         return {
             checkIfLoggedIn: checkIfLoggedIn,
             register: register,
-            login: login,
-            logout: logout,
+            forgotPassword: forgotPassword,
+            resetPassword: resetPassword,
             getCurrentToken: getCurrentToken
         }
     
+    }]);
+
+
+
+    salesVisionServices.factory('appService', ['$http', function($http) {
+        function getProjects(onSuccess,onError){
+            $http.get('/project')
+            .then(function(response){
+                onSuccess(response);
+            },function(){
+                onError(response);
+            });
+        }
+
+        function createProject(formdata,onSuccess,onError){
+            $http.post('/project',formdata)
+            .then(function(response){
+                onSuccess(response);
+            },function(response){
+                onError(response);
+            });
+        }
+
+        return{
+            getProjects: getProjects,
+            createProject:createProject,
+           
+        }
+
     }]);

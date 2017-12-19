@@ -29,6 +29,6 @@ class DashboardController extends Controller
         $dbToConnect = ConfigureDB::ConfigureDBConnection('db_'.auth()->User()->company_id);
         DB::connection($dbToConnect);
 
-        return view('pages.dashboard');
+        return view('layouts.app');
     }
 }

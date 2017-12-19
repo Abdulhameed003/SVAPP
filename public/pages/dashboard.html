@@ -1,0 +1,127 @@
+
+    <section id="dashboardsection" class="project" ng-class="{visible:showdashboard}" >
+
+        <div>
+            <h1 class="sectiontitle">Dashboard</h1>
+        </div>
+        <div class="dashboardbox">
+            <div class="container-fluid">
+                <div class="row topspace">
+                    <div class="arrangement1">
+                        <div class="dashdiagrambox arrangement">
+                            <div class="headerbox">
+                                <h5 class="tite">Progress towards the Target</h5>
+                            </div>
+                            <div>{{totalprogress}}</div>
+                        </div>
+
+                        <div class="dashdiagrambox arrangement">
+                            <div class="headerbox">
+                                <h5 class="tite">Total Opportunities Value</h5>
+                            </div>
+                            <div>{{totaloppvalues}}</div>
+                        </div>
+
+                        <div class="dashdiagrambox arrangement">
+                            <div class="headerbox">
+                                <h5 class="tite">Total Opportunities Count</h5>
+                            </div>
+                            <div>{{totaloppcounts}}</div>
+                        </div>
+
+                        <div class="dashdiagrambox arrangement">
+                            <div class="headerbox">
+                                <h5 class="tite">Total Won Cases Value</h5>
+                            </div>
+                            <div>{{totalwonvalues}}</div>
+                        </div>
+
+                        <div class="dashdiagrambox arrangement">
+                            <div class="headerbox">
+                                <h5 class="tite">Total Won Cases Count</h5>
+                            </div>
+                            <div>{{totalwoncounts}}</div>
+                        </div>
+
+                        <div class="dashdiagrambox arrangement">
+                            <div class="headerbox">
+                                <h5 class="tite">Total Lost Cases Value</h5>
+                            </div>
+                            <div>{{totallostvalues}}</div>
+                        </div>
+
+                        <div class="dashdiagrambox arrangement">
+                            <div class="headerbox">
+                                <h5 class="tite">Total Lost Cases Count</h5>
+                            </div>
+                            <div>{{totallostcounts}}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row topspace">
+                    <div class="col-sm-4">
+                        <div class="makemove" id="example">
+                            <fusioncharts type="bar2d" width=380 height=300 datasource="{{totalWonCases}}">
+                            </fusioncharts>
+                            <i class="fa fa-search-plus positionicon" id="examplebut"></i>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="makemove" id="example1">
+                            <fusioncharts type="scrollcolumn2d" width=380 height=300 datasource="{{totalRenewals}}">
+                            </fusioncharts>
+                            <i class="fa fa-search-plus positionicon" id="example1but"></i>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="makemove" id="example2">
+                            <fusioncharts type="scrollcolumn2d" width=380 height=300 datasource="{{totalNewsales}}">
+                            </fusioncharts>
+                            <i class="fa fa-search-plus positionicon" id="example2but"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="row topspace">
+                    <div class="col-sm-4">
+                        <div class="makemove" id="example3">
+                            <fusioncharts type="scrollcombidy2d" width=380 height=300 datasource="{{totalwonComparison}}">
+                            </fusioncharts>
+                            <i class="fa fa-search-plus positionicon" id="example3but"></i>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="makemove" id="example4">
+                            <fusioncharts type="msbar2d" width=380 height=300 datasource="{{QuarterWoncase}}">
+                            </fusioncharts>
+                            <i class="fa fa-search-plus positionicon" id="example4but"></i>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="makemove" id="example5">
+                            <fusioncharts type="pie2d" width=380 height=300 datasource="{{Salesvaluebycustomers}}">
+                            </fusioncharts>
+                            <i class="fa fa-search-plus positionicon" id="example5but"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="row topspace">
+                    <div class="col-sm-4">
+                        <div class="makemove" id="example6">
+                            <fusioncharts type="doughnut2d" width=380 height=300 datasource="{{Salesvaluebyindustry}}">
+                            </fusioncharts>
+                            <i class="fa fa-search-plus positionicon" id="example6but"></i>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="makemove" id="example7">
+                            <fusioncharts type="line" width=380 height=300 datasource="{{totalclosingbyquarter}}">
+                            </fusioncharts>
+                            <i class="fa fa-search-plus positionicon" id="example7but"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>

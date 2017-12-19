@@ -43,10 +43,445 @@ var salesVisionControllers = angular.module('salesVisionControllers',[]);
         };
     }]);
     
-    salesVisionControllers.controller('MainController', ['$scope', '$http', function ($scope, $http) {
+    salesVisionControllers.controller('forgetPasswordController', ['$scope', '$modal', function ($scope, $modal) {
+        $scope.open = function (size) {
+            $scope.modalInstance = $modal.open({
+                controller: 'forgetPasswordController',
+                templateUrl: 'forgotpass.html',
+                backdrop: "static",
+                scope: $scope,
+                size: size
+            });
+        }
+    
+    
+        $scope.close = function () {
+            $scope.modalInstance.dismiss('cancel');
+        };
+    
+        $scope.emailSubmit = function(){
+    
+            $scope.modalInstance.dismiss('cancel');
+        };
+    
+    }]);
+
+    salesVisionControllers.controller('dashboardController', ['$scope', '$http','appService', function ($scope, $http, projectService) {
+        var myEl = angular.element(document.querySelector('#dash'));
+        myEl.addClass('active');
+    
+        test = [
+            {label: "Total New Sales",
+             value: "138000"},
+    
+            {label: "Total Renewals",
+             value: "602000"}
+        ];
+    
+        $scope.totalWonCases = {
+            chart: {
+                caption: "Won Cases",
+                subCaption: "Total Won cases by Values",
+                numberPrefix: "RM",
+                yAxisName: "Value (in Ringit)",
+                theme: "fint",
+                paletteColors: "#E53935,#FFEB3B,#4CAF50,#FF9800,#2196F3",
+                usePlotGradientColor: "0",
+                valueFontColor: "#212121",
+                toolTipBgColor: "#263238",
+                placeValuesInside: "0",
+                bgcolor: "#EEEEEE",
+            },
+            data: test
+        };
+    
+        $scope.totalRenewals = {
+            chart: {
+                caption: " Total Renewals",
+                numberPrefix: "RM",
+                yAxisName: "Value (in Ringit)",
+                paletteColors: "#2196F3,#E53935,#FFEB3B,#4CAF50,#FF9800",
+                usePlotGradientColor: "0",
+                theme: "fint",
+                valueFontColor: "#212121",
+                placeValuesInside: "0",
+                bgcolor: "#EEEEEE"
+            },
+            categories: [{
+                category: [{
+                    label: "Office 365"
+                }, {
+                    label: "Cloud SVR"
+                }, {
+                    label: "Broadband"
+                }, {
+                    label: "HRM"
+                }]
+            }],
+            dataset: [{
+                data: [{
+                    value: "6000"
+                }, {
+                    value: "12800"
+                }, {
+                    value: "18000"
+                }, {
+                    value: "19000"
+                }]
+    
+            }]
+    
+        };
+    
+        $scope.totalNewsales = {
+            chart: {
+                caption: " Total New Sales",
+                numberPrefix: "RM",
+                yAxisName: "Value (in Ringit)",
+                paletteColors: "#E53935,#FFEB3B,#4CAF50,#FF9800,#2196F3",
+                usePlotGradientColor: "0",
+                theme: "fint",
+                valueFontColor: "#212121",
+                placeValuesInside: "0",
+                bgcolor: "#EEEEEE"
+            },
+            categories: [{
+                category: [{
+                    label: "Office 365"
+                }, {
+                    label: "Cloud SVR"
+                }, {
+                    label: "Broadband"
+                }, {
+                    label: "HRM"
+                }]
+            }],
+            dataset: [{
+                data: [{
+                    value: "3000"
+                }, {
+                    value: "6800"
+                }, {
+                    value: "10000"
+                }, {
+                    value: "19000"
+                }]
+    
+            }]
+        };
+    
+        $scope.totalwonComparison = {
+            chart: {
+                caption: "Total Opportunities vs Won Cases",
+                subCaption: "Last year",
+                xAxisname: "Month",
+                yAxisName: "Value (In Ringit)",
+                numberPrefix: "RM",
+                theme: "fint",
+                paletteColors: "#4CAF50,#FFEB3B,",
+                usePlotGradientColor: "0",
+                bgcolor: "#EEEEEE"
+            },
+            categories: [{
+                category: [{
+                    label: "Jan"
+                }, {
+                    label: "Feb"
+                }, {
+                    label: "Mar"
+                }, {
+                    label: "Apr"
+                }, {
+                    label: "May"
+                }, {
+                    label: "Jun"
+                }, {
+                    label: "Jul"
+                }, {
+                    label: "Aug"
+                }, {
+                    label: "Sep"
+                }, {
+                    label: "Oct"
+                }, {
+                    label: "Nov"
+                }, {
+                    label: "Dec"
+                }]
+            }],
+            dataset: [{
+                seriesName: "Total Oppotunities",
+                data: [{
+                    value: "16000"
+                }, {
+                    value: "20000"
+                }, {
+                    value: "18000"
+                }, {
+                    value: "19000"
+                }, {
+                    value: "15000"
+                }, {
+                    value: "21000"
+                }, {
+                    value: "16000"
+                }, {
+                    value: "20000"
+                }, {
+                    value: "17000"
+                }, {
+                    value: "25000"
+                }, {
+                    value: "19000"
+                }, {
+                    value: "23000"
+                }]
+            }, {
+                seriesName: "Won Cases",
+                renderAs: "area",
+                showValues: "0",
+                data: [{
+                    value: "4000"
+                }, {
+                    value: "5000"
+                }, {
+                    value: "3000"
+                }, {
+                    value: "4000"
+                }, {
+                    value: "1000"
+                }, {
+                    value: "7000"
+                }, {
+                    value: "1000"
+                }, {
+                    value: "4000"
+                }, {
+                    value: "1000"
+                }, {
+                    value: "8000"
+                }, {
+                    value: "2000"
+                }, {
+                    value: "7000"
+                }]
+            }],
+            data: [{
+    
+                value: "2000"
+            },
+            {
+    
+                value: "8000"
+            },
+            {
+    
+                value: "4500"
+            },
+            {
+    
+                value: "24000"
+            }],
+    
+            trendlines: [{
+                line: [{
+                    startvalue: "50000",
+                    color: "#E53935",
+                    valueOnRight: "1",
+                    tooltext: "2017 Target",
+                    displayvalue: "Target - RM200k"
+                }]
+            }]
+    
+        };
+        $scope.QuarterWoncase = {
+            chart: {
+                caption: "Won Cases vs Lost Cases",
+                subCaption: "By Quarters",
+                numberPrefix: "RM",
+                yAxisName: "Value (In Ringit)",
+                theme: "fint",
+                paletteColors: "#2196F3,#FF9800",
+                usePlotGradientColor: "0",
+                valueFontColor: "#212121",
+                placeValuesInside: "0",
+                bgcolor: "#EEEEEE"
+            },
+            categories: [{
+                category: [{
+                    label: "Q1"
+                }, {
+                    label: "Q2"
+                }, {
+                    label: "Q3"
+                }, {
+                    label: "Q4"
+                }]
+            }],
+            dataset: [
+                {
+                    seriesname: "Won Cases",
+    
+                    data: [{
+    
+                        value: "2000"
+                    },
+                    {
+    
+                        value: "8000"
+                    },
+                    {
+    
+                        value: "4500"
+                    },
+                    {
+    
+                        value: "24000"
+                    }]
+                },
+                {
+                    seriesname: "Lost Cases",
+    
+                    data: [{
+    
+                        value: "500"
+                    },
+                    {
+    
+                        value: "8400"
+                    },
+                    {
+    
+                        value: "100"
+                    },
+                    {
+    
+                        value: "5000"
+                    }]
+                }]
+        };
+        $scope.Salesvaluebycustomers = {
+            chart: {
+                caption: "Sales Value by Customers",
+                numberPrefix: "RM",
+                theme: "fint",
+                showPercentValues: "1",
+                showPercentInTooltip: "0",
+                decimals: "1",
+                //paletteColors: "#3F51B5",
+                valueFontColor: "#212121",
+                toolTipBgColor: "#263238",
+                placeValuesInside: "0",
+                showToolTip: "1",
+                showLegend: "1",
+                useDataPlotColorForLabels: "1",
+                bgcolor: "#EEEEEE"
+            },
+            data: [{
+                label: "Office 365",
+                value: "2000"
+            },
+            {
+                label: "Cloud SVR",
+                value: "8000"
+            },
+            {
+                label: "Broadband",
+                value: "4500"
+            },
+            {
+                label: "HRM",
+                value: "24000"
+            }]
+        };
+        $scope.Salesvaluebyindustry = {
+            chart: {
+                caption: "Sales Value by Industries",
+                numberPrefix: "RM",
+                theme: "fint",
+                showPercentValues: "1",
+                showPercentInTooltip: "0",
+                decimals: "1",
+                //paletteColors: "#3F51B5",
+                valueFontColor: "#212121",
+                toolTipBgColor: "#263238",
+                placeValuesInside: "0",
+                showToolTip: "1",
+                showLegend: "1",
+                useDataPlotColorForLabels: "1",
+                bgcolor: "#EEEEEE"
+            },
+            data: [{
+                label: "Reseller",
+                value: "2000"
+            },
+            {
+                label: "Health",
+                value: "24000"
+            },
+            {
+                label: "Education",
+                value: "4500"
+            },
+            {
+                label: "Retail",
+                value: "5000"
+            }]
+        };
+    
+        $scope.totalclosingbyquarter = {
+            chart: {
+                caption: "Total Closing Opportunities",
+                subCaption: "By Quarters",
+                numberPrefix: "#",
+                theme: "fint",
+                xAxisName: "Quarters of year",
+                yAxisName: "No. of Total closing Opportunities ",
+                //paletteColors: "#3F51B5",
+                valueFontColor: "#212121",
+                toolTipBgColor: "#263238",
+                placeValuesInside: "0",
+                showLegend: "1",
+                bgcolor: "#EEEEEE"
+            },
+            data: [{
+                label: "Q1",
+                value: "5"
+            },
+            {
+                label: "Q2",
+                value: "10"
+            },
+            {
+                label: "Q3",
+                value: "1"
+            },
+            {
+                label: "Q4",
+                value: "12"
+            }]
+        };
+    }]);
+
+    salesVisionControllers.controller('projectController', ['$scope', '$http','appService', function ($scope, $http, projectService) {
+      
+    }]);
+
+    salesVisionControllers.controller('companyController', ['$scope', '$http','appService', function ($scope, $http, projectService) {
         
     }]);
 
+    salesVisionControllers.controller('contactController', ['$scope', '$http','appService', function ($scope, $http, projectService) {
+        
+    }]);
+
+    salesVisionControllers.controller('salesController', ['$scope', '$http','appService', function ($scope, $http, projectService) {
+        
+    }]);
+
+    salesVisionControllers.controller('settingsController', ['$scope', '$http','appService', function ($scope, $http, projectService) {
+        
+    }]);
     
 /**Changepassword.html controller */
 
@@ -76,69 +511,9 @@ salesVisionControllers.controller('changepassctrl', function ($scope) {
     
     
                 };
-            });
-
-/**forgot password controller*/
-
-salesVisionControllers.controller('forgetPasswordController', ['$scope', '$modal', function ($scope, $modal) {
-    $scope.open = function (size) {
-        $scope.modalInstance = $modal.open({
-            controller: 'forgetPasswordController',
-            templateUrl: 'forgotpass.html',
-            backdrop: "static",
-            scope: $scope,
-            size: size
-        });
-    }
+});
 
 
-    $scope.close = function () {
-        $scope.modalInstance.dismiss('cancel');
-    };
-
-    $scope.emailSubmit = function(){
-
-        $scope.modalInstance.dismiss('cancel');
-    };
-
-}]);
-
-
-
-/**Register.html  controller*/
-salesVisionControllers.controller('homeCtrl',['$scope','userService', function ($scope,userService) {
-    
-       
-                var original = angular.copy($scope.user);
-                $scope.postRegisterform = function (form) {
-    
-                    if (form.$valid) {
-                        userService.register($scope.user,
-                        function(response){
-                            alert( $scope.user.company_name +' has been successfully registered login with your registed email');
-                            $scope.user = angular.copy(original);
-                            $scope.signupForm.$setPristine();
-                            $scope.signupForm.$setValidity();
-                            $scope.signupForm.$setUntouched();
-                        },
-                        function(response){
-                            scope.error = response.data;
-                        });
-    
-                    }
-                    if (form.$invalid) {
-    
-                        angular.forEach($scope.signupForm.$error, function (field) {
-                            angular.forEach(field, function (errorField) {
-                                errorField.$setTouched();
-                            })
-                        });
-    
-                    }
-    
-    
-                };
-}]);
 
 
 /**mainpage.html controller */
@@ -146,405 +521,7 @@ salesVisionControllers.controller('homeCtrl',['$scope','userService', function (
 salesVisionControllers.controller('mainCtrl', function ($scope) {
     var category = "";
     var projectTitle = "";
-    $scope.showdashboard = true;
-    $scope.projectTitle = "Dashboard";
-    var myEl = angular.element(document.querySelector('#dash'));
-    myEl.addClass('active');
-
-    test = [{
-        label: "Total New Sales",
-        value: "138000"
-    },
-
-    {
-        label: "Total Renewals",
-        value: "602000"
-    }];
-
-    $scope.totalWonCases = {
-        chart: {
-            caption: "Won Cases",
-            subCaption: "Total Won cases by Values",
-            numberPrefix: "RM",
-            yAxisName: "Value (in Ringit)",
-            theme: "fint",
-            paletteColors: "#E53935,#FFEB3B,#4CAF50,#FF9800,#2196F3",
-            usePlotGradientColor: "0",
-            valueFontColor: "#212121",
-            toolTipBgColor: "#263238",
-            placeValuesInside: "0",
-            bgcolor: "#EEEEEE",
-        },
-        data: test
-    };
-
-    $scope.totalRenewals = {
-        chart: {
-            caption: " Total Renewals",
-            numberPrefix: "RM",
-            yAxisName: "Value (in Ringit)",
-            paletteColors: "#2196F3,#E53935,#FFEB3B,#4CAF50,#FF9800",
-            usePlotGradientColor: "0",
-            theme: "fint",
-            valueFontColor: "#212121",
-            placeValuesInside: "0",
-            bgcolor: "#EEEEEE"
-        },
-        categories: [{
-            category: [{
-                label: "Office 365"
-            }, {
-                label: "Cloud SVR"
-            }, {
-                label: "Broadband"
-            }, {
-                label: "HRM"
-            }]
-        }],
-        dataset: [{
-            data: [{
-                value: "6000"
-            }, {
-                value: "12800"
-            }, {
-                value: "18000"
-            }, {
-                value: "19000"
-            }]
-
-        }]
-
-    };
-
-    $scope.totalNewsales = {
-        chart: {
-            caption: " Total New Sales",
-            numberPrefix: "RM",
-            yAxisName: "Value (in Ringit)",
-            paletteColors: "#E53935,#FFEB3B,#4CAF50,#FF9800,#2196F3",
-            usePlotGradientColor: "0",
-            theme: "fint",
-            valueFontColor: "#212121",
-            placeValuesInside: "0",
-            bgcolor: "#EEEEEE"
-        },
-        categories: [{
-            category: [{
-                label: "Office 365"
-            }, {
-                label: "Cloud SVR"
-            }, {
-                label: "Broadband"
-            }, {
-                label: "HRM"
-            }]
-        }],
-        dataset: [{
-            data: [{
-                value: "3000"
-            }, {
-                value: "6800"
-            }, {
-                value: "10000"
-            }, {
-                value: "19000"
-            }]
-
-        }]
-    };
-
-    $scope.totalwonComparison = {
-        chart: {
-            caption: "Total Opportunities vs Won Cases",
-            subCaption: "Last year",
-            xAxisname: "Month",
-            yAxisName: "Value (In Ringit)",
-            numberPrefix: "RM",
-            theme: "fint",
-            paletteColors: "#4CAF50,#FFEB3B,",
-            usePlotGradientColor: "0",
-            bgcolor: "#EEEEEE"
-        },
-        categories: [{
-            category: [{
-                label: "Jan"
-            }, {
-                label: "Feb"
-            }, {
-                label: "Mar"
-            }, {
-                label: "Apr"
-            }, {
-                label: "May"
-            }, {
-                label: "Jun"
-            }, {
-                label: "Jul"
-            }, {
-                label: "Aug"
-            }, {
-                label: "Sep"
-            }, {
-                label: "Oct"
-            }, {
-                label: "Nov"
-            }, {
-                label: "Dec"
-            }]
-        }],
-        dataset: [{
-            seriesName: "Total Oppotunities",
-            data: [{
-                value: "16000"
-            }, {
-                value: "20000"
-            }, {
-                value: "18000"
-            }, {
-                value: "19000"
-            }, {
-                value: "15000"
-            }, {
-                value: "21000"
-            }, {
-                value: "16000"
-            }, {
-                value: "20000"
-            }, {
-                value: "17000"
-            }, {
-                value: "25000"
-            }, {
-                value: "19000"
-            }, {
-                value: "23000"
-            }]
-        }, {
-            seriesName: "Won Cases",
-            renderAs: "area",
-            showValues: "0",
-            data: [{
-                value: "4000"
-            }, {
-                value: "5000"
-            }, {
-                value: "3000"
-            }, {
-                value: "4000"
-            }, {
-                value: "1000"
-            }, {
-                value: "7000"
-            }, {
-                value: "1000"
-            }, {
-                value: "4000"
-            }, {
-                value: "1000"
-            }, {
-                value: "8000"
-            }, {
-                value: "2000"
-            }, {
-                value: "7000"
-            }]
-        }],
-        data: [{
-
-            value: "2000"
-        },
-        {
-
-            value: "8000"
-        },
-        {
-
-            value: "4500"
-        },
-        {
-
-            value: "24000"
-        }],
-
-        trendlines: [{
-            line: [{
-                startvalue: "50000",
-                color: "#E53935",
-                valueOnRight: "1",
-                tooltext: "2017 Target",
-                displayvalue: "Target - RM200k"
-            }]
-        }]
-
-    };
-    $scope.QuarterWoncase = {
-        chart: {
-            caption: "Won Cases vs Lost Cases",
-            subCaption: "By Quarters",
-            numberPrefix: "RM",
-            yAxisName: "Value (In Ringit)",
-            theme: "fint",
-            paletteColors: "#2196F3,#FF9800",
-            usePlotGradientColor: "0",
-            valueFontColor: "#212121",
-            placeValuesInside: "0",
-            bgcolor: "#EEEEEE"
-        },
-        categories: [{
-            category: [{
-                label: "Q1"
-            }, {
-                label: "Q2"
-            }, {
-                label: "Q3"
-            }, {
-                label: "Q4"
-            }]
-        }],
-        dataset: [
-            {
-                seriesname: "Won Cases",
-
-                data: [{
-
-                    value: "2000"
-                },
-                {
-
-                    value: "8000"
-                },
-                {
-
-                    value: "4500"
-                },
-                {
-
-                    value: "24000"
-                }]
-            },
-            {
-                seriesname: "Lost Cases",
-
-                data: [{
-
-                    value: "500"
-                },
-                {
-
-                    value: "8400"
-                },
-                {
-
-                    value: "100"
-                },
-                {
-
-                    value: "5000"
-                }]
-            }]
-    };
-    $scope.Salesvaluebycustomers = {
-        chart: {
-            caption: "Sales Value by Customers",
-            numberPrefix: "RM",
-            theme: "fint",
-            showPercentValues: "1",
-            showPercentInTooltip: "0",
-            decimals: "1",
-            //paletteColors: "#3F51B5",
-            valueFontColor: "#212121",
-            toolTipBgColor: "#263238",
-            placeValuesInside: "0",
-            showToolTip: "1",
-            showLegend: "1",
-            useDataPlotColorForLabels: "1",
-            bgcolor: "#EEEEEE"
-        },
-        data: [{
-            label: "Office 365",
-            value: "2000"
-        },
-        {
-            label: "Cloud SVR",
-            value: "8000"
-        },
-        {
-            label: "Broadband",
-            value: "4500"
-        },
-        {
-            label: "HRM",
-            value: "24000"
-        }]
-    };
-    $scope.Salesvaluebyindustry = {
-        chart: {
-            caption: "Sales Value by Industries",
-            numberPrefix: "RM",
-            theme: "fint",
-            showPercentValues: "1",
-            showPercentInTooltip: "0",
-            decimals: "1",
-            //paletteColors: "#3F51B5",
-            valueFontColor: "#212121",
-            toolTipBgColor: "#263238",
-            placeValuesInside: "0",
-            showToolTip: "1",
-            showLegend: "1",
-            useDataPlotColorForLabels: "1",
-            bgcolor: "#EEEEEE"
-        },
-        data: [{
-            label: "Reseller",
-            value: "2000"
-        },
-        {
-            label: "Health",
-            value: "24000"
-        },
-        {
-            label: "Education",
-            value: "4500"
-        },
-        {
-            label: "Retail",
-            value: "5000"
-        }]
-    };
-
-    $scope.totalclosingbyquarter = {
-        chart: {
-            caption: "Total Closing Opportunities",
-            subCaption: "By Quarters",
-            numberPrefix: "#",
-            theme: "fint",
-            xAxisName: "Quarters of year",
-            yAxisName: "No. of Total closing Opportunities ",
-            //paletteColors: "#3F51B5",
-            valueFontColor: "#212121",
-            toolTipBgColor: "#263238",
-            placeValuesInside: "0",
-            showLegend: "1",
-            bgcolor: "#EEEEEE"
-        },
-        data: [{
-            label: "Q1",
-            value: "5"
-        },
-        {
-            label: "Q2",
-            value: "10"
-        },
-        {
-            label: "Q3",
-            value: "1"
-        },
-        {
-            label: "Q4",
-            value: "12"
-        }]
-    };
-
+   
 
 
     /**calling the project section */
@@ -558,7 +535,7 @@ salesVisionControllers.controller('mainCtrl', function ($scope) {
         $scope.extend = false;
         myEl.removeClass('active');
         $scope.projectTitle = "Project Table: All Categories";
-    }
+    };
     /**calling the company section */
     $scope.callCompany = function () {
         $scope.show = false;
@@ -569,7 +546,7 @@ salesVisionControllers.controller('mainCtrl', function ($scope) {
         $scope.extend = false;
         myEl.removeClass('active');
         $scope.projectTitle = "Companies Table";
-    }
+    };
     /**calling the contact section */
     $scope.callContact = function () {
         $scope.show = false;
@@ -706,159 +683,159 @@ salesVisionControllers.controller('mainCtrl', function ($scope) {
 
     var companylist = [{
 
-        No: 1,
-        companyName: 'University Kebangsaan',
-        contactPerson: 'Shaharom',
-        website: '',
-        phone: '',
-        industry: 'Education',
-        address: ''
+            No: 1,
+            companyName: 'University Kebangsaan',
+            contactPerson: 'Shaharom',
+            website: '',
+            phone: '',
+            industry: 'Education',
+            address: ''
 
-    }, {
-        No: 2,
-        companyName: 'Pengurusan Air Selangor Sdn Bhd',
-        contactPerson: 'Raja Ahmad Hidzir',
-        website: '',
-        phone: '',
-        industry: 'Hospitality/Services',
-        address: ''
-    },
+        }, {
+            No: 2,
+            companyName: 'Pengurusan Air Selangor Sdn Bhd',
+            contactPerson: 'Raja Ahmad Hidzir',
+            website: '',
+            phone: '',
+            industry: 'Hospitality/Services',
+            address: ''
+        },
 
-    {
-        No: 3,
-        companyName: 'Numa Solution',
-        contactPerson: 'Aizuddin',
-        website: '',
-        phone: '',
-        industry: 'Reseller',
-        address: ''
-    },
-    {
-        No: 4,
-        companyName: 'Abeam Consulting',
-        contactPerson: 'See Mun',
-        website: '',
-        phone: '',
-        industry: 'HOSPITALITY / SERVICES',
-        address: ''
-    },
-    {
-        No: 5,
-        companyName: 'Cornerstone',
-        contactPerson: 'Victoria',
-        website: '',
-        phone: '',
-        industry: 'Industrial',
-        address: ''
-    },
-    {
-        No: 6,
-        companyName: 'Alfredo Biagio',
-        contactPerson: 'Alfredo',
-        website: '',
-        phone: '',
-        industry: 'Hospitality/Services',
-        address: ''
-    },
-    {
-        No: 7,
-        companyName: 'E-Treasure BPO',
-        contactPerson: 'Kelvin Silva',
-        website: '',
-        phone: '',
-        industry: 'Telecommunication',
-        address: ''
-    }, {
-        No: 8,
-        companyName: 'PeopleQuest (Risda)',
-        contactPerson: 'Yew',
-        website: '',
-        phone: '',
-        industry: 'GOV / GLC',
-        address: ''
-    }
+        {
+            No: 3,
+            companyName: 'Numa Solution',
+            contactPerson: 'Aizuddin',
+            website: '',
+            phone: '',
+            industry: 'Reseller',
+            address: ''
+        },
+        {
+            No: 4,
+            companyName: 'Abeam Consulting',
+            contactPerson: 'See Mun',
+            website: '',
+            phone: '',
+            industry: 'HOSPITALITY / SERVICES',
+            address: ''
+        },
+        {
+            No: 5,
+            companyName: 'Cornerstone',
+            contactPerson: 'Victoria',
+            website: '',
+            phone: '',
+            industry: 'Industrial',
+            address: ''
+        },
+        {
+            No: 6,
+            companyName: 'Alfredo Biagio',
+            contactPerson: 'Alfredo',
+            website: '',
+            phone: '',
+            industry: 'Hospitality/Services',
+            address: ''
+        },
+        {
+            No: 7,
+            companyName: 'E-Treasure BPO',
+            contactPerson: 'Kelvin Silva',
+            website: '',
+            phone: '',
+            industry: 'Telecommunication',
+            address: ''
+        }, {
+            No: 8,
+            companyName: 'PeopleQuest (Risda)',
+            contactPerson: 'Yew',
+            website: '',
+            phone: '',
+            industry: 'GOV / GLC',
+            address: ''
+        }
     ];
 
     var contacts = [{
 
-        No: 1,
-        companyName: 'University Kebangsaan',
-        name: 'Shaharom',
-        phone: '',
-        email: '',
-        position: ''
+            No: 1,
+            companyName: 'University Kebangsaan',
+            name: 'Shaharom',
+            phone: '',
+            email: '',
+            position: ''
 
-    }, {
-        No: 2,
-        companyName: 'Pengurusan Air Selangor Sdn Bhd',
-        name: 'Raja Ahmad Hidzir',
-        phone: '',
-        email: '',
-        position: ''
+        }, {
+            No: 2,
+            companyName: 'Pengurusan Air Selangor Sdn Bhd',
+            name: 'Raja Ahmad Hidzir',
+            phone: '',
+            email: '',
+            position: ''
 
-    },
+        },
 
-    {
-        No: 3,
-        companyName: 'Numa Solution',
-        name: 'Aizuddin',
-        phone: '',
-        email: 'aizzuddin@numasolution.com',
-        position: ''
+        {
+            No: 3,
+            companyName: 'Numa Solution',
+            name: 'Aizuddin',
+            phone: '',
+            email: 'aizzuddin@numasolution.com',
+            position: ''
 
-    },
-    {
-        No: 4,
-        companyName: 'Abeam Consulting',
-        name: 'See Mun',
-        phone: '',
-        email: 'sleong@abeam.com',
-        position: ''
+        },
+        {
+            No: 4,
+            companyName: 'Abeam Consulting',
+            name: 'See Mun',
+            phone: '',
+            email: 'sleong@abeam.com',
+            position: ''
 
-    },
-    {
-        No: 5,
-        companyName: 'Cornerstone',
-        name: 'Victoria',
-        phone: '',
-        email: 'victoria@cstone.com.my',
-        position: ''
+        },
+        {
+            No: 5,
+            companyName: 'Cornerstone',
+            name: 'Victoria',
+            phone: '',
+            email: 'victoria@cstone.com.my',
+            position: ''
 
-    },
-    {
-        No: 6,
-        companyName: 'Alfredo Biagio',
-        name: 'Alfredo',
-        phone: '',
-        email: 'a.biagio@vfemail.net',
-        position: ''
+        },
+        {
+            No: 6,
+            companyName: 'Alfredo Biagio',
+            name: 'Alfredo',
+            phone: '',
+            email: 'a.biagio@vfemail.net',
+            position: ''
 
-    },
-    {
-        No: 7,
-        companyName: 'E-Treasure BPO',
-        name: 'Kelvin Silva',
-        phone: '',
-        email: 'kelvin092108@yahoo.com',
-        position: ''
+        },
+        {
+            No: 7,
+            companyName: 'E-Treasure BPO',
+            name: 'Kelvin Silva',
+            phone: '',
+            email: 'kelvin092108@yahoo.com',
+            position: ''
 
-    }, {
-        No: 8,
-        companyName: 'PeopleQuest (Risda)',
-        name: 'Yew',
-        phone: '',
-        email: 'th.yew@peoplequest.com.my',
-        position: ''
-    }
-    ];
+        }, {
+            No: 8,
+            companyName: 'PeopleQuest (Risda)',
+            name: 'Yew',
+            phone: '',
+            email: 'th.yew@peoplequest.com.my',
+            position: ''
+        }
+        ];
 
-    var sperson = [{
-        No:'1',
-        name: 'Iulia',
-        phone: '',
-        email: '',
-        position: 'Business development manager',
-        total: '8'
+        var sperson = [{
+            No:'1',
+            name: 'Iulia',
+            phone: '',
+            email: '',
+            position: 'Business development manager',
+            total: '8'
     }];
 
 
@@ -881,7 +858,7 @@ salesVisionControllers.controller('mainCtrl', function ($scope) {
         pincharge: 'Iulia',
         remarks: ' 15/1 - Scoping for requirement'
 
-    }, {
+     }, {
         No: 2,
         companyName: 'Pengurusan Air Selangor Sdn Bhd',
         contactPerson: 'Raja Ahmad Hidzir',
@@ -897,9 +874,9 @@ salesVisionControllers.controller('mainCtrl', function ($scope) {
         salesStage: '20%',
         lastUpdate: '04/05/2017',
         remarks: '*Group head human resource admin meet up *Meeting initiated'
-    },
+        },
 
-    {
+     {
         No: 3,
         companyName: 'Numa Solution',
         contactPerson: 'Aizuddin',
@@ -915,8 +892,8 @@ salesVisionControllers.controller('mainCtrl', function ($scope) {
         salesStage: '50%',
         lastUpdate: '10/02/2017',
         remarks: '06/02 - Site visit10/02 - Quoted'
-    },
-    {
+        },
+        {
         No: 4,
         companyName: 'Abeam Consulting',
         contactPerson: 'See Mun',
@@ -932,8 +909,8 @@ salesVisionControllers.controller('mainCtrl', function ($scope) {
         salesStage: '100%',
         lastUpdate: '29/06/2017',
         remarks: ''
-    },
-    {
+        },
+        {
         No: 5,
         companyName: 'Cornerstone',
         contactPerson: 'Victoria',
@@ -949,8 +926,8 @@ salesVisionControllers.controller('mainCtrl', function ($scope) {
         salesStage: '100%',
         lastUpdate: '27/01/2017',
         remarks: '27/02 - PO Received.'
-    },
-    {
+        },
+        {
         No: 6,
         companyName: 'Alfredo Biagio',
         contactPerson: 'Alfredo',
@@ -966,8 +943,8 @@ salesVisionControllers.controller('mainCtrl', function ($scope) {
         salesStage: '100%',
         lastUpdate: '21/12/2016',
         remarks: '23/10 - Scoping requirement. Gathering customer background information. 21/12 - Quoting '
-    },
-    {
+        },
+        {
         No: 7,
         companyName: 'E-Treasure BPO',
         contactPerson: 'Kelvin Silva',
@@ -983,8 +960,8 @@ salesVisionControllers.controller('mainCtrl', function ($scope) {
         salesStage: '10%',
         lastUpdate: '10/02/2017',
         remarks: '10/02 - Required 1rack, 20 IP, 3Mbps of Colo - Competitor'
-    },
-    {
+        },
+        {
         No: 8,
         companyName: 'PeopleQuest (Risda)',
         contactPerson: 'Yew',
@@ -1000,7 +977,7 @@ salesVisionControllers.controller('mainCtrl', function ($scope) {
         salesStage: '50%',
         lastUpdate: '06/02/2017',
         remarks: '10/12 - Scoping for requirement. 13/12 - Quoting Peoplequest.- Yew lost the deal to HR2000.'
-    }
+     }
     ];
 
 

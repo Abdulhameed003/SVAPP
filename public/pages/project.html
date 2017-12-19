@@ -1,8 +1,7 @@
-@extends('layouts.app')
-@section('content')
-    <section id="defaultprojectview" class="project" ng-class="{visible:show}" ng-controller="mainCtrl">
+
+<section id="defaultprojectview" class="project" ng-class="{visible:show}" >
         <div>
-            <h1 class="sectiontitle">@{{projectTitle}}</h1>
+            <h1 class="sectiontitle">{{projectTitle}}</h1>
         </div>
         <div class="row">
             <div class="col-md-4 col-md-offset-3">
@@ -70,23 +69,23 @@
                                             popover="Delete this project" popover-trigger="mouseenter" popover-placement="right"></span>
                                     </a>
                                 </div>
-                                @{{proj.No}}
+                                {{proj.No}}
                             </td>
 
-                            <td>@{{proj.companyName}}</td>
-                            <td ng-if="colContactPerson">@{{proj.contactPerson}}</td>
-                            <td ng-if="colEmail">@{{proj.email}}</td>
-                            <td ng-if="colPhone">@{{proj.phone}}</td>
-                            <td ng-if="colIndustry">@{{proj.industry}}</td>
-                            <td ng-if="colProduct">@{{proj.product}}</td>
-                            <td ng-if="colValue">@{{proj.value}}</td>
-                            <td ng-if="colType">@{{proj.type}}</td>
-                            <td ng-if="colCategory">@{{proj.category}}</td>
-                            <td ng-if="colStartdate">@{{proj.startDate}}</td>
-                            <td ng-if="colClosingdate">@{{proj.closingDate}}</td>
-                            <td ng-if="colSalesstage">@{{proj.salesStage}}</td>
-                            <td ng-if="colLastupdate">@{{proj.lastUpdate}}</td>
-                            <td ng-if="colRemarks">@{{proj.remarks}}</td>
+                            <td>{{proj.companyName}}</td>
+                            <td ng-if="colContactPerson">{{proj.contactPerson}}</td>
+                            <td ng-if="colEmail">{{proj.email}}</td>
+                            <td ng-if="colPhone">{{proj.phone}}</td>
+                            <td ng-if="colIndustry">{{proj.industry}}</td>
+                            <td ng-if="colProduct">{{proj.product}}</td>
+                            <td ng-if="colValue">{{proj.value}}</td>
+                            <td ng-if="colType">{{proj.type}}</td>
+                            <td ng-if="colCategory">{{proj.category}}</td>
+                            <td ng-if="colStartdate">{{proj.startDate}}</td>
+                            <td ng-if="colClosingdate">{{proj.closingDate}}</td>
+                            <td ng-if="colSalesstage">{{proj.salesStage}}</td>
+                            <td ng-if="colLastupdate">{{proj.lastUpdate}}</td>
+                            <td ng-if="colRemarks">{{proj.remarks}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -99,7 +98,7 @@
                             <button type="button" class="btn button" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
                         </li>
                         <li>
-                            <span id="pagenumbers">Page @{{curPage + 1}} of @{{ numberOfPages() }}</span>
+                            <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
                         </li>
                         <li>
                             <button type="button" class="btn button" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
@@ -198,7 +197,7 @@
                             <button type="button" class="btn button" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
                         </li>
                         <li>
-                            <span id="pagenumbers">Page @{{curPage + 1}} of @{{ numberOfPages() }}</span>
+                            <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
                         </li>
                         <li>
                             <button type="button" class="btn button" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
@@ -297,7 +296,7 @@
                             <button type="button" class="btn button" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
                         </li>
                         <li>
-                            <span id="pagenumbers">Page @{{curPage + 1}} of @{{ numberOfPages() }}</span>
+                            <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
                         </li>
                         <li>
                             <button type="button" class="btn button" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
@@ -363,7 +362,7 @@
                             <button type="button" class="btn button" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
                         </li>
                         <li>
-                            <span id="pagenumbers">Page @{{curPage + 1}} of @{{ numberOfPages() }}</span>
+                            <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
                         </li>
                         <li>
                             <button type="button" class="btn button" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
@@ -437,7 +436,7 @@
                         <span ng-repeat="column in columns |limitTo:9:0">
                             <div>
                                 <input type="checkbox" checklist-model="defaulttable.columns" checklist-value="column.id" ng-disabled="column.disabled" />
-                                <label>@{{column.name}}</label>
+                                <label>{{column.name}}</label>
                         </span>
 
                         </div>
@@ -447,7 +446,7 @@
                         <span ng-repeat="column in columns |limitTo:10:9">
                             <div>
                                 <input type="checkbox" checklist-model="defaulttable.columns" checklist-value="column.id" ng-disabled="column.disabled" />
-                                <label>@{{column.name}}</label>
+                                <label>{{column.name}}</label>
                         </span>
                         </div>
                     </div>
@@ -468,4 +467,3 @@
         </div>
 
     </section>
-@endsection

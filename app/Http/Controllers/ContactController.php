@@ -18,7 +18,7 @@ class ContactController extends Controller
     {
         $contact = Contact::with('company')->orderBy('contact_name', 'asc')->get();
 
-        return view('pages.contact')->with('contact',$contact);
+        return $contact;
     }
 
     /**

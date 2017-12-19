@@ -22,7 +22,7 @@ class CompanyController extends Controller
     {
         $company = Company::with(['contacts','industry'])->
                         withCount('projects')->orderBy('company_name','asc')->get();
-        return view('pages.company')->with('company',$company);
+        return $company;
     }
 
     /**

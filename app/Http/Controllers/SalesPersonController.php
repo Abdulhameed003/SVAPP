@@ -21,7 +21,7 @@ class SalesPersonController extends Controller
     public function index()
     {
         $salesperson = Salesperson::orderBy('name', 'asc')->get();
-        return view('pages.salesperson')->with('salesperson',$salesperson);        
+        return $salesperson;        
     }
 
     
@@ -75,12 +75,6 @@ class SalesPersonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        $salesperson = Salesperson::with('projects')->where('id',$id)->get();
-        return view('pages.sale_view')->with('salesperson', $salesersonp);
-
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -121,7 +115,7 @@ class SalesPersonController extends Controller
         $saleperson->position = $request->saleperson_position;
         $saleperson->save();
 
-        return redirect('/salesperson')->with('success','update successful');
+        return 'success';
 
 
     }
