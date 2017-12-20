@@ -48,6 +48,7 @@
     <script src="{{asset('js/SV1.js')}}"></script>
     <script src="{{asset('js/jquery.js')}}"></script>
 	<script src="{{asset('js/bootstrap.js')}}"></script>
+    <script src="{{asset('js/custom.js')}}"></script>
     <style>
         body {
             background-size: cover;
@@ -69,7 +70,20 @@
     
 	
     <!-- Modal pages scripts section -->
-   
+   <script type="text/javascript">
+              var yourbuttons = document.getElementsByClassName('mainbutton');
+           for (var i = yourbuttons.length - 1; i >= 0; i--) {
+               var currentbtn;
+               yourbuttons[i].onclick = function () {
+                   if (currentbtn) {
+                       currentbtn.classList.remove("active");
+                   }
+                   this.classList.add("active");
+                   currentbtn = this;
+               }
+     
+           };
+   </script>
 
         <!--not required for now
             <script type="text/ng-template" id="addcontact.html"> 
@@ -318,7 +332,7 @@
                                 <lable class="convertToblack">Address:</label>
                             </div>
                         <textarea class="forInput form-control" wrap="soft" rows="5" type="text" size="255" placeholder="Address" ng-model="editcom.companyAddress"   name="companyAddress"
-                        ng-class="{submitting:editcompany.companyAddress.$error.required && editcompany.companyAddress.$touched}" required />
+                        ng-class="{submitting:editcompany.companyAddress.$error.required && editcompany.companyAddress.$touched}" required ></textarea>
                         <div class="errormainpage">
                                 <div ng-show="editcompany.companyAddress.$error.required" ng-if="editcompany.companyAddress.$touched">Can't leave this empty.</div>
                         </div>

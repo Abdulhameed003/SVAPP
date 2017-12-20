@@ -8,7 +8,7 @@
                 <form action="" class="search-form">
                     <div class="form-group has-feedback" style="position:relative;left:505px;top:18px;">
                         <label for="search" class="sr-only">Search</label>
-                        <input type="text" class="form-control" name="search" id="search" placeholder="Search" ng-model="searchKeyword" style="font-family:'lato', sans-serif">
+                        <input type="text" class="form-control" name="search" id="search" placeholder="Search" ng-model="searchKeyword2" style="font-family:'lato', sans-serif">
                         <span class="glyphicon glyphicon-search form-control-feedback"></span>
                     </div>
                 </form>
@@ -37,16 +37,18 @@
 
                 </thead>
                 <tbody ng-controller="MyControllerModal">
-                    <tr ng-repeat="sperson in spersonlist|orderBy:predicate:reverse | filter:searchKeyword">
+                    <tr class="paginationclass" ng-repeat="sperson in (filteredRows6 = (rows6| orderBy:predicate:reverse | filter:searchKeyword2 | pagination: curPage * pageSize | limitTo: pageSize))">
                         <td style="text-align:right;">
                             <div style="float:left;">
-                                <input type="checkbox" class="squaredFour" checklist-model="spersontable.spersonlist" checklist-value="sperson.No" style="position:relative;top:-1px;"
-                                />
-                                <a href="#" ng-click="openEditsperson('sm',sperson)" popover="Edit this sales person" popover-trigger="mouseenter" popover-placement="right">
-                                    <span class="fa fa-pencil-square-o" style="font-size:19px;color:#D32F2F;position:relative;top:-2px;"></span>
+                                <input type="checkbox" name="rowID" class="squaredFour" checklist-model="projecttable.projects" checklist-value="proj.No"
+                                    style="position:relative;top:-1px;" />
+                                <a id="projectrowedit" href="#" ng-click="openEditsperson('sm',sperson)">
+                                    <span class="fa fa-pencil-square-o" style="font-size:19px;color:#D32F2F ;position:relative;top:-2px;margin-left:3px;" popover="Edit this Sales Person"
+                                        popover-trigger="mouseenter" popover-placement="right"></span>
                                 </a>
-                                <a href="#" ng-click="openDeletesperson('sm',sperson)" popover="Delete this sales person" popover-trigger="mouseenter" popover-placement="right">
-                                    <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#D32F2F;position:relative;top:-3px;"></span>
+                                <a id="projectrowdelete" href="#" ng-click="openDeletesperson('sm',sperson)">
+                                    <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#D32F2F;position:relative;top:-3px;margin-left:3px;"
+                                        popover="Delete this Sales Person" popover-trigger="mouseenter" popover-placement="right"></span>
                                 </a>
                             </div>
                             {{sperson.No}}
@@ -62,7 +64,7 @@
             </table>
         </div>
         <div class="row2">
-            <div class="pagination pagination-centered" ng-show="rows.length">
+            <div class="pagination pagination-centered" ng-show="rows6.length">
                 <ul class="pagination-controle pagination">
                     <li>
                         <button type="button" class="btn button" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
@@ -71,7 +73,7 @@
                         <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
                     </li>
                     <li>
-                        <button type="button" class="btn button" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
+                        <button type="button" class="btn button" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows6.length < pageSize)"
                             ng-click="curPage = curPage+1">&gt;&gt;</button>
                     </li>
                 </ul>
@@ -86,4 +88,3 @@
         </div>
 
     </section>
-    <script src="custom-js.js"></script>

@@ -38,18 +38,18 @@
 
                 </thead>
                 <tbody ng-controller="MyControllerModal">
-                    <tr ng-repeat="company in companylist|orderBy:predicate:reverse | filter:searchKeyword">
+                    <tr class="paginationclass" ng-repeat="company in (filteredRows4 = (rows4| orderBy:predicate:reverse | filter:searchKeyword | pagination: curPage * pageSize | limitTo: pageSize))">
                         <td style="text-align:right;">
                             <div style="float:left;">
-                                <input type="checkbox" class="squaredFour" checklist-model="companytable.companylist" checklist-value="company.No" style="position:relative;top:-1px;"
-                                />
-                                <a id="companyrowedit" href="#" ng-click="openEditcomp('sm',company)">
-                                    <span class="fa fa-pencil-square-o" style="font-size:19px;color:#D32F2F ;position:relative;top:-2px;" popover="Edit this company"
+                                <input type="checkbox" name="rowID" class="squaredFour" checklist-model="companytable.companylist" checklist-value="company.No"
+                                    style="position:relative;top:-1px;" />
+                                <a id="companyrowedit" href="#"  ng-click="openEditcomp('sm',company)">
+                                    <span class="fa fa-pencil-square-o" style="font-size:19px;color:#D32F2F ;position:relative;top:-2px;margin-left:3px;" popover="Edit this Company"
                                         popover-trigger="mouseenter" popover-placement="right"></span>
                                 </a>
                                 <a id="companyrowdelete" href="#" ng-click="openDeletecomp('sm',company)">
-                                    <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#D32F2F;position:relative;top:-3px;" popover="Delete this company"
-                                        popover-trigger="mouseenter" popover-placement="right"></span>
+                                    <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#D32F2F;position:relative;top:-3px;margin-left:3px;"
+                                        popover="Delete this company" popover-trigger="mouseenter" popover-placement="right"></span>
                                 </a>
                             </div>
                             {{company.No}}
@@ -65,7 +65,7 @@
             </table>
         </div>
         <div class="row2">
-            <div class="pagination pagination-centered" ng-show="rows.length">
+            <div class="pagination pagination-centered" ng-show="rows4.length">
                 <ul class="pagination-controle pagination">
                     <li>
                         <button type="button" class="btn button" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
@@ -74,7 +74,7 @@
                         <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
                     </li>
                     <li>
-                        <button type="button" class="btn button" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
+                        <button type="button" class="btn button" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows4.length < pageSize)"
                             ng-click="curPage = curPage+1">&gt;&gt;</button>
                     </li>
                 </ul>
@@ -88,4 +88,3 @@
         </div>
 
     </section>
-    <script src="custom-js.js"></script>

@@ -1,18 +1,11 @@
 
-        $(document).ready(function () {
-            
-            var yourbuttons = document.getElementsByClassName('mainbutton');
-            for (var i = yourbuttons.length - 1; i >= 0; i--) {
-                var currentbtn;
-                yourbuttons[i].onclick = function () {
-                    if (currentbtn) {
-                        currentbtn.classList.remove("active");
-                    }
-                    this.classList.add("active");
-                    currentbtn = this;
-                }
 
-            };
+     $(addCrudControls());
+ 
+     function addCrudControls() { 
+
+            
+  
             
             $(document).click(function () {
                 $(".dropdown-menu").hide();
@@ -153,6 +146,6 @@
                     $("#example7but").removeClass("fa-remove");
                 }
             });
-        });
+     
     
- 
+    };

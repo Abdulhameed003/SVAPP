@@ -523,7 +523,9 @@ salesVisionControllers.controller('changepassctrl', function ($scope) {
 /**mainpage.html controller */
 
 salesVisionControllers.controller('mainCtrl',['$scope','$location', function ($scope, $location) {
+    $scope.$on('$viewContentLoaded', addCrudControls);
     var category = "";
+   
     var projectTitle = "";
 
     var myEl = angular.element(document.querySelector('#dash'));
