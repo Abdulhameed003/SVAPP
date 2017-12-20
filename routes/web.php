@@ -38,3 +38,6 @@ Route::prefix('api')->group(function(){
 
 });
 
+Route::any( '{catchall}', function ( ) {
+    return view('layouts.app');
+} )->where('catchall', '(.*)');

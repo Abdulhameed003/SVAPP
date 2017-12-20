@@ -6,7 +6,7 @@ app.config(function($routeProvider,$locationProvider) {
      
         when('/project', {
             templateUrl: 'pages/project.html',
-            controller: 'mainCtrl'
+            controller: 'projectController'
         }).
         when('/company', {
             templateUrl: 'pages/company.html',

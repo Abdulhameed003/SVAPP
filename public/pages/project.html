@@ -1,5 +1,4 @@
-
-<section id="defaultprojectview" class="project" ng-class="{visible:show}" ng-controller="mainCtrl">
+<section id="defaultprojectview" class="project" ng-controller="projectController">
         <div>
             <h1 class="sectiontitle">{{projectTitle}}</h1>
         </div>
@@ -15,7 +14,7 @@
                 </form>
             </div>
         </div>
-        <div class="tablevisibility" ng-class="{tablevisible:showprojecttable}">
+        <div class="tablevisible" >
             <div class="table-wrapper projectTable">
                 <table class="table table-condensed table-bordered table-striped table-responsive table-hover">
                     <thead>
@@ -49,6 +48,11 @@
                             <th ng-if="colClosingdate">Closing Date</th>
                             <th ng-if="colSalesstage">Sales Stage</th>
                             <th ng-if="colLastupdate">Last Update</th>
+                            <th ng-if="colPersonincharge">Person in Charge</th>
+                            <th ng-if="colStatus">Status</th>
+                            <th ng-if="colTender">Tender</th>
+                            <th ng-if="colPOnum">PO-Number</th>
+                            <th ng-if="colPOdate">PO-Date</th>
                             <th ng-if="colRemarks" style="width:250px;">Remarks</th>
                         </tr>
 
@@ -85,6 +89,11 @@
                             <td ng-if="colClosingdate">{{proj.closingDate}}</td>
                             <td ng-if="colSalesstage">{{proj.salesStage}}</td>
                             <td ng-if="colLastupdate">{{proj.lastUpdate}}</td>
+                            <td ng-if="colPersonincharge">{{proj.personincharge}}</td>
+                            <td ng-if="colStatus">{{proj.status}}</td>
+                            <td ng-if="colTender">{{proj.tender}}</td>
+                            <td ng-if="colPOnum">{{proj.ponumber}}</td>
+                            <td ng-if="colPOdate">{{proj.podate}}</td>
                             <td ng-if="colRemarks">{{proj.remarks}}</td>
                         </tr>
                     </tbody>
@@ -109,271 +118,7 @@
             </div>
         </div>
 
-        <!-- lead table !-->
-        <div class="tablevisibility" ng-class="{tablevisible:showleadtable}">
-            <div class="table-wrapper projectTable">
-                <table class="table table-hover table-bordered table-responsive">
-                    <thead>
-                        <tr>
-
-                            <th style="text-align:right"> No.
-                                <a href="#" ng-click="sort('No')" class="sortDir" ng-class="{ active: isSorted('No') }">&#x25B2;</a>
-                                <a href="#" ng-click="sort('-No')" class="sortDir" ng-class="{ active: isSorted('-No' ) }">&#x25BC;</a>
-                            </th>
-
-                            <th>Company Name
-
-                                <a href="#" ng-click="sort('companyName')" class="sortDir" ng-class="{ active: isSorted('companyName' ) }">&#x25B2;</a>
-                                <a href="#" ng-click="sort('-companyName')" class="sortDir" ng-class="{ active: isSorted('-companyName' ) }">&#x25BC;</a>
-                            </th>
-                            <th ng-if="colContactPerson">Contact Person</th>
-                            <th ng-if="colEmail">Email</th>
-                            <th ng-if="colPhone">Phone</th>
-                            <th ng-if="colIndustry">Industry</th>
-                            <th ng-if="colProduct">Product</th>
-                            <th ng-if="colValue">Value
-                                <a href="#" ng-click="sort('-value')" class="sortDir" ng-class="{ active: isSorted('-value' ) }">&#x25B2;</a>
-                                <a href="#" ng-click="sort('value')" class="sortDir" ng-class="{ active: isSorted('value' ) }">&#x25BC;</a>
-                            </th>
-                            <th ng-if="colType">Type</th>
-                            <th ng-if="colCategory">Category</th>
-                            <th ng-if="colStartdate">Start Date
-                                <a href="#" ng-click="sort('startDate')" class="sortDir" ng-class="{ active: isSorted('startDate' ) }">&#x25B2;</a>
-                                <a href="#" ng-click="sort('-startDate')" class="sortDir" ng-class="{ active: isSorted('-startDate' ) }">&#x25BC;</a>
-                            </th>
-                            <th ng-if="colClosingdate">Closing Date</th>
-                            <th ng-if="colSalesstage">Sales stage</th>
-                            <th ng-if="colLastupdate">Last update</th>
-                            <th ng-if="colPersonincharge">Person in charge</th>
-                            <th ng-if="colStatus">Status</th>
-                            <th ng-if="colTender">Tender</th>
-                            <th ng-if="colRemarks">Remarks</th>
-                        </tr>
-
-                    </thead>
-                    <!--
-                            <tbody ng-controller="MyControllerModal">
-
-                                <tr>
-                                    <td style="text-align:right;">
-                                        <div style="float:left;">
-                                            <input type="checkbox" name="rowID" class="squaredFour" style="position:relative;top:-1px;" />
-                                            <a href="#">
-                                                <span class="fa fa-pencil-square-o" style="font-size:19px;color:#D32F2F ;position:relative;top:-2px;"></span>
-                                            </a>
-                                            <a href="#" ng-click="openDelete('sm',proj)">
-                                                <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#D32F2F;position:relative;top:-3px;"></span>
-                                            </a>
-                                        </div>
-                            
-                                    </td>
-
-                                    <td></td>
-                                    <td ng-if="colContactPerson"></td>
-                                    <td ng-if="colEmail"></td>
-                                    <td ng-if="colPhone"></td>
-                                    <td ng-if="colIndustry"></td>
-                                    <td ng-if="colProduct"></td>
-                                    <td ng-if="colValue"></td>
-                                    <td ng-if="colType"></td>
-                                    <td ng-if="colCategory"></td>
-                                    <td ng-if="colStartdate"></td>
-                                    <td ng-if="colClosingdate"></td>
-                                    <td ng-if="colSalesstage"></td>
-                                    <td ng-if="colLastupdate"></td>
-                                    <td ng-if="colPersonincharge"></td>
-                                    <td ng-if="colStatus">Status</td>
-                                    <td ng-if="colTender">Tender</td>
-                                    <td ng-if="colRemarks"></td>
-                                </tr>
-                            </tbody>  
-                            !-->
-                </table>
-            </div>
-            <div class="row1">
-                <div class="pagination pagination-centered" ng-show="rows.length">
-                    <ul class="pagination-controle pagination">
-                        <li>
-                            <button type="button" class="btn button" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
-                        </li>
-                        <li>
-                            <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
-                        </li>
-                        <li>
-                            <button type="button" class="btn button" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
-                                ng-click="curPage = curPage+1">&gt;&gt;</button>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- Deal table !-->
-        <div class="tablevisibility" ng-class="{tablevisible:showdealtable}">
-            <div class="table-wrapper projectTable">
-                <table class="table table-hover table-bordered table-responsive">
-                    <thead>
-                        <tr>
-
-                            <th style="text-align:right"> No.
-                                <a href="#" ng-click="sort('No')" class="sortDir" ng-class="{ active: isSorted('No') }">&#x25B2;</a>
-                                <a href="#" ng-click="sort('-No')" class="sortDir" ng-class="{ active: isSorted('-No' ) }">&#x25BC;</a>
-                            </th>
-
-                            <th>Company Name
-
-                                <a href="#" ng-click="sort('companyName')" class="sortDir" ng-class="{ active: isSorted('companyName' ) }">&#x25B2;</a>
-                                <a href="#" ng-click="sort('-companyName')" class="sortDir" ng-class="{ active: isSorted('-companyName' ) }">&#x25BC;</a>
-                            </th>
-                            <th ng-if="colContactPerson">Contact Person</th>
-                            <th ng-if="colEmail">Email</th>
-                            <th ng-if="colPhone">Phone</th>
-                            <th ng-if="colIndustry">Industry</th>
-                            <th ng-if="colProduct">Product</th>
-                            <th ng-if="colValue">Value
-                                <a href="#" ng-click="sort('-value')" class="sortDir" ng-class="{ active: isSorted('-value' ) }">&#x25B2;</a>
-                                <a href="#" ng-click="sort('value')" class="sortDir" ng-class="{ active: isSorted('value' ) }">&#x25BC;</a>
-                            </th>
-                            <th ng-if="colType">Type</th>
-                            <th ng-if="colCategory">Category</th>
-                            <th ng-if="colStartdate">Start Date
-                                <a href="#" ng-click="sort('startDate')" class="sortDir" ng-class="{ active: isSorted('startDate' ) }">&#x25B2;</a>
-                                <a href="#" ng-click="sort('-startDate')" class="sortDir" ng-class="{ active: isSorted('-startDate' ) }">&#x25BC;</a>
-                            </th>
-                            <th ng-if="colClosingdate">Closing Date</th>
-                            <th ng-if="colSalesstage">Sales Stage</th>
-                            <th ng-if="colLastupdate">Last Update</th>
-                            <th ng-if="colPersonincharge">Person in Charge</th>
-                            <th ng-if="colPOnum">PO-Number</th>
-                            <th ng-if="colPOdate">PO-Date</th>
-                            <th ng-if="colRemarks">Remarks</th>
-                        </tr>
-
-                    </thead>
-                    <!--
-                            <tbody ng-controller="MyControllerModal">
-
-                                <tr>
-                                    <td style="text-align:right;">
-                                        <div style="float:left;">
-                                            <input type="checkbox" name="rowID" class="squaredFour" style="position:relative;top:-1px;" />
-                                            <a href="#">
-                                                <span class="fa fa-pencil-square-o" style="font-size:19px;color:#D32F2F ;position:relative;top:-2px;"></span>
-                                            </a>
-                                            <a href="#" ng-click="openDelete('sm',proj)">
-                                                <span class="fa fa-trash" id="rowtrashhover" style="font-size:19px;color:#D32F2F;position:relative;top:-3px;"></span>
-                                            </a>
-                                        </div>
-                            
-                                    </td>
-
-                                    <td></td>
-                                    <td ng-if="colContactPerson"></td>
-                                    <td ng-if="colEmail"></td>
-                                    <td ng-if="colPhone"></td>
-                                    <td ng-if="colIndustry"></td>
-                                    <td ng-if="colProduct"></td>
-                                    <td ng-if="colValue"></td>
-                                    <td ng-if="colType"></td>
-                                    <td ng-if="colCategory"></td>
-                                    <td ng-if="colStartdate"></td>
-                                    <td ng-if="colClosingdate"></td>
-                                    <td ng-if="colSalesstage"></td>
-                                    <td ng-if="colLastupdate"></td>
-                                    <td ng-if="colPersonincharge"></td>
-                                    <td ng-if="colPOnum">Status</td>
-                                    <td ng-if="colPOdate">Tender</td>
-                                    <td ng-if="colRemarks"></td>
-                                </tr>
-                            </tbody>  
-                            !-->
-                </table>
-            </div>
-            <div class="row1">
-                <div class="pagination pagination-centered" ng-show="rows.length">
-                    <ul class="pagination-controle pagination">
-                        <li>
-                            <button type="button" class="btn button" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
-                        </li>
-                        <li>
-                            <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
-                        </li>
-                        <li>
-                            <button type="button" class="btn button" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
-                                ng-click="curPage = curPage+1">&gt;&gt;</button>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-
-
-        <!-- lostcase table !-->
-        <div class="tablevisibility" ng-class="{tablevisible:showlostcasetable}">
-            <div class="table-wrapper projectTable">
-                <table class="table table-hover table-bordered table-responsive">
-                    <thead>
-                        <tr>
-
-                            <th style="text-align:right"> No.
-                                <a href="#" ng-click="sort('No')" class="sortDir" ng-class="{ active: isSorted('No') }">&#x25B2;</a>
-                                <a href="#" ng-click="sort('-No')" class="sortDir" ng-class="{ active: isSorted('-No' ) }">&#x25BC;</a>
-                            </th>
-
-                            <th>Company Name
-
-                                <a href="#" ng-click="sort('companyName')" class="sortDir" ng-class="{ active: isSorted('companyName' ) }">&#x25B2;</a>
-                                <a href="#" ng-click="sort('-companyName')" class="sortDir" ng-class="{ active: isSorted('-companyName' ) }">&#x25BC;</a>
-                            </th>
-                            <th ng-if="colContactPerson">Contact person</th>
-                            <th ng-if="colEmail">Email</th>
-                            <th ng-if="colPhone">Phone</th>
-                            <th ng-if="colIndustry">Industry</th>
-                            <th ng-if="colProduct">Product</th>
-                            <th ng-if="colValue">Value
-                                <a href="#" ng-click="sort('-value')" class="sortDir" ng-class="{ active: isSorted('-value' ) }">&#x25B2;</a>
-                                <a href="#" ng-click="sort('value')" class="sortDir" ng-class="{ active: isSorted('value' ) }">&#x25BC;</a>
-                            </th>
-                            <th ng-if="colType">Type</th>
-                            <th ng-if="colCategory">Category</th>
-                            <th ng-if="colStartdate">Start Date
-                                <a href="#" ng-click="sort('startDate')" class="sortDir" ng-class="{ active: isSorted('startDate' ) }">&#x25B2;</a>
-                                <a href="#" ng-click="sort('-startDate')" class="sortDir" ng-class="{ active: isSorted('-startDate' ) }">&#x25BC;</a>
-                            </th>
-                            <th ng-if="colClosingdate">Closing Date</th>
-                            <th ng-if="colSalesstage">Sales Stage</th>
-                            <th ng-if="colLastupdate">Last Update</th>
-                            <th ng-if="colRemarks">Remarks</th>
-                        </tr>
-
-                    </thead>
-                    <!-- same to projetable tobody
-                            <tbody ng-controller="MyControllerModal">
-
-                            
-                            !-->
-                </table>
-            </div>
-            <div class="row1">
-                <div class="pagination pagination-centered" ng-show="rows.length">
-                    <ul class="pagination-controle pagination">
-                        <li>
-                            <button type="button" class="btn button" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; &lt;</button>
-                        </li>
-                        <li>
-                            <span id="pagenumbers">Page {{curPage + 1}} of {{ numberOfPages() }}</span>
-                        </li>
-                        <li>
-                            <button type="button" class="btn button" ng-disabled="(curPage >= numberOfPages() - 1) || (filteredRows.length < pageSize)"
-                                ng-click="curPage = curPage+1">&gt;&gt;</button>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-
+  
 
 
         <div class="dropdown" style="position:relative;top:-25px;left:1200px;">
@@ -467,4 +212,3 @@
         </div>
 
     </section>
-  
