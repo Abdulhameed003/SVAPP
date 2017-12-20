@@ -63,7 +63,7 @@ salesVisionServices.factory('userService', ['$http', 'localStorageService', func
 
 
 
-    salesVisionServices.factory('appService', ['$http', function($http) {
+    salesVisionServices.factory('projectService', ['$http', function($http) {
         function getProjects(onSuccess,onError){
             $http.get('/project')
             .then(function(response){
@@ -82,10 +82,19 @@ salesVisionServices.factory('userService', ['$http', 'localStorageService', func
             });
         }
 
+        function deleteProject(projectid, onSuccess, onError){
+            $http.delete('api/project/'+projectid)
+            .then(function(response){
+                onSuccess(response);
+            },function(response){
+                onError(response);
+            });
+        }
+
         return{
             getProjects: getProjects,
             createProject:createProject,
-           
+            deleteProject:deleteProject 
         }
 
     }]);

@@ -141,7 +141,7 @@ class projectControllerTest extends TestCase
                 'PO_number'=>$deal->po_num,
                 'PO_date'=> $deal->po_date
         ]; 
-          $response = $this->actingAs($this->user)->post('/project',$data);
+          $response = $this->actingAs($this->user)->post('api/project',$data);
       
         $this->assertDatabaseHas('deals',['project_id'=>'1'],'mysql2');
         $this->assertDatabaseHas('deals',['po_num'=>$deal->po_num],'mysql2');
@@ -178,7 +178,7 @@ class projectControllerTest extends TestCase
             'PO_date'=>date('d-m-Y')
         ];
 
-        $response = $this->actingAs($this->user)->put("/project/{$project->id}",$data);
+        $response = $this->actingAs($this->user)->put("api/project/{$project->id}",$data);
         
         $this->assertDatabaseHas('projects',['sales_stage'=>'70'],'mysql2');
         $this->assertDatabaseHas('projects',['status'=>'pending'],'mysql2');
@@ -190,19 +190,9 @@ class projectControllerTest extends TestCase
         $project = factory(App\Project::class)->create();
         $deal = factory(App\Deal::class)->create(['project_id'=>$project->id]);
 
-        $response = $this->actingAs($this->user)->delete('/project/'.$project->id);
+        $response = $this->actingAs($this->user)->delete("/project/{$project->id}");
         $this->assertDatabaseMissing('projects',['id'=>$project->id],'mysql2');
         $this->assertDatabaseMissing('deals',['project_id'=>$project->id],'mysql2');
     }
-
-    private function createDB($database){
-        $query = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME =  ?";
-        $db = DB::select($query, [$database]);
-        if(empty($db)){
-            DB::statement('CREATE DATABASE '.$database );
-        }
-        Artisan::call('migrate', ['--database' => 'mysql2','--path' => 'database/migrations','--force' => true]);
-    }
-
     
 }
