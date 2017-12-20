@@ -6,7 +6,7 @@ app.config(function($routeProvider,$locationProvider) {
      
         when('/project', {
             templateUrl: 'pages/project.html',
-            controller: 'projectController'
+            controller: 'mainCtrl'
         }).
         when('/company', {
             templateUrl: 'pages/company.html',
@@ -14,15 +14,19 @@ app.config(function($routeProvider,$locationProvider) {
         }).
         when('/contact', {
             templateUrl: 'pages/contact.html',
-            controller: 'MainController'
+            controller: 'mainCtrl'
         }).
-        when('/salesperson', {
+        when('/sales', {
             templateUrl: 'pages/salesperson.html',
-            controller: 'MainController'
+            controller: 'mainCtrl'
         }).
         when('/dashboard', {
             templateUrl: 'pages/dashboard.html',
             controller: 'dashboardController'
+        }).
+        otherwise({
+            redirectTo: '/login',
+            
         });
         $locationProvider.html5Mode(true);
 

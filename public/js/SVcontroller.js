@@ -67,6 +67,10 @@ var salesVisionControllers = angular.module('salesVisionControllers',[]);
     }]);
 
     salesVisionControllers.controller('dashboardController', ['$scope', '$http','appService', function ($scope, $http, projectService) {
+        var category = "";
+        var projectTitle = "";
+        $scope.showdashboard = true;
+        $scope.projectTitle = "Dashboard";
         var myEl = angular.element(document.querySelector('#dash'));
         myEl.addClass('active');
     
@@ -518,14 +522,17 @@ salesVisionControllers.controller('changepassctrl', function ($scope) {
 
 /**mainpage.html controller */
 
-salesVisionControllers.controller('mainCtrl', function ($scope) {
+salesVisionControllers.controller('mainCtrl',['$scope','$location', function ($scope, $location) {
     var category = "";
     var projectTitle = "";
-   
+
+    var myEl = angular.element(document.querySelector('#dash'));
 
 
+    
     /**calling the project section */
     $scope.callProject = function () {
+        
         $scope.showcomp = false;
         $scope.showcontact = false;
         $scope.showsalesperson = false;
@@ -535,6 +542,7 @@ salesVisionControllers.controller('mainCtrl', function ($scope) {
         $scope.extend = false;
         myEl.removeClass('active');
         $scope.projectTitle = "Project Table: All Categories";
+        $location.path('/project');
     };
     /**calling the company section */
     $scope.callCompany = function () {
@@ -546,6 +554,7 @@ salesVisionControllers.controller('mainCtrl', function ($scope) {
         $scope.extend = false;
         myEl.removeClass('active');
         $scope.projectTitle = "Companies Table";
+        $location.path('/company');
     };
     /**calling the contact section */
     $scope.callContact = function () {
@@ -557,6 +566,7 @@ salesVisionControllers.controller('mainCtrl', function ($scope) {
         $scope.extend = false;
         myEl.removeClass('active');
         $scope.projectTitle = "Contacts Table";
+        $location.path('/contact');
     }
     /**calling the salesperson section */
     $scope.callSalesperson = function () {
@@ -569,6 +579,7 @@ salesVisionControllers.controller('mainCtrl', function ($scope) {
         $scope.extend = false;
         myEl.removeClass('active');
         $scope.projectTitle = "Sales Person Table";
+        $location.path('/sales');
     }
 
 
@@ -581,7 +592,8 @@ salesVisionControllers.controller('mainCtrl', function ($scope) {
         $scope.showsalesperson = false;
         $scope.showdashboard = true;
         $scope.projectTitle = "Dashboard";
-        $scope.extend = true;
+       // $scope.extend = true;
+        $location.path('/dashboard');
     }
 
 
@@ -1317,7 +1329,7 @@ salesVisionControllers.controller('mainCtrl', function ($scope) {
         spersonlist: []
     };
 
-}).filter('pagination', function () {
+}]).filter('pagination', function () {
     return function (input, start) {
         start = +start;
         return input.slice(start);
