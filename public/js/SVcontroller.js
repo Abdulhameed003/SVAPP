@@ -6,7 +6,7 @@ var salesVisionControllers = angular.module('salesVisionControllers',[]);
     salesVisionControllers.controller('registerController', ['$scope', '$http','userService','$location','$window', function ($scope, $http, userService,$location,$window) {
         var original = angular.copy($scope.user);
         $scope.error = false;
-        
+    
         $scope.postRegisterform = function (form) {
             if (form.$valid) {
                 userService.register($scope.user,
@@ -66,7 +66,7 @@ var salesVisionControllers = angular.module('salesVisionControllers',[]);
     
     }]);
 
-    salesVisionControllers.controller('dashboardController', ['$scope', '$http','appService', function ($scope, $http, dashboardService) {
+    salesVisionControllers.controller('dashboardController', ['$scope', '$http', function ($scope, $http) {
         var category = "";
         var projectTitle = "";
         $scope.showdashboard = true;
@@ -467,9 +467,21 @@ var salesVisionControllers = angular.module('salesVisionControllers',[]);
         };
     }]);
 
-    salesVisionControllers.controller('projectController', ['$scope', '$http','appService', function ($scope, $http, projectService) {
+    salesVisionControllers.controller('projectController', ['$scope', '$http','projectService', function ($scope, $http, projectService) {
         var category = "";
         var projectTitle = "";
+        var projects=[];
+
+        projectService.getProjects(function(response){
+            if(response.status == 200 && response.data.length > 0){
+                this.projects = [response.data];
+            }else if (response.data.length == 0){
+                alert('No project found!');
+            }
+        },function(response){
+            alert('There was a problem getting the projects from the database');
+        });
+
         $scope.projectTitle = "Project Table: All Categories";
         
       
@@ -533,7 +545,9 @@ var salesVisionControllers = angular.module('salesVisionControllers',[]);
             }
     
         };
+
         $scope.setTabletoDefault();
+        
         $scope.resetForm = function (id) {
             if (id == 'filterForm')
                 $scope.filterForm = {};
@@ -551,7 +565,7 @@ var salesVisionControllers = angular.module('salesVisionControllers',[]);
             $scope.enddate = "";
         }
 
-        var projects = [{
+        /*var projects = [{
             
                     No: 1,
                     companyName: 'University Kebangsaan',
@@ -690,7 +704,7 @@ var salesVisionControllers = angular.module('salesVisionControllers',[]);
                     lastUpdate: '06/02/2017',
                     remarks: '10/12 - Scoping for requirement. 13/12 - Quoting Peoplequest.- Yew lost the deal to HR2000.'
                  }
-        ];
+        ];*/
 
         //pagination
         $scope.searchData = '';
@@ -999,6 +1013,30 @@ var salesVisionControllers = angular.module('salesVisionControllers',[]);
         
         $scope.projecttable = {
             projects: []
+        };
+
+
+
+        $scope.update = function(){
+            projectService.updateProject($scope.project,function(response){
+                if (response.data == 'success'){
+                    alert('Project updated succesfully');
+                }
+            },function(response){
+                var error = response.data;
+                alert(error);
+            });
+        };
+
+        $scope.delete = function(){
+            projectService.deleteProject($scope.project, function(response){
+                if(response.status == 200){
+                    alert('project has been delete');
+                }
+            },function(response){
+                var error= response.data;
+                alert(error);
+            });
         };
     
     }]).filter('pagination', function () {
@@ -1673,8 +1711,17 @@ salesVisionControllers.controller('mainCtrl',['$scope','$location', function ($s
 
 
     /** project modal controllers */
-    salesVisionControllers.controller('forCloseLead', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+    salesVisionControllers.controller('forCloseLead', ['$scope', '$modalInstance','projectService', function ($scope, $modalInstance, projectService) {
+        projectService.loadProjectData(function(response){
+            $scope.companies = response.data.company;
+            $scope.industry = respons.data.industry;
+            $scope.product = response.data.product;
 
+        },function(response){
+            alert('No predefined data are set for industires, company and products');
+        });
+
+        /*
         $scope.companies = [
             {
                 "id": "114",
@@ -1689,9 +1736,9 @@ salesVisionControllers.controller('mainCtrl',['$scope','$location', function ($s
             {
                 "id": "149",
                 "name": "Company 3"
-            }];
-
-
+            }
+        ];
+        */
         $scope.project = {
             "typeID": "0",
 
@@ -1727,15 +1774,15 @@ salesVisionControllers.controller('mainCtrl',['$scope','$location', function ($s
         ];
 
         $scope.tenders = [{
-            name: 'Yes',
-            id:0
-        }, {
-            name: 'No',
-            id:1
-        }, {
-            name: 'Possibly',
-            id:2
-        }
+                name: 'Yes',
+                id:0
+            }, {
+                name: 'No',
+                id:1
+            }, {
+                name: 'Possibly',
+                id:2
+            }
         ];
 
 
@@ -1744,13 +1791,20 @@ salesVisionControllers.controller('mainCtrl',['$scope','$location', function ($s
             
 
             if (form.$valid) {
-                alert('can submit');
-                $scope.leadproj = angular.copy(original);
-                $scope.addLead.$setPristine();
-                $scope.addLead.$setValidity();
-                $scope.addLead.$setUntouched();
-
+                projectService.createProject($scope.leadproj,function(response){
+                    if (response.data == 'success'){
+                        alert('Project created succesfully');
+                        $scope.leadproj = angular.copy(original);
+                        $scope.addLead.$setPristine();
+                        $scope.addLead.$setValidity();
+                        $scope.addLead.$setUntouched();
+                    }
+                },function(response){
+                    var error = response.data;
+                    alert('There was problem creating project');
+                });
             }
+
             if (form.$invalid) {
 
                 angular.forEach($scope.addLead.$error, function (field) {

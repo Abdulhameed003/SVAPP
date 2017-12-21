@@ -64,7 +64,7 @@
         @yield('content')
     @endif
     @includeWhen(Auth::user(),'inc.navbar')
-    <div ng-view></div>
+    <div class="ng-view"></div>
 
 
     
@@ -872,7 +872,7 @@
                         <div class="labelbottomspace">
                             <lable class="convertToblack">Company Name:</label>
                         </div>
-                        <select class="forInput form-control" ng-model="editLeadProj.companyID"  ng-options="company.id as company.name for company in companies" ng-disabled="true">
+                        <select class="forInput form-control" ng-model="editLeadProj.company_id"  ng-options="company.id as company.name for company in companies" ng-disabled="true">
                         <option value="" default disabled selected>Select the Company</option>
                     </select>
                 </div>
@@ -1286,7 +1286,7 @@
                         <div class="SectionBox">
                             <h5>Company and Contact:</h5>
                             <div class="form-group">
-                                <select class="forInput form-control" id="companyselect" ng-model="leadproj.companyID" ng-options="company.id as company.name for company in companies"
+                                <select class="forInput form-control" id="companyselect" ng-model="leadproj.company_id" ng-options="company.id as company.name for company in companies"
                                     ng-disabled="addcompany" name="companyName" ng-class="{submitting:addLead.companyName.$error.required && addLead.companyName.$touched &&  !leadproj.addCompanyName }"
                                     required>
                                     <option value="" default selected>Select the Company</option>

@@ -1,4 +1,4 @@
-<section id="defaultprojectview" class="project" ng-controller="projectController">
+<section id="defaultprojectview" class="project" >
         <div>
             <h1 class="sectiontitle">{{projectTitle}}</h1>
         </div>
@@ -73,27 +73,27 @@
                                             popover="Delete this project" popover-trigger="mouseenter" popover-placement="right"></span>
                                     </a>
                                 </div>
-                                {{proj.No}}
+                                {{proj.id}}
                             </td>
 
-                            <td>{{proj.companyName}}</td>
-                            <td ng-if="colContactPerson">{{proj.contactPerson}}</td>
-                            <td ng-if="colEmail">{{proj.email}}</td>
-                            <td ng-if="colPhone">{{proj.phone}}</td>
-                            <td ng-if="colIndustry">{{proj.industry}}</td>
-                            <td ng-if="colProduct">{{proj.product}}</td>
+                            <td>{{proj.company.company_name}}</td>
+                            <td ng-if="colContactPerson">{{proj.contacts.contact_name}}</td>
+                            <td ng-if="colEmail">{{proj.contact.email}}</td>
+                            <td ng-if="colPhone">{{proj.contact.contact_number}}</td>
+                            <td ng-if="colIndustry">{{proj.industry.industry}}</td>
+                            <td ng-if="colProduct">{{proj.product.product_name}}</td>
                             <td ng-if="colValue">{{proj.value}}</td>
-                            <td ng-if="colType">{{proj.type}}</td>
-                            <td ng-if="colCategory">{{proj.category}}</td>
-                            <td ng-if="colStartdate">{{proj.startDate}}</td>
-                            <td ng-if="colClosingdate">{{proj.closingDate}}</td>
-                            <td ng-if="colSalesstage">{{proj.salesStage}}</td>
-                            <td ng-if="colLastupdate">{{proj.lastUpdate}}</td>
-                            <td ng-if="colPersonincharge">{{proj.personincharge}}</td>
+                            <td ng-if="colType">{{proj.project_type}}</td>
+                            <td ng-if="colCategory">{{proj.project_category}}</td>
+                            <td ng-if="colStartdate">{{proj.created_at}}</td>
+                            <td ng-if="colClosingdate">{{proj.close_at}}</td>
+                            <td ng-if="colSalesstage">{{proj.sales_stage}}</td>
+                            <td ng-if="colLastupdate">{{proj.update_at}}</td>
+                            <td ng-if="colPersonincharge">{{proj.salesperson.name}}</td>
                             <td ng-if="colStatus">{{proj.status}}</td>
                             <td ng-if="colTender">{{proj.tender}}</td>
-                            <td ng-if="colPOnum">{{proj.ponumber}}</td>
-                            <td ng-if="colPOdate">{{proj.podate}}</td>
+                            <td ng-if="colPOnum">{{proj.po_number}}</td>
+                            <td ng-if="colPOdate">{{proj.po_date}}</td>
                             <td ng-if="colRemarks">{{proj.remarks}}</td>
                         </tr>
                     </tbody>

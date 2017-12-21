@@ -11,7 +11,7 @@ salesVisionServices.factory('userService', ['$http', 'localStorageService', func
                 return false;
                 
         }
-    
+      
         function register(formdata, onSuccess, onError) {
            
             $http.post('/register',formdata)
@@ -65,7 +65,7 @@ salesVisionServices.factory('userService', ['$http', 'localStorageService', func
 
     salesVisionServices.factory('projectService', ['$http', function($http) {
         function getProjects(onSuccess,onError){
-            $http.get('/project')
+            $http.get('api/project')
             .then(function(response){
                 onSuccess(response);
             },function(){
@@ -74,7 +74,16 @@ salesVisionServices.factory('userService', ['$http', 'localStorageService', func
         }
 
         function createProject(formdata,onSuccess,onError){
-            $http.post('/project',formdata)
+            $http.post('api/project',formdata)
+            .then(function(response){
+                onSuccess(response);
+            },function(response){
+                onError(response);
+            });
+        }
+
+        function updateProject(formdata, onSuccess, onError){
+            $http.put("api/project/{{formdata.project_id}}/edit")
             .then(function(response){
                 onSuccess(response);
             },function(response){
@@ -91,10 +100,20 @@ salesVisionServices.factory('userService', ['$http', 'localStorageService', func
             });
         }
 
+        function loadProjectData(onSuccess, onError){
+            $http.get('api/project/create')
+            .then(function(){
+                onSuccess(response);
+            },function(){
+                onError(response);
+            });
+        }
         return{
             getProjects: getProjects,
             createProject:createProject,
-            deleteProject:deleteProject 
+            deleteProject:deleteProject,
+            updateProject:updateProject, 
+            loadProjectData:loadProjectData
         }
 
     }]);

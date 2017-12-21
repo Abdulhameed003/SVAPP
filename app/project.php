@@ -26,9 +26,15 @@ class Project extends ConfigureDB
         return $this->belongsTo('App\Salesperson','salesperson_id','salesperson_id');
     }
 
+    public function product(){
+        return $this->belongsTo('App\Product');
+    }
+
     //Static Method calls
 
-public static function loadProjects(){
-    return static::with('company.industry','company.contacts')->orderBy('created_at','Desc')->get();
-}
+    public static function loadProjects(){
+        return static::with('company.industry','company.contacts','product')->orderBy('created_at','Desc')->get();
+    }
+
+
 }
