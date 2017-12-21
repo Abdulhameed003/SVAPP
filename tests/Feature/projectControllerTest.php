@@ -37,7 +37,9 @@ class projectControllerTest extends TestCase
     }
 
     public function test_load_variables_for_project_creation(){
-        $response = $this->actingAs($this->user)->get('/project/create');
+        $company= factory(App\Company::class,4)->create();
+        $response = $this->actingAs($this->user)->get('api/project/create');
+        var_dump($response->getContent());
         $this->assertContains('company',$response->getContent());
         $this->assertContains('industry',$response->getContent());
         $this->assertContains('product',$response->getContent());
@@ -75,7 +77,7 @@ class projectControllerTest extends TestCase
                 'remark'=>$project->remarks,
                 'close_at'=>date('d-m-Y')
         ]; 
-          $response = $this->actingAs($this->user)->post('/project',$data);
+          $response = $this->actingAs($this->user)->post('api/project',$data);
       
         $this->assertDatabaseHas('projects',['company_id'=>$company->company_id],'mysql2');
         $this->assertDatabaseHas('companies',['company_id'=>$company->company_id],'mysql2');
@@ -103,7 +105,7 @@ class projectControllerTest extends TestCase
         'remark'=>$project->remarks,
         'close_at'=>date('d-m-Y')
         ];  
-        $response = $this->actingAs($this->user)->post('/project',$data);
+        $response = $this->actingAs($this->user)->post('api/project',$data);
     
       $this->assertDatabaseHas('projects',['tender'=>'Dis is a new tender'],'mysql2');
       $this->assertDatabaseHas('projects',['company_id'=>$company->company_id],'mysql2');
@@ -190,7 +192,7 @@ class projectControllerTest extends TestCase
         $project = factory(App\Project::class)->create();
         $deal = factory(App\Deal::class)->create(['project_id'=>$project->id]);
 
-        $response = $this->actingAs($this->user)->delete("/project/{$project->id}");
+        $response = $this->actingAs($this->user)->delete("api/project/{$project->id}");
         $this->assertDatabaseMissing('projects',['id'=>$project->id],'mysql2');
         $this->assertDatabaseMissing('deals',['project_id'=>$project->id],'mysql2');
     }

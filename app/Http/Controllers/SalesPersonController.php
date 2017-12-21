@@ -137,7 +137,6 @@ class SalesPersonController extends Controller
             }else{
                 return 'unauthorized';
             }
-
         }catch(\Exception $e){
             return 'failed';
         }

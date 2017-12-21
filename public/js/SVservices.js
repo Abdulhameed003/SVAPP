@@ -117,3 +117,47 @@ salesVisionServices.factory('userService', ['$http', 'localStorageService', func
         }
 
     }]);
+
+    salesVisionServices.factory('settingsServices', ['$http','settingService', function($http,settingService) {
+        function showSettings(onSuccess,onError){
+            $http.get('api/settings')
+            .then(function(){
+                onSuccess(response);
+            },function(){
+                onError(response);
+            });
+        }
+
+        function create(formdata, onSuccess, onError){
+            $http.post('api/settings/add')
+            .then(function(response){
+                onSuccess(response);
+            },function(response){
+                onError(response);
+            });
+        }
+
+        function deleteIndusty(formdata, onSuccess, onError){
+            $http.delete("api/settings/{{formdata}}/industry")
+            .then(function(response){
+                onSuccess(response);
+            },function(response){
+                onError(response);
+            });
+        }
+
+        function deleteProduct(formdata, onSuccess, onError){
+            $http.delete("api/settings/{{formdata}}/product")
+            .then(function(response){
+                onSuccess(response);
+            },function(response){
+                onError(response);
+            });
+        }
+        return{
+            showSettings:showSettings,
+            create:create,
+            deleteIndustry:deleteIndusty,
+            deleteProduct:deleteProduct
+        }
+    }]);

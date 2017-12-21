@@ -26,7 +26,7 @@ class Company extends ConfigureDB
 
     //Static Calls
     public static function loadCompanyNames(){
-        $product = static::all();
-        return $product->only(['id','company_name'])->all() ;
+        $product = static::all('id','company_name');
+        return $product;
     } 
 }
