@@ -83,7 +83,7 @@ var salesVisionControllers = angular.module('salesVisionControllers',[]);
 
     }]);
 
-    salesVisionControllers.controller('dashboardController', ['$scope', '$http','appService', function ($scope, $http, projectService) {
+    salesVisionControllers.controller('dashboardController', ['$scope', '$http','appService', function ($scope, $http, dashboardService) {
         var category = "";
         var projectTitle = "";
         $scope.showdashboard = true;
