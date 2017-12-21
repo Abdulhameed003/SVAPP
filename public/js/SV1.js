@@ -23,11 +23,8 @@ app.config(function($routeProvider,$locationProvider) {
         when('/dashboard', {
             templateUrl: 'pages/dashboard.html',
             controller: 'dashboardController'
-        }).
-        otherwise({
-            redirectTo: '/login',
-            
         });
+       
         $locationProvider.html5Mode(true);
 
      });

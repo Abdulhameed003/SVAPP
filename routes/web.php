@@ -11,18 +11,18 @@
 |
 */
 
-Route::get('/', function(){
-    return view('auth.login');
-});
-Route::get('/dashboard', function(){
-    return view('layouts.app');
-})->name('dashboard.show');
+
 
     Auth::routes();
     Route::get('login','Auth\Log_inController@show')->name('log_in.show');
     Route::post('login','Auth\Log_inController@login')->name('log_in.submit');
     Route::post('logout','Auth\Log_inController@logout')->name('log_out');
-    
+    Route::get('/', function(){
+        return view('auth.login');
+    });
+    Route::get('/dashboard', function(){
+        return view('layouts.app');
+    })->name('dashboard.show');
 Route::prefix('api')->group(function(){
         Route::get('/dashboard', 'DashboardController@index');
         Route::resource('/project', 'ProjectController');

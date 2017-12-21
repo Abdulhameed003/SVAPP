@@ -71,7 +71,7 @@
                 <div ng-controller="forgetPasswordController">
                     <button type="button" ng-click="open('sm')" class="btn btn-link" id="forget-pass">Forgot your Password?</button>
 
-                    <a class="btn btn-link" id="sign-up" href="{{route('register')}}">
+                    <a class="btn btn-link" id="sign-up" href="{{route('register')}}" target="_self">
                         Register
                     </a>
                 </div>

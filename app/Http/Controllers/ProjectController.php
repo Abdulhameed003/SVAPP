@@ -30,7 +30,7 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::loadProjects();
-        return $projects;
+        return response()->json($projects);
        
     }
 
@@ -49,7 +49,7 @@ class ProjectController extends Controller
                 'industry'=>$industry,
                 'product'=>$product];
 
-        return $data;
+        return response()->json($data);
     }
 
     /**
