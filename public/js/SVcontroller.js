@@ -58,12 +58,29 @@ var salesVisionControllers = angular.module('salesVisionControllers',[]);
         $scope.close = function () {
             $scope.modalInstance.dismiss('cancel');
         };
-    
-        $scope.emailSubmit = function(){
-    
-            $scope.modalInstance.dismiss('cancel');
-        };
-    
+        var original = angular.copy($scope.user);
+        $scope.emailSubmit = function(form){
+          
+                /**call to update database */
+                if (form.$valid) {
+                    $scope.user = angular.copy(original);
+                    $scope.forgotpass.$setPristine();
+                    $scope.forgotpass.$setValidity();
+                    $scope.forgotpass.$setUntouched();
+
+                }
+                if (form.$invalid) {
+        
+                    angular.forEach($scope.forgotpass.$error, function (field) {
+                        angular.forEach(field, function (errorField) {
+                            errorField.$setTouched();
+                        })
+                    });
+                }
+            };
+
+           
+
     }]);
 
     salesVisionControllers.controller('dashboardController', ['$scope', '$http','appService', function ($scope, $http, projectService) {
@@ -533,7 +550,9 @@ var salesVisionControllers = angular.module('salesVisionControllers',[]);
             }
     
         };
+
         $scope.setTabletoDefault();
+
         $scope.resetForm = function (id) {
             if (id == 'filterForm')
                 $scope.filterForm = {};
@@ -1062,7 +1081,6 @@ salesVisionControllers.controller('changepassctrl', function ($scope) {
 salesVisionControllers.controller('mainCtrl',['$scope','$location', function ($scope, $location) {
     $scope.$on('$viewContentLoaded', addCrudControls);
 
-
     var myEl = angular.element(document.querySelector('#dash'));
 
     
@@ -1270,23 +1288,14 @@ salesVisionControllers.controller('mainCtrl',['$scope','$location', function ($s
         }
         ];
 
-         var sperson = [{
+        var spersonlist = [{
             No:'1',
             name: 'Iulia',
             phone: '',
             email: '',
             position: 'Business development manager',
             total: '8'
-        }];
-
-
-  
-
-
-
-    
-
-
+    }];
     //pagination
 
 
@@ -1299,8 +1308,8 @@ salesVisionControllers.controller('mainCtrl',['$scope','$location', function ($s
     $scope.filteredRows5 = contacts;
 
     $scope.searchKeyword2 = '';
-    $scope.rows6 = sperson;
-    $scope.filteredRows6 = sperson;
+    $scope.rows6 = spersonlist;
+    $scope.filteredRows6 = spersonlist;
 
  
 
