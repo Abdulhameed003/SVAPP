@@ -12,6 +12,6 @@ class Product extends ConfigureDB
     protected $connection = 'mysql2';
 
     public function projects(){
-        return $this->hasMany('App\Project');
+        return $this->hasMany('App\Project','id','product');
     }
 }

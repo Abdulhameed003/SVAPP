@@ -140,8 +140,8 @@ class projectControllerTest extends TestCase
                 'tender'=>$project->tender,
                 'remark'=>$project->remarks,
                 'close_at'=>date('d-m-Y'),
-                'PO_number'=>$deal->po_num,
-                'PO_date'=> $deal->po_date
+                'po_number'=>$deal->po_num,
+                'po_date'=> $deal->po_date
         ]; 
           $response = $this->actingAs($this->user)->post('api/project',$data);
       
@@ -176,8 +176,8 @@ class projectControllerTest extends TestCase
             'tender'=>$project->tender,
             'remark'=>'This is an update to the exixting project',
             'close_at'=>date('d-m-Y'),
-            'PO_number'=>$deal->po_num,
-            'PO_date'=>date('d-m-Y')
+            'po_number'=>$deal->po_num,
+            'po_date'=>date('d-m-Y')
         ];
 
         $response = $this->actingAs($this->user)->put("api/project/{$project->id}",$data);

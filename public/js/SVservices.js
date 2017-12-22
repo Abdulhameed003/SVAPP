@@ -68,7 +68,7 @@ salesVisionServices.factory('userService', ['$http', 'localStorageService', func
             $http.get('api/project')
             .then(function(response){
                 onSuccess(response);
-            },function(){
+            },function(response){
                 onError(response);
             });
         }
@@ -83,7 +83,7 @@ salesVisionServices.factory('userService', ['$http', 'localStorageService', func
         }
 
         function updateProject(formdata, onSuccess, onError){
-            $http.put("api/project/{{formdata.project_id}}/edit")
+            $http.put("api/project/{{formdata.id}}/edit")
             .then(function(response){
                 onSuccess(response);
             },function(response){
@@ -102,9 +102,9 @@ salesVisionServices.factory('userService', ['$http', 'localStorageService', func
 
         function loadProjectData(onSuccess, onError){
             $http.get('api/project/create')
-            .then(function(){
+            .then(function(response){
                 onSuccess(response);
-            },function(){
+            },function(response){
                 onError(response);
             });
         }
@@ -118,10 +118,10 @@ salesVisionServices.factory('userService', ['$http', 'localStorageService', func
 
     }]);
 
-    salesVisionServices.factory('settingsServices', ['$http','settingService', function($http,settingService) {
+    salesVisionServices.factory('settingService', ['$http', function($http) {
         function showSettings(onSuccess,onError){
             $http.get('api/settings')
-            .then(function(){
+            .then(function(response){
                 onSuccess(response);
             },function(){
                 onError(response);
