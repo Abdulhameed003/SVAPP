@@ -281,8 +281,13 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
     }]);
 
     salesVisionServices.factory('dashboardService',['$http',function($http){
-        function showDash(){
-
+        function showDash(onSuccess,onError){
+            $http.get('api/dashboard')
+            .then(function(response){
+                onSuccess(response);
+            },function(response){
+                onError(response);
+            });
         }
 
         return {
