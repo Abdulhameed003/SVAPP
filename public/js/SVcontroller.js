@@ -491,7 +491,11 @@ var salesVisionControllers = angular.module('salesVisionControllers',[]);
 
         projectService.getProjects(function(response){
             if(response.status == 200 && response.data.length > 0){
-                this.projects = [response.data];
+                this.projects = response.data;
+                $scope.searchData = '';
+                $scope.rows = this.projects;
+                $scope.filteredRows = this.projects;
+
             }else if (response.data.length == 0){
                 alert('No project found!');
             }
@@ -728,9 +732,7 @@ var salesVisionControllers = angular.module('salesVisionControllers',[]);
         ];*/
 
         //pagination
-        $scope.searchData = '';
-        $scope.rows = projects;
-        $scope.filteredRows = projects;
+
 
         $scope.checkLength = function () {
             
@@ -1727,75 +1729,49 @@ salesVisionControllers.controller('mainCtrl',['$scope','$location', function ($s
             $scope.companies = response.data.company;
             $scope.industry = respons.data.industry;
             $scope.product = response.data.product;
-
+            $scope.types = [
+                {
+                    "id": "1",
+                    "name": "New Sale"
+                },
+                {
+                    "id": "2",
+                    "name": "Renewal"
+                }
+    
+            ];
+    
+            $scope.statuses = [
+                {
+                    "id": "1",
+                    "name": "In progress"
+                },
+                {
+                    "id": "2",
+                    "name": "Successful"
+                },
+                {
+                    "id": "3",
+                    "name": "Terminated"
+                }
+    
+    
+            ];
+    
+            $scope.tenders = [{
+                    name: 'Yes',
+                    id:0
+                }, {
+                    name: 'No',
+                    id:1
+                }, {
+                    name: 'Possibly',
+                    id:2
+                }
+            ];
         },function(response){
             alert('No predefined data are set for industires, company and products');
         });
-
-        /*
-        $scope.companies = [
-            {
-                "id": "114",
-
-                "name": "Company 1"
-            },
-            {
-                "id": "126",
-
-                "name": "Company 2"
-            },
-            {
-                "id": "149",
-                "name": "Company 3"
-            }
-        ];
-        */
-        $scope.project = {
-            "typeID": "0",
-
-        }
-        $scope.types = [
-            {
-                "id": "1",
-                "name": "New Sale"
-            },
-            {
-                "id": "2",
-                "name": "Renewal"
-            }
-
-        ];
-
-
-        $scope.statuses = [
-            {
-                "id": "1",
-                "name": "In progress"
-            },
-            {
-                "id": "2",
-                "name": "Successful"
-            },
-            {
-                "id": "3",
-                "name": "Terminated"
-            }
-
-
-        ];
-
-        $scope.tenders = [{
-                name: 'Yes',
-                id:0
-            }, {
-                name: 'No',
-                id:1
-            }, {
-                name: 'Possibly',
-                id:2
-            }
-        ];
-
 
         var original = angular.copy($scope.leadproj);
         $scope.postAddLeadForm = function (form) {
@@ -1809,6 +1785,7 @@ salesVisionControllers.controller('mainCtrl',['$scope','$location', function ($s
                         $scope.addLead.$setPristine();
                         $scope.addLead.$setValidity();
                         $scope.addLead.$setUntouched();
+                        //push data to table with scope.leadproj.pushto table :)
                     }
                 },function(response){
                     var error = response.data;
@@ -1857,46 +1834,46 @@ salesVisionControllers.controller('mainCtrl',['$scope','$location', function ($s
 
     }]);
 
-    salesVisionControllers.controller('forCloseDeal', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+    salesVisionControllers.controller('forCloseDeal', ['$scope', '$modalInstance','projectService', function ($scope, $modalInstance,projectService) {
+        projectService.loadProjectData(function(response){
+            $scope.companies = response.data.company;
+            $scope.industry = respons.data.industry;
+            $scope.product = response.data.product;
+            $scope.types = [
+                {
+                    "id": "1",
+                    "name": "New Sale"
+                },
+                {
+                    "id": "2",
+                    "name": "Renewal"
+                }
+    
+            ];
+        },function(response){
+            alert('No predefined data are set for industires, company and products');
+        });
 
-        $scope.companies = [
-            {
-                "id": "114",
 
-                "name": "Company 1"
-            },
-            {
-                "id": "126",
-
-                "name": "Company 2"
-            },
-            {
-                "id": "149",
-                "name": "Company 3"
-            }];
-
-
-        $scope.types = [
-            {
-                "id": "1",
-                "name": "New Sale"
-            },
-            {
-                "id": "2",
-                "name": "Renewal"
-            }
-
-        ];
         var original = angular.copy($scope.Dealproj);
         $scope.postAddDealForm = function (form) {
             
 
             if (form.$valid) {
-                alert('can submit');
-                $scope.Dealproj = angular.copy(original);
-                $scope.addDeal.$setPristine();
-                $scope.addDeal.$setValidity();
-                $scope.addDeal.$setUntouched();
+                projectService.createProject($scope.Dealproj,function(response){
+                    if (response.data == 'success'){
+                        alert('Project created succesfully');
+                        $scope.Dealproj = angular.copy(original);
+                        $scope.addDeal.$setPristine();
+                        $scope.addDeal.$setValidity();
+                        $scope.addDeal.$setUntouched();
+                        //push data to table
+                    }
+                },function(response){
+                    var error = response.data;
+                    alert('There was problem creating project');
+                });
+               
 
             }
             if (form.$invalid) {
@@ -1934,17 +1911,24 @@ salesVisionControllers.controller('mainCtrl',['$scope','$location', function ($s
             $scope.Dealproj.contPerPos='';
         };
 
-
-
         $scope.close = function () {
             $modalInstance.dismiss('cancel');
         };
 
     }]);
 
-    salesVisionControllers.controller('forCloseDelete', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+    salesVisionControllers.controller('forCloseDelete', ['$scope', '$modalInstance','projectService', function ($scope, $modalInstance,projectService) {
         $scope.deleteHeader = "Delete a Project";
         $scope.deleteTitle = "Are you sure to delete this project?";
+        var indexid = $modalInstance.id.id;
+        projectService.deleteProject(indexid,function(response){
+            if (response.status == 200){
+                alert('Project has been deleted successfully');
+            }
+        },function(response){
+            alert('There was an error deleting the selected project');
+        });
+
         $scope.removeRow = function () {
             var currentid = $modalInstance.id;
             var index = $scope.rows.indexOf(currentid);
@@ -1996,34 +1980,15 @@ salesVisionControllers.controller('mainCtrl',['$scope','$location', function ($s
     }]);
 
 
-    salesVisionControllers.controller('forCloseIndustry', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
-        $scope.industryList = [{
-            name: 'Healthcare'
-        },
-        {
-            name: 'Retail'
-        },
-        {
-            name: 'Education'
-        },
-        {
-            name: 'Reseller'
-        },
-        {
-            name: 'Automotive'
-        },
-        {
-            name: 'Financial'
-        },
-        {
-            name: 'Industrial'
-        },
-        {
-            name: 'Telecommunication'
-        }
-        ];
+    salesVisionControllers.controller('forCloseIndustry', ['$scope', '$modalInstance','settingService', function ($scope, $modalInstance,settingService) {
+        settingService.showSettings(function(response){
+            $scope.industryList = response.data.industry;
+        },function(response){
+            alert('Error in loading industries');
+        });
 
         $scope.deleteSelected = function (index) {
+
             $scope.industryList.splice(index, 1);
         };
 
@@ -2031,35 +1996,39 @@ salesVisionControllers.controller('mainCtrl',['$scope','$location', function ($s
             $modalInstance.dismiss('cancel');
         };
 
-
     }]);
 
 
-    salesVisionControllers.controller('forCloseProduct', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+    salesVisionControllers.controller('forCloseProduct', ['$scope', '$modalInstance','settingService', function ($scope, $modalInstance, settingService) {
+        settingService.showSettings(function(response){
+            $scope.productList = response.data.industry;
+        },function(response){
+            alert('Error in loading product');
+        });
         $scope.productList = [{
-            name: 'Healthcare'
-        },
-        {
-            name: 'Retail'
-        },
-        {
-            name: 'Education'
-        },
-        {
-            name: 'Reseller'
-        },
-        {
-            name: 'Automotive'
-        },
-        {
-            name: 'Financial'
-        },
-        {
-            name: 'Industrial'
-        },
-        {
-            name: 'Telecommunication'
-        }
+                name: 'Healthcare'
+            },
+            {
+                name: 'Retail'
+            },
+            {
+                name: 'Education'
+            },
+            {
+                name: 'Reseller'
+            },
+            {
+                name: 'Automotive'
+            },
+            {
+                name: 'Financial'
+            },
+            {
+                name: 'Industrial'
+            },
+            {
+                name: 'Telecommunication'
+            }
         ];
 
         $scope.deleteSelected = function (index) {

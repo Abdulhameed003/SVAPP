@@ -41,9 +41,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $company = Company::loadCompanyNames();
-        $industry = Industry::all();
-        $product = Product::all();
+        $company = Company::all('id','company_name');
+        $industry = Industry::all('id','industry');
+        $product = Product::all('id','product_name');
 
         $data=['company'=>$company,
                 'industry'=>$industry,
