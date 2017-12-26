@@ -99,9 +99,9 @@ class ProjectController extends Controller
                     'salesperson_id'=>$salesPerson->salesperson_id
             ]);
 
-            if($request->has('PO_number')){
-                Deal::firstOrCreate(['po_num'=>$request->PO_number],
-                    ['po_date'=>$request->PO_date,'project_id'=>$project->id]);    
+            if($request->has('po_number')){
+                Deal::firstOrCreate(['po_num'=>$request->po_number],
+                    ['po_date'=>$request->po_date,'project_id'=>$project->id]);    
             }    
 
             return 'success';//reditect('/project')->with('success','A new project is added to the list');
@@ -137,8 +137,8 @@ class ProjectController extends Controller
                 'tender'=>'nullable|string',
                 'remark'=>'nullable|string',
                 'close_date'=>'nullable|string',
-                'PO_number'=>'sometimes|required|string',
-                'PO_date'=>'sometimes|required'
+                'po_number'=>'sometimes|required|string',
+                'po_date'=>'sometimes|required'
         ];      
     }
 
@@ -180,10 +180,10 @@ class ProjectController extends Controller
             $project->close_at = $request->close_at;
             $project->salesperson_id = $salesPerson->salesperson_id;
             
-            if($request->has('PO_number')){
+            if($request->has('po_number')){
                 Deal::updateOrCreate(['project_id' => $project->id],
-                ['po_num' => $request->PO_number,
-                'po_date' => $request->PO_date]);
+                ['po_num' => $request->po_number,
+                'po_date' => $request->po_date]);
             }
             return $result = $project->save() ? $result ='success' : $result = 'failed';
         }catch(\Exception $e){
