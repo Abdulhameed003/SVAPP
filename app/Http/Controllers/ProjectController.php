@@ -47,7 +47,9 @@ class ProjectController extends Controller
         $salesperson = Salesperson::all('id','name','salesperson_id');
         $data=['company'=>$company,
                 'industry'=>$industry,
-                'product'=>$product];
+                'product'=>$product,
+                'salesperson'=>$salesperson];
+
 
         return response()->json($data);
     }

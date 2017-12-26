@@ -10,7 +10,7 @@ app.config(function($routeProvider,$locationProvider) {
         }).
         when('/company', {
             templateUrl: 'pages/company.html',
-            controller: 'mainCtrl'
+            controller: 'companyController'
         }).
         when('/contact', {
             templateUrl: 'pages/contact.html',
