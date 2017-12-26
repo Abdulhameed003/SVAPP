@@ -30,6 +30,7 @@ class DashboardController extends Controller
     public function index()
     {
        $totalWonCase = totalWonCase();
+       $total = totalRenewal();
 
         return 'sum';
     }
@@ -41,7 +42,10 @@ class DashboardController extends Controller
     }
 
     private function totalRenewal(){
+        $product = Product::all('product_name');
         $renewal = Project::with('product')->where('project_type','Renewals')->pluck('product.product_name','value');
-
+        $renewal= $renewal->groupBy('product.product_name');
+        $renewal->toArray();
+        
     }
 }
