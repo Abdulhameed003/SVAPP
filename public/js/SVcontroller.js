@@ -261,32 +261,10 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', fun
             }, {
                 value: "23000"
             }]
-<<<<<<< HEAD
-        };
-
-        $scope.Salesvaluebyindustry = {
-            chart: {
-                caption: "Sales Value by Industries",
-                numberPrefix: "RM",
-                theme: "fint",
-                showPercentValues: "1",
-                showPercentInTooltip: "0",
-                decimals: "1",
-                //paletteColors: "#3F51B5",
-                valueFontColor: "#212121",
-                toolTipBgColor: "#263238",
-                placeValuesInside: "0",
-                showToolTip: "1",
-                showLegend: "1",
-                useDataPlotColorForLabels: "1",
-                bgcolor: "#EEEEEE"
-            },
-=======
         }, {
             seriesName: "Won Cases",
             renderAs: "area",
             showValues: "0",
->>>>>>> 4b0a0a035a9357fd7a915e82d891f752f364b183
             data: [{
                 value: "4000"
             }, {
@@ -406,31 +384,6 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', fun
                     value: "5000"
                 }]
             }]
-<<<<<<< HEAD
-        };
-
-    }]);
-
-    salesVisionControllers.controller('projectController', ['$scope', '$http','projectService', function ($scope, $http, projectService) {
-        var category = "";
-        var projectTitle = "";
-        var projects=[];
-
-        projectService.getProjects(function(response){
-            if(response.status == 200 && response.data.length > 0){
-                this.projects = response.data;
-                $scope.searchData = '';
-                $scope.rows = this.projects;
-                $scope.filteredRows = this.projects;
-
-                //pagination
-                $scope.checkLength = function () {
-            
-                    $scope.curPage = 0;
-            
-                };
-            
-=======
     };
     $scope.Salesvaluebycustomers = {
         chart: {
@@ -550,7 +503,6 @@ salesVisionControllers.controller('projectController', ['$scope', '$http', 'proj
             //pagination
             $scope.checkLength = function () {
 
->>>>>>> 4b0a0a035a9357fd7a915e82d891f752f364b183
                 $scope.curPage = 0;
 
             };
@@ -911,19 +863,6 @@ salesVisionControllers.controller('projectController', ['$scope', '$http', 'proj
                 columns: [1]
             };
 
-<<<<<<< HEAD
-    salesVisionControllers.controller('contactController', ['$scope', '$http','companyService', function ($scope, $http, companyService) {
-        companyService.showContact(function(){
-            alert(response.data);
-        },function(){
-            alert('error');
-        });
-    }]).filter('pagination', function () {
-        return function (input, start) {
-            start = +start;
-            return input.slice(start);
-        };
-=======
 
     }
 
@@ -1023,7 +962,6 @@ salesVisionControllers.controller('companyController', ['$scope', '$http', 'comp
         }
     }, function (response) {
         alert('There was a problem getting the companies from the database');
->>>>>>> 4b0a0a035a9357fd7a915e82d891f752f364b183
     });
 
 
