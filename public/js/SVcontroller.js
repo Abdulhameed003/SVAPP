@@ -2042,10 +2042,42 @@ salesVisionControllers.controller('mainCtrl',['$scope','$location', function ($s
     }]);
 
     salesVisionControllers.controller('forCloseEditlead', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
-        $scope.leadproject = {
-            "typeID": "",
-
+        var statusid = "";
+        if ($modalInstance.leadproject.status == "In progress")
+            statusid = "1";
+        else if ($modalInstance.leadproject.status == "Successful")
+            statusid = "2";
+        else if ($modalInstance.leadproject.status == "Terminated")
+            statusid = "3";
+    
+        var tenderid = "";
+        if ($modalInstance.leadproject.tender == "Yes")
+            tenderid = "0";
+        else if ($modalInstance.leadproject.tender == "No")
+            tenderid = "1";
+        else if ($modalInstance.leadproject.tender == "Possibly")
+            tenderid = "2";
+    
+    
+        $scope.editLeadProj = {
+            company_name: $modalInstance.leadproject.company.company_name,
+            project_type: $modalInstance.leadproject.project_type= "New Sales" ? '1' : '2',
+            //product_name:$modalInstance.leadproject.product.product_name,
+            value: $modalInstance.leadproject.value,
+            sales_stage: $modalInstance.leadproject.sales_stage,
+            created_at: $modalInstance.leadproject.created_at,
+            close_at: $modalInstance.leadproject.close_at,
+            status: statusid,
+            tender: tenderid,
+            remarks: $modalInstance.leadproject.remarks,
+            // name: $modalInstance.leadproject.salesperson.name
         };
+    
+        //$scope.productList= response from database;
+        //$scope.salespersonList=response from database;
+    
+    
+     
         $scope.statuses = [
             {
                 "id": "1",
