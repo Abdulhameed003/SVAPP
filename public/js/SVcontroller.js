@@ -1907,7 +1907,7 @@ salesVisionControllers.controller('mainCtrl',['$scope','$location', function ($s
         $scope.editLeadProj = {
             company_name: $modalInstance.leadproject.company.company_name,
             project_type: $modalInstance.leadproject.project_type= "New Sales" ? '1' : '2',
-            product_name:$modalInstance.leadproject.product.product_name,
+            product_name:$modalInstance.leadproject.product.id,
             value: $modalInstance.leadproject.value,
             sales_stage: $modalInstance.leadproject.sales_stage,
             created_at: $modalInstance.leadproject.created_at,
@@ -1915,8 +1915,10 @@ salesVisionControllers.controller('mainCtrl',['$scope','$location', function ($s
             status: statusid,
             tender: tenderid,
             remarks: $modalInstance.leadproject.remarks,
-            // name: $modalInstance.leadproject.salesperson.name
+            name: $modalInstance.leadproject.salesperson.id 
         };
+
+      
     
     
     
@@ -1952,7 +1954,7 @@ salesVisionControllers.controller('mainCtrl',['$scope','$location', function ($s
         ];
 
         $scope.projectCat = {
-            "catID": "0",
+            "id": "0",
 
         };
 

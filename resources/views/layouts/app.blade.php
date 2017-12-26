@@ -919,7 +919,7 @@
 							<div class="labelbottomspace">
 								<lable class="convertToblack">Project Category:</label>
 							</div>
-							<select class="forInput form-control" id="ponumber" ng-model="projectCat.category" ng-options="cat.id as cat.name for cat in cats"
+							<select class="forInput form-control" id="ponumber" ng-model="projectCat.id" ng-options="cat.id as cat.name for cat in cats"
 							 ng-change="selectedItemChanged()">
 								<option value="" default disabled selected>Select the Category</option>
 							</select>
