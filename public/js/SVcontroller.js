@@ -58,12 +58,29 @@ var salesVisionControllers = angular.module('salesVisionControllers',[]);
         $scope.close = function () {
             $scope.modalInstance.dismiss('cancel');
         };
-    
-        $scope.emailSubmit = function(){
-    
-            $scope.modalInstance.dismiss('cancel');
-        };
-    
+        var original = angular.copy($scope.user);
+        $scope.emailSubmit = function(form){
+          
+                /**call to update database */
+                if (form.$valid) {
+                    $scope.user = angular.copy(original);
+                    $scope.forgotpass.$setPristine();
+                    $scope.forgotpass.$setValidity();
+                    $scope.forgotpass.$setUntouched();
+
+                }
+                if (form.$invalid) {
+        
+                    angular.forEach($scope.forgotpass.$error, function (field) {
+                        angular.forEach(field, function (errorField) {
+                            errorField.$setTouched();
+                        })
+                    });
+                }
+            };
+
+           
+
     }]);
 
     salesVisionControllers.controller('dashboardController', ['$scope', '$http', function ($scope, $http) {
@@ -832,7 +849,11 @@ var salesVisionControllers = angular.module('salesVisionControllers',[]);
         };
 
         $scope.setTabletoDefault();
+<<<<<<< HEAD
+
+=======
         
+>>>>>>> 280389071c6d0392cde91fe38c8e56eccfae5814
         $scope.resetForm = function (id) {
             if (id == 'filterForm')
                 $scope.filterForm = {};
@@ -962,7 +983,6 @@ salesVisionControllers.controller('changepassctrl', function ($scope) {
 
 salesVisionControllers.controller('mainCtrl',['$scope','$location', function ($scope, $location) {
     $scope.$on('$viewContentLoaded', addCrudControls);
-
 
     var myEl = angular.element(document.querySelector('#dash'));
 
@@ -1171,23 +1191,14 @@ salesVisionControllers.controller('mainCtrl',['$scope','$location', function ($s
         }
         ];
 
-         var sperson = [{
+        var spersonlist = [{
             No:'1',
             name: 'Iulia',
             phone: '',
             email: '',
             position: 'Business development manager',
             total: '8'
-        }];
-
-
-  
-
-
-
-    
-
-
+    }];
     //pagination
 
 
@@ -1200,8 +1211,8 @@ salesVisionControllers.controller('mainCtrl',['$scope','$location', function ($s
     $scope.filteredRows5 = contacts;
 
     $scope.searchKeyword2 = '';
-    $scope.rows6 = sperson;
-    $scope.filteredRows6 = sperson;
+    $scope.rows6 = spersonlist;
+    $scope.filteredRows6 = spersonlist;
 
  
 
@@ -1879,11 +1890,43 @@ salesVisionControllers.controller('mainCtrl',['$scope','$location', function ($s
 
     }]);
 
-    salesVisionControllers.controller('forCloseEditlead', ['$scope', '$modalInstance','projectService', function ($scope, $modalInstance,projectService) {
-        $scope.leadproject = {
-            "typeID": "",
-
+    salesVisionControllers.controller('forCloseEditlead', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+        var statusid = "";
+        if ($modalInstance.leadproject.status == "In progress")
+            statusid = "1";
+        else if ($modalInstance.leadproject.status == "Successful")
+            statusid = "2";
+        else if ($modalInstance.leadproject.status == "Terminated")
+            statusid = "3";
+    
+        var tenderid = "";
+        if ($modalInstance.leadproject.tender == "Yes")
+            tenderid = "0";
+        else if ($modalInstance.leadproject.tender == "No")
+            tenderid = "1";
+        else if ($modalInstance.leadproject.tender == "Possibly")
+            tenderid = "2";
+    
+    
+        $scope.editLeadProj = {
+            company_name: $modalInstance.leadproject.company.company_name,
+            project_type: $modalInstance.leadproject.project_type= "New Sales" ? '1' : '2',
+            //product_name:$modalInstance.leadproject.product.product_name,
+            value: $modalInstance.leadproject.value,
+            sales_stage: $modalInstance.leadproject.sales_stage,
+            created_at: $modalInstance.leadproject.created_at,
+            close_at: $modalInstance.leadproject.close_at,
+            status: statusid,
+            tender: tenderid,
+            remarks: $modalInstance.leadproject.remarks,
+            // name: $modalInstance.leadproject.salesperson.name
         };
+    
+        //$scope.productList= response from database;
+        //$scope.salespersonList=response from database;
+    
+    
+     
         $scope.statuses = [
             {
                 "id": "1",

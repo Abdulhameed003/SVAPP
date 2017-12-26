@@ -62,7 +62,7 @@
                         <tr class="paginationclass" ng-repeat="proj in (filteredRows = (rows| orderBy:predicate:reverse | filter:searchData | pagination: curPage * pageSize | limitTo: pageSize))">
                             <td style="text-align:right;">
                                 <div style="float:left;">
-                                    <input type="checkbox" name="rowID" class="squaredFour" checklist-model="projecttable.projects" checklist-value="proj.No"
+                                    <input type="checkbox" name="rowID" class="squaredFour" checklist-model="projecttable.projects" checklist-value="proj.id"
                                         style="position:relative;top:-1px;" />
                                     <a id="projectrowedit" href="#" ng-click="openEdit('md',proj)">
                                         <span class="fa fa-pencil-square-o" style="font-size:19px;color:#D32F2F ;position:relative;top:-2px;margin-left:3px;" popover="Edit this project"
@@ -77,18 +77,18 @@
                             </td>
 
                             <td>{{proj.company.company_name}}</td>
-                            <td ng-if="colContactPerson">{{proj.contacts.contact_name}}</td>
-                            <td ng-if="colEmail">{{proj.contact.email}}</td>
-                            <td ng-if="colPhone">{{proj.contact.contact_number}}</td>
-                            <td ng-if="colIndustry">{{proj.industry.industry}}</td>
+                            <td ng-if="colContactPerson">{{proj.company.contacts[0].contact_name}}</td>
+                            <td ng-if="colEmail">{{proj.company.contacts[0].email}}</td>
+                            <td ng-if="colPhone">{{proj.company.contacts[0].contact_number}}</td>
+                            <td ng-if="colIndustry">{{proj.company.industry.industry}}</td>
                             <td ng-if="colProduct">{{proj.product.product_name}}</td>
                             <td ng-if="colValue">{{proj.value}}</td>
                             <td ng-if="colType">{{proj.project_type}}</td>
                             <td ng-if="colCategory">{{proj.project_category}}</td>
-                            <td ng-if="colStartdate">{{proj.created_at}}</td>
+                            <td date-format="dd/MM/yyyy" ng-if="colStartdate">{{proj.created_at}}</td>
                             <td ng-if="colClosingdate">{{proj.close_at}}</td>
                             <td ng-if="colSalesstage">{{proj.sales_stage}}</td>
-                            <td ng-if="colLastupdate">{{proj.update_at}}</td>
+                            <td ng-if="colLastupdate">{{proj.updated_at}}</td>
                             <td ng-if="colPersonincharge">{{proj.salesperson.name}}</td>
                             <td ng-if="colStatus">{{proj.status}}</td>
                             <td ng-if="colTender">{{proj.tender}}</td>
