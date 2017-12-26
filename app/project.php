@@ -27,7 +27,7 @@ class Project extends ConfigureDB
     }
 
     public function product(){
-        return $this->belongsTo('App\Product');
+        return $this->belongsTo('App\Product','product','id');
     }
 
     //Static Method calls

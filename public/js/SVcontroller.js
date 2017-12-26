@@ -568,11 +568,7 @@ var salesVisionControllers = angular.module('salesVisionControllers',[]);
         };
 
         $scope.setTabletoDefault();
-<<<<<<< HEAD
-
-=======
         
->>>>>>> 280389071c6d0392cde91fe38c8e56eccfae5814
         $scope.resetForm = function (id) {
             if (id == 'filterForm')
                 $scope.filterForm = {};
@@ -1528,7 +1524,7 @@ salesVisionControllers.controller('mainCtrl',['$scope','$location', function ($s
         };
 
         $scope.openEdit = function (size, proj) {
-            if (proj.category == 'Lead') {
+            if (proj.project_category == 'Lead') {
                 var modalInstance = $modal.open({
                     controller: 'forCloseEditlead',
                     templateUrl: 'editlead.html',
@@ -1539,7 +1535,7 @@ salesVisionControllers.controller('mainCtrl',['$scope','$location', function ($s
                 });
                 modalInstance.leadproject = proj;
             }
-            if (proj.category == 'Deal') {
+            if (proj.project_category == 'Deal') {
                 var modalInstance = $modal.open({
                     controller: 'forCloseEditdeal',
                     templateUrl: 'editdeal.html',
@@ -1550,7 +1546,7 @@ salesVisionControllers.controller('mainCtrl',['$scope','$location', function ($s
                 });
                 modalInstance.dealproject = proj;
             }
-            if (proj.category == 'Lost case') {
+            if (proj.project_category == 'Lost case') {
                 var modalInstance = $modal.open({
                     controller: 'forCloseEditlostcase',
                     templateUrl: 'editlostcase.html',
@@ -2062,7 +2058,7 @@ salesVisionControllers.controller('mainCtrl',['$scope','$location', function ($s
         $scope.editLeadProj = {
             company_name: $modalInstance.leadproject.company.company_name,
             project_type: $modalInstance.leadproject.project_type= "New Sales" ? '1' : '2',
-            //product_name:$modalInstance.leadproject.product.product_name,
+            product_name:$modalInstance.leadproject.product.product_name,
             value: $modalInstance.leadproject.value,
             sales_stage: $modalInstance.leadproject.sales_stage,
             created_at: $modalInstance.leadproject.created_at,
@@ -2073,8 +2069,7 @@ salesVisionControllers.controller('mainCtrl',['$scope','$location', function ($s
             // name: $modalInstance.leadproject.salesperson.name
         };
     
-        //$scope.productList= response from database;
-        //$scope.salespersonList=response from database;
+    
     
     
      
