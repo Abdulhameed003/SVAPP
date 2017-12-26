@@ -23,13 +23,13 @@ class CompanyControllerTest extends TestCase
 
     public function test_if_company_page_display()
     {
-        $response= $this->actingAs($this->user)->get('/company');
+        $response= $this->actingAs($this->user)->get('api/company');
         $response->assertViewis('pages.company');
     }
 
     public function test_if_company_is_returned_for_edit(){
         $company = factory(\App\Company::class)->create();
-        $response= $this->actingAs($this->user)->get("/company/{$company->id}/edit");
+        $response= $this->actingAs($this->user)->get("api/company/{$company->id}/edit");
         $this->assertContains('company',$response->getContent());
     }
 
@@ -41,19 +41,19 @@ class CompanyControllerTest extends TestCase
                 'website'=>'https://something.com',
                 'office_number'=>'234567890'];
 
-        $response= $this->actingAs($this->user)->put("/company/{$company->id}",$data);
+        $response= $this->actingAs($this->user)->put("api/company/{$company->id}",$data);
         $this->assertDatabaseHas('companies',['website'=>'https://something.com'],'mysql2');
         $this->assertDatabaseHas('companies',['office_num'=>'234567890'],'mysql2');
     }
 
     public function test_if_company_is_deleted(){
         $company = factory(\App\Company::class)->create();
-        $project = factory(\App\Project::class)->create(['company_id'=>$company->company_id]);
-        $contact = factory(\App\Contact::class)->create(['company_id'=>$company->company_id]);
+        $project = factory(\App\Project::class)->create(['company_id'=>$company->id]);
+        $contact = factory(\App\Contact::class)->create(['company_id'=>$company->id]);
 
-        $response = $this->actingAs($this->user)->delete("/company/{$company->id}");
+        $response = $this->actingAs($this->user)->delete("api/company/{$company->id}");
         $this->assertDatabaseMissing('companies',['id'=>$company->id],'mysql2');
-        $this->assertDatabaseMissing('contacts',['company_id'=>$company->company_id],'mysql2');
-        $this->assertDatabaseMissing('projects',['company_id'=>$company->company_id],'mysql2');
+        $this->assertDatabaseMissing('contacts',['company_id'=>$company->id],'mysql2');
+        $this->assertDatabaseMissing('projects',['company_id'=>$company->id],'mysql2');
     }
 }

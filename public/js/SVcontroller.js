@@ -315,6 +315,7 @@ var salesVisionControllers = angular.module('salesVisionControllers',[]);
             }]
     
         };
+
         $scope.QuarterWoncase = {
             chart: {
                 caption: "Won Cases vs Lost Cases",
@@ -381,6 +382,7 @@ var salesVisionControllers = angular.module('salesVisionControllers',[]);
                     }]
                 }]
         };
+
         $scope.Salesvaluebycustomers = {
             chart: {
                 caption: "Sales Value by Customers",
@@ -415,6 +417,7 @@ var salesVisionControllers = angular.module('salesVisionControllers',[]);
                 value: "24000"
             }]
         };
+
         $scope.Salesvaluebyindustry = {
             chart: {
                 caption: "Sales Value by Industries",
@@ -482,6 +485,7 @@ var salesVisionControllers = angular.module('salesVisionControllers',[]);
                 value: "12"
             }]
         };
+
     }]);
 
     salesVisionControllers.controller('projectController', ['$scope', '$http','projectService', function ($scope, $http, projectService) {
@@ -935,8 +939,12 @@ var salesVisionControllers = angular.module('salesVisionControllers',[]);
         };
     });
 
-    salesVisionControllers.controller('contactController', ['$scope', '$http','appService', function ($scope, $http, projectService) {
-        
+    salesVisionControllers.controller('contactController', ['$scope', '$http','companyService', function ($scope, $http, companyService) {
+        companyService.showContact(function(){
+            alert(response.data);
+        },function(){
+            alert('error');
+        });
     }]).filter('pagination', function () {
         return function (input, start) {
             start = +start;

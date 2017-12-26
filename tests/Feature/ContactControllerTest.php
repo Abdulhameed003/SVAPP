@@ -25,8 +25,10 @@ class ContactControllerTest extends TestCase
     }
 
     public function test_contact_page_is_displayed(){
-        $response = $this->actingAs($this->user)->get('/contact');
-        $response->assertViewIs('pages.contact');
+        $contact = factory(App\Contact::class)->create();
+        $response = $this->actingAs($this->user)->get('api/contact');
+        var_dump($response->getContent());
+        $this->assertContains('contact',$response->getContent());
     }
 
     /*public function test_contact_create_returns_companies(){

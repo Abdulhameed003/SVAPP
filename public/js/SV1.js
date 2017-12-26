@@ -14,7 +14,7 @@ app.config(function($routeProvider,$locationProvider) {
         }).
         when('/contact', {
             templateUrl: 'pages/contact.html',
-            controller: 'mainCtrl'
+            controller: 'contactController'
         }).
         when('/sales', {
             templateUrl: 'pages/salesperson.html',

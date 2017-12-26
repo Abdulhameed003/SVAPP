@@ -44,7 +44,7 @@ class ProjectController extends Controller
         $company = Company::all('id','company_name');
         $industry = Industry::all('id','industry');
         $product = Product::all('id','product_name');
-
+        $salesperson = Salesperson::all('id','name','salesperson_id');
         $data=['company'=>$company,
                 'industry'=>$industry,
                 'product'=>$product];
@@ -66,14 +66,13 @@ class ProjectController extends Controller
             $industry = $request->has('industry') ? Industry::firstOrCreate(['industry'=>$request->industry ]):null;
 
             //find or create new comapny if not found in the db in case of new company entry
-            $company= Company::firstOrCreate(['company_id'=>$request->company_id],
+            $company= Company::firstOrCreate(['company_name'=>$request->company_name],
                 ['industry_id'=> !is_null($industry) ? $industry->id : '',
-                'company_name'=>$request->company_name,
-                'website'=>$request->website,
+                 'website'=>$request->website,
                 'office_num'=>$request->office_number]);
 
             if ($request->has('contact_name')){
-                Contact::firstOrCreate(['company_id'=>$company->company_id],
+                Contact::firstOrCreate(['company_id'=>$company->id],
                     ['contact_name'=>$request->contact_name,
                     'contact_number'=>$request->contact_number,
                     'email'=>$request->contact_email,
@@ -95,7 +94,7 @@ class ProjectController extends Controller
                     'tender'=>$request->tender,
                     'remarks'=>$request->remark,
                     'close_at'=>$request->close_at,
-                    'company_id'=>$company->company_id,
+                    'company_id'=>$company->id,
                     'salesperson_id'=>$salesPerson->salesperson_id
             ]);
 
@@ -166,7 +165,7 @@ class ProjectController extends Controller
         try{
             $this->validate($request,$this->rule());
 
-            $salesPerson = Salesperson::where('salesperson_id',$request->salesperson_id)->first();
+            $salesPerson = Salesperson::where('salesperson_name',$request->salesperson_name)->first();
 
             $project = Project::find($id);
         

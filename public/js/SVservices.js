@@ -170,7 +170,7 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
             });
         }
 
-        function updateCompany(copany_id,onSuccess,onError){
+        function updateCompany(company_id,onSuccess,onError){
             $http.put("api/company/{{company_id}}")
             .then(function(response){
                 onSuccess(response);

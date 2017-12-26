@@ -47,7 +47,7 @@ $factory->define(App\Project::class, function (Faker\Generator $faker) {
         'status'=>$faker->randomDigit,
         'tender'=>$faker->word,
         'remarks'=>$faker->text($max = 50),
-        'company_id'=>$faker->ean8,
+        'company_id'=>$faker->randomDigit,
         'salesperson_id'=>$faker->ean8
     ];
 });
@@ -73,7 +73,6 @@ $factory->define(App\Industry::class, function (Faker\Generator $faker) {
 $factory->define(App\Company::class, function (Faker\Generator $faker) {
 
     return [ 
-        'company_id' =>$faker->ean8,
         'company_name' => $faker->company,
         'industry_id'=>$faker->randomDigit,
         'website'=>$faker->url,
@@ -84,7 +83,7 @@ $factory->define(App\Company::class, function (Faker\Generator $faker) {
 $factory->define(App\Contact::class, function (Faker\Generator $faker) {
     
         return [
-            'company_id'=>$faker->ean8,
+            'company_id'=>$faker->randomDigit,
             'contact_name' => $faker->name,
             'contact_number'=>$faker->e164PhoneNumber,
             'email'=>$faker->unique()->safeEmail,
