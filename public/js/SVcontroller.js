@@ -1478,10 +1478,20 @@ salesVisionControllers.controller('MyControllerModal', ['$scope', '$modal', func
 
 /** project modal controllers */
 salesVisionControllers.controller('forCloseLead', ['$scope', '$modalInstance', 'projectService', function ($scope, $modalInstance, projectService) {
+
     projectService.loadProjectData(function (response) {
+       
         $scope.companies = response.data.company;
-        $scope.industry = respons.data.industry;
-        $scope.product = response.data.product;
+        $scope.industryList = response.data.industry;
+        $scope.productList = response.data.product;
+        $scope.salespersonList = response.data.salesperson;  
+     
+$scope.call=function(item){
+    alert(item);
+}
+
+
+
         $scope.types = [
             {
                 "id": "1",
@@ -1589,24 +1599,27 @@ salesVisionControllers.controller('forCloseLead', ['$scope', '$modalInstance', '
 
 salesVisionControllers.controller('forCloseDeal', ['$scope', '$modalInstance', 'projectService', function ($scope, $modalInstance, projectService) {
     projectService.loadProjectData(function (response) {
-        $scope.companies = response.data.company;
-        $scope.industryList = respons.data.industry;
-        $scope.productList = response.data.product;
-        $scope.types = [
-            {
-                "id": "1",
-                "name": "New Sale"
-            },
-            {
-                "id": "2",
-                "name": "Renewal"
-            }
-
-        ];
-    }, function (response) {
-        alert('No predefined data are set for industires, company and products');
-    });
-
+        
+         $scope.companies = response.data.company;
+         $scope.industryList = response.data.industry;
+         $scope.productList = response.data.product;
+         $scope.salespersonList = response.data.salesperson;
+         $scope.types = [
+             {
+                 "id": "1",
+                 "name": "New Sale"
+             },
+             {
+                 "id": "2",
+                 "name": "Renewal"
+             }
+ 
+         ];
+ 
+     }, function (response) {
+         alert('No predefined data are set for industires, company and products');
+     });
+ 
 
     var original = angular.copy($scope.Dealproj);
     $scope.postAddDealForm = function (form) {
@@ -1964,18 +1977,19 @@ salesVisionControllers.controller('forCloseEditdeal', ['$scope', '$modalInstance
     else if ($modalInstance.dealproject.project_type == "Renewals")
         typeid = "2";
 
+
     $scope.editDealProj = {
         company_name: $modalInstance.dealproject.company.company_name,
-       // salesperson_id:$modalInstance.dealproject.salesperson.id,
-       project_type:typeid,
-       //product:$modalInstance.dealproject.product.id,
-       value:$modalInstance.dealproject.value,
-       sales_stage: $modalInstance.dealproject.sales_stage,
-       remarks:$modalInstance.dealproject.remarks,
-       po_num:$modalInstance.dealproject.deal.po_num,
-       po_date:$modalInstance.dealproject.deal.po_date,
-       created_at:$modalInstance.dealproject.created_at,
-       close_at:$modalInstance.dealproject.close_at
+        // salesperson_id:$modalInstance.dealproject.salesperson.id,
+        project_type: typeid,
+        //product:$modalInstance.dealproject.product.id,
+        value: $modalInstance.dealproject.value,
+        sales_stage: $modalInstance.dealproject.sales_stage,
+        remarks: $modalInstance.dealproject.remarks,
+        po_num: $modalInstance.dealproject.deal.po_num,
+        po_date: $modalInstance.dealproject.deal.po_date,
+        created_at: $modalInstance.dealproject.created_at,
+        close_at: $modalInstance.dealproject.close_at
     }
 
     $scope.types = [

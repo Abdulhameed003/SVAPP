@@ -602,7 +602,7 @@
 						<h5>Company and Contact:</h5>
 						<input type="hidden" ng-model="Dealproj.category" />
 						<div class="form-group">
-							<select class="forInput form-control" id="companyselect" ng-model="Dealproj.company_id" ng-options="company.company_id as company.company_name for company in companies"
+							<select class="forInput form-control" id="companyselect"  ng-model="Dealproj.company_id"  ng-options="company.id as company.company_name for company in companies"
 							 ng-disabled="addcompany" name="companyName" ng-class="{submitting:addDeal.companyName.$error.required && addDeal.companyName.$touched &&  !Dealproj.addCompanyName }"
 							 required>
 								<option value="" default selected>Select the Company</option>
@@ -1275,7 +1275,7 @@
 						<h5>Company and Contact:</h5>
 						<input type="hidden" ng-model="leadproj.category" />
 						<div class="form-group">
-							<select class="forInput form-control" id="companyselect" ng-model="leadproj.company_id" ng-options="company.company_id as company.company_name for company in companies"
+							<select class="forInput form-control" id="companyselect" ng-model="leadproj.company_name"  ng-options="company.company_name as company.company_name for company in companies track by company.id" value="company.company_name" 
 							 ng-disabled="addcompany" name="companyName" ng-class="{submitting:addLead.companyName.$error.required && addLead.companyName.$touched &&  !leadproj.addCompanyName }"
 							 required>
 								<option value="" default selected>Select the Company</option>
@@ -1335,7 +1335,7 @@
 							<div class="form-group spacinga">
 								<div class="form-inline">
 									<div class="form-group">
-										<select class="forInput form-control" name="industry" ng-model="leadproj.industry_id" ng-options="industry.industry_id as industry.industry in industryList" ng-class="{submitting:addLead.industry.$error.required && addLead.industry.$touched &&  !leadproj.companyID}"
+										<select class="forInput form-control" name="industry" ng-model="leadproj.industry_id" ng-options="industry.id as industry.industry for industry in industryList" ng-class="{submitting:addLead.industry.$error.required && addLead.industry.$touched &&  !leadproj.companyID}"
 										 required>
 											<option value="" default disabled selected>Select the Industry</option>
 										</select>
@@ -1384,7 +1384,7 @@
 						<div class="form-group">
 							<div class="form-inline">
 								<div class="form-group">
-									<select class="forInput form-control" name="salesPerson" ng-model="leadproj.salesPerson_id" ng-options="salesperson.salesperson_id as salesperson.name for salesperson in salespersonList" ng-class="{submitting:addLead.salesPerson.$error.required && addLead.salesPerson.$touched}"
+									<select class="forInput form-control" name="salesPerson" ng-model="leadproj.salesperson_id" ng-options="salesperson.salesperson_id as salesperson.name for salesperson in salespersonList track by salesperson.id" ng-class="{submitting:addLead.salesPerson.$error.required && addLead.salesPerson.$touched}"
 									 required>
 										<option value="" default disabled selected>Select the Person in Charge</option>
 									</select>
@@ -1407,7 +1407,7 @@
 						<div class="form-group spacinga">
 							<div class="form-inline">
 								<div class="form-group">
-									<select class="forInput form-control" ng-model="leadproj.id" name="product" ng-options="product.id as product.ptoduct_name for product in productList" ng-class="{submitting:addLead.product.$error.required && addLead.product.$touched}"
+									<select class="forInput form-control" ng-model="leadproj.product_id" name="product" ng-options="product.id as product.product_name for product in productList" ng-class="{submitting:addLead.product.$error.required && addLead.product.$touched}"
 									 required>
 										<option value="" default disabled selected>Select the Product</option>
 									</select>
