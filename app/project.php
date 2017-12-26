@@ -33,7 +33,7 @@ class Project extends ConfigureDB
     //Static Method calls
 
     public static function loadProjects(){
-        return static::with('company.industry','company.contacts','product')->orderBy('created_at','Desc')->get();
+        return static::with('company.industry','company.contacts','product','salesperson')->orderBy('created_at','Desc')->get();
     }
 
 

@@ -1,67 +1,65 @@
 
 var salesVisionServices = angular.module('salesVisionServices',['LocalStorageModule']);
 
-salesVisionServices.factory('userService', ['$http', 'localStorageService', function($http, localStorageService) {
-    
-        function checkIfLoggedIn() {
-    
-            if(localStorageService.get('token'))
-                return true;
-            else
-                return false;
-                
-        }
-      
-        function register(formdata, onSuccess, onError) {
-           
-            $http.post('/register',formdata)
-            .then(function(response) {
-    
-                localStorageService.set('token', response.data.token);
-                onSuccess(response);
-    
-            }, function(response) {
-    
-                onError(response);
-    
-            });
-    
-        }
+    salesVisionServices.factory('userService', ['$http', 'localStorageService', function($http, localStorageService) {
         
-        function forgotPassword(formdata, onSuccess,onError){
-            $http.post('/password/email',formdata)
-            .then(function(response){
-                onSuccess(response);
-            },function(response){
-                onError(response);
-            });
-        }
+            function checkIfLoggedIn() {
+        
+                if(localStorageService.get('token'))
+                    return true;
+                else
+                    return false;
+                    
+            }
+        
+            function register(formdata, onSuccess, onError) {
+            
+                $http.post('/register',formdata)
+                .then(function(response) {
+        
+                    localStorageService.set('token', response.data.token);
+                    onSuccess(response);
+        
+                }, function(response) {
+        
+                    onError(response);
+        
+                });
+        
+            }
+            
+            function forgotPassword(formdata, onSuccess,onError){
+                $http.post('/password/email',formdata)
+                .then(function(response){
+                    onSuccess(response);
+                },function(response){
+                    onError(response);
+                });
+            }
 
-        function resetPassword(){
-            $http.post('/password/reset',formdata)
-            .then(function(response){
-                onSuccess(response);
-            },function(response){
-                onError(response);
-            });
-        }
+            function resetPassword(){
+                $http.post('/password/reset',formdata)
+                .then(function(response){
+                    onSuccess(response);
+                },function(response){
+                    onError(response);
+                });
+            }
 
-    
-        function getCurrentToken(){
-            return localStorageService.get('token');
-        }
-    
-        return {
-            checkIfLoggedIn: checkIfLoggedIn,
-            register: register,
-            forgotPassword: forgotPassword,
-            resetPassword: resetPassword,
-            getCurrentToken: getCurrentToken
-        }
-    
+        
+            function getCurrentToken(){
+                return localStorageService.get('token');
+            }
+        
+            return {
+                checkIfLoggedIn: checkIfLoggedIn,
+                register: register,
+                forgotPassword: forgotPassword,
+                resetPassword: resetPassword,
+                getCurrentToken: getCurrentToken
+            }
+        
     }]);
-
-
 
     salesVisionServices.factory('projectService', ['$http', function($http) {
         function getProjects(onSuccess,onError){
@@ -123,7 +121,7 @@ salesVisionServices.factory('userService', ['$http', 'localStorageService', func
             $http.get('api/settings')
             .then(function(response){
                 onSuccess(response);
-            },function(){
+            },function(response){
                 onError(response);
             });
         }
@@ -159,5 +157,135 @@ salesVisionServices.factory('userService', ['$http', 'localStorageService', func
             create:create,
             deleteIndustry:deleteIndusty,
             deleteProduct:deleteProduct
+        }
+    }]);
+
+    salesVisionServices.factory('companyService',['$http',function($http){
+        function showCompany(onSuccess,onError){
+            $http.get('api/company')
+            .then(function(response){
+                onSuccess(response);
+            },function(response){
+                onError(response);
+            });
+        }
+
+        function updateCompany(copany_id,onSuccess,onError){
+            $http.put("api/company/{{company_id}}")
+            .then(function(response){
+                onSuccess(response);
+            },function(response){
+                onError(response);
+            });
+        }
+
+        function deleteCompany(company_id,onSuccess,onError){
+            $http.delete("api/company/{{company_id}}")
+            .then(function(response){
+                onSuccess(response);
+            },function(response){
+                onError(response);
+            });
+        }
+
+        function showContact(onSuccess,onError){
+            $http.get("api/contact")
+            .then(function(response){
+                onSuccess(response);
+            },function(response){
+                onError(response);
+            });
+        }
+
+        function updatecontact(contact_id,onSuccess,onError){
+            $http.put("api/contact/{{contact_id}}")
+            .then(function(response){
+                onSuccess(response);
+            },function(response){
+                onError(response);
+            });
+        }   
+        
+        function deleteContact(contact_id,onSuccess,onError){
+            $http.delete("api/contact/{{contact_id}}")
+            .then(function(response){
+                onSuccess(response);
+            },function(response){
+                onError(response);
+            });
+        }
+
+        return {
+            showCompany:showCompany,
+            updateCompany:updateCompany,
+            deleteCompany:deleteCompany,
+            showContact:showContact,
+            updateContact:updatecontact,
+            deleteContact:deleteContact
+        }
+    }]);
+
+    salesVisionServices.factory('salesService',['$http',function($http){
+       
+        function showSales(onSuccess,onError){
+            $http.get('api/salesperson')
+            .then(function(response){
+                onSuccess(response);
+            },function(response){
+                onError(response);
+            });
+        }
+
+        function updateSales(sales_id,onSuccess,onError){
+            $http.put("api/salesperson/{{sales_id}}")
+            .then(function(response){
+                onSuccess(response);
+            },function(response){
+                onError(response);
+            });
+        }
+
+        function deleteSales(sales_id,onSuccess,onError){
+            $http.delete("api/salesperson/{{sales_id}}")
+            .then(function(response){
+                onSuccess(response);
+            },function(response){
+                onError(response);
+            });
+        }
+
+        function createSlaes(formdata,onSuccess,onError){
+            $http.post('api/salesperson',formdata)
+            .then(function(response){
+                onSuccess(response);
+            },function(response){
+                onError(response);
+            });
+        }
+
+        function editSales(sales_id,onSuccess,onError){
+            $http.get("api/salesperson/{{sales_id}}/edit")
+            .then(function(response){
+                onSuccess(response);
+            },function(response){
+                onError(response);
+            });
+        }    
+        return {
+            showSales:showSales,
+            createSales:createSales,
+            editSales:editSales,
+            updateSales:updateSales,
+            deleteSales:deleteSales
+        }
+    }]);
+
+    salesVisionServices.factory('dashboardService',['$http',function($http){
+        function showDash(){
+
+        }
+
+        return {
+            showDash:shoeDash
         }
     }]);
