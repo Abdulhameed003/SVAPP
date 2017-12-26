@@ -189,7 +189,7 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
         }
 
         function showContact(onSuccess,onError){
-            $http.get("api/contact")
+            $http.get('api/contact')
             .then(function(response){
                 onSuccess(response);
             },function(response){

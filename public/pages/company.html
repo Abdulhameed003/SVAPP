@@ -33,7 +33,7 @@
                         <th>Website</th>
                         <th>Phone</th>
                         <th>Industry</th>
-                        <th style="width:400px;">Address</th>
+                      <th>Total Projects</th>
                     </tr>
 
                 </thead>
@@ -41,7 +41,7 @@
                     <tr class="paginationclass" ng-repeat="company in (filteredRows4 = (rows4| orderBy:predicate:reverse | filter:searchKeyword | pagination: curPage * pageSize | limitTo: pageSize))">
                         <td style="text-align:right;">
                             <div style="float:left;">
-                                <input type="checkbox" name="rowID" class="squaredFour" checklist-model="companytable.companylist" checklist-value="company.No"
+                                <input type="checkbox" name="rowID" class="squaredFour" checklist-model="companytable.companylist" checklist-value="company.id"
                                     style="position:relative;top:-1px;" />
                                 <a id="companyrowedit" href="#"  ng-click="openEditcomp('sm',company)">
                                     <span class="fa fa-pencil-square-o" style="font-size:19px;color:#D32F2F ;position:relative;top:-2px;margin-left:3px;" popover="Edit this Company"
@@ -52,14 +52,14 @@
                                         popover="Delete this company" popover-trigger="mouseenter" popover-placement="right"></span>
                                 </a>
                             </div>
-                            {{company.No}}
+                            {{company.id}}
                         </td>
-                        <td>{{company.companyName}}</td>
-                        <td>{{company.contactPerson}}</td>
+                        <td>{{company.company_name}}</td>
+                        <td>{{company.contacts[0].contact_name}}</td>
                         <td>{{company.website}}</td>
-                        <td>{{company.phone}}</td>
-                        <td>{{company.industry}}</td>
-                        <td>{{company.address}}</td>
+                        <td>{{company.office_num}}</td>
+                        <td>{{company.industry.industry}}</td>
+                        <td>{{company.projects_count}}</td>
                     </tr>
                 </tbody>
             </table>

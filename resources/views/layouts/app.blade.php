@@ -508,7 +508,7 @@
 								<label class="convertToblack">Remarks:</label>
 							</div>
 							<textarea class="forInput form-control" wrap="soft" rows="5" type="text" size="255" placeholder="Remarks" name="remarks"
-							 ng-model="editDealProj.remarks" />
+							 ng-model="editDealProj.remarks"></textarea>
 						</div>
 					</div>
 
@@ -517,7 +517,7 @@
 							<div>
 								<label class="convertToblack">PO-Number:</label>
 							</div>
-							<input class="forInput form-control" id="ponumber" type="text" placeholder="PO-Number" name="ponumber" ng-model="editDealProj.po_number"
+							<input class="forInput form-control" id="ponumber" type="text" placeholder="PO-Number" name="ponumber" ng-model="editDealProj.po_num"
 							 ng-class="{submitting:((editDeal.ponumber.$error.required  || editDeal.ponumber.$error.pattern) && editDeal.ponumber.$touched)}"
 							 required restrict-to="[0-9]">
 							<div ng-messages="editDeal.ponumber.$error" class="errormainpage">
@@ -1074,10 +1074,7 @@
 							<div>
 								<label class="convertToblack">Company Name:</label>
 							</div>
-							<select class="forInput form-control" ng-model="editlostProj.company_name" ng-options="company.id as company.name for company in companies"
-							 ng-disabled="true">
-								<option value="" default disabled selected>Select the Company</option>
-							</select>
+							<input type="text" class="forInput form-control" ng-model="editlostProj.company_name" ng-disabled="true"/>
 						</div>
 						<div class="form-group">
 							<div>
@@ -1151,7 +1148,7 @@
 							<label class="convertToblack">Remarks:</label>
 						</div>
 						<textarea class="forInput form-control" wrap="soft" rows="5" type="text" size="255" placeholder="Remarks" ng-model="editlostProj.remarks"
-						/>
+						></textarea>
 					</div>
 				</div>
 

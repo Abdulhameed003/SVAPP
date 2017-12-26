@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Contact extends Model
+class Contact extends configureDB
 {
     public $table = 'contacts';
     protected $fillable = ['company_id','contact_name','contact_number','email','designation'];
