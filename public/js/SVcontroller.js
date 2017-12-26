@@ -498,17 +498,17 @@ var salesVisionControllers = angular.module('salesVisionControllers',[]);
 
                 //pagination
                 $scope.checkLength = function () {
-                    
-                            $scope.curPage = 0;
-                    
-                        };
-                    
-                        $scope.curPage = 0;
-                        $scope.pageSize = 11;
-                        $scope.numberOfPages = function () {
-                            return Math.ceil($scope.rows.length / $scope.pageSize);
-                       
-                        };
+            
+                    $scope.curPage = 0;
+            
+                };
+            
+                $scope.curPage = 0;
+                $scope.pageSize = 11;
+                $scope.numberOfPages = function () {
+                    return Math.ceil($scope.rows.length / $scope.pageSize);
+                
+                };
                     
         
                 $scope.checkboxRule1 = function (checkbox) {
@@ -928,15 +928,30 @@ var salesVisionControllers = angular.module('salesVisionControllers',[]);
 
     salesVisionControllers.controller('companyController', ['$scope', '$http','appService', function ($scope, $http, projectService) {
         
-    }]);
+    }]).filter('pagination', function () {
+        return function (input, start) {
+            start = +start;
+            return input.slice(start);
+        };
+    });
 
     salesVisionControllers.controller('contactController', ['$scope', '$http','appService', function ($scope, $http, projectService) {
         
-    }]);
+    }]).filter('pagination', function () {
+        return function (input, start) {
+            start = +start;
+            return input.slice(start);
+        };
+    });
 
     salesVisionControllers.controller('salesController', ['$scope', '$http','appService', function ($scope, $http, projectService) {
         
-    }]);
+    }]).filter('pagination', function () {
+        return function (input, start) {
+            start = +start;
+            return input.slice(start);
+        };
+    });
 
     salesVisionControllers.controller('settingsController', ['$scope', '$http','appService', function ($scope, $http, projectService) {
         
@@ -1984,73 +1999,73 @@ salesVisionControllers.controller('mainCtrl',['$scope','$location', function ($s
         ];
 
 
-    $scope.selectedItemChanged=function(){
+        $scope.selectedItemChanged=function(){
 
-        if( $scope.projectCat.catID != 1){
-            $scope.editLead.podate.$setUntouched();
-            $scope.editLead.podate.$setValidity();
-            $scope.editLead.podate.$setPristine();
-            $scope.editLead.ponumber.$setUntouched();
-            $scope.editLead.ponumber.$setValidity();
-            $scope.editLead.ponumber.$setPristine();
-            $scope.editLeadProj.ponumber='';
-            $scope.editLeadProj.podate='';
-        }
+            if( $scope.projectCat.catID != 1){
+                $scope.editLead.podate.$setUntouched();
+                $scope.editLead.podate.$setValidity();
+                $scope.editLead.podate.$setPristine();
+                $scope.editLead.ponumber.$setUntouched();
+                $scope.editLead.ponumber.$setValidity();
+                $scope.editLead.ponumber.$setPristine();
+                $scope.editLeadProj.ponumber='';
+                $scope.editLeadProj.podate='';
+            }
 
-        if( $scope.projectCat.catID != 0){
-                $scope.editLead.tender.$setUntouched();
-                $scope.editLead.tender.$setValidity();
-                $scope.editLead.tender.$setPristine();
-                $scope.editLead.statusID.$setUntouched();
-                $scope.editLead.statusID.$setValidity();
-                $scope.editLead.statusID.$setPristine();
-        }
+            if( $scope.projectCat.catID != 0){
+                    $scope.editLead.tender.$setUntouched();
+                    $scope.editLead.tender.$setValidity();
+                    $scope.editLead.tender.$setPristine();
+                    $scope.editLead.statusID.$setUntouched();
+                    $scope.editLead.statusID.$setValidity();
+                    $scope.editLead.statusID.$setPristine();
+            }
 
-        if( $scope.projectCat.catID != 2){
-                $scope.editLead.salesPerson.$setUntouched();
-                $scope.editLead.salesPersonr.$setValidity();
-                $scope.editLead.salesPerson.$setPristine();
-        
-        }
-        
+            if( $scope.projectCat.catID != 2){
+                    $scope.editLead.salesPerson.$setUntouched();
+                    $scope.editLead.salesPersonr.$setValidity();
+                    $scope.editLead.salesPerson.$setPristine();
+            
+            }
+            
 
-    };
+        };
 
- 
-    var original = angular.copy($scope.editLeadProj);
-    $scope.editLeadRow = function (form) {
-        /**call to update database */
-        if (form.$valid) {
-            projectService.updateProject($scope.editLeadProj,function(response){
-                if(response.status == 200){
-                    alert('Updated successfully');
-                }
-            },function(response){
-                alert('Error editting the project.');
-            });
-            $scope.editLeadProj = angular.copy(original);
-            $scope.editLead.$setPristine();
-            $scope.editLead.$setValidity();
-            $scope.editLead.$setUntouched();
+    
+        var original = angular.copy($scope.editLeadProj);
+        $scope.editLeadRow = function (form) {
+            /**call to update database */
+            if (form.$valid) {
+                projectService.updateProject($scope.editLeadProj,function(response){
+                    if(response.status == 200){
+                        alert('Updated successfully');
+                    }
+                },function(response){
+                    alert('Error editting the project.');
+                });
+                $scope.editLeadProj = angular.copy(original);
+                $scope.editLead.$setPristine();
+                $scope.editLead.$setValidity();
+                $scope.editLead.$setUntouched();
 
-        }
-        if (form.$invalid) {
+            }
+            if (form.$invalid) {
 
-            angular.forEach($scope.editLead.$error, function (field) {
-                angular.forEach(field, function (errorField) {
-                    errorField.$setTouched();
-                })
-            });
-        }
-    };
-
-
-    $scope.close = function () {
-        $modalInstance.dismiss('cancel');
-    };
+                angular.forEach($scope.editLead.$error, function (field) {
+                    angular.forEach(field, function (errorField) {
+                        errorField.$setTouched();
+                    })
+                });
+            }
+        };
 
 
-}]);
+        $scope.close = function () {
+            $modalInstance.dismiss('cancel');
+        };
+
+
+    }]);
 
 
 
