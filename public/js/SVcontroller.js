@@ -489,6 +489,8 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', fun
 }]);
 
 salesVisionControllers.controller('projectController', ['$scope', '$http', 'projectService', 'moment', function ($scope, $http, projectService, moment) {
+    var myE2 = angular.element(document.querySelector('#projnav'));
+    myE2.addClass('active');
     var category = "";
     var projectTitle = "";
     var projects = [];
@@ -987,6 +989,8 @@ salesVisionControllers.controller('projectController', ['$scope', '$http', 'proj
 });
 
 salesVisionControllers.controller('companyController', ['$scope', '$http', 'companyService', function ($scope, $http, companyService) {
+    var myE3 = angular.element(document.querySelector('#comnav'));
+    myE3.addClass('active');
     var companylist = [];
     companyService.showCompany(function (response) {
         if (response.status == 200 && response.data.length > 0) {
@@ -1029,6 +1033,8 @@ salesVisionControllers.controller('companyController', ['$scope', '$http', 'comp
 });
 
 salesVisionControllers.controller('contactController', ['$scope', '$http', 'companyService', function ($scope, $http, companyService) {
+    var myE4 = angular.element(document.querySelector('#contnav'));
+    myE4.addClass('active');
     var contacts = [];
     companyService.showContact(function (response) {
         if (response.status == 200 && response.data.length > 0) {
@@ -1070,6 +1076,8 @@ salesVisionControllers.controller('contactController', ['$scope', '$http', 'comp
 
 
 salesVisionControllers.controller('salesController', ['$scope', '$http', 'salesService', function ($scope, $http, salesService) {
+    var myE5 = angular.element(document.querySelector('#salesnav'));
+    myE5.addClass('active');
     var spersonlist = [];
     salesService.showSales(function (response) {
         if (response.status == 200 && response.data.length > 0) {
@@ -1149,12 +1157,19 @@ salesVisionControllers.controller('mainCtrl', ['$scope', '$location', function (
     $scope.$on('$viewContentLoaded', addCrudControls);
 
     var myEl = angular.element(document.querySelector('#dash'));
+    var myE2 = angular.element(document.querySelector('#projnav'));
+    var myE3 = angular.element(document.querySelector('#comnav'));
+    var myE4 = angular.element(document.querySelector('#contnav'));
+    var myE5 = angular.element(document.querySelector('#salesnav'));
 
 
     /**calling the project section */
     $scope.callProject = function () {
         // $scope.showprojecttable = true;
         myEl.removeClass('active');
+        myE3.removeClass('active');
+        myE4.removeClass('active');
+        myE5.removeClass('active');
         $scope.projectTitle = "Project Table: All Categories";
         $location.path('/project');
     };
@@ -1162,6 +1177,9 @@ salesVisionControllers.controller('mainCtrl', ['$scope', '$location', function (
     $scope.callCompany = function () {
 
         myEl.removeClass('active');
+        myE2.removeClass('active');
+        myE4.removeClass('active');
+        myE5.removeClass('active');
         $scope.projectTitle = "Companies Table";
         $location.path('/company');
     };
@@ -1169,12 +1187,18 @@ salesVisionControllers.controller('mainCtrl', ['$scope', '$location', function (
     $scope.callContact = function () {
 
         myEl.removeClass('active');
+        myE2.removeClass('active');
+        myE3.removeClass('active');
+        myE5.removeClass('active');
         $scope.projectTitle = "Contacts Table";
         $location.path('/contact');
     }
     /**calling the salesperson section */
     $scope.callSalesperson = function () {
         myEl.removeClass('active');
+        myE2.removeClass('active');
+        myE3.removeClass('active');
+        myE4.removeClass('active');
         $scope.projectTitle = "Sales Person Table";
         $location.path('/sales');
     }
@@ -1182,7 +1206,10 @@ salesVisionControllers.controller('mainCtrl', ['$scope', '$location', function (
 
     /**calling the dashboard section */
     $scope.callDashboard = function () {
-
+        myE5.removeClass('active');
+        myE2.removeClass('active');
+        myE3.removeClass('active');
+        myE4.removeClass('active');
         $location.path('/dashboard');
     }
 
@@ -2261,7 +2288,29 @@ salesVisionControllers.controller('forCloseEditcont', ['$scope', '$modalInstance
         contact_number: $modalInstance.contlist.contact_number,
         email: $modalInstance.contlist.email,
         designation: $modalInstance.contlist.designation
-    }
+    };
+
+    var original = angular.copy($scope.editcont);
+    $scope.postEditContact = function (form) {
+
+        if (form.$valid) {
+            alert('can submit');
+            $scope.editcont = angular.copy(original);
+            $scope.editContact.$setPristine();
+            $scope.editContact.$setValidity();
+            $scope.editContact.$setUntouched();
+
+        }
+        if (form.$invalid) {
+
+            angular.forEach($scope.editContact.$error, function (field) {
+                angular.forEach(field, function (errorField) {
+                    errorField.$setTouched();
+                })
+            });
+
+        }
+    };
 
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
@@ -2407,8 +2456,11 @@ salesVisionControllers.controller('forCloseMultiplecompdelete', ['$scope', '$mod
 salesVisionControllers.controller('forCloseEditpers', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
 
     $scope.editSperson = {
-        name: modalInstance.list.name,
-
+        name: $modalInstance.list.name,
+        phone_num: $modalInstance.list.phone_num,
+        email: $modalInstance.list.email,
+        salesperson_id:$modalInstance.list.salesperson_id,
+        position:$modalInstance.list.position
     }
 
     var original = angular.copy($scope.editSperson);

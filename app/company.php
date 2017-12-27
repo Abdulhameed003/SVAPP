@@ -21,7 +21,7 @@ class Company extends ConfigureDB
     }
 
     public function contacts(){
-        return $this->hasMany('App\Contact','id','company_id');
+        return $this->hasMany('App\Contact','company_id','id');
     }
 
     //Static Calls

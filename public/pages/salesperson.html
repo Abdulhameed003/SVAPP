@@ -20,8 +20,8 @@
                     <tr>
 
                         <th style="text-align:right;width:150px;"> No.
-                            <a href="#" ng-click="sort('No')" class="sortDir" ng-class="{ active: isSorted('No') }">&#x25B2;</a>
-                            <a href="#" ng-click="sort('-No')" class="sortDir" ng-class="{ active: isSorted('-No' ) }">&#x25BC;</a>
+                            <a href="#" ng-click="sort('id')" class="sortDir" ng-class="{ active: isSorted('id') }">&#x25B2;</a>
+                            <a href="#" ng-click="sort('-id')" class="sortDir" ng-class="{ active: isSorted('-id' ) }">&#x25BC;</a>
                         </th>
                         <th>ID</th>
                         <th>Name
@@ -58,7 +58,7 @@
                         <td>{{sperson.phone_num}}</td>
                         <td>{{sperson.email}}</td>
                         <td>{{sperson.position}}</td>
-                        <td>{{sperson.total}}</td>
+                        <td>{{sperson.projects_count}}</td>
 
                     </tr>
                 </tbody>

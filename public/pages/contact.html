@@ -26,8 +26,8 @@
 
                         <th>Company
 
-                            <a href="#" ng-click="sort('company_name')" class="sortDir" ng-class="{ active: isSorted('company_name' ) }">&#x25B2;</a>
-                            <a href="#" ng-click="sort('-company_name')" class="sortDir" ng-class="{ active: isSorted('-company_name' ) }">&#x25BC;</a>
+                            <a href="#" ng-click="sort('company.company_name')" class="sortDir" ng-class="{ active: isSorted('company.company_name' ) }">&#x25B2;</a>
+                            <a href="#" ng-click="sort('-company.company_name')" class="sortDir" ng-class="{ active: isSorted('-company.company_name' ) }">&#x25BC;</a>
                         </th>
                         <th>Name
 
@@ -55,14 +55,14 @@
                                         popover="Delete this contact" popover-trigger="mouseenter" popover-placement="right"></span>
                                 </a>
                             </div>
-                            {{contact.id}}
-                        </td>
+                        {{contact.id}} </td> 
                         <td>{{contact.company.company_name}}</td>
                         <td>{{contact.contact_name}}</td>
-                        <td>{{contact.contact_number}}</td>
                         <td>{{contact.email}}</td>
+                        <td>{{contact.contact_number}}</td>
                         <td>{{contact.designation}}</td>
-
+                        
+                        
                     </tr>
                 </tbody>
             </table>

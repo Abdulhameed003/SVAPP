@@ -27,8 +27,8 @@
 
                             <th>Company Name
 
-                                <a href="#" ng-click="sort('company_name')" class="sortDir" ng-class="{ active: isSorted('company_name' ) }">&#x25B2;</a>
-                                <a href="#" ng-click="sort('-company_name')" class="sortDir" ng-class="{ active: isSorted('-company_name' ) }">&#x25BC;</a>
+                                <a href="#" ng-click="sort('company.company_name')" class="sortDir" ng-class="{ active: isSorted('company.company_name' ) }">&#x25B2;</a>
+                                <a href="#" ng-click="sort('-company.company_name')" class="sortDir" ng-class="{ active: isSorted('-company.company_name' ) }">&#x25BC;</a>
                             </th>
                             <th ng-if="colContactPerson">Contact Person</th>
                             <th ng-if="colEmail">Email</th>
@@ -145,14 +145,14 @@
                         />
                         <label for="checkbox">Date</label>
                         <br>
-                        <div ng-show="filterForm.date">
+                        <div ng-show="filterForm.date" style="margin-left:15px;margin-top:10px;">
                             <div class="datepicker mainpagedatepicker" date-format="dd/MM/yyyy">
                                 <input class="maindateWidth form-control" ng-model="startdate" type="text" placeholder="Start date">
                                 <i class="fa fa-calendar fafaPosititionondatepicker1"></i>
                                 </input>
                             </div>
-                            <div class="datepicker mainpagedatepicker" date-format="dd/MM/yyyy">
-                                <input class="maindateWidth form-control" ng-model="enddate" type="text" placeholder="End date">
+                            <div class="datepicker mainpagedatepicker" style="margin-top:10px;" date-format="dd/MM/yyyy">
+                                <input class="maindateWidth form-control " ng-model="enddate" type="text" placeholder="End date">
                                 <i class="fa fa-calendar fafaPosititionondatepicker1"></i>
                                 </input>
                             </div>

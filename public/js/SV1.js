@@ -18,7 +18,7 @@ app.config(function($routeProvider,$locationProvider) {
         }).
         when('/sales', {
             templateUrl: 'pages/salesperson.html',
-            controller: 'mainCtrl'
+            controller: 'salesController'
         }).
         when('/dashboard', {
             templateUrl: 'pages/dashboard.html',
