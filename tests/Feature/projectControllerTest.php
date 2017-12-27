@@ -30,16 +30,20 @@ class projectControllerTest extends TestCase
     }
 
     public function test_project_page_display(){
-
-        $response = $this->actingAs($this->user)->withSession(['token'=>'testing12345'])->get('/project');
-        $response->assertViewIs('pages.project');
+        $industry = factory(App\Industry::class)->create();
+        $product=factory(App\Product::class)->create();
+        $company=factory(App\Company::class)->create(['industry_id'=>$industry->id]);
+        $project = factory(App\Project::class)->create(['company_id'=>$company->id,'product'=>$product->id]);
+       
+        $response = $this->actingAs($this->user)->withSession(['token'=>'testing12345'])->get('api/project');
+        var_dump($response->getContent());
+        $response->assertSee('project_category');
     
     }
 
     public function test_load_variables_for_project_creation(){
         $company= factory(App\Company::class,4)->create();
         $response = $this->actingAs($this->user)->get('api/project/create');
-        var_dump($response->getContent());
         $this->assertContains('company',$response->getContent());
         $this->assertContains('industry',$response->getContent());
         $this->assertContains('product',$response->getContent());
@@ -58,7 +62,6 @@ class projectControllerTest extends TestCase
         $product= factory(App\Product::class)->create(['product_name'=>'VPS']); 
 
         $data= ['company_name'=>$company->company_name,
-                'company_id'=>$company->company_id,
                 'website'=>$company->website,
                 'office_number'=>$company->office_num,
                 'industry'=>$industry->industry,
@@ -79,8 +82,8 @@ class projectControllerTest extends TestCase
         ]; 
           $response = $this->actingAs($this->user)->post('api/project',$data);
       
-        $this->assertDatabaseHas('projects',['company_id'=>$company->company_id],'mysql2');
-        $this->assertDatabaseHas('companies',['company_id'=>$company->company_id],'mysql2');
+        $this->assertDatabaseHas('projects',['id'=>'1'],'mysql2');
+        $this->assertDatabaseHas('companies',['id'=>'1'],'mysql2');
         $this->assertEquals('success',$response->getContent(),'Expected to return success');
       
 
@@ -88,12 +91,12 @@ class projectControllerTest extends TestCase
 
     public function test_if_project_is_stored_with_existing_company(){
         $project= factory(App\Project::class)->make();   
-        $company= factory(App\Company::class)->create(['company_id'=>'22222']);
+        $company= factory(App\Company::class)->create();
         $sales =factory(App\SalesPerson::class)->create(['salesperson_id'=>'1234567']);
         $product= factory(App\Product::class)->create(['product_name'=>'VPS']); 
 
         $data= [
-        'company_id'=>$company->company_id,
+        'company_name'=>$company->company_name,
         'salesperson_id'=>$sales->salesperson_id,
         'project_category'=>$project->project_category,
         'product'=>'VPS',
@@ -108,7 +111,7 @@ class projectControllerTest extends TestCase
         $response = $this->actingAs($this->user)->post('api/project',$data);
     
       $this->assertDatabaseHas('projects',['tender'=>'Dis is a new tender'],'mysql2');
-      $this->assertDatabaseHas('projects',['company_id'=>$company->company_id],'mysql2');
+      $this->assertDatabaseHas('projects',['company_id'=>$company->id],'mysql2');
       $this->assertEquals('success',$response->getContent(),'Expected to return success');
     }
 
@@ -122,7 +125,7 @@ class projectControllerTest extends TestCase
         $sproduct= factory(App\Product::class)->create(['product_name'=>'VPS']); 
 
         $data= ['company_name'=>$company->company_name,
-                'company_id'=>$company->company_id,
+                'company_name'=>$company->company_name,
                 'website'=>$company->website,
                 'office_number'=>$company->office_num,
                 'industry'=>$industry->industry,

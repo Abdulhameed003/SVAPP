@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Company extends ConfigureDB
 {
     public $table= 'companies';
-    protected $fillable = ['company_name','company_id','website','office_num','industry_id'];
+    protected $fillable = ['company_name','website','office_num','industry_id'];
     protected $connection = 'mysql2';
     //relationships
 
     public function projects(){
-        return $this->hasMany('App\Project','company_id','company_id');
+        return $this->hasMany('App\Project','company_id','id');
 
     }
 
@@ -21,7 +21,7 @@ class Company extends ConfigureDB
     }
 
     public function contacts(){
-        return $this->hasMany('App\Contact','company_id','company_id');
+        return $this->hasMany('App\Contact','company_id','id');
     }
 
     //Static Calls
