@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestSetup;
+use App;
 
 class salespersonControllerTest extends TestCase
 {
@@ -22,9 +23,12 @@ class salespersonControllerTest extends TestCase
     }
     
     public function test_salesperson_index_is_displayed()
-    {
-        $response = $this->actingAs($this->user)->get('/salesperson');
-        $response->assertViewIs('pages.salesperson');
+    {   
+        $sales=factory(App\SalesPerson::class)->create();
+        $project=factory(App\Project::class)->create(['salesperson_id'=>$sales->salesperson_id]);
+        $response = $this->actingAs($this->user)->get('api/salesperson');
+        var_dump($response->getContent());
+        $response->assertSee('salesperson_id');
 
     }
 
@@ -39,7 +43,7 @@ class salespersonControllerTest extends TestCase
                 'Salesperson_password'=>$sales->password
         ];
 
-        $response = $this->actingAs($this->user)->post("/salesperson",$data);
+        $response = $this->actingAs($this->user)->post("api/salesperson",$data);
         $this->assertDatabaseHas('salespersons',['name'=>$sales->name],'mysql2');
         $this->assertDatabaseHas('users',['email'=>$sales->email],'mysql');
     }
