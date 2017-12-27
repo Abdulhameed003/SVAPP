@@ -20,7 +20,7 @@ class SalesPersonController extends Controller
      */
     public function index()
     {
-        $salesperson = Salesperson::orderBy('name', 'asc')->get();
+        $salesperson = Salesperson::withCount('projects')->orderBy('name', 'asc')->get();
         return $salesperson;        
     }
 
