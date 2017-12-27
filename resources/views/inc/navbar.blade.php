@@ -5,10 +5,10 @@
         <img id="loginlogo" src="image/logo-salesvision (2).png" />
     </div>
     <nav class="bar">
-        <button type="button" class="btn btn-link mainbutton" ng-click="callProject()" style="position:absolute;top:3%;left:100px;">Projects</button>
-        <button type="button" class="btn btn-link mainbutton" style="position:absolute;top:3%;left:250px;" ng-click="callCompany()">Companies</button>
-        <button type="button" class="btn btn-link mainbutton" style="position:absolute;top:3%;left:400px;" ng-click="callContact()">Contacts</button>
-        <button type="button" class="btn btn-link mainbutton" style="position:absolute;top:3%;left:550px;" ng-click="callSalesperson()">Sales Persons</button>
+        <button type="button" class="btn btn-link mainbutton" ng-click="callProject()" style="position:absolute;top:3%;left:100px;" id="projnav">Projects</button>
+        <button type="button" class="btn btn-link mainbutton" style="position:absolute;top:3%;left:250px;" ng-click="callCompany()" id="comnav">Companies</button>
+        <button type="button" class="btn btn-link mainbutton" style="position:absolute;top:3%;left:400px;" ng-click="callContact()" id="contnav">Contacts</button>
+        <button type="button" class="btn btn-link mainbutton" style="position:absolute;top:3%;left:550px;" ng-click="callSalesperson()" id="salesnav">Sales Persons</button>
         <button type="button" class="btn btn-link mainbutton" style="position:absolute;top:3%;left:700px;" ng-click="callDashboard()"
             id="dash">Dashboard</button>
         

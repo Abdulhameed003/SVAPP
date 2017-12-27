@@ -233,7 +233,7 @@
 			<form id="chpassform" name="changepassformin" novalidate class="form-group">
 				<div class="modal-body">
 					<div class="form-group spacinga">
-						<input type="password" required name="useroldpass" ng-model="user.oldpassword" ng-class="{submitting: changepassformin.usernewpass.$error.required && changepassformin.usernewpass.$touched }"
+						<input type="password" required name="useroldpass" ng-model="user.oldpassword" ng-class="{submitting: changepassformin.useroldpass.$error.required && changepassformin.useroldpass.$touched }"
 						 class="forInput form-control" placeholder="Old Password">
 						<div class="errormainpage">
 							<div ng-show="changepassformin.useroldpass.$error.required" ng-if="changepassformin.useroldpass.$touched">Can't leave this empty.</div>
@@ -1486,16 +1486,14 @@
 							</div>
 						</div>
 
-						<div id="sub-right spacing">
+						<div class="sub-right spacing">
 							<textarea class="forInput form-control" wrap="soft" rows="5" ng-model="leadproj.remarks" type="text" size="255" placeholder="Remarks"></textarea>
 						</div>
 
 					</div>
 				</form>
 			</div>
-
-
-			<div class="modal-footer">
+			<div class="modal-footer" style="height:70px;">
 				<button type="submit" ng-click="postAddLeadForm(addLead)" class="button modalsubmit">Submit</button>
 			</div>
 		</div>

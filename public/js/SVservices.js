@@ -254,7 +254,7 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
             });
         }
 
-        function createSlaes(formdata,onSuccess,onError){
+        function createSales(formdata,onSuccess,onError){
             $http.post('api/salesperson',formdata)
             .then(function(response){
                 onSuccess(response);

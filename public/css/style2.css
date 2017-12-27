@@ -624,17 +624,13 @@ display:block !important;
 }
 
 
-._720kb-datepicker-calendar {
-width:200px;
+.mainpagedatepicker>._720kb-datepicker-calendar{
+width:260px;
 }
 
-
-
 .mainpagedatepicker{
-   
     margin-top: 6px;
     margin-left:16px;
-
 }
 .maindateWidth{
     width:260px;
