@@ -18,8 +18,7 @@ class DashboardController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $dbToConnect = ConfigureDB::ConfigureDBConnection('db_'.auth()->User()->company_id);
-        DB::connection($dbToConnect);
+       
     }
 
     /**
@@ -29,6 +28,8 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        $dbToConnect = ConfigureDB::ConfigureDBConnection('db_'.auth()->User()->company_id);
+        DB::connection($dbToConnect);
        $totalWonCase = totalWonCase();
        $total = totalRenewal();
 

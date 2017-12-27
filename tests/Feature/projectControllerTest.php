@@ -78,10 +78,11 @@ class projectControllerTest extends TestCase
                 'status'=>$project->status,
                 'tender'=>$project->tender,
                 'remark'=>$project->remarks,
-                'close_at'=>date('d-m-Y')
+                'close_at'=>date('3/5/3078'),
+                'start_date'=>date('3/5/2017')
         ]; 
           $response = $this->actingAs($this->user)->post('api/project',$data);
-      
+            var_dump($response->getContent());
         $this->assertDatabaseHas('projects',['id'=>'1'],'mysql2');
         $this->assertDatabaseHas('companies',['id'=>'1'],'mysql2');
         $this->assertEquals('success',$response->getContent(),'Expected to return success');
@@ -106,7 +107,9 @@ class projectControllerTest extends TestCase
         'status'=>$project->status,
         'tender'=>'Dis is a new tender',
         'remark'=>$project->remarks,
-        'close_at'=>date('d-m-Y')
+        'close_at'=>date('d-m-Y'),
+        'start_date'=>date('d/m/Y')
+        
         ];  
         $response = $this->actingAs($this->user)->post('api/project',$data);
     
@@ -144,7 +147,8 @@ class projectControllerTest extends TestCase
                 'remark'=>$project->remarks,
                 'close_at'=>date('d-m-Y'),
                 'po_number'=>$deal->po_num,
-                'po_date'=> $deal->po_date
+                'po_date'=> $deal->po_date,
+                'start_date'=>date('d/m/Y')
         ]; 
           $response = $this->actingAs($this->user)->post('api/project',$data);
       
@@ -180,7 +184,8 @@ class projectControllerTest extends TestCase
             'remark'=>'This is an update to the exixting project',
             'close_at'=>date('d-m-Y'),
             'po_number'=>$deal->po_num,
-            'po_date'=>date('d-m-Y')
+            'po_date'=>date('d-m-Y'),
+            'start_date'=>date('d/m/Y')
         ];
 
         $response = $this->actingAs($this->user)->put("api/project/{$project->id}",$data);
