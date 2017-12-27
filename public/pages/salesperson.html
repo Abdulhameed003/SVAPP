@@ -23,7 +23,7 @@
                             <a href="#" ng-click="sort('No')" class="sortDir" ng-class="{ active: isSorted('No') }">&#x25B2;</a>
                             <a href="#" ng-click="sort('-No')" class="sortDir" ng-class="{ active: isSorted('-No' ) }">&#x25BC;</a>
                         </th>
-
+                        <th>ID</th>
                         <th>Name
 
                             <a href="#" ng-click="sort('name')" class="sortDir" ng-class="{ active: isSorted('name' ) }">&#x25B2;</a>
@@ -51,10 +51,11 @@
                                         popover="Delete this Sales Person" popover-trigger="mouseenter" popover-placement="right"></span>
                                 </a>
                             </div>
-                            {{sperson.No}}
+                            {{sperson.id}}
                         </td>
+                        <td>{{sperson.salesperson_id}}</td>
                         <td>{{sperson.name}}</td>
-                        <td>{{sperson.phone}}</td>
+                        <td>{{sperson.phone_num}}</td>
                         <td>{{sperson.email}}</td>
                         <td>{{sperson.position}}</td>
                         <td>{{sperson.total}}</td>

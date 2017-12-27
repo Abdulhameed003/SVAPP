@@ -488,10 +488,17 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', fun
     };
 }]);
 
-salesVisionControllers.controller('projectController', ['$scope', '$http', 'projectService', function ($scope, $http, projectService) {
+salesVisionControllers.controller('projectController', ['$scope', '$http', 'projectService', 'moment', function ($scope, $http, projectService, moment) {
     var category = "";
     var projectTitle = "";
     var projects = [];
+    var onlylead = [];
+    var onlydeal = [];
+    var onlylostcase = [];
+    var startDate = "";
+    var endDate = "";
+    var daterangeprojects = [];
+
 
     projectService.getProjects(function (response) {
         if (response.status == 200 && response.data.length > 0) {
@@ -600,6 +607,7 @@ salesVisionControllers.controller('projectController', ['$scope', '$http', 'proj
             $scope.filterContent = function () {
 
                 if ($scope.filterForm.lead) {
+                    onlylead = [];
                     category = "lead";
                     $scope.projectTitle = "Project Table: Leads Category";
                     //$scope.showprojecttable = true;
@@ -622,9 +630,17 @@ salesVisionControllers.controller('projectController', ['$scope', '$http', 'proj
                     $scope.colPOnum = false;
                     $scope.colPOdate = false;
 
+                    angular.forEach(response.data, function (value, key) {
+                        if (value.project_category == "Lead") {
+                            onlylead.push(value);
+                        }
+                    });
+                    $scope.rows = onlylead;
+                    $scope.filteredRows = onlylead;
                 }
 
                 if ($scope.filterForm.deal) {
+                    onlydeal = [];
                     category = "deal";
                     $scope.projectTitle = "Project Table: Deals Category";
                     // $scope.showprojecttable = true;
@@ -646,10 +662,16 @@ salesVisionControllers.controller('projectController', ['$scope', '$http', 'proj
                     $scope.colRemarks = true;
                     $scope.colPOnum = true;
                     $scope.colPOdate = true;
-
-
+                    angular.forEach(response.data, function (value, key) {
+                        if (value.project_category == "Deal") {
+                            onlydeal.push(value);
+                        }
+                    });
+                    $scope.rows = onlydeal;
+                    $scope.filteredRows = onlydeal;
                 }
                 if ($scope.filterForm.lostCase) {
+                    onlylostcase = [];
                     category = "lostcase";
                     $scope.projectTitle = "Project Table: Lost Cases Category";
                     //$scope.showprojecttable = true;
@@ -671,7 +693,28 @@ salesVisionControllers.controller('projectController', ['$scope', '$http', 'proj
                     $scope.colPersonincharge = false;
                     $scope.colStatus = false;
                     $scope.colTender = false;
+                    angular.forEach(response.data, function (value, key) {
+                        if (value.project_category == "Lost case") {
+                            onlylostcase.push(value);
+                        }
+                    });
+                    $scope.rows = onlylostcase;
+                    $scope.filteredRows = onlylostcase;
+                }
 
+                if ($scope.filterForm.date) {
+                    // startDate = $scope.startdate;
+                    // endDate = $scope.enddate;
+
+                    angular.forEach($scope.rows, function (obj) {
+                        obj.created_at = moment(obj.created_at).format('DD/MM/YYYY');
+                        alert(obj.created_at);
+                        alert("yes");
+                        //alert(moment(obj.close_at).isBefore(startDate, 'days'));
+                        // if (moment(obj.close_at).isBefore(endDate, 'day')) {
+                        // daterangeprojects.push(obj);
+
+                    });
                 }
             };
 
@@ -703,6 +746,7 @@ salesVisionControllers.controller('projectController', ['$scope', '$http', 'proj
                 $scope.colStatus = false;
                 $scope.colTender = false;
                 $scope.colPOnum = false;
+                $scope.colPersonincharge = false;
                 $scope.colPOdate = false;
 
                 for (var i = 0; i < total; i++) {
@@ -784,144 +828,156 @@ salesVisionControllers.controller('projectController', ['$scope', '$http', 'proj
         } else if (response.data.length == 0) {
             alert('No project found!');
         }
-    }, function (response) {
-        alert('There was a problem getting the projects from the database');
-    });
-
-    $scope.projectTitle = "Project Table: All Categories";
 
 
-    $scope.setTabletoDefault = function () {
-        $scope.defaulttable = {
-            columns: [1]
-        };
-        if ((category != 'lead') && (category != 'deal')) {
-            $scope.colContactPerson = true;
-            $scope.colEmail = false;
-            $scope.colPhone = false;
-            $scope.colIndustry = true;
-            $scope.colProduct = true;
-            $scope.colValue = true;
-            $scope.colType = true;
-            $scope.colCategory = true;
-            $scope.colStartdate = true;
-            $scope.colClosingdate = true;
-            $scope.colSalesstage = true;
-            $scope.colLastupdate = true;
-            $scope.colRemarks = true;
-        }
-
-        if (category == 'lead') {
-            $scope.colContactPerson = true;
-            $scope.colEmail = false;
-            $scope.colPhone = false;
-            $scope.colIndustry = true;
-            $scope.colProduct = true;
-            $scope.colValue = true;
-            $scope.colType = true;
-            $scope.colCategory = true;
-            $scope.colStartdate = true;
-            $scope.colClosingdate = true;
-            $scope.colSalesstage = true;
-            $scope.colLastupdate = true;
-            $scope.colRemarks = true;
-            $scope.colStatus = true;
-            $scope.colPersonincharge = true;
-            $scope.colTender = true;
-        }
+        $scope.projectTitle = "Project Table: All Categories";
 
 
-        if (category == 'deal') {
-            $scope.colContactPerson = true;
-            $scope.colEmail = false;
-            $scope.colPhone = false;
-            $scope.colIndustry = true;
-            $scope.colProduct = true;
-            $scope.colValue = true;
-            $scope.colType = true;
-            $scope.colCategory = true;
-            $scope.colStartdate = true;
-            $scope.colClosingdate = true;
-            $scope.colSalesstage = true;
-            $scope.colLastupdate = true;
-            $scope.colRemarks = true;
-            $scope.colPOdate = true;
-            $scope.colPersonincharge = true;
-            $scope.colPOnum = true;
-        }
-
-    };
-
-    $scope.setTabletoDefault();
-
-    $scope.resetForm = function (id) {
-        if (id == 'filterForm')
-            $scope.filterForm = {};
-
-        if (id == 'columnForm')
+        $scope.setTabletoDefault = function () {
             $scope.defaulttable = {
                 columns: [1]
             };
-
-
-    }
-
-    $scope.resetDate = function () {
-        $scope.startdate = "";
-        $scope.enddate = "";
-    }
-
-    $scope.setDefault = function () {
-        category = "";
-        $scope.projectTitle = "Project Table: All Categories";
-        //$scope.showprojecttable = true;
-        $scope.colContactPerson = true;
-        $scope.colEmail = false;
-        $scope.colPhone = false;
-        $scope.colIndustry = true;
-        $scope.colProduct = true;
-        $scope.colValue = true;
-        $scope.colType = true;
-        $scope.colCategory = true;
-        $scope.colStartdate = true;
-        $scope.colClosingdate = true;
-        $scope.colSalesstage = true;
-        $scope.colLastupdate = true;
-        $scope.colRemarks = true;
-        $scope.colPOdate = false;
-        $scope.colPersonincharge = false;
-        $scope.colPOnum = false;
-        $scope.colStatus = false;
-        $scope.colTender = false;
-
-    };
-
-
-
-
-
-
-    $scope.update = function () {
-        projectService.updateProject($scope.project, function (response) {
-            if (response.data == 'success') {
-                alert('Project updated succesfully');
+            if ((category != 'lead') && (category != 'deal')) {
+                $scope.colContactPerson = true;
+                $scope.colEmail = false;
+                $scope.colPhone = false;
+                $scope.colIndustry = true;
+                $scope.colProduct = true;
+                $scope.colValue = true;
+                $scope.colType = true;
+                $scope.colCategory = true;
+                $scope.colStartdate = true;
+                $scope.colClosingdate = true;
+                $scope.colSalesstage = true;
+                $scope.colLastupdate = true;
+                $scope.colRemarks = true;
             }
-        }, function (response) {
-            var error = response.data;
-            alert(error);
-        });
-    };
 
-    $scope.delete = function () {
-        projectService.deleteProject($scope.project, function (response) {
-            if (response.status == 200) {
-                alert('project has been delete');
+            if (category == 'lead') {
+                $scope.colContactPerson = true;
+                $scope.colEmail = false;
+                $scope.colPhone = false;
+                $scope.colIndustry = true;
+                $scope.colProduct = true;
+                $scope.colValue = true;
+                $scope.colType = true;
+                $scope.colCategory = true;
+                $scope.colStartdate = true;
+                $scope.colClosingdate = true;
+                $scope.colSalesstage = true;
+                $scope.colLastupdate = true;
+                $scope.colRemarks = true;
+                $scope.colStatus = true;
+                $scope.colPersonincharge = true;
+                $scope.colTender = true;
             }
-        }, function (response) {
-            var error = response.data;
-            alert(error);
-        });
-    };
+
+
+            if (category == 'deal') {
+                $scope.colContactPerson = true;
+                $scope.colEmail = false;
+                $scope.colPhone = false;
+                $scope.colIndustry = true;
+                $scope.colProduct = true;
+                $scope.colValue = true;
+                $scope.colType = true;
+                $scope.colCategory = true;
+                $scope.colStartdate = true;
+                $scope.colClosingdate = true;
+                $scope.colSalesstage = true;
+                $scope.colLastupdate = true;
+                $scope.colRemarks = true;
+                $scope.colPOdate = true;
+                $scope.colPersonincharge = true;
+                $scope.colPOnum = true;
+            }
+
+        };
+
+        $scope.setTabletoDefault();
+
+        $scope.resetForm = function (id) {
+            if (id == 'filterForm')
+                $scope.filterForm = {};
+
+            if (id == 'columnForm')
+                $scope.defaulttable = {
+                    columns: [1]
+                };
+
+
+        }
+
+        $scope.resetDate = function () {
+            $scope.startdate = "";
+            $scope.enddate = "";
+        }
+
+        $scope.setDefault = function () {
+            category = "";
+            $scope.projectTitle = "Project Table: All Categories";
+            var showall = [];
+            var allprojects = [];
+            allprojects = response.data;
+            angular.forEach(allprojects, function (value, key) {
+
+                showall.push(value);
+
+            });
+            $scope.rows = showall;
+            $scope.filteredRows = showall;
+
+            //$scope.showprojecttable = true;
+            $scope.colContactPerson = true;
+            $scope.colEmail = false;
+            $scope.colPhone = false;
+            $scope.colIndustry = true;
+            $scope.colProduct = true;
+            $scope.colValue = true;
+            $scope.colType = true;
+            $scope.colCategory = true;
+            $scope.colStartdate = true;
+            $scope.colClosingdate = true;
+            $scope.colSalesstage = true;
+            $scope.colLastupdate = true;
+            $scope.colRemarks = true;
+            $scope.colPOdate = false;
+            $scope.colPersonincharge = false;
+            $scope.colPOnum = false;
+            $scope.colStatus = false;
+            $scope.colTender = false;
+
+        };
+
+
+
+
+
+
+        $scope.update = function () {
+            projectService.updateProject($scope.project, function (response) {
+                if (response.data == 'success') {
+                    alert('Project updated succesfully');
+                }
+            }, function (response) {
+                var error = response.data;
+                alert(error);
+            });
+        };
+
+        $scope.delete = function () {
+            projectService.deleteProject($scope.project, function (response) {
+                if (response.status == 200) {
+                    alert('project has been delete');
+                }
+            }, function (response) {
+                var error = response.data;
+                alert(error);
+            });
+        };
+    }, function (response) {
+        alert('There was a problem getting the projects from the database');
+    });
 
 }]).filter('pagination', function () {
     return function (input, start) {
@@ -1013,13 +1069,46 @@ salesVisionControllers.controller('contactController', ['$scope', '$http', 'comp
 });
 
 
-salesVisionControllers.controller('salesController', ['$scope', '$http', 'appService', function ($scope, $http, projectService) {
+salesVisionControllers.controller('salesController', ['$scope', '$http', 'salesService', function ($scope, $http, salesService) {
+    var spersonlist = [];
+    salesService.showSales(function (response) {
+        if (response.status == 200 && response.data.length > 0) {
+            this.spersonlist = response.data;
+            $scope.searchKeyword2 = '';
+            $scope.rows6 = this.spersonlist;
+            $scope.filteredRows6 = this.spersonlist;
 
-}]);
+            $scope.checkLength = function () {
 
-salesVisionControllers.controller('settingsController', ['$scope', '$http', 'appService', function ($scope, $http, projectService) {
+                $scope.curPage = 0;
 
-}]);
+            };
+
+            $scope.curPage = 0;
+            $scope.pageSize = 11;
+            $scope.numberOfPages = function () {
+                return Math.ceil($scope.rows6.length / $scope.pageSize);
+            };
+
+            $scope.spersontable = {
+                spersonlist: []
+            };
+
+
+
+        } else if (response.data.length == 0) {
+            alert('No contact found!');
+        }
+    }, function (response) {
+        alert('There was a problem getting the contacts from the database');
+    });
+}]).filter('pagination', function () {
+    return function (input, start) {
+        start = +start;
+        return input.slice(start);
+    };
+});
+
 
 /**Changepassword.html controller */
 
@@ -1109,35 +1198,6 @@ salesVisionControllers.controller('mainCtrl', ['$scope', '$location', function (
         return ($scope.predicate == predicate)
     }
 
-    var spersonlist = [{
-        No: '1',
-        name: 'Iulia',
-        phone: '',
-        email: '',
-        position: 'Business development manager',
-        total: '8'
-    }];
-
-    $scope.searchKeyword2 = '';
-    $scope.rows6 = spersonlist;
-    $scope.filteredRows6 = spersonlist;
-
-
-    $scope.checkLength = function () {
-
-        $scope.curPage = 0;
-
-    };
-
-    $scope.curPage = 0;
-    $scope.pageSize = 11;
-    $scope.numberOfPages = function () {
-        return Math.ceil($scope.rows6.length / $scope.pageSize);
-    };
-
-    $scope.spersontable = {
-        spersonlist: []
-    };
 
 }]).filter('pagination', function () {
     return function (input, start) {
@@ -1480,15 +1540,15 @@ salesVisionControllers.controller('MyControllerModal', ['$scope', '$modal', func
 salesVisionControllers.controller('forCloseLead', ['$scope', '$modalInstance', 'projectService', function ($scope, $modalInstance, projectService) {
 
     projectService.loadProjectData(function (response) {
-       
+
         $scope.companies = response.data.company;
         $scope.industryList = response.data.industry;
         $scope.productList = response.data.product;
-        $scope.salespersonList = response.data.salesperson;  
-     
-$scope.call=function(item){
-    alert(item);
-}
+        $scope.salespersonList = response.data.salesperson;
+
+        $scope.leadproj = {
+            project_category: "Lead"
+        };
 
 
 
@@ -1599,27 +1659,34 @@ $scope.call=function(item){
 
 salesVisionControllers.controller('forCloseDeal', ['$scope', '$modalInstance', 'projectService', function ($scope, $modalInstance, projectService) {
     projectService.loadProjectData(function (response) {
-        
-         $scope.companies = response.data.company;
-         $scope.industryList = response.data.industry;
-         $scope.productList = response.data.product;
-         $scope.salespersonList = response.data.salesperson;
-         $scope.types = [
-             {
-                 "id": "1",
-                 "name": "New Sale"
-             },
-             {
-                 "id": "2",
-                 "name": "Renewal"
-             }
- 
-         ];
- 
-     }, function (response) {
-         alert('No predefined data are set for industires, company and products');
-     });
- 
+
+        $scope.companies = response.data.company;
+        $scope.industryList = response.data.industry;
+        $scope.productList = response.data.product;
+        $scope.salespersonList = response.data.salesperson;
+
+        $scope.Dealproj = {
+            project_category: "Deal"
+        };
+
+        $scope.types = [
+            {
+                "id": "1",
+                "name": "New sales"
+            },
+            {
+                "id": "2",
+                "name": "Renewals"
+            }
+
+
+        ];
+
+
+    }, function (response) {
+        alert('No predefined data are set for industires, company and products');
+    });
+
 
     var original = angular.copy($scope.Dealproj);
     $scope.postAddDealForm = function (form) {
@@ -1795,142 +1862,122 @@ salesVisionControllers.controller('forCloseProduct', ['$scope', '$modalInstance'
 
 }]);
 
-salesVisionControllers.controller('forCloseEditlead', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
-    var statusid = "";
-    if ($modalInstance.leadproject.status == "In progress")
-        statusid = "1";
-    else if ($modalInstance.leadproject.status == "Successful")
-        statusid = "2";
-    else if ($modalInstance.leadproject.status == "Terminated")
-        statusid = "3";
+salesVisionControllers.controller('forCloseEditlead', ['$scope', '$modalInstance', 'projectService', function ($scope, $modalInstance, projectService) {
+    projectService.loadProjectData(function (response) {
 
-    var tenderid = "";
-    if ($modalInstance.leadproject.tender == "Yes")
-        tenderid = "0";
-    else if ($modalInstance.leadproject.tender == "No")
-        tenderid = "1";
-    else if ($modalInstance.leadproject.tender == "Possibly")
-        tenderid = "2";
+        $scope.productList = response.data.product;
+        $scope.salespersonList = response.data.salesperson;
 
-    var typeid = "";
-    if ($modalInstance.leadproject.project_type == "New sales")
-        typeid = "1";
-    else if ($modalInstance.leadproject.project_type == "Renewals")
-        typeid = "2";
-
-    $scope.editLeadProj = {
-        company_name: $modalInstance.leadproject.company.company_name,
-        project_type: typeid,
-        product_name: $modalInstance.leadproject.product.id,
-        value: $modalInstance.leadproject.value,
-        sales_stage: $modalInstance.leadproject.sales_stage,
-        created_at: $modalInstance.leadproject.created_at,
-        close_at: $modalInstance.leadproject.close_at,
-        status: statusid,
-        tender: tenderid,
-        remarks: $modalInstance.leadproject.remarks,
-        name: $modalInstance.leadproject.salesperson.id
-    };
+        $scope.editLeadProj = {
+            company_name: $modalInstance.leadproject.company.company_name,
+            project_type: $modalInstance.leadproject.project_type,
+            product: $modalInstance.leadproject.product.id,
+            value: $modalInstance.leadproject.value,
+            sales_stage: $modalInstance.leadproject.sales_stage,
+            created_at: $modalInstance.leadproject.created_at,
+            close_at: $modalInstance.leadproject.close_at,
+            status: $modalInstance.leadproject.status,
+            tender: $modalInstance.leadproject.tender,
+            remarks: $modalInstance.leadproject.remarks,
+            salesperson_id: $modalInstance.leadproject.salesperson.salesperson_id,
+            project_category: $modalInstance.leadproject.project_category
+        };
 
 
 
+        $scope.statuses = [
+            {
+                "id": "1",
+                "name": "In progress"
+            },
+            {
+                "id": "2",
+                "name": "Successfull"
+            },
+            {
+                "id": "3",
+                "name": "Terminated"
+            }
+
+
+        ];
+
+        $scope.types = [
+            {
+                "id": "1",
+                "name": "New sales"
+            },
+            {
+                "id": "2",
+                "name": "Renewals"
+            }
+
+        ];
 
 
 
-
-    $scope.statuses = [
+        $scope.cats = [{
+            "id": "0",
+            "name": "Lead"
+        },
         {
             "id": "1",
-            "name": "In progress"
+            "name": "Deal"
         },
         {
             "id": "2",
-            "name": "Successful"
-        },
-        {
-            "id": "3",
-            "name": "Terminated"
+            "name": "Lost case"
         }
 
+        ];
 
-    ];
-
-    $scope.types = [
-        {
-            "id": "1",
-            "name": "New sales"
-        },
-        {
-            "id": "2",
-            "name": "Renewals"
+        $scope.tenders = [{
+            name: 'Yes',
+            id: 0
+        }, {
+            name: 'No',
+            id: 1
+        }, {
+            name: 'Possibly',
+            id: 2
         }
-
-    ];
-
-    $scope.projectCat = {
-        "id": "0",
-
-    };
-
-    $scope.cats = [{
-        "id": "0",
-        "name": "Lead"
-    },
-    {
-        "id": "1",
-        "name": "Deal"
-    },
-    {
-        "id": "2",
-        "name": "Lost case"
-    }
-
-    ];
-
-    $scope.tenders = [{
-        name: 'Yes',
-        id: 0
-    }, {
-        name: 'No',
-        id: 1
-    }, {
-        name: 'Possibly',
-        id: 2
-    }
-    ];
+        ];
 
 
-    $scope.selectedItemChanged = function () {
+        $scope.selectedItemChanged = function () {
 
-        if ($scope.projectCat.catID != 1) {
-            $scope.editLead.podate.$setUntouched();
-            $scope.editLead.podate.$setValidity();
-            $scope.editLead.podate.$setPristine();
-            $scope.editLead.ponumber.$setUntouched();
-            $scope.editLead.ponumber.$setValidity();
-            $scope.editLead.ponumber.$setPristine();
-            $scope.editLeadProj.ponumber = '';
-            $scope.editLeadProj.podate = '';
-        }
+            if ($scope.editLeadProj.project_category != "Deal") {
+                $scope.editLead.podate.$setUntouched();
+                $scope.editLead.podate.$setValidity();
+                $scope.editLead.podate.$setPristine();
+                $scope.editLead.ponumber.$setUntouched();
+                $scope.editLead.ponumber.$setValidity();
+                $scope.editLead.ponumber.$setPristine();
+                $scope.editLeadProj.ponumber = '';
+                $scope.editLeadProj.podate = '';
+            }
 
-        if ($scope.projectCat.catID != 0) {
-            $scope.editLead.tender.$setUntouched();
-            $scope.editLead.tender.$setValidity();
-            $scope.editLead.tender.$setPristine();
-            $scope.editLead.statusID.$setUntouched();
-            $scope.editLead.statusID.$setValidity();
-            $scope.editLead.statusID.$setPristine();
-        }
+            if ($scope.editLeadProj.project_category != "Lead") {
+                $scope.editLead.tender.$setUntouched();
+                $scope.editLead.tender.$setValidity();
+                $scope.editLead.tender.$setPristine();
+                $scope.editLead.statusID.$setUntouched();
+                $scope.editLead.statusID.$setValidity();
+                $scope.editLead.statusID.$setPristine();
+            }
 
-        if ($scope.projectCat.catID != 2) {
-            $scope.editLead.salesPerson.$setUntouched();
-            $scope.editLead.salesPersonr.$setValidity();
-            $scope.editLead.salesPerson.$setPristine();
+            if ($scope.editLeadProj.project_category != "Lost case") {
+                $scope.editLead.salesPerson.$setUntouched();
+                $scope.editLead.salesPersonr.$setValidity();
+                $scope.editLead.salesPerson.$setPristine();
 
-        }
+            }
 
 
-    };
+        };
+    }, function (response) {
+        alert('No predefined data are set for industires, company and products');
+    });
 
 
     var original = angular.copy($scope.editLeadProj);
@@ -1970,39 +2017,42 @@ salesVisionControllers.controller('forCloseEditlead', ['$scope', '$modalInstance
 
 
 
-salesVisionControllers.controller('forCloseEditdeal', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
-    var typeid = "";
-    if ($modalInstance.dealproject.project_type == "New sales")
-        typeid = "1";
-    else if ($modalInstance.dealproject.project_type == "Renewals")
-        typeid = "2";
+salesVisionControllers.controller('forCloseEditdeal', ['$scope', '$modalInstance', 'projectService', function ($scope, $modalInstance, projectService) {
+    projectService.loadProjectData(function (response) {
+
+        $scope.productList = response.data.product;
+        $scope.salespersonList = response.data.salesperson;
 
 
-    $scope.editDealProj = {
-        company_name: $modalInstance.dealproject.company.company_name,
-        // salesperson_id:$modalInstance.dealproject.salesperson.id,
-        project_type: typeid,
-        //product:$modalInstance.dealproject.product.id,
-        value: $modalInstance.dealproject.value,
-        sales_stage: $modalInstance.dealproject.sales_stage,
-        remarks: $modalInstance.dealproject.remarks,
-        po_num: $modalInstance.dealproject.deal.po_num,
-        po_date: $modalInstance.dealproject.deal.po_date,
-        created_at: $modalInstance.dealproject.created_at,
-        close_at: $modalInstance.dealproject.close_at
-    }
+        $scope.editDealProj = {
+            company_name: $modalInstance.dealproject.company.company_name,
+            salesperson_id: $modalInstance.dealproject.salesperson.salesperson_id,
+            project_type: $modalInstance.dealproject.project_type,
+            product: $modalInstance.dealproject.product.id,
+            value: $modalInstance.dealproject.value,
+            sales_stage: $modalInstance.dealproject.sales_stage,
+            remarks: $modalInstance.dealproject.remarks,
+            po_num: $modalInstance.dealproject.deal.po_num,
+            po_date: $modalInstance.dealproject.deal.po_date,
+            created_at: $modalInstance.dealproject.created_at,
+            close_at: $modalInstance.dealproject.close_at
+        };
 
-    $scope.types = [
-        {
-            "id": "1",
-            "name": "New sales"
-        },
-        {
-            "id": "2",
-            "name": "Renewals"
-        }
+        $scope.types = [
+            {
+                "id": "1",
+                "name": "New sales"
+            },
+            {
+                "id": "2",
+                "name": "Renewals"
+            }
 
-    ];
+        ];
+    }, function (response) {
+        alert('No predefined data are set for industires, company and products');
+    });
+
     var original = angular.copy($scope.editDealProj);
     $scope.editDealRow = function (form) {
         /**call to update database */
@@ -2038,35 +2088,37 @@ salesVisionControllers.controller('forCloseEditdeal', ['$scope', '$modalInstance
 }]);
 
 
-salesVisionControllers.controller('forCloseEditlostcase', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
-    var typeid = "";
-    if ($modalInstance.lostcaseproject.project_type == "New sales")
-        typeid = "1";
-    else if ($modalInstance.lostcaseproject.project_type == "Renewals")
-        typeid = "2";
+salesVisionControllers.controller('forCloseEditlostcase', ['$scope', '$modalInstance', 'projectService', function ($scope, $modalInstance, projectService) {
+    projectService.loadProjectData(function (response) {
 
-    $scope.editlostProj = {
-        company_name: $modalInstance.lostcaseproject.company.company_name,
-        project_type: typeid,
-        //product: $modalInstance.lostcaseproject.product.product_name,
-        value: $modalInstance.lostcaseproject.value,
-        created_at: $modalInstance.lostcaseproject.created_at,
-        close_at: $modalInstance.lostcaseproject.close_at,
-        remarks: $modalInstance.lostcaseproject.remarks
-    }
+        $scope.productList = response.data.product;
 
 
-    $scope.types = [
-        {
-            "id": "1",
-            "name": "New sales"
-        },
-        {
-            "id": "2",
-            "name": "Renewals"
+        $scope.editlostProj = {
+            company_name: $modalInstance.lostcaseproject.company.company_name,
+            project_type: $modalInstance.lostcaseproject.project_type,
+            product: $modalInstance.lostcaseproject.product.id,
+            value: $modalInstance.lostcaseproject.value,
+            created_at: $modalInstance.lostcaseproject.created_at,
+            close_at: $modalInstance.lostcaseproject.close_at,
+            remarks: $modalInstance.lostcaseproject.remarks
         }
 
-    ];
+
+        $scope.types = [
+            {
+                "id": "1",
+                "name": "New sales"
+            },
+            {
+                "id": "2",
+                "name": "Renewals"
+            }
+
+        ];
+    }, function (response) {
+        alert('No predefined data are set for industires, company and products');
+    });
 
     var original = angular.copy($scope.editLostProj);
     $scope.editLostRow = function (form) {
@@ -2131,6 +2183,7 @@ salesVisionControllers.controller('forCloseContact', ['$scope', '$modalInstance'
 */
 
 salesVisionControllers.controller('forCloseSalesperson', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+
     var original = angular.copy($scope.Sperson);
     $scope.postAddSalesPerson = function (form) {
 
@@ -2202,7 +2255,13 @@ salesVisionControllers.controller('forCloseMultipledeleteErrormessage', ['$scope
 
 /**contact modal controllers */
 salesVisionControllers.controller('forCloseEditcont', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
-
+    $scope.editcont = {
+        company_name: $modalInstance.contlist.company.company_name,
+        contact_name: $modalInstance.contlist.contact_name,
+        contact_number: $modalInstance.contlist.contact_number,
+        email: $modalInstance.contlist.email,
+        designation: $modalInstance.contlist.designation
+    }
 
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
@@ -2266,19 +2325,23 @@ salesVisionControllers.controller('forCloseMultiplecontdelete', ['$scope', '$mod
 }]);
 
 /**company modal controllers */
-salesVisionControllers.controller('forCloseEditcomp', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+salesVisionControllers.controller('forCloseEditcomp', ['$scope', '$modalInstance', 'settingService', function ($scope, $modalInstance, settingService) {
+    settingService.showSettings(function (response) {
+        $scope.industryList = response.data.industry;
+        $scope.editcom = {
+            company_name: $modalInstance.comlist.company_name,
+            website: $modalInstance.comlist.website,
+            office_num: $modalInstance.comlist.office_num,
+            industry_id: $modalInstance.comlist.industry.id
+        }
 
-    $scope.editcom = {
-        company_name: $modalInstance.comlist.company_name,
-        website: $modalInstance.comlist.website,
-        office_num: $modalInstance.comlist.office_num,
-        //industry:$modalInstance.comlist.industry.industry
-    }
-    // modalInstance.comlist
-    $scope.close = function () {
-        $modalInstance.dismiss('cancel');
-    };
 
+        $scope.close = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    }, function (response) {
+        alert('No predefined data are set for industires, company and products');
+    });
 
 }]);
 
@@ -2342,6 +2405,12 @@ salesVisionControllers.controller('forCloseMultiplecompdelete', ['$scope', '$mod
 
 /**company modal controllers */
 salesVisionControllers.controller('forCloseEditpers', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+
+    $scope.editSperson = {
+        name: modalInstance.list.name,
+
+    }
+
     var original = angular.copy($scope.editSperson);
     $scope.editPersRow = function (form) {
         /**call to update database */

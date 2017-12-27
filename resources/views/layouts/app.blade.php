@@ -49,6 +49,9 @@
 	<script src="{{asset('js/jquery.js')}}"></script>
 	<script src="{{asset('js/bootstrap.js')}}"></script>
 	<script src="{{asset('js/custom.js')}}"></script>
+	<script src="{{asset('js/moment.js')}}"></script>
+	<script src="{{asset('js/angular-moment.js')}}"></script>
+
 	<style>
 		body {
 			background-size: cover;
@@ -319,7 +322,7 @@
 						<div class="labelbottomspace">
 							<lable class="convertToblack">Industry:</label>
 						</div>
-						<select class="forInput form-control" name="industry" ng-model="editcom.industry_id" ng-options="industry.industry_id as industry.industry for industry in industryList"
+						<select class="forInput form-control" name="industry" ng-model="editcom.industry_id" ng-options="industry.id as industry.industry for industry in industryList"
 						 ng-class="{submitting:editcompany.industry.$error.required && editcompany.industry.$touched}" required>
 							<option value="" default disabled selected>Select the Industry</option>
 						</select>
@@ -454,7 +457,7 @@
 							<div>
 								<label class="convertToblack">Project Type:</label>
 							</div>
-							<select class="forInput form-control" ng-model="editDealProj.project_type" name="typeID" ng-options="type.id as type.name for type in types"
+							<select class="forInput form-control" ng-model="editDealProj.project_type" name="typeID" ng-options="type.name as type.name for type in types"
 							 ng-class="{submitting:editDeal.typeID.$error.required && editDeal.typeID.$touched}" required>
 								<option value="" default disabled selected>Select the Type of Project</option>
 							</select>
@@ -467,7 +470,7 @@
 							<div>
 								<label class="convertToblack">Product:</label>
 							</div>
-							<select class="forInput form-control" ng-model="editDealProj.id" ng-options="product.id as product.product_name for product in productList"
+							<select class="forInput form-control" ng-model="editDealProj.product" ng-options="product.id as product.product_name for product in productList"
 							 name="product" ng-class="{submitting:editDeal.product.$error.required && editDeal.product.$touched}" required>
 								<option value="" default disabled selected>Select the Product</option>
 							</select>
@@ -600,9 +603,9 @@
 					<h4> Please fill in the form to add new Deal.</h4>
 					<div class="SectionBox">
 						<h5>Company and Contact:</h5>
-						<input type="hidden" ng-model="Dealproj.category" />
+						<input type="hidden" ng-model="Dealproj.project_category" />
 						<div class="form-group">
-							<select class="forInput form-control" id="companyselect"  ng-model="Dealproj.company_id"  ng-options="company.id as company.company_name for company in companies"
+							<select class="forInput form-control" id="companyselect"  ng-model="Dealproj.company_name"  ng-options="company.company_name as company.company_name for company in companies track by company.id"
 							 ng-disabled="addcompany" name="companyName" ng-class="{submitting:addDeal.companyName.$error.required && addDeal.companyName.$touched &&  !Dealproj.addCompanyName }"
 							 required>
 								<option value="" default selected>Select the Company</option>
@@ -661,7 +664,7 @@
 							<div class="form-group spacinga">
 								<div class="form-inline">
 									<div class="form-group">
-										<select class="forInput form-control" name="industry" ng-model="Dealproj.industry_id" ng-options="industry.industry_id as industry.industry for industry in industryList"
+										<select class="forInput form-control" name="industry" ng-model="Dealproj.industry_id" ng-options="industry.id as industry.industry for industry in industryList"
 										 ng-class="{submitting:addDeal.industry.$error.required && addDeal.industry.$touched &&  !Dealproj.companyID}" required>
 											<option value="" default disabled selected>Select the Industry</option>
 										</select>
@@ -709,7 +712,7 @@
 						<div class="form-group">
 							<div class="form-inline">
 								<div class="form-group">
-									<select class="forInput form-control" name="salesPerson" ng-model="Dealproj.salesperson_id" ng-options="salesperson.salesperson_id as salesperson.name for salesperson in salespersonList" ng-class="{submitting:addDeal.salesPerson.$error.required && addDeal.salesPerson.$touched}"
+									<select class="forInput form-control" name="salesPerson" ng-model="Dealproj.salesperson_id" ng-options="salesperson.salesperson_id as salesperson.name for salesperson in salespersonList track by salesperson.id" ng-class="{submitting:addDeal.salesPerson.$error.required && addDeal.salesPerson.$touched}"
 									 required>
 										<option value="" default disabled selected>Select the Person in Charge</option>
 									</select>
@@ -718,7 +721,7 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<select class="forInput form-control" ng-model="Dealproj.project_type" name="typeID" ng-options="type.id as type.name for type in types"
+									<select class="forInput form-control" ng-model="Dealproj.project_type" name="typeID" ng-options="type.name as type.name for type in types track by type.id"
 									 ng-class="{submitting:addDeal.typeID.$error.required && addDeal.typeID.$touched}" required>
 										<option value="" default disabled selected>Select the Type of Project</option>
 									</select>
@@ -731,7 +734,7 @@
 						<div class="form-group spacinga">
 							<div class="form-inline">
 								<div class="form-group">
-									<select class="forInput form-control" ng-model="Dealproj.id" ng-options="product.id as product.product_name for product in productList"
+									<select class="forInput form-control" ng-model="Dealproj.product_id" ng-options="product.id as product.product_name for product in productList"
 									 name="product" ng-class="{submitting:addDeal.product.$error.required && addDeal.product.$touched}" required>
 										<option value="" default disabled selected>Select the Product</option>
 									</select>
@@ -867,7 +870,7 @@
 							<div class="labelbottomspace">
 								<lable class="convertToblack">Project Type:</label>
 							</div>
-							<select class="forInput form-control" ng-model="editLeadProj.project_type" name="typeID" ng-options="type.id as type.name for type in types"
+							<select class="forInput form-control" ng-model="editLeadProj.project_type" name="typeID" ng-options="type.name as type.name for type in types"
 							 ng-class="{submitting:editLead.typeID.$error.required && editLead.typeID.$touched}" required>
 								<option value="" default disabled selected>Select the Type of Project</option>
 							</select>
@@ -881,7 +884,7 @@
 							<div class="labelbottomspace">
 								<lable class="convertToblack">Product:</label>
 							</div>
-							<select class="forInput form-control" ng-model="editLeadProj.id" ng-options="product.id as product.product_name for product in productList"
+							<select class="forInput form-control" ng-model="editLeadProj.product" ng-options="product.id as product.product_name for product in productList"
 							 name="product" ng-class="{submitting:editLead.product.$error.required && editLead.product.$touched}" required>
 								<option value="" default disabled selected>Select the Product</option>
 							</select>
@@ -919,7 +922,7 @@
 							<div class="labelbottomspace">
 								<lable class="convertToblack">Project Category:</label>
 							</div>
-							<select class="forInput form-control" id="ponumber" ng-model="projectCat.id" ng-options="cat.id as cat.name for cat in cats"
+							<select class="forInput form-control" id="ponumber" ng-model="editLeadProj.project_category" ng-options="cat.name as cat.name for cat in cats"
 							 ng-change="selectedItemChanged()">
 								<option value="" default disabled selected>Select the Category</option>
 							</select>
@@ -954,7 +957,7 @@
 						</div>
 					</div>
 
-					<div ng-show="projectCat.category =='1'">
+					<div ng-show="editLeadProj.project_category =='Deal'">
 						<div class="form-inline spacinga">
 							<div class="form-group">
 								<div class="labelbottomspace">
@@ -987,13 +990,13 @@
 					</div>
 
 
-					<div ng-hide="projectCat.category !='0'">
+					<div ng-hide="editLeadProj.project_category !='Lead'">
 						<div class="form-inline spacinga">
 							<div class="form-group">
 								<div class="labelbottomspace">
 									<lable class="convertToblack">Status:</label>
 								</div>
-								<select class="forInput form-control" name="statusID" ng-model="editLeadProj.status" ng-options="status.id as status.name for status in statuses"
+								<select class="forInput form-control" name="statusID" ng-model="editLeadProj.status" ng-options="status.name as status.name for status in statuses"
 								 ng-class="{submitting:editLead.statusID.$error.required && editLead.statusID.$touched}" required>
 									<option value="" default disabled selected>Select the Status</option>
 								</select>
@@ -1007,7 +1010,7 @@
 								<div class="labelbottomspace">
 									<label class="convertToblack">Tender:</label>
 								</div>
-								<select class="forInput form-control" name="tender" ng-model="editLeadProj.tender" ng-options="tender.id as tender.name for tender in tenders"
+								<select class="forInput form-control" name="tender" ng-model="editLeadProj.tender" ng-options="tender.name as tender.name for tender in tenders"
 								 ng-class="{submitting:editLead.tender.$error.required && editLead.tender.$touched}" required>
 									<option value="" default disabled selected>Select the Tender</option>
 								</select>
@@ -1026,7 +1029,7 @@
 						</div>
 					</div>
 
-					<div class="spacinga" ng-hide="projectCat.category =='2'">
+					<div class="spacinga" ng-hide="editLeadProj.project_category =='Lost case'">
 						<div id="sub-rightedit">
 							<div class="form-group">
 								<div class="labelbottomspace">
@@ -1080,7 +1083,7 @@
 							<div>
 								<label class="convertToblack">Project Type:</label>
 							</div>
-							<select class="forInput form-control" ng-model="editlostProj.project_type" name="typeID" ng-options="type.id as type.name for type in types"
+							<select class="forInput form-control" ng-model="editlostProj.project_type" name="typeID" ng-options="type.name as type.name for type in types"
 							 ng-class="{submitting:editlostcase.typeID.$error.required && editlostcase.typeID.$touched}" required>
 								<option value="" default disabled selected>Select the Type of Project</option>
 							</select>
@@ -1095,7 +1098,7 @@
 							<div>
 								<label class="convertToblack">Product:</label>
 							</div>
-							<select class="forInput form-control" ng-model="editlostProj.product" name="product" ng-class="{submitting:editlostcase.product.$error.required && editlostcase.product.$touched}"
+							<select class="forInput form-control" ng-model="editlostProj.product" name="product" ng-options="product.id as product.product_name for product in productList" ng-class="{submitting:editlostcase.product.$error.required && editlostcase.product.$touched}"
 							 required>
 								<option value="" default disabled selected>Select the Product</option>
 							</select>
@@ -1178,7 +1181,7 @@
 					</div>
 					<div ng-repeat="prod in productList" class="spacing">
 						<div style="background-color:rgb(227, 227, 228);" class="listtext">
-							@{{prod.product}}
+							@{{prod.product_name}}
 							<a href="#" ng-click="deleteSelected($index,prod)">
 								<span class="glyphicon glyphicon-remove" style="color:#D32F2F;font-size:13px;float:right;"></span>
 						</div>
@@ -1273,7 +1276,7 @@
 					<h4> Please fill in the form to add new lead.</h4>
 					<div class="SectionBox">
 						<h5>Company and Contact:</h5>
-						<input type="hidden" ng-model="leadproj.category" />
+						<input type="hidden" ng-model="leadproj.project_category" />
 						<div class="form-group">
 							<select class="forInput form-control" id="companyselect" ng-model="leadproj.company_name"  ng-options="company.company_name as company.company_name for company in companies track by company.id" value="company.company_name" 
 							 ng-disabled="addcompany" name="companyName" ng-class="{submitting:addLead.companyName.$error.required && addLead.companyName.$touched &&  !leadproj.addCompanyName }"
@@ -1393,7 +1396,7 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<select class="forInput form-control" ng-model="leadproj.project_type" name="typeID" ng-options="type.id as type.name for type in types"
+									<select class="forInput form-control" ng-model="leadproj.project_type" name="typeID" ng-options="type.name as type.name for type in types track by type.id"
 									 ng-class="{submitting:addLead.typeID.$error.required && addLead.typeID.$touched}" required>
 										<option value="" default disabled selected>Select the Type of Project</option>
 									</select>
@@ -1437,7 +1440,7 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<select class="forInput form-control" name="statusID" ng-model="leadproj.status" ng-options="status.id as status.name for status in statuses"
+									<select class="forInput form-control" name="statusID" ng-model="leadproj.status" ng-options="status.name as status.name for status in statuses track by status.id"
 									 ng-class="{submitting:addLead.statusID.$error.required && addLead.statusID.$touched}" required>
 										<option value="" default disabled selected>Select the Status</option>
 									</select>
