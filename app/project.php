@@ -9,9 +9,11 @@ class Project extends ConfigureDB
     public $table = 'projects';
     protected $primaryKey = 'id';
     protected $fillable = ['project_category','company_id','salesperson_id',
-                        'product','value','project_type','sales_stage','status','tender','remarks'];
+                        'product','value','project_type','sales_stage','status','tender','remarks','start_date'];
     protected $connection = 'mysql2';
-
+    protected $dateFormat = 'Y-m-d';
+    const CREATED_AT = null;
+    
     //relationships
 
     public function company(){
@@ -33,7 +35,7 @@ class Project extends ConfigureDB
     //Static Method calls
 
     public static function loadProjects(){
-        return static::with('company.industry','company.contacts','product','salesperson','deal')->orderBy('created_at','Desc')->get();
+        return static::with('company.industry','company.contacts','product','salesperson','deal')->orderBy('id','Desc')->get();
     }
 
 

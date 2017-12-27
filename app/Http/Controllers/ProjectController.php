@@ -96,16 +96,17 @@ class ProjectController extends Controller
                     'tender'=>$request->tender,
                     'remarks'=>$request->remark,
                     'close_at'=>$request->close_at,
+                    'start_date'=>$request->start_date,
                     'company_id'=>$company->id,
                     'salesperson_id'=>$salesPerson->salesperson_id
             ]);
-
+            
             if($request->has('po_number')){
                 Deal::firstOrCreate(['po_num'=>$request->po_number],
                     ['po_date'=>$request->po_date,'project_id'=>$project->id]);    
             }    
 
-            return 'success';//reditect('/project')->with('success','A new project is added to the list');
+            return $project;//reditect('/project')->with('success','A new project is added to the list');
 
         }catch(\Exception $e ){
             return 'failed';
@@ -138,6 +139,7 @@ class ProjectController extends Controller
                 'tender'=>'nullable|string',
                 'remark'=>'nullable|string',
                 'close_date'=>'nullable|string',
+                'start_date'=>'required',
                 'po_number'=>'sometimes|required|string',
                 'po_date'=>'sometimes|required'
         ];      
@@ -179,6 +181,7 @@ class ProjectController extends Controller
             $project->tender = $request->tender;
             $project->remarks = $request->remark;
             $project->close_at = $request->close_at;
+            $project->start_date = $request->start_date;
             $project->salesperson_id = $salesPerson->salesperson_id;
             
             if($request->has('po_number')){

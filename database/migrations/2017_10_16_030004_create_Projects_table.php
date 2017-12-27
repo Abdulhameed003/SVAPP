@@ -26,6 +26,7 @@ class CreateProjectsTable extends Migration
             $table->string('tender');
             $table->string('remarks')->nullable();
             $table->string('close_at')->nullable();
+            $table->string('start_date');
             $table->timestamps();
 
         });
