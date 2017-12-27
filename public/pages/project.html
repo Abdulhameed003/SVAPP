@@ -21,14 +21,14 @@
                         <tr>
 
                             <th style="text-align:right;width:150px;"> No.
-                                <a href="#" ng-click="sort('No')" class="sortDir" ng-class="{ active: isSorted('No') }">&#x25B2;</a>
-                                <a href="#" ng-click="sort('-No')" class="sortDir" ng-class="{ active: isSorted('-No' ) }">&#x25BC;</a>
+                                <a href="#" ng-click="sort('id')" class="sortDir" ng-class="{ active: isSorted('id') }">&#x25B2;</a>
+                                <a href="#" ng-click="sort('-id')" class="sortDir" ng-class="{ active: isSorted('-id' ) }">&#x25BC;</a>
                             </th>
 
                             <th>Company Name
 
-                                <a href="#" ng-click="sort('companyName')" class="sortDir" ng-class="{ active: isSorted('companyName' ) }">&#x25B2;</a>
-                                <a href="#" ng-click="sort('-companyName')" class="sortDir" ng-class="{ active: isSorted('-companyName' ) }">&#x25BC;</a>
+                                <a href="#" ng-click="sort('company_name')" class="sortDir" ng-class="{ active: isSorted('company_name' ) }">&#x25B2;</a>
+                                <a href="#" ng-click="sort('-company_name')" class="sortDir" ng-class="{ active: isSorted('-company_name' ) }">&#x25BC;</a>
                             </th>
                             <th ng-if="colContactPerson">Contact Person</th>
                             <th ng-if="colEmail">Email</th>
@@ -42,8 +42,8 @@
                             <th ng-if="colType">Type</th>
                             <th ng-if="colCategory">Category</th>
                             <th ng-if="colStartdate">Start Date
-                                <a href="#" ng-click="sort('startDate')" class="sortDir" ng-class="{ active: isSorted('startDate' ) }">&#x25B2;</a>
-                                <a href="#" ng-click="sort('-startDate')" class="sortDir" ng-class="{ active: isSorted('-startDate' ) }">&#x25BC;</a>
+                                <a href="#" ng-click="sort('created_at')" class="sortDir" ng-class="{ active: isSorted('created_at' ) }">&#x25B2;</a>
+                                <a href="#" ng-click="sort('-created_at')" class="sortDir" ng-class="{ active: isSorted('-created_at' ) }">&#x25BC;</a>
                             </th>
                             <th ng-if="colClosingdate">Closing Date</th>
                             <th ng-if="colSalesstage">Sales Stage</th>
@@ -85,10 +85,10 @@
                             <td ng-if="colValue">{{proj.value}}</td>
                             <td ng-if="colType">{{proj.project_type}}</td>
                             <td ng-if="colCategory">{{proj.project_category}}</td>
-                            <td date-format="dd/MM/yyyy" ng-if="colStartdate">{{proj.created_at}}</td>
+                            <td ng-if="colStartdate">{{proj.created_at | amDateFormat:'DD/MM/YYYY'}}</td>
                             <td ng-if="colClosingdate">{{proj.close_at}}</td>
                             <td ng-if="colSalesstage">{{proj.sales_stage}}</td>
-                            <td ng-if="colLastupdate">{{proj.updated_at}}</td>
+                            <td ng-if="colLastupdate">{{proj.updated_at | amDateFormat:'DD/MM/YYYY'}}</td>
                             <td ng-if="colPersonincharge">{{proj.salesperson.name}}</td>
                             <td ng-if="colStatus">{{proj.status}}</td>
                             <td ng-if="colTender">{{proj.tender}}</td>

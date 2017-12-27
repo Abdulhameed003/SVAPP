@@ -1,4 +1,4 @@
-var app = angular.module('app', ['salesVisionControllers','salesVisionServices','ngRoute','ng-fusioncharts','ngMessages', 'ui.bootstrap', '720kb.datepicker', 'checklist-model']);
+var app = angular.module('app', ['salesVisionControllers','salesVisionServices','ngRoute','ng-fusioncharts','ngMessages', 'ui.bootstrap', '720kb.datepicker', 'checklist-model','angularMoment']);
 
 app.config(function($routeProvider,$locationProvider) {
         
