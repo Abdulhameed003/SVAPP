@@ -1475,7 +1475,7 @@
 
 						<div id="sub-left">
 							<div class="form-group spacing">
-								<select class="forInput form-control" name="tender" ng-model="leadproj.tender" ng-options="tender.id as tender.name for tender in tenders"
+								<select class="forInput form-control" name="tender" ng-model="leadproj.tender" ng-options="tender.name as tender.name for tender in tenders"
 								 ng-class="{submitting:addLead.tender.$error.required && addLead.tender.$touched}" required>
 									<option value="" default disabled selected>Select the Tender</option>
 								</select>
