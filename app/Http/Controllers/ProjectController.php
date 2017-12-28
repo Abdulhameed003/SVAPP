@@ -82,7 +82,7 @@ class ProjectController extends Controller
 
             }
             //get product id
-            $product = Product::firstOrCreate(['product_name'=>$request->product]);
+            $product = Product::firstOrCreate(['id'=>$request->product]);
             
             //get salesperson 
             $salesPerson = Salesperson::firstOrCreate(['salesperson_id'=>$request->salesperson_id]);

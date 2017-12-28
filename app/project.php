@@ -11,9 +11,9 @@ class Project extends ConfigureDB
     protected $fillable = ['project_category','company_id','salesperson_id',
                         'product','value','project_type','sales_stage','status','tender','remarks','start_date'];
     protected $connection = 'mysql2';
-    protected $dateFormat = 'Y-m-d';
+    //protected $dateFormat = 'Y-m-d';
     const CREATED_AT = null;
-    
+
     //relationships
 
     public function company(){
