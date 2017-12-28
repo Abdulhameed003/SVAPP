@@ -131,7 +131,7 @@
                 <p>Please select the filtering option.</p>
                 <form id="filterForm" name="filterForm">
                     <div style="position:relative;top:10px;left:20px;">
-                        <input type="checkbox" class="checkbox-default" ng-model="filterForm.deal" ng-click="checkboxRule1('deal')" />
+                        <input type="checkbox" class="checkbox-default" ng-model="filterForm.deal" ng-click="checkboxRule1('deal')"  />
                         <label for="checkbox">Deals</label>
                         <br>
                         <input type="checkbox" class="checkbox-default" ng-model="filterForm.lead" ng-click="checkboxRule1('lead')" />
@@ -147,19 +147,19 @@
                         <br>
                         <div ng-show="filterForm.date" style="margin-left:15px;margin-top:10px;">
                             <div class="datepicker mainpagedatepicker" date-format="dd/MM/yyyy">
-                                <input class="maindateWidth form-control" ng-model="startdate" type="text" placeholder="Start date">
+                                <input class="maindateWidth form-control" ng-model="startdate" type="text" placeholder="Start date" required>
                                 <i class="fa fa-calendar fafaPosititionondatepicker1"></i>
                                 </input>
                             </div>
                             <div class="datepicker mainpagedatepicker" style="margin-top:10px;" date-format="dd/MM/yyyy">
-                                <input class="maindateWidth form-control " ng-model="enddate" type="text" placeholder="End date">
+                                <input class="maindateWidth form-control " ng-model="enddate" type="text" placeholder="End date" required>
                                 <i class="fa fa-calendar fafaPosititionondatepicker1"></i>
                                 </input>
                             </div>
                         </div>
                     </div>
                     <div style="position:absolute;top:270px;left:35px;">
-                        <button type="button" class="btn-default btndef hidedropdown1" ng-click="filterContent()">Apply</button>
+                        <button type="button" class="btn-default btndef hidedropdown1" ng-click="filterContent(); checkempty()">Apply</button>
                         <button type="button" class="btn-default btndef hidedropdown1" ng-click="setDefault()">Show all</button>
                     </div>
                 </form>

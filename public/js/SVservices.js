@@ -291,6 +291,8 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
         }
 
         return {
-            showDash:shoeDash
+            showDash:showDash
         }
     }]);
+
+ 

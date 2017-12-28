@@ -705,13 +705,19 @@ salesVisionControllers.controller('projectController', ['$scope', '$http', 'proj
                 }
 
                 if ($scope.filterForm.date) {
+                    var checkrequired = function () {
+                        if ($scope.startdate == "" && $scope.enddate == "") {
+                            alert("Please fill in both start date and end date");
+                        }
+                    };
+                    checkrequired();
                     // startDate = $scope.startdate;
                     // endDate = $scope.enddate;
 
                     angular.forEach($scope.rows, function (obj) {
                         obj.created_at = moment(obj.created_at).format('DD/MM/YYYY');
-                        alert(obj.created_at);
-                        alert("yes");
+                        //alert(obj.created_at);
+                        //alert("yes");
                         //alert(moment(obj.close_at).isBefore(startDate, 'days'));
                         // if (moment(obj.close_at).isBefore(endDate, 'day')) {
                         // daterangeprojects.push(obj);
@@ -720,7 +726,10 @@ salesVisionControllers.controller('projectController', ['$scope', '$http', 'proj
                 }
             };
 
-
+            $scope.checkempty = function () {
+                if (!$scope.filterForm.lead && !$scope.filterForm.deal && !$scope.filterForm.lostCase && !$scope.filterForm.date)
+                    alert("Please select the filtering option first.");
+            }
             /**filtering table columns */
             var list = [];
             var list1 = [];
@@ -1243,6 +1252,7 @@ salesVisionControllers.controller('mainCtrl', ['$scope', '$location', function (
 salesVisionControllers.controller('MyControllerModal', ['$scope', '$modal', function ($scope, $modal) {
 
     /** nav bar modals */
+
     $scope.openL = function (size) {
         var modalInstance = $modal.open({
             controller: 'forCloseLead',
@@ -1565,6 +1575,9 @@ salesVisionControllers.controller('MyControllerModal', ['$scope', '$modal', func
 
 /** project modal controllers */
 salesVisionControllers.controller('forCloseLead', ['$scope', '$modalInstance', 'projectService', function ($scope, $modalInstance, projectService) {
+    $scope.close = function () {
+        $modalInstance.dismiss('cancel');
+    };
 
     projectService.loadProjectData(function (response) {
 
@@ -1622,25 +1635,37 @@ salesVisionControllers.controller('forCloseLead', ['$scope', '$modalInstance', '
     }, function (response) {
         alert('No predefined data are set for industires, company and products');
     });
-
     var original = angular.copy($scope.leadproj);
+
+    $scope.watchselect=function(){
+        if ($scope.leadproj.company_name == null){
+            $scope.foraddnewcompany = true;
+            alert($scope.foraddnewcompany);
+        }
+        else {
+            $scope.foraddnewcompany = false;
+            alert($scope.foraddnewcompany);
+        }
+    }
+
     $scope.postAddLeadForm = function (form) {
-
-
         if (form.$valid) {
-            projectService.createProject($scope.leadproj, function (response) {
-                if (response.data == 'success') {
-                    alert('Project created succesfully');
-                    $scope.leadproj = angular.copy(original);
-                    $scope.addLead.$setPristine();
-                    $scope.addLead.$setValidity();
-                    $scope.addLead.$setUntouched();
-                    //push data to table with scope.leadproj.pushto table :)
-                }
-            }, function (response) {
-                var error = response.data;
-                alert('There was problem creating project');
-            });
+            alert('can submit');
+             projectService.createProject($scope.leadproj, function (response) {
+                    if (response.data == 'success') {
+                        alert('Project created succesfully');
+                        $scope.leadproj = angular.copy(original);
+                        $scope.addLead.$setPristine();
+                        $scope.addLead.$setValidity();
+                        $scope.addLead.$setUntouched();
+                        //push data to table with scope.leadproj.pushto table :)
+                    }
+                }, function (response) {
+                    var error = response.data;
+                    alert('There was problem creating project');
+                });
+                
+            $scope.close();
         }
 
         if (form.$invalid) {
@@ -1657,30 +1682,23 @@ salesVisionControllers.controller('forCloseLead', ['$scope', '$modalInstance', '
     };
 
     $scope.resetSelect = function () {
-        $scope.leadproj.companyID = $scope.default;
+        $scope.leadproj.company_name = $scope.default;
         $scope.addLead.addCompanyName.$setUntouched();
         $scope.addLead.companyWebsite.$setUntouched();
         $scope.addLead.companyPhone.$setUntouched();
-        $scope.addLead.companyAddress.$setUntouched();
         $scope.addLead.industry.$setUntouched();
         $scope.addLead.contactPerson.$setUntouched();
         $scope.addLead.contPerEmail.$setUntouched();
         $scope.addLead.contPerPhone.$setUntouched();
         $scope.addLead.contPerPos.$setUntouched();
-        $scope.leadproj.addCompanyName = '';
-        $scope.leadproj.companyWebsite = '';
-        $scope.leadproj.companyPhone = '';
-        $scope.leadproj.companyAddress = '';
-        $scope.leadproj.industry = '';
-        $scope.leadproj.contactPerson = '';
-        $scope.leadproj.contPerEmail = '';
-        $scope.leadproj.contPerPhone = '';
-        $scope.leadproj.contPerPos = '';
+        $scope.leadproj.website = '';
+        $scope.leadproj.office_number = '';
+        $scope.leadproj.contact_name = '';
+        $scope.leadproj.contact_email = '';
+        $scope.leadproj.contact_number = '';
+        $scope.leadproj.contact_designation = '';
     };
 
-    $scope.close = function () {
-        $modalInstance.dismiss('cancel');
-    };
 
 }]);
 
@@ -1781,18 +1799,20 @@ salesVisionControllers.controller('forCloseDelete', ['$scope', '$modalInstance',
     $scope.deleteHeader = "Delete a Project";
     $scope.deleteTitle = "Are you sure to delete this project?";
     var indexid = $modalInstance.id.id;
-    projectService.deleteProject(indexid, function (response) {
-        if (response.status == 200) {
-            alert('Project has been deleted successfully');
-        }
-    }, function (response) {
-        alert('There was an error deleting the selected project');
-    });
+
 
     $scope.removeRow = function () {
-        var currentid = $modalInstance.id;
-        var index = $scope.rows.indexOf(currentid);
-        $scope.rows.splice(index, 1);
+        projectService.deleteProject(indexid, function (response) {
+            if (response.status == 200) {
+                var currentid = $modalInstance.id;
+                var index = $scope.rows.indexOf(currentid);
+                $scope.rows.splice(index, 1);
+                // alert('Project has been deleted successfully');
+            }
+        }, function (response) {
+            alert('There was an error deleting the selected project');
+        });
+
     };
 
     $scope.close = function () {
@@ -2181,33 +2201,6 @@ salesVisionControllers.controller('forCloseEditlostcase', ['$scope', '$modalInst
 
 }]);
 
-/** for now its not required
-salesVisionControllers.controller('forCloseContact', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
-
-
-    $scope.companies = [
-    {
-        "id": "114",
-
-        "name": "Company 1"
-    },
-    {
-        "id": "126",
-
-        "name": "Company 2"
-    },
-    {
-        "id": "149",
-        "name": "Company 3"
-    }];
-
-    $scope.close = function () {
-        $modalInstance.dismiss('cancel');
-    };
-
-
-}]);
-*/
 
 salesVisionControllers.controller('forCloseSalesperson', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
 
@@ -2251,7 +2244,7 @@ salesVisionControllers.controller('forCloseMultipledelete', ['$scope', '$modalIn
         var numbers = $modalInstance.list.length;
         for (var i = 0; i < numbers; i++) {
             angular.forEach($scope.rows, function (value) {
-                if (value.No == rows[i]) {
+                if (value.id == rows[i]) {
                     var index = $scope.rows.indexOf(value);
                     $scope.rows.splice(index, 1);
                 }
@@ -2391,6 +2384,29 @@ salesVisionControllers.controller('forCloseEditcomp', ['$scope', '$modalInstance
     }, function (response) {
         alert('No predefined data are set for industires, company and products');
     });
+    var original = angular.copy($scope.editcom);
+    $scope.postEditCompany = function (form) {
+
+        if (form.$valid) {
+            alert('can submit');
+            $scope.editcom = angular.copy(original);
+            $scope.editcompany.$setPristine();
+            $scope.editcompany.$setValidity();
+            $scope.editcompany.$setUntouched();
+
+        }
+        if (form.$invalid) {
+
+            angular.forEach($scope.editcompany.$error, function (field) {
+                angular.forEach(field, function (errorField) {
+                    errorField.$setTouched();
+                })
+            });
+
+        }
+
+
+    };
 
 }]);
 
@@ -2459,8 +2475,8 @@ salesVisionControllers.controller('forCloseEditpers', ['$scope', '$modalInstance
         name: $modalInstance.list.name,
         phone_num: $modalInstance.list.phone_num,
         email: $modalInstance.list.email,
-        salesperson_id:$modalInstance.list.salesperson_id,
-        position:$modalInstance.list.position
+        salesperson_id: $modalInstance.list.salesperson_id,
+        position: $modalInstance.list.position
     }
 
     var original = angular.copy($scope.editSperson);
