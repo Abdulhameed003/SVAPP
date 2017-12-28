@@ -73,7 +73,7 @@ class ProjectController extends Controller
                  'website'=>$request->website,
                 'office_num'=>$request->office_number]);
 
-            if ($request->has('contact_name') && !empty($request->contact_name)){
+            if ($request->has('contact_name')){
                 Contact::firstOrCreate(['company_id'=>$company->id],
                     ['contact_name'=>$request->contact_name,
                     'contact_number'=>$request->contact_number,
@@ -106,7 +106,7 @@ class ProjectController extends Controller
                     ['po_date'=>$request->po_date,'project_id'=>$project->id]);    
             }    
 
-            return $project;//reditect('/project')->with('success','A new project is added to the list');
+            return 'success';//reditect('/project')->with('success','A new project is added to the list');
 
         }catch(\Exception $e ){
             return 'failed';
