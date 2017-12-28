@@ -65,11 +65,11 @@ class ProjectController extends Controller
         $this->validate($request,$this->rule());
         try{
            
-            $industry = $request->has('industry') ? Industry::firstOrCreate(['industry'=>$request->industry ]):null;
+            //$industry = $request->has('industry') ? Industry::firstOrCreate(['industry'=>$request->industry ]):null;
 
             //find or create new comapny if not found in the db in case of new company entry
             $company= Company::firstOrCreate(['company_name'=>$request->company_name],
-                ['industry_id'=> !is_null($industry) ? $industry->id : '',
+                ['industry_id'=> $request->industry,//!is_null($industry) ? $industry->id : '',
                  'website'=>$request->website,
                 'office_num'=>$request->office_number]);
 
@@ -77,7 +77,7 @@ class ProjectController extends Controller
                 Contact::firstOrCreate(['company_id'=>$company->id],
                     ['contact_name'=>$request->contact_name,
                     'contact_number'=>$request->contact_number,
-                    'email'=>$request->contact_email,
+                     'email'=>$request->contact_email,
                     'designation'=>$request->contact_designation]);
 
             }
