@@ -134,13 +134,13 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', fun
         },
         categories: [{
             category: [{
-                label: "Office 365"
+                label: "Ab"
             }, {
-                label: "Cloud SVR"
+                label: "Vd"
             }, {
-                label: "Broadband"
+                label: "LQ"
             }, {
-                label: "HRM"
+                label: "NM"
             }]
         }],
         dataset: [{
@@ -172,13 +172,13 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', fun
         },
         categories: [{
             category: [{
-                label: "Office 365"
+                label: "Ab"
             }, {
-                label: "Cloud SVR"
+                label: "Vd"
             }, {
-                label: "Broadband"
+                label: "LQ"
             }, {
-                label: "HRM"
+                label: "NM"
             }]
         }],
         dataset: [{
@@ -403,19 +403,19 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', fun
             bgcolor: "#EEEEEE"
         },
         data: [{
-            label: "Office 365",
+            label: "Hg",
             value: "2000"
         },
         {
-            label: "Cloud SVR",
+            label: "Ab",
             value: "8000"
         },
         {
-            label: "Broadband",
+            label: "Kk",
             value: "4500"
         },
         {
-            label: "HRM",
+            label: "Mn",
             value: "24000"
         }]
     };
@@ -715,8 +715,8 @@ salesVisionControllers.controller('projectController', ['$scope', '$http', 'proj
                     // endDate = $scope.enddate;
 
                     angular.forEach($scope.rows, function (obj) {
-                        obj.created_at = moment(obj.created_at).format('DD/MM/YYYY');
-                        //alert(obj.created_at);
+                        obj.start_date = moment(obj.start_date).format('DD/MM/YYYY');
+                        //alert(obj.start_date);
                         //alert("yes");
                         //alert(moment(obj.close_at).isBefore(startDate, 'days'));
                         // if (moment(obj.close_at).isBefore(endDate, 'day')) {
@@ -1636,15 +1636,16 @@ salesVisionControllers.controller('forCloseLead', ['$scope', '$modalInstance', '
         alert('No predefined data are set for industires, company and products');
     });
     var original = angular.copy($scope.leadproj);
-
+    $scope.foraddnewcompany = false;
     $scope.watchselect=function(){
-        if ($scope.leadproj.company_name == null){
+
+        if ($scope.showAdd == true){
             $scope.foraddnewcompany = true;
-            alert($scope.foraddnewcompany);
+
         }
         else {
             $scope.foraddnewcompany = false;
-            alert($scope.foraddnewcompany);
+       
         }
     }
 
@@ -1658,7 +1659,8 @@ salesVisionControllers.controller('forCloseLead', ['$scope', '$modalInstance', '
                         $scope.addLead.$setPristine();
                         $scope.addLead.$setValidity();
                         $scope.addLead.$setUntouched();
-                        //push data to table with scope.leadproj.pushto table :)
+                        $scope.rows.push(leadproj);
+                     
                     }
                 }, function (response) {
                     var error = response.data;
@@ -1921,7 +1923,7 @@ salesVisionControllers.controller('forCloseEditlead', ['$scope', '$modalInstance
             product: $modalInstance.leadproject.product.id,
             value: $modalInstance.leadproject.value,
             sales_stage: $modalInstance.leadproject.sales_stage,
-            created_at: $modalInstance.leadproject.created_at,
+            start_date: $modalInstance.leadproject.start_date,
             close_at: $modalInstance.leadproject.close_at,
             status: $modalInstance.leadproject.status,
             tender: $modalInstance.leadproject.tender,
@@ -2081,7 +2083,7 @@ salesVisionControllers.controller('forCloseEditdeal', ['$scope', '$modalInstance
             remarks: $modalInstance.dealproject.remarks,
             po_num: $modalInstance.dealproject.deal.po_num,
             po_date: $modalInstance.dealproject.deal.po_date,
-            created_at: $modalInstance.dealproject.created_at,
+            start_date: $modalInstance.dealproject.start_date,
             close_at: $modalInstance.dealproject.close_at
         };
 
@@ -2146,7 +2148,7 @@ salesVisionControllers.controller('forCloseEditlostcase', ['$scope', '$modalInst
             project_type: $modalInstance.lostcaseproject.project_type,
             product: $modalInstance.lostcaseproject.product.id,
             value: $modalInstance.lostcaseproject.value,
-            created_at: $modalInstance.lostcaseproject.created_at,
+            start_date: $modalInstance.lostcaseproject.start_date,
             close_at: $modalInstance.lostcaseproject.close_at,
             remarks: $modalInstance.lostcaseproject.remarks
         }

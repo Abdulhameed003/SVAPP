@@ -42,8 +42,8 @@
                             <th ng-if="colType">Type</th>
                             <th ng-if="colCategory">Category</th>
                             <th ng-if="colStartdate">Start Date
-                                <a href="#" ng-click="sort('created_at')" class="sortDir" ng-class="{ active: isSorted('created_at' ) }">&#x25B2;</a>
-                                <a href="#" ng-click="sort('-created_at')" class="sortDir" ng-class="{ active: isSorted('-created_at' ) }">&#x25BC;</a>
+                                <a href="#" ng-click="sort('start_date')" class="sortDir" ng-class="{ active: isSorted('start_date' ) }">&#x25B2;</a>
+                                <a href="#" ng-click="sort('-start_date')" class="sortDir" ng-class="{ active: isSorted('-start_date' ) }">&#x25BC;</a>
                             </th>
                             <th ng-if="colClosingdate">Closing Date</th>
                             <th ng-if="colSalesstage">Sales Stage</th>
@@ -85,7 +85,7 @@
                             <td ng-if="colValue">{{proj.value}}</td>
                             <td ng-if="colType">{{proj.project_type}}</td>
                             <td ng-if="colCategory">{{proj.project_category}}</td>
-                            <td ng-if="colStartdate">{{proj.created_at | amDateFormat:'DD/MM/YYYY'}}</td>
+                            <td ng-if="colStartdate">{{proj.start_date}}</td>
                             <td ng-if="colClosingdate">{{proj.close_at}}</td>
                             <td ng-if="colSalesstage">{{proj.sales_stage}}</td>
                             <td ng-if="colLastupdate">{{proj.updated_at | amDateFormat:'DD/MM/YYYY'}}</td>

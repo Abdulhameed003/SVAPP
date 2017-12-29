@@ -553,7 +553,7 @@
 								<label class="convertToblack">Start Date:</label>
 							</div>
 							<div class="datepicker modaldate form-group" date-format="dd/MM/yyyy">
-								<input class="forInput form-control modaldatepicker " onkeypress="return false;" ng-model="editDealProj.created_at" type="text"
+								<input class="forInput form-control modaldatepicker " onkeypress="return false;" ng-model="editDealProj.start_date" type="text"
 								 placeholder="Start Date: DD/MM/YYYY" name="startdate" required ng-class="{submitting:editDeal.startdate.$error.required && editDeal.startdate.$touched}">
 								<i class="fa fa-calendar fafaPosititionondatepicker"></i>
 								</input>
@@ -789,7 +789,7 @@
 						</div>
 						<div id="sub-right" class="spacinga">
 							<div class="datepicker modaldate" date-format="dd/MM/yyyy">
-								<input class="forInput form-control modaldatepicker" onkeypress="return false;" ng-model="Dealproj.created_at" type="text"
+								<input class="forInput form-control modaldatepicker" onkeypress="return false;" ng-model="Dealproj.start_date" type="text"
 								 placeholder="Start Date: DD/MM/YYYY" name="startdate" required ng-class="{submitting:addDeal.startdate.$error.required && addDeal.startdate.$touched}">
 								<i class="fa fa-calendar fafaPosititionondatepicker"></i>
 								</input>
@@ -935,7 +935,7 @@
 								<lable class="convertToblack">Start Date:</label>
 							</div>
 							<div class="datepicker modaldate form-group" date-format="dd/MM/yyyy">
-								<input class="forInput form-control modaldatepicker " onkeypress="return false;" ng-model="editLeadProj.created_at" type="text"
+								<input class="forInput form-control modaldatepicker " onkeypress="return false;" ng-model="editLeadProj.start_date" type="text"
 								 placeholder="Start Date: DD/MM/YYYY" name="startdate" required ng-class="{submitting:editLead.startdate.$error.required && editLead.startdate.$touched}">
 								<i class="fa fa-calendar fafaPosititionondatepicker"></i>
 								</input>
@@ -1125,7 +1125,7 @@
 								<lable class="convertToblack">Start Date:</label>
 							</div>
 							<div class="datepicker modaldate form-group" date-format="dd/MM/yyyy">
-								<input class="forInput form-control modaldatepicker " onkeypress="return false;" ng-model="editlostProj.created_at" type="text"
+								<input class="forInput form-control modaldatepicker " onkeypress="return false;" ng-model="editlostProj.start_date" type="text"
 								 placeholder="Start Date: DD/MM/YYYY" name="startdate" required ng-class="{submitting:editlostcase.startdate.$error.required && editlostcase.startdate.$touched}">
 								<i class="fa fa-calendar fafaPosititionondatepicker"></i>
 								</input>
@@ -1199,7 +1199,7 @@
 	<script type="text/ng-template" id="editsalesperson.html">
 		<div class="modal-content">
 			<div class="modal-header" style="height:40px;">
-				<h3>Edit sales person</h3>
+				<h3>Edit Sales Person</h3>
 			</div>
 			<form id="editsalesperson" name="editsalesperson" class="form-group" novalidate>
 				<div class="modal-body" style="overflow-y: auto; max-height:450px;">
@@ -1284,7 +1284,7 @@
 								<option value="" default selected>Select the Company</option>
 							</select>
 							<a href="#" id="addIcon">
-								<span id="addIcon" class="glyphicon glyphicon-plus-sign" ng-init="showAdd=false " ng-click="showAdd=!showAdd; addcompany=!addcompany; resetSelect()"></span>
+								<span id="addIcon" class="glyphicon glyphicon-plus-sign" ng-init="showAdd=false " ng-click="showAdd=!showAdd; addcompany=!addcompany; resetSelect();watchselect()"></span>
 							</a>
 							<div class="errormainpage form-group">
 								<div ng-show="addLead.companyName.$error.required" ng-if="(addLead.companyName.$touched && (!leadproj.company_name || !leadproj.website || !leadproj.office_number 
