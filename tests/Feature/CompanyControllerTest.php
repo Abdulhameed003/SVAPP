@@ -21,7 +21,7 @@ class CompanyControllerTest extends TestCase
         $this->configEnv->dropDB();
     }
 
-    public function test_if_company_page_display()
+    public function test_if_company_returns_comapnylists()
     {
         $response= $this->actingAs($this->user)->get('api/company');
         $response->assertViewis('pages.company');

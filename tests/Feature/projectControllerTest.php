@@ -36,7 +36,7 @@ class projectControllerTest extends TestCase
         $project = factory(App\Project::class)->create(['company_id'=>$company->id,'product'=>$product->id]);
        
         $response = $this->actingAs($this->user)->withSession(['token'=>'testing12345'])->get('api/project');
-        var_dump($response->getContent());
+        $response->assertSee("company_id={$comapany->id}");
         $response->assertSee('project_category');
     
     }
@@ -203,6 +203,7 @@ class projectControllerTest extends TestCase
         $response = $this->actingAs($this->user)->delete("api/project/{$project->id}");
         $this->assertDatabaseMissing('projects',['id'=>$project->id],'mysql2');
         $this->assertDatabaseMissing('deals',['project_id'=>$project->id],'mysql2');
+        $response->assertEquals('success',$response->getContent());
     }
     
 }
