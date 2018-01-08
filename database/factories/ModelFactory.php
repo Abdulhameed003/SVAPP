@@ -40,15 +40,17 @@ $factory->define(App\Project::class, function (Faker\Generator $faker) {
     static $close_at;
     return [
         'project_category'=>$faker->word,
-        'product'=>$faker->randomDigit,
-        'value'=>$faker->randomDigit,
+        'product'=>$faker->randomDigitNotNull ,
+        'value'=>$faker->randomDigitNotNull,
         'project_type'=>$faker->word,
-        'sales_stage'=>$faker->randomDigit,
-        'status'=>$faker->randomDigit,
+        'sales_stage'=>$faker->randomDigitNotNull ,
+        'status'=>$faker->randomDigitNotNull ,
         'tender'=>$faker->word,
         'remarks'=>$faker->text($max = 50),
-        'company_id'=>$faker->randomDigit,
-        'salesperson_id'=>$faker->ean8
+        'company_id'=>$faker->randomDigitNotNull ,
+        'salesperson_id'=>$faker->ean8,
+        'close_at'=> date_create_from_format('d-m-Y',$faker->date($format = 'd-m-Y', $max='now')),
+        'start_date'=> date_create_from_format('d-m-Y',$faker->date($format = 'd-m-Y', $max='now'))
     ];
 });
 
