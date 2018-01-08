@@ -36,7 +36,7 @@ class projectControllerTest extends TestCase
         $project = factory(App\Project::class)->create(['company_id'=>$company->id,'product'=>$product->id]);
        
         $response = $this->actingAs($this->user)->withSession(['token'=>'testing12345'])->get('api/project');
-        $response->assertSee("company_id={$comapany->id}");
+        $response->assertSee("company_id:{$comapany->id}");
         $response->assertSee('project_category');
     
     }
@@ -71,7 +71,7 @@ class projectControllerTest extends TestCase
                 'contact_designation'=>$contact->designation,
                 'salesperson_id'=>$sales->salesperson_id,
                 'project_category'=>$project->project_category,
-                'product'=>'VPS',
+                'product'=>$product->id,
                 'value'=>$project->value,
                 'project_type'=>$project->project_type,
                 'sales_stage'=>$project->sales_stage,
@@ -91,6 +91,7 @@ class projectControllerTest extends TestCase
     }
 
     public function test_if_project_is_stored_with_existing_company(){
+    
         $project= factory(App\Project::class)->make();   
         $company= factory(App\Company::class)->create();
         $sales =factory(App\SalesPerson::class)->create(['salesperson_id'=>'1234567']);
@@ -100,7 +101,7 @@ class projectControllerTest extends TestCase
         'company_name'=>$company->company_name,
         'salesperson_id'=>$sales->salesperson_id,
         'project_category'=>$project->project_category,
-        'product'=>'VPS',
+        'product'=>$product->id,
         'value'=>$project->value,
         'project_type'=>$project->project_type,
         'sales_stage'=>$project->sales_stage,
