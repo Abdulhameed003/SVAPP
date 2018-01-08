@@ -9,7 +9,7 @@ class Salesperson extends ConfigureDB
     public $table = 'salespersons';
     protected $fillable = ['salesperson_id','name','email','phone_num','position'];
     protected $connection = 'mysql2';
-
+    public $timestamps = false;
    
     //relationships
 

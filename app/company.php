@@ -9,6 +9,7 @@ class Company extends ConfigureDB
     public $table= 'companies';
     protected $fillable = ['company_name','website','office_num','industry_id'];
     protected $connection = 'mysql2';
+    public $timestamps = false;
     //relationships
 
     public function projects(){

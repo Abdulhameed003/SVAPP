@@ -9,6 +9,7 @@ class Contact extends configureDB
     public $table = 'contacts';
     protected $fillable = ['company_id','contact_name','contact_number','email','designation'];
     protected $connection = 'mysql2';
+    public $timestamps = false;
     //Relationships
 
     public function company(){
