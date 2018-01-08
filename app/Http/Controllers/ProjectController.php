@@ -12,6 +12,7 @@ use App\Project;
 use App\Industry;
 use App\Deal;
 
+
 class ProjectController extends Controller
 {
     /**
@@ -95,8 +96,8 @@ class ProjectController extends Controller
                     'status'=>$request->status,
                     'tender'=>$request->tender,
                     'remarks'=>$request->remark,
-                    'close_at'=>$request->close_at,
-                    'start_date'=>$request->start_date,
+                    'close_at'=>Carbon::createFromFormat('d-m-Y',$request->close_at),
+                    'start_date'=>Carbon::createFromFormat('d-m-Y',$request->start_date),
                     'company_id'=>$company->id,
                     'salesperson_id'=>$salesPerson->salesperson_id
             ]);
@@ -179,14 +180,14 @@ class ProjectController extends Controller
             $project->status = $request->status;
             $project->tender = $request->tender;
             $project->remarks = $request->remark;
-            $project->close_at = $request->close_at;
-            $project->start_date = $request->start_date;
+            $project->close_at = Carbon::creatFromFormat('d-m-Y',$request->close_at);
+            $project->start_date = Carbon::creatFromFormat('d-m-Y',$request->start_date);
             $project->salesperson_id = $salesPerson->salesperson_id;
             
             if($request->has('po_number')){
                 Deal::updateOrCreate(['project_id' => $project->id],
                 ['po_num' => $request->po_number,
-                'po_date' => $request->po_date]);
+                'po_date' => Carbon::creatFromFormat('d-m-Y',$request->po_date)]);
             }
             return $result = $project->save() ? $result ='success' : $result = 'failed';
         }catch(\Exception $e){
