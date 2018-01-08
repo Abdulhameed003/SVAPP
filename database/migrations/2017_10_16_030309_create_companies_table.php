@@ -19,7 +19,6 @@ class CreateCompaniesTable extends Migration
             $table->string('industry_id');
             $table->string('website');
             $table->string('office_num');
-            $table->timestamps();
         });
     }
 

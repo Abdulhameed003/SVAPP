@@ -17,8 +17,7 @@ class CreateDealsTable extends Migration
             $table->increments('id');
             $table->integer('project_id');
             $table->string('po_num');
-            $table->string('po_date');
-            $table->timestamps();
+            $table->date('po_date');
         });
     }
 

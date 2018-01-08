@@ -20,7 +20,6 @@ class CreateSalespersonsTable extends Migration
             $table->string('email')->unique();
             $table->string('phone_num');
             $table->string('position');
-            $table->timestamps();
         });
     }
 

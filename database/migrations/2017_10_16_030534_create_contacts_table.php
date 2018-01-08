@@ -20,7 +20,6 @@ class CreateContactsTable extends Migration
             $table->string('contact_number')->unique();
             $table->string('email')->unique();
             $table->string('designation');
-            $table->timestamps();
         });
     }
 
