@@ -6,6 +6,8 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Tests\TestSetup;
+use App;
 
 class DashboardTest extends TestCase
 {
@@ -20,5 +22,14 @@ class DashboardTest extends TestCase
         $this->configEnv->dropDB();
     }
 
+    public function test_dashboard_return_data(){
+        $project = factory(App\Project::class,50)->create(['project_type'=>'New Sales','project_category'=>'Deal']);
+        $project = factory(App\Project::class,50)->create(['project_type'=>'Renewals','project_category'=>'Deal']);
+        $product2 = factory(App\Product::class,10)->create();
+
+        $response = $this->actingAs($this->user)->get('api/dashboard');
+        var_dump($response->getContent());
+
+    }
 
 }

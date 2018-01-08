@@ -22,9 +22,10 @@ class CompanyControllerTest extends TestCase
     }
 
     public function test_if_company_returns_comapnylists()
-    {
+    {   $industry = factory(App\Industry::class)->create(['industry'=>'IT']);
+        $company = factory(App\Company::class)->create(['industry_id'=>$industry->id]);
         $response= $this->actingAs($this->user)->get('api/company');
-        $response->assertViewis('pages.company');
+        $response->assertSee("industry_id:{$industry->id}");
     }
 
     public function test_if_company_is_returned_for_edit(){
