@@ -104,10 +104,10 @@ class ProjectController extends Controller
             
             if($request->has('po_number')){
                 Deal::firstOrCreate(['po_num'=>$request->po_number],
-                    ['po_date'=>$request->po_date,'project_id'=>$project->id]);    
+                    ['po_date'=>Carbon::creatFromFormat('d-m-Y',$request->po_date),'project_id'=>$project->id]);    
             }    
 
-            return 'success';//reditect('/project')->with('success','A new project is added to the list');
+            return $project;//reditect('/project')->with('success','A new project is added to the list');
 
         }catch(\Exception $e ){
             return 'failed';
