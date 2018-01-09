@@ -36,14 +36,14 @@ class RegisterUserTest extends TestCase
 
     public function test_Register_for_valid_registration(){
       
-        $data =['first_name' =>'abduldhd',
-                'last_name' =>'dxdsdssd',
+        $data =['first_name' =>'john',
+                'last_name' =>'Doe',
                 'email' => $this->user->email,
                 'password' =>'qwerty',
                 'password_confirmation' =>'qwerty',
                 'company_id' => $this->company->company_id,
-                'company_name' => 'qwderf',
-                'company_phone' => '323223',
+                'company_name' => 'exitra',
+                'company_phone' => '0103456780',
         ];  
 
         $response = $this->post('/register',$data);

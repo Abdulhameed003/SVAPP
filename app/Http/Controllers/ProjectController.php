@@ -82,7 +82,7 @@ class ProjectController extends Controller
 
             }
             //get product id
-            $product = Product::firstOrCreate(['id'=>$request->product]);
+            $product = Product::find($request->product);
             
             //get salesperson 
             $salesPerson = Salesperson::firstOrCreate(['salesperson_id'=>$request->salesperson_id]);
@@ -166,9 +166,8 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request,$this->rule());
         try{
-            $this->validate($request,$this->rule());
-
             $salesPerson = Salesperson::where('salesperson_name',$request->salesperson_name)->first();
 
             $project = Project::find($id);
