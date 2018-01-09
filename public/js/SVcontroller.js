@@ -1060,8 +1060,6 @@ salesVisionControllers.controller('contactController', ['$scope', '$http', 'comp
             $scope.curPage = 0;
             $scope.pageSize = 11;
             $scope.numberOfPages = function () {
-
-
                 return Math.ceil($scope.rows5.length / $scope.pageSize);
 
             };
