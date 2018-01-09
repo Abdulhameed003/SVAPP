@@ -23,8 +23,8 @@ class DashboardTest extends TestCase
     }
 
     public function test_dashboard_return_data(){
-        $project = factory(App\Project::class,50)->create(['project_type'=>'New Sales','project_category'=>'Deal']);
-        $project = factory(App\Project::class,50)->create(['project_type'=>'Renewals','project_category'=>'Deal']);
+        $project = factory(App\Project::class,30)->create(['project_type'=>'New Sales','project_category'=>'Deal']);
+        $project = factory(App\Project::class,20)->create(['project_type'=>'Renewals','project_category'=>'Lost Case']);
         $product2 = factory(App\Product::class,10)->create();
 
         $response = $this->actingAs($this->user)->get('api/dashboard');
