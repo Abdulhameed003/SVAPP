@@ -89,17 +89,24 @@ class DashboardController extends Controller
         return $totalNewSales;
     }
 
-    private function wonOp (){
+    private function wonOpp(){
         $wonOpp = [];
+        $totalOpp = [];
     
         $startdate = Carbon::now()->subYear()->format('Y');
         foreach($this->months as $month){
-            $value_sum = Project::where('project_category','Deal')->whereYear('start_date',$startdate)->whereMonth('start_date',$month['code'])->sum('value');
-            $wonOpp = array_prepend($wonOpp,['label'=>$month['month'],'value'=>$value_sum]); 
+            $value_sum_wonOpp = Project::where('project_category','Deal')->whereYear('start_date',$startdate)->whereMonth('start_date',$month['code'])->sum('value');
+            $value_sum_totalOpp = Project::whereYear('start_date',$startdate)->whereMonth('start_date',$month['code'])->sum('value');
+            $wonOpp = array_prepend($wonOpp,['label'=>$month['month'],'value'=>$value_sum_wonOpp]); 
         }
 
         return array_sort($wonOpp);
     }
 
-    
+    private function totalOpp(){
+        
+
+        
+    }
+
 }
