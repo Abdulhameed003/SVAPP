@@ -63,8 +63,8 @@ class DashboardController extends Controller
         //$totalWonCase = $this->totalWonCase();
         //$totalRenewals = $this->totalRenewal();
        //$totalNewsales = $this->totalNewsales();
-        $wonOp = $this->quarterWonLost();
-        return $wonOp;
+        //$wonOp = $this->quarterWonLost();
+       // return $wonOp;
         $dashboard = ['totalWonCase'=>$this->totalWonCase(),
                     'totalRenewals'=>$this->totalRenewal(),
                     'totalNewsales'=>$this->totalNewSales(),
@@ -75,20 +75,21 @@ class DashboardController extends Controller
                     'totalCloseOpp'=>$this->totalCloseOpp()
         ];
 
-        return $response->json($dashboard);
+        return response()->json($dashboard);
     }
 
     private function totalWonCase(){
         $newSalesSum = Project::where([['project_category','Deal'],['project_type','New Sales'],['start_date','>=',Carbon::now()->startOfYear()]])->sum('value');
         $renewalSum = Project::where([['project_category','Deal'],['project_type','Renewals'],['start_date','>=',Carbon::now()->startOfYear()]])->sum('value');
-        return [['Total New Sales'=>$newSalesSum],['Total Renewals'=>$renewalSum]];
+        return [['label'=>'Total New Sales','value'=>$newSalesSum],
+                ['label'=>'Total Renewals','value'=>$renewalSum]];
     }
 
     private function totalRenewal(){
         $totalRenewal = [];
         $products = Product::all('id','product_name');
         foreach($products as $product){
-            $value_sum= Project::where([['project_type','Renewals'],['start_date','>=',Carbon::now()->startOfYear]])
+            $value_sum= Project::where([['project_type','Renewals'],['start_date','>=',Carbon::now()->startOfYear()]])
                     ->where('product',$product->id)
                     ->sum('value');
             $totalRenewal = array_prepend($totalRenewal,['label'=>$product->product_name,'value'=>$value_sum]);
@@ -125,7 +126,7 @@ class DashboardController extends Controller
             
         }
 
-        return $comparison;
+        return array_reverse($comparison);
     }
 
     private function quarterWonLost(){
@@ -143,10 +144,11 @@ class DashboardController extends Controller
                     ->whereMonth('start_date','<=',$quarter['end'])
                     ->sum('value');
 
-            $quaterlyWonLost = array_prepend($quaterlyWonLost,['label'=>$quarter['qrt'],'value'=>['won'=>$value_sum_wonCase,'wonOpp'=>$value_sum_lostCase]]); 
+            $quaterlyWonLost = array_prepend($quaterlyWonLost,['label'=>$quarter['qrt'],'value'=>['won'=>$value_sum_wonCase,'lost'=>$value_sum_lostCase]]); 
             
         }
         
+        return array_reverse($quaterlyWonLost);
     }
 
     private function salesByProuct(){
@@ -193,9 +195,10 @@ class DashboardController extends Controller
                     ->whereMonth('close_at','<=',$quarter['end'])
                     ->count();
 
-            $quaterlyClose = array_prepend($quaterlyWonLost,['label'=>$quarter['qrt'],
-                                    'value'=>['deal'=>$value_sum_wonCase,'lead'=>$value_sum_lostCase]]); 
+            $quaterlyClose = array_prepend($quaterlyClose,['label'=>$quarter['qrt'],
+                                    'value'=>['deal'=>$deal_close_count,'lead'=>$lead_close_count]]); 
             
         }
+        return array_reverse($quaterlyClose);
     }
 }
