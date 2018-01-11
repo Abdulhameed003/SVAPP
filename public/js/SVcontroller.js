@@ -93,10 +93,10 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http','das
     
     dashboardService.showDash(function(response){
         if (response.status = 200){
-
+            test = [{label:"New",value:0},{label:"Old",value:"32322"}];
             $scope.content = response.data;
 
-            $scope.totalWonCases.data = $scope.content.totalWonCase;
+            $scope.totalWonCases.data = test;//$scope.content.totalWonCase;
 
             $scope.totalRenewals.categories = $scope.content.totalRenewals.category;
             $scope.totalRenewals.dataset = $scope.content.totalRenewals.data;
@@ -230,7 +230,7 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http','das
             usePlotGradientColor: "0",
             bgcolor: "#EEEEEE"
         },
-        categories: [],
+        categories: 0,
         // [{
             // category: [{
             //     label: "Jan"

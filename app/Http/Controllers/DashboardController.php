@@ -75,7 +75,7 @@ class DashboardController extends Controller
                     'totalCloseOpp'=>$this->totalCloseOpp()
         ];
 
-        return response()->json($dashboard);
+        return $dashboard;
     }
 
     private function totalWonCase(){
