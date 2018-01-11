@@ -71,7 +71,7 @@ class DashboardController extends Controller
                     'wonOpp'=>$this->wonOpp(),
                     'quarterWonLost'=>$this->quarterWonLost(),
                     'salesByProduct'=>$this->salesByProuct(),
-                    'slaesByIndustry'=>$this->salesByIndustry(),
+                    'salesByIndustry'=>$this->salesByIndustry(),
                     'totalCloseOpp'=>$this->totalCloseOpp()
         ];
 
@@ -79,7 +79,7 @@ class DashboardController extends Controller
     }
 
     private function totalWonCase(){
-        $newSalesSum = Project::where([['project_category','Deal'],['project_type','New Sales'],['start_date','>=',Carbon::now()->startOfYear()]])->sum('value');
+        $newSalesSum = Project::where([['project_category','Deal'],['project_type','New Sale'],['start_date','>=',Carbon::now()->startOfYear()]])->sum('value');
         $renewalSum = Project::where([['project_category','Deal'],['project_type','Renewals'],['start_date','>=',Carbon::now()->startOfYear()]])->sum('value');
         return [['label'=>'Total New Sales','value'=>$newSalesSum],
                 ['label'=>'Total Renewals','value'=>$renewalSum]];
@@ -87,32 +87,44 @@ class DashboardController extends Controller
 
     private function totalRenewal(){
         $totalRenewal = [];
+        $category =[];
+        $data = [];
+
         $products = Product::all('id','product_name');
         foreach($products as $product){
             $value_sum= Project::where([['project_type','Renewals'],['start_date','>=',Carbon::now()->startOfYear()]])
                     ->where('product',$product->id)
                     ->sum('value');
-            $totalRenewal = array_prepend($totalRenewal,['label'=>$product->product_name,'value'=>$value_sum]);
+            $category = array_prepend($category,['label'=>$product->product_name]);
+            $data = array_prepend($data,['value'=>$value_sum]);
         }
-        
+        $totalRenewal = ['category'=>array_reverse($category),'data'=>array_reverse($data)];
         return $totalRenewal;
         
     }
 
     private function totalNewsales(){
         $totalNewSales = [];
+        $category =[];
+        $data = [];
+
         $products = Product::all('id','product_name');
         foreach($products as $product){
-            $value_sum= Project::where([['project_type','New Sales'],['start_date','>=',Carbon::now()->startOfYear()],['product',$product->id]])
+            $value_sum= Project::where([['project_type','New Sale'],['start_date','>=',Carbon::now()->startOfYear()],['product',$product->id]])
                 ->sum('value');
-            $totalNewSales = array_prepend($totalNewSales,['label'=>$product->product_name,'value'=>$value_sum]);
+            $category = array_prepend($category,['label'=>$product->product_name]);
+            $data= array_prepend($data,['value'=>$value_sum]);
         }
-        
+        $totalNewSales = ['category'=>array_reverse($category),'data'=>array_reverse($data)];
         return $totalNewSales;
     }
 
     private function wonOpp(){
         $comparison = [];
+        $category = [];
+        $totalOpp = [];
+        $wonOpp = [];
+
         $startdate = Carbon::now()->subYear()->format('Y');
         foreach($this->months as $month){
             $value_sum_wonOpp = Project::where('project_category','Deal')
@@ -122,15 +134,22 @@ class DashboardController extends Controller
             $value_sum_totalOpp = Project::whereYear('start_date',$startdate)
                     ->whereMonth('start_date',$month['code'])
                     ->sum('value');
-            $comparison = array_prepend($comparison,['label'=>$month['month'],'value'=>['totalOpp'=>$value_sum_totalOpp,'wonOpp'=>$value_sum_wonOpp]]); 
+            $category = array_prepend($category,['label'=>$month['month']]);
+            $totalOpp = array_prepend($totalOpp,['value'=>$value_sum_totalOpp]);
+            $wonOpp = array_prepend($wonOpp,['value'=>$value_sum_wonOpp]); 
             
         }
+        $comparison = ['category'=>array_reverse($category), 'data'=>['totalOpp'=>array_reverse($totalOpp),'wonOpp'=>array_reverse($wonOpp)]];
 
-        return array_reverse($comparison);
+        return $comparison;
     }
 
     private function quarterWonLost(){
         $quaterlyWonLost = [];
+        $category=[];
+        $won=[];
+        $lost =[];
+
         $startdate = Carbon::now()->subYear()->format('Y');
         foreach($this->quarters as $quarter){
             $value_sum_wonCase = Project::where('project_category','Deal')
@@ -144,11 +163,13 @@ class DashboardController extends Controller
                     ->whereMonth('start_date','<=',$quarter['end'])
                     ->sum('value');
 
-            $quaterlyWonLost = array_prepend($quaterlyWonLost,['label'=>$quarter['qrt'],'value'=>['won'=>$value_sum_wonCase,'lost'=>$value_sum_lostCase]]); 
+             $category = array_prepend($category,['label'=>$quarter['qrt']]);
+             $won = array_prepend($won,['value'=>$value_sum_wonCase]);
+             $lost = array_prepend($lost,['value'=>$value_sum_lostCase]);
             
         }
-        
-        return array_reverse($quaterlyWonLost);
+        $quaterlyWonLost = ['category'=>array_reverse($category),'data'=>['won'=>array_reverse($won),'lost'=>array_reverse($lost)]];
+        return $quaterlyWonLost;
     }
 
     private function salesByProuct(){
@@ -172,7 +193,7 @@ class DashboardController extends Controller
         foreach($industries as $industry){
             $value_sum= Project::with('company')->where([['project_category','Deal'],
                                         ['project_category','Lead'],
-                                        ['product',$product->id]])
+                                        ['product',$industry->id]])
                       ->sum('value');
             $salesByIndustry = array_prepend($salesByIndustry,['label'=>$industry->industry,'value'=>$value_sum]);
         }
@@ -182,6 +203,9 @@ class DashboardController extends Controller
 
     private function totalCloseOpp(){
         $quaterlyClose = [];
+        $category =[];
+        $deal = [];
+        $lead = [];
         $startdate = Carbon::now()->subYear()->format('Y');
         foreach($this->quarters as $quarter){
             $deal_close_count = Project::where('project_category','Deal')
@@ -195,10 +219,13 @@ class DashboardController extends Controller
                     ->whereMonth('close_at','<=',$quarter['end'])
                     ->count();
 
-            $quaterlyClose = array_prepend($quaterlyClose,['label'=>$quarter['qrt'],
-                                    'value'=>['deal'=>$deal_close_count,'lead'=>$lead_close_count]]); 
+            $category = array_prepend($category,['label'=>$quarter['qrt']]);
+            $deal = array_prepend($deal,['value'=>$deal_close_count]);
+            $lead = array_prepend($lead,['value'=>$lead_close_count]); 
             
         }
+        $quaterlyClose =['category'=>array_reverse($category), 'data'=>['deal'=>array_reverse($deal),'lead'=>array_reverse($lead)]];
+
         return array_reverse($quaterlyClose);
     }
 }

@@ -534,9 +534,9 @@
 							<div>
 								<label class="convertToblack">PO-Date:</label>
 							</div>
-							<div class="datepicker modaldate" date-format="dd/MM/yyyy">
+							<div class="datepicker modaldate" date-format="dd-MM-yyyy">
 								<input class="forInput form-control modaldatepicker" onkeypress="return false;" ng-model="editDealProj.po_date" type="text"
-								 placeholder="PO-Date: DD/MM/YYYY" name="podate" required ng-class="{submitting:editDeal.podate.$error.required && editDeal.podate.$touched}">
+								 placeholder="PO-Date: DD-MM-YYYY" name="podate" required ng-class="{submitting:editDeal.podate.$error.required && editDeal.podate.$touched}">
 								<i class="fa fa-calendar fafaPosititionondatepicker"></i>
 								</input>
 								<div ng-messages="editDeal.podate.$error" class="errormainpage">
@@ -552,9 +552,9 @@
 							<div>
 								<label class="convertToblack">Start Date:</label>
 							</div>
-							<div class="datepicker modaldate form-group" date-format="dd/MM/yyyy">
+							<div class="datepicker modaldate form-group" date-format="dd-MM-yyyy">
 								<input class="forInput form-control modaldatepicker " onkeypress="return false;" ng-model="editDealProj.start_date" type="text"
-								 placeholder="Start Date: DD/MM/YYYY" name="startdate" required ng-class="{submitting:editDeal.startdate.$error.required && editDeal.startdate.$touched}">
+								 placeholder="Start Date: DD-MM-YYYY" name="startdate" required ng-class="{submitting:editDeal.startdate.$error.required && editDeal.startdate.$touched}">
 								<i class="fa fa-calendar fafaPosititionondatepicker"></i>
 								</input>
 								<div ng-messages="editDeal.startdate.$error" class="errormainpage">
@@ -569,9 +569,9 @@
 							<div>
 								<label class="convertToblack">End Date:</label>
 							</div>
-							<div class="datepicker modaldate" date-format="dd/MM/yyyy">
+							<div class="datepicker modaldate" date-format="dd-MM-yyyy">
 								<input class="forInput form-control modaldatepicker" onkeypress="return false;" ng-model="editDealProj.close_at" type="text"
-								 placeholder="End Date: DD/MM/YYYY" name="enddate">
+								 placeholder="End Date: DD-MM-YYYY" name="enddate">
 								<i class="fa fa-calendar fafaPosititionondatepicker"></i>
 								</input>
 							</div>
@@ -777,8 +777,8 @@
 							 ng-model="Dealproj.remarks"></textarea>
 						</div>
 						<div id="sub-right" class="spacinga">
-							<div class="datepicker modaldate" date-format="dd/MM/yyyy">
-								<input class="forInput form-control modaldatepicker" onkeypress="return false;" ng-model="Dealproj.po_date" type="text" placeholder="PO-Date: DD/MM/YYYY"
+							<div class="datepicker modaldate" date-format="dd-MM-yyyy">
+								<input class="forInput form-control modaldatepicker" onkeypress="return false;" ng-model="Dealproj.po_date" type="text" placeholder="PO-Date: DD-MM-YYYY"
 								 name="podate" required ng-class="{submitting:addDeal.podate.$error.required && addDeal.podate.$touched}">
 								<i class="fa fa-calendar fafaPosititionondatepicker"></i>
 								</input>
@@ -788,9 +788,9 @@
 							</div>
 						</div>
 						<div id="sub-right" class="spacinga">
-							<div class="datepicker modaldate" date-format="dd/MM/yyyy">
+							<div class="datepicker modaldate" date-format="dd-MM-yyyy">
 								<input class="forInput form-control modaldatepicker" onkeypress="return false;" ng-model="Dealproj.start_date" type="text"
-								 placeholder="Start Date: DD/MM/YYYY" name="startdate" required ng-class="{submitting:addDeal.startdate.$error.required && addDeal.startdate.$touched}">
+								 placeholder="Start Date: DD-MM-YYYY" name="startdate" required ng-class="{submitting:addDeal.startdate.$error.required && addDeal.startdate.$touched}">
 								<i class="fa fa-calendar fafaPosititionondatepicker"></i>
 								</input>
 								<div ng-messages="addDeal.startdate.$error" class="errormainpage">
@@ -799,9 +799,9 @@
 							</div>
 						</div>
 						<div id="sub-right" class="spacinga">
-							<div class="datepicker modaldate" date-format="dd/MM/yyyy">
+							<div class="datepicker modaldate" date-format="dd-MM-yyyy">
 								<input class="forInput form-control modaldatepicker" onkeypress="return false;" ng-model="Dealproj.close_at" type="text"
-								 placeholder="End Date: DD/MM/YYYY" name="enddate">
+								 placeholder="End Date: DD-MM-YYYY" name="enddate">
 								<i class="fa fa-calendar fafaPosititionondatepicker"></i>
 								</input>
 							</div>
@@ -934,9 +934,9 @@
 							<div class="labelbottomspace">
 								<lable class="convertToblack">Start Date:</label>
 							</div>
-							<div class="datepicker modaldate form-group" date-format="dd/MM/yyyy">
+							<div class="datepicker modaldate form-group" date-format="dd-MM-yyyy">
 								<input class="forInput form-control modaldatepicker " onkeypress="return false;" ng-model="editLeadProj.start_date" type="text"
-								 placeholder="Start Date: DD/MM/YYYY" name="startdate" required ng-class="{submitting:editLead.startdate.$error.required && editLead.startdate.$touched}">
+								 placeholder="Start Date: DD-MM-YYYY" name="startdate" required ng-class="{submitting:editLead.startdate.$error.required && editLead.startdate.$touched}">
 								<i class="fa fa-calendar fafaPosititionondatepicker"></i>
 								</input>
 								<div ng-messages="editLead.startdate.$error" class="errormainpage">
@@ -948,9 +948,9 @@
 							<div class="labelbottomspace">
 								<lable class="convertToblack">End Date:</label>
 							</div>
-							<div class="datepicker modaldate" date-format="dd/MM/yyyy">
+							<div class="datepicker modaldate" date-format="dd-MM-yyyy">
 								<input class="forInput form-control modaldatepicker" onkeypress="return false;" ng-model="editLeadProj.close_at" type="text"
-								 placeholder="End Date: DD/MM/YYYY" name="enddate">
+								 placeholder="End Date: DD-MM-YYYY" name="enddate">
 								<i class="fa fa-calendar fafaPosititionondatepicker"></i>
 								</input>
 							</div>
@@ -976,9 +976,9 @@
 								<div class="labelbottomspace">
 									<lable class="convertToblack">PO-Date:</label>
 								</div>
-								<div class="datepicker modaldate" date-format="dd/MM/yyyy">
+								<div class="datepicker modaldate" date-format="dd-MM-yyyy">
 									<input class="forInput form-control modaldatepicker" onkeypress="return false;" ng-model="editLeadProj.po_date" type="text"
-									 placeholder="PO-Date: DD/MM/YYYY" name="podate" required ng-class="{submitting:editLead.podate.$error.required && editLead.podate.$touched}">
+									 placeholder="PO-Date: DD-MM-YYYY" name="podate" required ng-class="{submitting:editLead.podate.$error.required && editLead.podate.$touched}">
 									<i class="fa fa-calendar fafaPosititionondatepicker"></i>
 									</input>
 									<div ng-messages="editLead.podate.$error" class="errormainpage">
@@ -1124,9 +1124,9 @@
 							<div class="labelbottomspace">
 								<lable class="convertToblack">Start Date:</label>
 							</div>
-							<div class="datepicker modaldate form-group" date-format="dd/MM/yyyy">
+							<div class="datepicker modaldate form-group" date-format="dd-MM-yyyy">
 								<input class="forInput form-control modaldatepicker " onkeypress="return false;" ng-model="editlostProj.start_date" type="text"
-								 placeholder="Start Date: DD/MM/YYYY" name="startdate" required ng-class="{submitting:editlostcase.startdate.$error.required && editlostcase.startdate.$touched}">
+								 placeholder="Start Date: DD-MM-YYYY" name="startdate" required ng-class="{submitting:editlostcase.startdate.$error.required && editlostcase.startdate.$touched}">
 								<i class="fa fa-calendar fafaPosititionondatepicker"></i>
 								</input>
 								<div ng-messages="editlostcase.startdate.$error" class="errormainpage">
@@ -1138,7 +1138,7 @@
 							<div class="labelbottomspace">
 								<lable class="convertToblack">End Date:</label>
 							</div>
-							<div class="datepicker modaldate" date-format="dd/MM/yyyy">
+							<div class="datepicker modaldate" date-format="dd-MM-yyyy">
 								<input class="forInput form-control modaldatepicker" ng-model="editlostProj.close_at" type="text" placeholder="End Date">
 								<i class="fa fa-calendar fafaPosititionondatepicker"></i>
 								</input>
@@ -1452,9 +1452,9 @@
 						</div>
 
 						<div id="sub-left" class="spacing">
-							<div class="datepicker modaldate" date-format="dd/MM/yyyy">
+							<div class="datepicker modaldate" date-format="dd-MM-yyyy">
 								<input class="forInput form-control modaldatepicker" onkeypress="return false;" ng-model="leadproj.start_date" type="text"
-								 placeholder="Start Date: DD/MM/YYYY" name="startdate" required ng-class="{submitting:addLead.startdate.$error.required && addLead.startdate.$touched}">
+								 placeholder="Start Date: DD-MM-YYYY" name="startdate" required ng-class="{submitting:addLead.startdate.$error.required && addLead.startdate.$touched}">
 								<i class="fa fa-calendar fafaPosititionondatepicker"></i>
 
 								<div ng-messages="addLead.startdate.$error" class="errormainpage">
@@ -1464,9 +1464,9 @@
 						</div>
 
 						<div id="sub-right" class="spacing">
-							<div class="datepicker modaldate" date-format="dd/MM/yyyy">
+							<div class="datepicker modaldate" date-format="dd-MM-yyyy">
 								<input class="forInput form-control modaldatepicker" onkeypress="return false;" name="enddate" ng-model="leadproj.close_at"
-								 type="text" placeholder="End Date: DD/MM/YYYY">
+								 type="text" placeholder="End Date: DD-MM-YYYY">
 							</div>
 						</div>
 

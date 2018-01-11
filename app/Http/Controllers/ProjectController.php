@@ -11,7 +11,7 @@ use App\Product;
 use App\Project;
 use App\Industry;
 use App\Deal;
-
+use Carbon\Carbon;
 
 class ProjectController extends Controller
 {
@@ -96,15 +96,15 @@ class ProjectController extends Controller
                     'status'=>$request->status,
                     'tender'=>$request->tender,
                     'remarks'=>$request->remark,
-                    'close_at'=>Carbon::createFromFormat('d-m-Y',$request->close_at),
-                    'start_date'=>Carbon::createFromFormat('d-m-Y',$request->start_date),
+                    'close_at'=>Carbon::parse($request->close_at)->format('Y-m-d'),
+                    'start_date'=>Carbon::parse($request->start_date)->format('Y-m-d'),
                     'company_id'=>$company->id,
                     'salesperson_id'=>$salesPerson->salesperson_id
             ]);
             
             if($request->has('po_number')){
                 Deal::firstOrCreate(['po_num'=>$request->po_number],
-                    ['po_date'=>Carbon::creatFromFormat('d-m-Y',$request->po_date),'project_id'=>$project->id]);    
+                    ['po_date'=>Carbon::parse($request->po_date)->format('Y-m-d'),'project_id'=>$project->id]);    
             }    
 
             return $project;//reditect('/project')->with('success','A new project is added to the list');
@@ -124,7 +124,7 @@ class ProjectController extends Controller
       return   ['company_name'=>'sometimes|required|string|max:255',
                 'company_id'=>'sometimes|required|',
                 'industry'=>'sometimes|required|',
-                'website'=>'sometimes|required|url',
+                'website'=>'sometimes|required',
                 'office_number'=>'sometimes|required|numeric',
                 'contact_name'=>'sometimes|required',
                 'contact_number'=>'sometimes|required',
@@ -180,14 +180,14 @@ class ProjectController extends Controller
             $project->status = $request->status;
             $project->tender = $request->tender;
             $project->remarks = $request->remark;
-            $project->close_at = Carbon::creatFromFormat('d-m-Y',$request->close_at);
-            $project->start_date = Carbon::creatFromFormat('d-m-Y',$request->start_date);
+            $project->close_at = Carbon::parse($request->close_at)->format('Y-m-d');
+            $project->start_date = Carbon::parse($request->start_date)->format('Y-m-d');
             $project->salesperson_id = $salesPerson->salesperson_id;
             
             if($request->has('po_number')){
                 Deal::updateOrCreate(['project_id' => $project->id],
                 ['po_num' => $request->po_number,
-                'po_date' => Carbon::creatFromFormat('d-m-Y',$request->po_date)]);
+                'po_date' => Carbon::parse($request->po_date)->format('Y-m-d')]);
             }
             return $result = $project->save() ? $result ='success' : $result = 'failed';
         }catch(\Exception $e){

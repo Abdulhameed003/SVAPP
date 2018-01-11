@@ -49,8 +49,8 @@ $factory->define(App\Project::class, function (Faker\Generator $faker) {
         'remarks'=>$faker->text($max = 50),
         'company_id'=>$faker->randomDigitNotNull ,
         'salesperson_id'=>$faker->ean8,
-        'close_at'=> date_create_from_format('d-m-Y',$faker->date($format = 'd-m-Y', $max='now')),
-        'start_date'=> date_create_from_format('d-m-Y',$faker->date($format = 'd-m-Y', $max='now'))
+        'close_at'=> date_create_from_format('d-m-Y',$faker->date($format = 'd-m-Y', $max='2018-12-31',$min='2017-01-01')),
+        'start_date'=> date_create_from_format('d-m-Y',$faker->date($format = 'd-m-Y', $max='2018-12-31', $min='2017-01-01'))
     ];
 });
 
@@ -105,6 +105,6 @@ $factory->define(App\Deal::class, function(faker\Generator $faker){
         return [
             'project_id'=>$faker->randomDigit,
             'po_num' => $faker->ean8,
-            'po_date'=>$faker->date($format ='d-m-Y', $max ='now'),
+            'po_date'=>date_create_from_format('d-m-Y',$faker->date($format ='d-m-Y', $max ='now')),
         ];
     });
