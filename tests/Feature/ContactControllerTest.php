@@ -28,7 +28,7 @@ class ContactControllerTest extends TestCase
         $contact = factory(App\Contact::class)->create();
         $response = $this->actingAs($this->user)->get('api/contact');
         var_dump($response->getContent());
-        $this->assertContains('contact',$response->getContent());
+        $this->assertSee('contact_name',$response->getContent());
     }
 
     /*public function test_contact_create_returns_companies(){
@@ -57,7 +57,7 @@ class ContactControllerTest extends TestCase
         $company = factory(App\Company::class)->create();
         $contact = factory(App\Contact::class)->create(['company_id'=>$company->company_id]);
 
-        $response=$this->actingAs($this->user)->get("/contact/{$contact->id}/edit");
+        $response=$this->actingAs($this->user)->get("api/contact/{$contact->id}/edit");
         $this->assertContains('contact',$response->getContent());
     }
 
@@ -70,7 +70,7 @@ class ContactControllerTest extends TestCase
                 'contact_designation'=>$contact->designation
         ];
 
-        $response=$this->actingAs($this->user)->put("/contact/{$contact->id}",$data);
+        $response=$this->actingAs($this->user)->put("api/contact/{$contact->id}",$data);
         $this->assertDatabaseHas('contacts',['contact_name'=>'John Doe'],'mysql2');
         $this->assertDatabaseHas('contacts',['contact_number'=>'1234567'],'mysql2');
         $this->assertContains('success',$response->getContent());

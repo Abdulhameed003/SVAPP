@@ -37,7 +37,6 @@ class CompanyControllerTest extends TestCase
     public function test_if_edited_company_is_updated(){
         $company = factory(\App\Company::class)->create();
         $data =['company_name'=>$company->company_name,
-                'company_id'=>$company->company_id,
                 'industry_id'=>$company->industry_id,
                 'website'=>'https://something.com',
                 'office_number'=>'234567890'];

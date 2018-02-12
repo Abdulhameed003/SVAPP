@@ -37,7 +37,7 @@ class ConfigControllerTest extends TestCase
     public function test_setting_stores_industry(){
         $industry= factory(App\Industry::class)->make();
         $data=['industry'=>$industry->industry];
-        $response= $this->actingAs($this->user)->post("/settings/add",$data);
+        $response= $this->actingAs($this->user)->post("api/settings/add",$data);
 
         $this->assertDatabaseHas('industries',['industry'=>$industry->industry],'mysql2');
     }

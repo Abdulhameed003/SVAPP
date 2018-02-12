@@ -22,8 +22,7 @@ class salespersonControllerTest extends TestCase
         $this->configEnv->dropDB();
     }
     
-    public function test_salesperson_index_is_displayed()
-    {   
+    public function test_salesperson_index_is_displayed(){   
         $sales=factory(App\SalesPerson::class)->create();
         $project=factory(App\Project::class)->create(['salesperson_id'=>$sales->salesperson_id]);
         $response = $this->actingAs($this->user)->get('api/salesperson');
@@ -51,14 +50,14 @@ class salespersonControllerTest extends TestCase
     public function test_salesperson_is_editable(){
         $sales=  factory(\App\SalesPerson::class)->create(['email'=>$this->user->email]);
 
-        $response = $this->actingAs($this->user)->get("/salesperson/{$sales->id}/edit");
+        $response = $this->actingAs($this->user)->get("api/salesperson/{$sales->id}/edit");
         $this->assertContains('salesperson',$response->getContent());
     }
 
     public function test_salesperson_is_not_editable(){
         $sales=  factory(\App\SalesPerson::class)->create();
         
-            $response = $this->actingAs($this->user)->get("/salesperson/{$sales->id}/edit");
+            $response = $this->actingAs($this->user)->get("api/salesperson/{$sales->id}/edit");
             $this->assertEquals('failed',$response->getContent());
     }
 
@@ -72,7 +71,7 @@ class salespersonControllerTest extends TestCase
             'user_role'=>$sales->position
         ]);
 
-        $response = $this->actingAs($Admin)->delete("/salesperson/{$sales->id}");
+        $response = $this->actingAs($Admin)->delete("api/salesperson/{$sales->id}");
 
         $this->assertDatabaseMissing('salespersons',['email'=>$sales->email],'mysql2');
         $this->assertDatabaseMissing('users',['email'=>$user1->email],'mysql');
@@ -89,7 +88,7 @@ class salespersonControllerTest extends TestCase
             'user_role'=>$sales->position
         ]);
 
-        $response = $this->actingAs($this->user)->delete("/salesperson/{$sales->id}");
+        $response = $this->actingAs($this->user)->delete("api/salesperson/{$sales->id}");
 
         $this->assertDatabaseHas('salespersons',['email'=>$sales->email],'mysql2');
         $this->assertDatabaseHas('users',['email'=>$user1->email],'mysql');

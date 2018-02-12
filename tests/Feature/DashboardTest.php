@@ -29,6 +29,14 @@ class DashboardTest extends TestCase
 
         $response = $this->actingAs($this->user)->get('api/dashboard');
         var_dump($response->getContent());
+        $response->assertJsonStructure(['totalWonCase'=>["New Sales"=>[],"Renewals"=>[]],
+        'totalRenewals'=>['category'=>[],'data'=>[]],
+        'totalNewsales'=>['category'=>[],'data'=>[]],
+        'wonOpp'=>['category'=>[],'data'=>['totalOpp'=>[],'wonOpp'=>[]]],
+        'quarterWonLost'=>['category'=>[],'data'=>['won'=>[],'lost'=>[]]],
+        'salesByProduct'=>['category'=>[],'data'=>[]],
+        'salesByIndustry'=>['category'=>[],'data'=>[]],
+        'totalCloseOpp'=>['category'=>[],'data'=>['deal'=>[],'lead'=>[]]]]);
 
     }
 
