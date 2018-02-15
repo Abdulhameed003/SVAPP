@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\MessageBag;
 use App\User;
 
 
@@ -44,11 +45,21 @@ class Log_inController extends Controller
             return redirect()->intended(route('dashboard.show'));
         }
 
-        return redirect()->back()->withInput($request->only('email','remember','company_id'));
+        return $this->sendFailedLoginResponse($request);
     }
 
     private function Credentials(request $request ){
         return $request->only('email','password','company_id');
+    }
+
+    protected function sendFailedLoginResponse(request $request){
+     
+        $errors= new MessageBag(['error' => 'Invalid Login Details']);
+     
+
+        return redirect()->back()
+            ->withInput($request->only('company_id','email', 'remember'))
+            ->withErrors($errors);
     }
 
     

@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,23 +12,25 @@
 */
 
 
+Route::get('/', function(){
+    return view('auth.login');
+});
 
-    Auth::routes();
-    Route::get('login','Auth\Log_inController@show')->name('log_in.show');
-    Route::post('login','Auth\Log_inController@login')->name('log_in.submit');
-    Route::post('logout','Auth\Log_inController@logout')->name('log_out');
-    Route::get('/', function(){
-        return view('auth.login');
-    });
-    Route::get('/dashboard', function(){
-        return view('layouts.app');
-    })->name('dashboard.show');
-Route::prefix('api')->group(function(){
+Auth::routes();
+Route::get('login','Auth\Log_inController@show')->name('log_in.show');
+Route::post('login','Auth\Log_inController@login')->name('log_in.submit');
+Route::post('logout','Auth\Log_inController@logout')->name('log_out');
+
+Route::get('/dashboard', function(){
+    return view('layouts.app');
+})->name('dashboard.show')->middleware('auth');
+
+Route::middleware(['ajax'])->prefix('api')->group(function(){
         Route::get('/dashboard', 'DashboardController@index');
-        Route::resource('/project', 'ProjectController');
-        Route::resource('/company', 'CompanyController');
-        Route::resource('/contact', 'ContactController');
-        Route::resource('/salesperson', 'SalesPersonController');
+        Route::resource('/project', 'ProjectController',['except'=>['edit']]);
+        Route::resource('/company', 'CompanyController',['except'=>['edit']]);
+        Route::resource('/contact', 'ContactController',['except'=>['edit']]);
+        Route::resource('/salesperson', 'SalesPersonController',['except'=>['edit']]);
         Route::prefix('settings')->group(function() {
             Route::get('/','ConfigController@show')->name('settings.show');
             Route::post('/add','ConfigController@store')->name('settings.store');
@@ -39,5 +41,9 @@ Route::prefix('api')->group(function(){
 });
 
 Route::any( '{catchall}', function ( ) {
-    return view('layouts.app');
+    if (Auth::check()) {
+       return redirect('/dashboard');
+    }elseif(Auth::guest()){
+        return redirect('/login');
+    }
 } )->where('catchall', '(.*)');

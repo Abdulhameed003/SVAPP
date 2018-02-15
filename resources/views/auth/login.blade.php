@@ -16,6 +16,11 @@
             
             <div id="login_form" class="formcontent">
                 {{ csrf_field() }}
+                @if ($errors->has('error'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('error') }}</strong>
+                </span>
+                @endif
                 <div class="form-group{{ $errors->has('company_id') ? ' has-error' : '' }}">
                     <div >
                         <input id="company_id"  type="text" class="form-control registertext" name="company_id"  value="{{ old('company_id') }}" placeholder="Company ID" required autofocus>

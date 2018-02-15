@@ -62,7 +62,11 @@
 
 <body ng-controller="{{Auth::guest() ? 'registerController' : 'mainCtrl'}}">
 
-	@if(Auth::guest()) @yield('content') @endif @includeWhen(Auth::user(),'inc.navbar')
+	@if(Auth::guest())
+		 @yield('content') 
+	@endif 
+	
+	@includeWhen(Auth::check(),'inc.navbar')
 	<div class="ng-view"></div>
 
 

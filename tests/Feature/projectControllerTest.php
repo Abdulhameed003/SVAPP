@@ -36,7 +36,7 @@ class projectControllerTest extends TestCase
         $project = factory(App\Project::class)->create(['company_id'=>$company->id,'product'=>$product->id]);
        
         $response = $this->actingAs($this->user)->withSession(['token'=>'testing12345'])->get('api/project');
-        $response->assertSee("company_id:{$comapany->id}");
+        $response->assertSee("company_id");
         $response->assertSee('project_category');
     
     }

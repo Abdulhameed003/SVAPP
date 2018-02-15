@@ -43,7 +43,7 @@ salesVisionControllers.controller('registerController', ['$scope', '$http', 'use
     };
 }]);
 
-salesVisionControllers.controller('forgetPasswordController', ['$scope', '$modal', function ($scope, $modal) {
+salesVisionControllers.controller('forgetPasswordController', ['$scope', '$modal','$http','userService', function ($scope, $http,userService,$modal) {
     $scope.open = function (size) {
         $scope.modalInstance = $modal.open({
             controller: 'forgetPasswordController',
@@ -63,10 +63,18 @@ salesVisionControllers.controller('forgetPasswordController', ['$scope', '$modal
 
         /**call to update database */
         if (form.$valid) {
-            $scope.user = angular.copy(original);
-            $scope.forgotpass.$setPristine();
-            $scope.forgotpass.$setValidity();
-            $scope.forgotpass.$setUntouched();
+            userService.forgotPassword($scope.user,function(response){
+                    if (response == 200){
+                        $scope.user = angular.copy(original);
+                        $scope.forgotpass.$setPristine();
+                        $scope.forgotpass.$setValidity();
+                        $scope.forgotpass.$setUntouched();
+                        alert('A reset link has been sent to ' + $scope.user.email + ' please click the link to rest your password.');
+                        $scope.modalInstance.dismiss('cancel');
+                    }
+            },function(response){
+                alert(response.data+ 'The was a problem reseting the link');
+            });
 
         }
         if (form.$invalid) {
@@ -94,6 +102,7 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http','das
     dashboardService.showDash(function(response){
         if (response.status = 200){
             test = [{label:"New",value:0},{label:"Old",value:"32322"}];
+           
             $scope.content = response.data;
 
             $scope.totalWonCases.data = test;//$scope.content.totalWonCase;
@@ -154,7 +163,7 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http','das
             placeValuesInside: "0",
             bgcolor: "#EEEEEE"
         },
-         categories: [], //[{
+         //categories: [], //[{
         //     category: [{
         //         label: "Ab"
         //     }, {
@@ -165,7 +174,7 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http','das
         //         label: "NM"
         //     }]
         // }],
-         dataset: []//[{
+         //dataset: []//[{
         //     data: [{
         //         value: "6000"
         //     }, {

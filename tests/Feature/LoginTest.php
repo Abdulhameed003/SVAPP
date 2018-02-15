@@ -53,4 +53,14 @@ class LoginTest extends TestCase
         $response->assertStatus(302);
     }
 
+    public function test_forgot_pass()
+    {
+       
+
+        $data = ['email'=>'solidman003@gmail.com'];
+
+        $response =  $this->post('/password/email',$data);
+        var_dump($response->getContent());
+        
+    }
 }
