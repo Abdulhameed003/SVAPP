@@ -9,7 +9,7 @@
             </div>
             <form name="changepassform" novalidate>
                 <div class="formcontent">
-
+                        <input type="hidden" name="token" user.token="{{ $token }}">
                         <div class="form-group">
                             <input  type="email" ng-class="{submitting: changepassform.email.$error.email || changepassform.email.$error.required && changepassform.email.$touched}"
                                 ng-model="user.email" name="email" class="form-control registertext" placeholder="Email" required>

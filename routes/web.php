@@ -21,9 +21,23 @@ Route::get('login','Auth\Log_inController@show')->name('log_in.show');
 Route::post('login','Auth\Log_inController@login')->name('log_in.submit');
 Route::post('logout','Auth\Log_inController@logout')->name('log_out');
 
-Route::get('/dashboard', function(){
-    return view('layouts.app');
-})->name('dashboard.show')->middleware('auth');
+Route::middleware(['auth'])->group(function(){
+    route::get('/dashboard', function(){
+        return view('layouts.app');
+    })->name('dashboard.show');
+    route::get('/project', function(){
+        return view('layouts.app');
+    });
+    route::get('/company', function(){
+        return view('layouts.app');
+    });
+    route::get('/contact', function(){
+        return view('layouts.app');
+    });
+    route::get('/sales', function(){
+        return view('layouts.app');
+    });
+});
 
 Route::middleware(['ajax'])->prefix('api')->group(function(){
         Route::get('/dashboard', 'DashboardController@index');

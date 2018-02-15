@@ -43,7 +43,8 @@ salesVisionControllers.controller('registerController', ['$scope', '$http', 'use
     };
 }]);
 
-salesVisionControllers.controller('forgetPasswordController', ['$scope', '$modal','$http','userService', function ($scope, $http,userService,$modal) {
+salesVisionControllers.controller('forgetPasswordController', ['$scope', '$modal','$http','userService', function ($scope,$modal, $http,userService) {
+   
     $scope.open = function (size) {
         $scope.modalInstance = $modal.open({
             controller: 'forgetPasswordController',
@@ -1156,19 +1157,26 @@ salesVisionControllers.controller('salesController', ['$scope', '$http', 'salesS
 
 /**Changepassword.html controller */
 
-salesVisionControllers.controller('changepassctrl', function ($scope) {
+salesVisionControllers.controller('changepassctrl','userService', function ($scope,userService) {
 
 
     var original = angular.copy($scope.user);
     $scope.postchpassform = function (form) {
 
         if (form.$valid) {
-            alert('can submit');
-            $scope.user = angular.copy(original);
-            $scope.changepassform.$setPristine();
-            $scope.changepassform.$setValidity();
-            $scope.changepassform.$setUntouched();
+            userService.resetPassword($scope.user,function(response){
+                if (response.status == 200){
+                    $scope.user = angular.copy(original);
+                    $scope.changepassform.$setPristine();
+                    $scope.changepassform.$setValidity();
+                    $scope.changepassform.$setUntouched();
 
+                }
+            }, function(response){
+
+            });
+            alert('can submit');
+            
         }
         if (form.$invalid) {
 
