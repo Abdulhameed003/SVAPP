@@ -92,7 +92,7 @@ salesVisionControllers.controller('forgetPasswordController', ['$scope', '$modal
 
 }]);
 
-salesVisionControllers.controller('dashboardController', ['$scope', '$http', 'dashboardService', function ($scope, $http, dashboardService) {
+salesVisionControllers.controller('dashboardController', ['$scope', '$http','dashboardService', function ($scope, $http, dashboardService) {
     var category = "";
     var projectTitle = "";
     $scope.showdashboard = true;
@@ -1159,7 +1159,7 @@ salesVisionControllers.controller('salesController', ['$scope', '$http', 'salesS
 
 /**Changepassword.html controller */
 
-salesVisionControllers.controller('changepassctrl', 'userService', function ($scope, userService) {
+salesVisionControllers.controller('changepassctrl','userService','$location', '$window', function ($scope,userService,$location,$windows) {
 
 
     var original = angular.copy($scope.user);
@@ -1172,7 +1172,7 @@ salesVisionControllers.controller('changepassctrl', 'userService', function ($sc
                     $scope.changepassform.$setPristine();
                     $scope.changepassform.$setValidity();
                     $scope.changepassform.$setUntouched();
-
+                    window.location = "/dashboard";
                 }
             }, function (response) {
 
@@ -1286,7 +1286,7 @@ salesVisionControllers.controller('mainCtrl', ['$scope', '$location', function (
 /**modals */
 
 
-salesVisionControllers.controller('MyControllerModal', ['$scope', '$modal', function ($scope, $modal) {
+salesVisionControllers.controller('MyControllerModal', ['$scope', '$modal', 'projectService', function ($scope, $modal, projectService) {
 
     /** nav bar modals */
 
@@ -1415,6 +1415,7 @@ salesVisionControllers.controller('MyControllerModal', ['$scope', '$modal', func
     };
 
     $scope.openEdit = function (size, proj) {
+        projectService.setid(proj.id);
         if (proj.project_category == 'Lead') {
             var modalInstance = $modal.open({
                 controller: 'forCloseEditlead',
@@ -1425,6 +1426,7 @@ salesVisionControllers.controller('MyControllerModal', ['$scope', '$modal', func
 
             });
             modalInstance.leadproject = proj;
+            
         }
         if (proj.project_category == 'Deal') {
             var modalInstance = $modal.open({

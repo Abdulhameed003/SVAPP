@@ -38,5 +38,8 @@ class Project extends ConfigureDB
         return static::with('company.industry','company.contacts','product','salesperson','deal')->orderBy('id','Desc')->get();
     }
 
+    public static function getRecentlyAdded($id){
+        return static::with('company.industry','company.contacts','product','salesperson','deal')->where('id',$id)->get();
+    }
 
 }
