@@ -43,8 +43,8 @@ salesVisionControllers.controller('registerController', ['$scope', '$http', 'use
     };
 }]);
 
-salesVisionControllers.controller('forgetPasswordController', ['$scope', '$modal','$http','userService', function ($scope,$modal, $http,userService) {
-   
+salesVisionControllers.controller('forgetPasswordController', ['$scope', '$modal', '$http', 'userService', function ($scope, $modal, $http, userService) {
+
     $scope.open = function (size) {
         $scope.modalInstance = $modal.open({
             controller: 'forgetPasswordController',
@@ -64,20 +64,17 @@ salesVisionControllers.controller('forgetPasswordController', ['$scope', '$modal
 
         /**call to update database */
         if (form.$valid) {
-                        
-            userService.forgotPassword($scope.user,function(response){
-                    if (response.status == 200){
-                        alert('A reset link has been sent  please click the link to rest your password.');
-                        $scope.user = angular.copy(original);
-                        $scope.forgotpass.$setPristine();
-                        $scope.forgotpass.$setValidity();
-                        $scope.forgotpass.$setUntouched();
-                        //$scope.modalInstance.dismiss('cancel');
-                        
-                       
-                    }
-            },function(response){
-                alert(response.data+ 'The was a problem reseting the link');
+            userService.forgotPassword($scope.user, function (response) {
+                if (response == 200) {
+                    $scope.user = angular.copy(original);
+                    $scope.forgotpass.$setPristine();
+                    $scope.forgotpass.$setValidity();
+                    $scope.forgotpass.$setUntouched();
+                    alert('A reset link has been sent to ' + $scope.user.email + ' please click the link to rest your password.');
+                    $scope.modalInstance.dismiss('cancel');
+                }
+            }, function (response) {
+                alert(response.data + 'The was a problem reseting the link');
             });
 
         }
@@ -102,11 +99,11 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http','das
     $scope.projectTitle = "Dashboard";
     var myEl = angular.element(document.querySelector('#dash'));
     myEl.addClass('active');
-    
-    dashboardService.showDash(function(response){
-        if (response.status = 200){
-            test = [{label:"New",value:0},{label:"Old",value:"32322"}];
-           
+
+    dashboardService.showDash(function (response) {
+        if (response.status = 200) {
+            test = [{ label: "New", value: 0 }, { label: "Old", value: "32322" }];
+            dashboardService.setDetails(response.data);
             $scope.content = response.data;
 
             $scope.totalWonCases.data = test;//$scope.content.totalWonCase;
@@ -120,7 +117,7 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http','das
             $scope.totalwonComparison.categories = $scope.content.wonOpp.category;
             $scope.totalwonComparison.dataset[0].data = $scope.content.wonOpp.data.totalOpp;
             $scope.totalwonComparison.dataset[1].data = $scope.content.wonOpp.data.wonOpp;
-            
+
             $scope.QuarterWoncase.categories = $scope.content.quarterWonLost.category;
             $scope.QuarterWoncase.dataset[0].data = $scope.content.quarterWonLost.data.won;
             $scope.QuarterWoncase.dataset[1].data = $scope.content.quarterWonLost.data.lost;
@@ -132,12 +129,13 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http','das
             $scope.totalclosingbyquarter.dataset[0].data = $scope.content.totalCloseOpp.data.deal;
             $scope.totalclosingbyquarter.dataset[1].data = $scope.content.totalCloseOpp.data.lead;
 
-    
+
         }
-    },function(response){
+    }, function (response) {
         alert('something went wrong!');
     });
-
+    var dashdataset=dashboardService.getDetails();
+    alert(dashdataset);
     $scope.totalWonCases = {
         chart: {
             caption: "Won Cases",
@@ -152,7 +150,7 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http','das
             placeValuesInside: "0",
             bgcolor: "#EEEEEE",
         },
-        data:  []
+        data: []
     };
 
     $scope.totalRenewals = {
@@ -167,7 +165,7 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http','das
             placeValuesInside: "0",
             bgcolor: "#EEEEEE"
         },
-         //categories: [], //[{
+        //categories: [], //[{
         //     category: [{
         //         label: "Ab"
         //     }, {
@@ -178,7 +176,7 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http','das
         //         label: "NM"
         //     }]
         // }],
-         //dataset: []//[{
+        //dataset: []//[{
         //     data: [{
         //         value: "6000"
         //     }, {
@@ -245,59 +243,59 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http','das
         },
         categories: 0,
         // [{
-            // category: [{
-            //     label: "Jan"
-            // }, {
-            //     label: "Feb"
-            // }, {
-            //     label: "Mar"
-            // }, {
-            //     label: "Apr"
-            // }, {
-            //     label: "May"
-            // }, {
-            //     label: "Jun"
-            // }, {
-            //     label: "Jul"
-            // }, {
-            //     label: "Aug"
-            // }, {
-            //     label: "Sep"
-            // }, {
-            //     label: "Oct"
-            // }, {
-            //     label: "Nov"
-            // }, {
-            //     label: "Dec"
-            // }]
+        // category: [{
+        //     label: "Jan"
+        // }, {
+        //     label: "Feb"
+        // }, {
+        //     label: "Mar"
+        // }, {
+        //     label: "Apr"
+        // }, {
+        //     label: "May"
+        // }, {
+        //     label: "Jun"
+        // }, {
+        //     label: "Jul"
+        // }, {
+        //     label: "Aug"
+        // }, {
+        //     label: "Sep"
+        // }, {
+        //     label: "Oct"
+        // }, {
+        //     label: "Nov"
+        // }, {
+        //     label: "Dec"
+        // }]
         //}],
         dataset: [{
             seriesName: "Total Oppotunities",
             data: []
             // [{
-                //     value: "16000"
-                // }, {
-                //     value: "20000"
-                // }, {
-                //     value: "18000"
-                // }, {
-                //     value: "19000"
-                // }, {
-                //     value: "15000"
-                // }, {
-                //     value: "21000"
-                // }, {
-                //     value: "16000"
-                // }, {
-                //     value: "20000"
-                // }, {
-                //     value: "17000"
-                // }, {
-                //     value: "25000"
-                // }, {
-                //     value: "19000"
-                // }, {
-                //     value: "23000"
+            //     value: "16000"
+            // }, {
+            //     value: "20000"
+            // }, {
+            //     value: "18000"
+            // }, {
+            //     value: "19000"
+            // }, {
+            //     value: "15000"
+            // }, {
+            //     value: "21000"
+            // }, {
+            //     value: "16000"
+            // }, {
+            //     value: "20000"
+            // }, {
+            //     value: "17000"
+            // }, {
+            //     value: "25000"
+            // }, {
+            //     value: "19000"
+            // }, {
+            //     value: "23000"
             // }]
         }, {
             seriesName: "Won Cases",
@@ -305,29 +303,29 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http','das
             showValues: "0",
             data: []
             // [{
-                //     value: "4000"
-                // }, {
-                //     value: "5000"
-                // }, {
-                //     value: "3000"
-                // }, {
-                //     value: "4000"
-                // }, {
-                //     value: "1000"
-                // }, {
-                //     value: "7000"
-                // }, {
-                //     value: "1000"
-                // }, {
-                //     value: "4000"
-                // }, {
-                //     value: "1000"
-                // }, {
-                //     value: "8000"
-                // }, {
-                //     value: "2000"
-                // }, {
-                //     value: "7000"
+            //     value: "4000"
+            // }, {
+            //     value: "5000"
+            // }, {
+            //     value: "3000"
+            // }, {
+            //     value: "4000"
+            // }, {
+            //     value: "1000"
+            // }, {
+            //     value: "7000"
+            // }, {
+            //     value: "1000"
+            // }, {
+            //     value: "4000"
+            // }, {
+            //     value: "1000"
+            // }, {
+            //     value: "8000"
+            // }, {
+            //     value: "2000"
+            // }, {
+            //     value: "7000"
             // }]
         }],
         /*data: [{
@@ -372,17 +370,17 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http','das
             placeValuesInside: "0",
             bgcolor: "#EEEEEE"
         },
-        categories: [] ,
+        categories: [],
         // [{
-            //     category: [{
-            //         label: "Q1"
-            //     }, {
-            //         label: "Q2"
-            //     }, {
-            //         label: "Q3"
-            //     }, {
-            //         label: "Q4"
-            //     }]
+        //     category: [{
+        //         label: "Q1"
+        //     }, {
+        //         label: "Q2"
+        //     }, {
+        //         label: "Q3"
+        //     }, {
+        //         label: "Q4"
+        //     }]
         // }],
         dataset: [
             {
@@ -448,20 +446,20 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http','das
         },
         data: []
         // [{
-            //     label: "Hg",
-            //     value: "2000"
-            // },
-            // {
-            //     label: "Ab",
-            //     value: "8000"
-            // },
-            // {
-            //     label: "Kk",
-            //     value: "4500"
-            // },
-            // {
-            //     label: "Mn",
-            //     value: "24000"
+        //     label: "Hg",
+        //     value: "2000"
+        // },
+        // {
+        //     label: "Ab",
+        //     value: "8000"
+        // },
+        // {
+        //     label: "Kk",
+        //     value: "4500"
+        // },
+        // {
+        //     label: "Mn",
+        //     value: "24000"
         // }]
     };
 
@@ -484,22 +482,22 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http','das
         },
         data: []
         // [{
-            //     label: "Reseller",
-            //     value: "2000"
-            // },
-            // {
-            //     label: "Health",
-            //     value: "24000"
-            // },
-            // {
-            //     label: "Education",
-            //     value: "4500"
-            // },
-            // {
-            //     label: "Retail",
-            //     value: "5000"
+        //     label: "Reseller",
+        //     value: "2000"
+        // },
+        // {
+        //     label: "Health",
+        //     value: "24000"
+        // },
+        // {
+        //     label: "Education",
+        //     value: "4500"
+        // },
+        // {
+        //     label: "Retail",
+        //     value: "5000"
         // }]
-    };     
+    };
 
     $scope.totalclosingbyquarter = {
         chart: {
@@ -517,9 +515,9 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http','das
             bgcolor: "#EEEEEE"
         },
         categories: [],
-        dataset: [{ 
+        dataset: [{
             seriesname: "Closing Deals",
-               data: []
+            data: []
             // [{
             //         label: "Q1",
             //         value: "5"
@@ -536,11 +534,11 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http','das
             //         label: "Q4",
             //         value: "12"
             // }]
-        },{
+        }, {
             seriesname: "Closing Leads",
             data: []
         }]
-        
+
     };
 
 }]);
@@ -564,6 +562,7 @@ salesVisionControllers.controller('projectController', ['$scope', '$http', 'proj
             this.projects = response.data;
             $scope.searchData = '';
             $scope.rows = this.projects;
+            projectService.setDetails($scope.rows);
             $scope.filteredRows = this.projects;
 
             //pagination
@@ -574,7 +573,7 @@ salesVisionControllers.controller('projectController', ['$scope', '$http', 'proj
             };
 
             $scope.curPage = 0;
-            $scope.pageSize = 11;
+            $scope.pageSize = 15;
             $scope.numberOfPages = function () {
                 return Math.ceil($scope.rows.length / $scope.pageSize);
 
@@ -1018,7 +1017,7 @@ salesVisionControllers.controller('projectController', ['$scope', '$http', 'proj
         };
 
 
- 
+
     }, function (response) {
         alert('There was a problem getting the projects from the database');
     });
@@ -1053,7 +1052,7 @@ salesVisionControllers.controller('companyController', ['$scope', '$http', 'comp
             };
 
             $scope.curPage = 0;
-            $scope.pageSize = 11;
+            $scope.pageSize = 15;
             $scope.numberOfPages = function () {
 
                 return Math.ceil($scope.rows4.length / $scope.pageSize);
@@ -1091,7 +1090,7 @@ salesVisionControllers.controller('contactController', ['$scope', '$http', 'comp
             };
 
             $scope.curPage = 0;
-            $scope.pageSize = 11;
+            $scope.pageSize = 15;
             $scope.numberOfPages = function () {
                 return Math.ceil($scope.rows5.length / $scope.pageSize);
 
@@ -1133,7 +1132,7 @@ salesVisionControllers.controller('salesController', ['$scope', '$http', 'salesS
             };
 
             $scope.curPage = 0;
-            $scope.pageSize = 11;
+            $scope.pageSize = 15;
             $scope.numberOfPages = function () {
                 return Math.ceil($scope.rows6.length / $scope.pageSize);
             };
@@ -1167,19 +1166,19 @@ salesVisionControllers.controller('changepassctrl','userService','$location', '$
     $scope.postchpassform = function (form) {
 
         if (form.$valid) {
-            userService.resetPassword($scope.user,function(response){
-                if (response.status == 320){
+            userService.resetPassword($scope.user, function (response) {
+                if (response.status == 200) {
                     $scope.user = angular.copy(original);
                     $scope.changepassform.$setPristine();
                     $scope.changepassform.$setValidity();
                     $scope.changepassform.$setUntouched();
                     window.location = "/dashboard";
                 }
-            }, function(response){
+            }, function (response) {
 
             });
             alert('can submit');
-            
+
         }
         if (form.$invalid) {
 
@@ -1675,36 +1674,37 @@ salesVisionControllers.controller('forCloseLead', ['$scope', '$modalInstance', '
     });
     var original = angular.copy($scope.leadproj);
     $scope.foraddnewcompany = false;
-    $scope.watchselect=function(){
+    $scope.watchselect = function () {
 
-        if ($scope.showAdd == true){
+        if ($scope.showAdd == true) {
             $scope.foraddnewcompany = true;
 
         }
         else {
             $scope.foraddnewcompany = false;
-       
+
         }
     }
 
     $scope.postAddLeadForm = function (form) {
         if (form.$valid) {
-            alert('can submit');
-             projectService.createProject($scope.leadproj, function (response) {
-                    if (response.data == 'success') {
-                        alert('Project created succesfully');
-                        $scope.leadproj = angular.copy(original);
-                        $scope.addLead.$setPristine();
-                        $scope.addLead.$setValidity();
-                        $scope.addLead.$setUntouched();
-                        $scope.rows.push(leadproj);
-                     
-                    }
-                }, function (response) {
-                    var error = response.data;
-                    alert('There was problem creating project');
-                });
-                
+            // alert('can submit');
+            projectService.createProject($scope.leadproj, function (response) {
+                if (response.status == 200) {
+                    alert('Project created succesfully');
+                    //alert(response.data.company.company_name);
+                    projectService.getDetails().push(response.data);
+                    // $scope.leadproj = angular.copy(original);
+                    // $scope.addLead.$setPristine();
+                    // $scope.addLead.$setValidity();
+                    // $scope.addLead.$setUntouched();
+
+                }
+            }, function (response) {
+                var error = response.data;
+                alert('There was problem creating project');
+            });
+
             $scope.close();
         }
 
@@ -1757,11 +1757,11 @@ salesVisionControllers.controller('forCloseDeal', ['$scope', '$modalInstance', '
         $scope.types = [
             {
                 "id": "1",
-                "name": "New sales"
+                "name": "New Sale"
             },
             {
                 "id": "2",
-                "name": "Renewals"
+                "name": "Renewal"
             }
 
 
@@ -1774,17 +1774,30 @@ salesVisionControllers.controller('forCloseDeal', ['$scope', '$modalInstance', '
 
 
     var original = angular.copy($scope.Dealproj);
+    $scope.foraddnewcompany = false;
+    $scope.watchselectDeal = function () {
+
+        if ($scope.showAddDeal == true) {
+            $scope.foraddnewcompany = true;
+
+        }
+        else {
+            $scope.foraddnewcompany = false;
+
+        }
+    };
+
     $scope.postAddDealForm = function (form) {
 
 
         if (form.$valid) {
             projectService.createProject($scope.Dealproj, function (response) {
-                if (response.data == 'success') {
+                if (response.status == 200) {
                     alert('Project created succesfully');
-                    $scope.Dealproj = angular.copy(original);
-                    $scope.addDeal.$setPristine();
-                    $scope.addDeal.$setValidity();
-                    $scope.addDeal.$setUntouched();
+                    // $scope.Dealproj = angular.copy(original);
+                    // $scope.addDeal.$setPristine();
+                    // $scope.addDeal.$setValidity();
+                    // $scope.addDeal.$setUntouched();
                     //push data to table
                 }
             }, function (response) {
@@ -1808,26 +1821,23 @@ salesVisionControllers.controller('forCloseDeal', ['$scope', '$modalInstance', '
     };
 
     $scope.resetSelect = function () {
-        $scope.Dealproj.companyID = $scope.default;
+        $scope.Dealproj.company_name = $scope.default;
         $scope.addDeal.addCompanyName.$setUntouched();
         $scope.addDeal.companyWebsite.$setUntouched();
         $scope.addDeal.companyPhone.$setUntouched();
-        $scope.addDeal.companyAddress.$setUntouched();
         $scope.addDeal.industry.$setUntouched();
         $scope.addDeal.contactPerson.$setUntouched();
         $scope.addDeal.contPerEmail.$setUntouched();
         $scope.addDeal.contPerPhone.$setUntouched();
         $scope.addDeal.contPerPos.$setUntouched();
-        $scope.Dealproj.addCompanyName = '';
-        $scope.Dealproj.companyWebsite = '';
-        $scope.Dealproj.companyPhone = '';
-        $scope.Dealproj.companyAddress = '';
-        $scope.Dealproj.industry = '';
-        $scope.Dealproj.contactPerson = '';
-        $scope.Dealproj.contPerEmail = '';
-        $scope.Dealproj.contPerPhone = '';
-        $scope.Dealproj.contPerPos = '';
+        $scope.Dealproj.website = '';
+        $scope.Dealproj.office_number = '';
+        $scope.Dealproj.contact_name = '';
+        $scope.Dealproj.contact_email = '';
+        $scope.Dealproj.contact_number = '';
+        $scope.Dealproj.contact_designation = '';
     };
+
 
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
@@ -1979,7 +1989,7 @@ salesVisionControllers.controller('forCloseEditlead', ['$scope', '$modalInstance
             },
             {
                 "id": "2",
-                "name": "Successfull"
+                "name": "Successful"
             },
             {
                 "id": "3",
@@ -1992,11 +2002,11 @@ salesVisionControllers.controller('forCloseEditlead', ['$scope', '$modalInstance
         $scope.types = [
             {
                 "id": "1",
-                "name": "New sales"
+                "name": "New Sale"
             },
             {
                 "id": "2",
-                "name": "Renewals"
+                "name": "Renewal"
             }
 
         ];
@@ -2029,48 +2039,60 @@ salesVisionControllers.controller('forCloseEditlead', ['$scope', '$modalInstance
             id: 2
         }
         ];
-
+        $scope.checkdeal = false;
 
         $scope.selectedItemChanged = function () {
-
-            if ($scope.editLeadProj.project_category != "Deal") {
+            if ($scope.editLeadProj.project_category == "Deal") {
+                alert('deal is selected');
+                $scope.checkdeal = true;
+            }
+            else if ($scope.editLeadProj.project_category != "Deal") {
+                $scope.checkdeal = false;
                 $scope.editLead.podate.$setUntouched();
-                $scope.editLead.podate.$setValidity();
-                $scope.editLead.podate.$setPristine();
+                // $scope.editLead.podate.$setValidity();
+                // $scope.editLead.podate.$setPristine();
                 $scope.editLead.ponumber.$setUntouched();
-                $scope.editLead.ponumber.$setValidity();
-                $scope.editLead.ponumber.$setPristine();
+                //$scope.editLead.ponumber.$setValidity();
+                // $scope.editLead.ponumber.$setPristine();
                 $scope.editLeadProj.ponumber = '';
                 $scope.editLeadProj.podate = '';
             }
 
+
+
             if ($scope.editLeadProj.project_category != "Lead") {
-                $scope.editLead.tender.$setUntouched();
-                $scope.editLead.tender.$setValidity();
-                $scope.editLead.tender.$setPristine();
-                $scope.editLead.statusID.$setUntouched();
-                $scope.editLead.statusID.$setValidity();
-                $scope.editLead.statusID.$setPristine();
+                // $scope.editLead.tender.$setUntouched();
+                // $scope.editLead.tender.$setValidity();
+                // $scope.editLead.tender.$setPristine();
+                // $scope.editLead.statusID.$setUntouched();
+                // $scope.editLead.statusID.$setValidity();
+                // $scope.editLead.statusID.$setPristine();
             }
 
             if ($scope.editLeadProj.project_category != "Lost case") {
-                $scope.editLead.salesPerson.$setUntouched();
-                $scope.editLead.salesPersonr.$setValidity();
-                $scope.editLead.salesPerson.$setPristine();
+                // $scope.editLead.salesPerson.$setUntouched();
+                //$scope.editLead.salesPersonr.$setValidity();
+                // $scope.editLead.salesPerson.$setPristine();
 
             }
 
 
+
+
         };
+
     }, function (response) {
         alert('No predefined data are set for industires, company and products');
     });
 
 
     var original = angular.copy($scope.editLeadProj);
+
     $scope.editLeadRow = function (form) {
         /**call to update database */
         if (form.$valid) {
+            alert('can');
+
             projectService.updateProject($scope.editLeadProj, function (response) {
                 if (response.status == 200) {
                     alert('Updated successfully');
@@ -2082,10 +2104,10 @@ salesVisionControllers.controller('forCloseEditlead', ['$scope', '$modalInstance
             $scope.editLead.$setPristine();
             $scope.editLead.$setValidity();
             $scope.editLead.$setUntouched();
-
+            $modalInstance.dismiss('cancel');
         }
         if (form.$invalid) {
-
+            alert('invalid');
             angular.forEach($scope.editLead.$error, function (field) {
                 angular.forEach(field, function (errorField) {
                     errorField.$setTouched();
@@ -2094,10 +2116,11 @@ salesVisionControllers.controller('forCloseEditlead', ['$scope', '$modalInstance
         }
     };
 
-
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
     };
+
+
 
 
 }]);
@@ -2275,9 +2298,10 @@ salesVisionControllers.controller('forCloseSalesperson', ['$scope', '$modalInsta
 
 }]);
 
-salesVisionControllers.controller('forCloseMultipledelete', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+salesVisionControllers.controller('forCloseMultipledelete', ['$scope', '$modalInstance', 'projectService', function ($scope, $modalInstance, projectService) {
     $scope.deleteHeaderrows = "Delete Projects";
     $scope.deleteMessage = "Are you sure to delete the selected projects?";
+
 
     $scope.removeSelectedRows = function () {
         var rows = $modalInstance.list;
@@ -2285,11 +2309,16 @@ salesVisionControllers.controller('forCloseMultipledelete', ['$scope', '$modalIn
         for (var i = 0; i < numbers; i++) {
             angular.forEach($scope.rows, function (value) {
                 if (value.id == rows[i]) {
-                    var index = $scope.rows.indexOf(value);
-                    $scope.rows.splice(index, 1);
+                    var indexid = rows[i];
+                    projectService.deleteProject(indexid, function (response) {
+                        if (response.status == 200) {
+                            var index = $scope.rows.indexOf(value);
+                            $scope.rows.splice(index, 1);
+                        }
+                    }, function (response) {
+                        alert('There was an error deleting the selected project');
+                    });
                 }
-
-
             });
         }
 

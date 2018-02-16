@@ -609,26 +609,26 @@
 						<h5>Company and Contact:</h5>
 						<input type="hidden" ng-model="Dealproj.project_category" />
 						<div class="form-group">
-							<select class="forInput form-control" id="companyselect"  ng-model="Dealproj.company_name"  ng-options="company.company_name as company.company_name for company in companies track by company.id"
+							<select class="forInput form-control" id="companyselect"  ng-model="Dealproj.company_name" ng-change="watchselectDeal()"  ng-options="company.company_name as company.company_name for company in companies track by company.id"
 							 ng-disabled="addcompany" name="companyName" ng-class="{submitting:addDeal.companyName.$error.required && addDeal.companyName.$touched}"
 							 required>
-								<option value="" default selected>Select the Company</option>
+								<option value=""  default selected>Select the Company</option>
 							</select>
 							<a href="#" id="addIcon">
-								<span id="addIcon" class="glyphicon glyphicon-plus-sign" ng-init="showAdd=false" ng-click="showAdd=!showAdd; addcompany=!addcompany; resetSelect()"></span>
+								<span id="addIcon" class="glyphicon glyphicon-plus-sign" ng-init="showAddDeal=false" ng-click="showAddDeal=!showAddDeal; addcompany=!addcompany; watchselectDeal(); resetSelect()"></span>
 							</a>
 							<div class="errormainpage form-group">
 								<div ng-show="addDeal.companyName.$error.required" ng-if="(addDeal.companyName.$touched && (!Dealproj.addCompanyName || !Dealproj.companyWebsite || !Dealproj.companyPhone 
                                                 && !Dealproj.companyAddress || !Dealproj.industry || !Dealproj.contactPerson || !Dealproj.contPerEmail || !Dealproj.contPerPhone || !Dealproj.contPerPos))">You either need to select the company or add new company.</div>
 							</div>
 						</div>
-						<div ng-show="showAdd">
+						<div ng-show="showAddDeal">
 							<div class="form-group spacinga">
 								<div class="form-inline">
 									<div class="form-group">
 										<input class="forInput form-control" type="text" name="addCompanyName" ng-model="Dealproj.company_name" placeholder="Company name"
 										 ng-class="{submitting:addDeal.addCompanyName.$error.required && addDeal.addCompanyName.$touched}"
-										 required>
+										 ng-required="foraddnewcompany">
 										<div class="errormainpage">
 											<div ng-show="addDeal.addCompanyName.$error.required" ng-if="addDeal.addCompanyName.$touched">Can't leave this empty.</div>
 										</div>
@@ -636,7 +636,7 @@
 									<div class="form-group">
 										<input class="forInput form-control" type="text" ng-pattern="/^(((ht|f)tp(s?))\://)?(www.|[a-zA-Z].)[a-zA-Z0-9\-\.]+\.(com|edu|gov|mil|net|org|biz|info|name|museum|us|ca|uk)(\:[0-9]+)*(/($|[a-zA-Z0-9\.\,\;\?\'\\\+&amp;%\$#\=~_\-]+))*$/"
 										 name="companyWebsite" ng-model="Dealproj.website" placeholder="Company Website" ng-class="{submitting:addDeal.companyWebsite.$error.required && addDeal.companyWebsite.$touched &&  !Dealproj.companyID}"
-										 required>
+										 ng-required="foraddnewcompany">
 										<div class="errormainpage" ng-messages="addDeal.companyWebsite.$error">
 											<div ng-message="required" ng-if="addDeal.companyWebsite.$touched">Can't leave this empty.</div>
 											<div ng-message="pattern" ng-if="addDeal.companyWebsite.$touched ">Wrong website format.</div>
@@ -647,9 +647,9 @@
 							<div class="form-group spacinga">
 								<div class="form-inline">
 									<div class="form-group" id="registerpassword">
-										<input class="forInput form-control" type="text" name="companyPhone" ng-model="Dealproj.office_num" ng-maxlength="10" placeholder="Company Office Phone Number"
+										<input class="forInput form-control" type="text" name="companyPhone" ng-model="Dealproj.office_number" ng-maxlength="10" placeholder="Company Office Phone Number"
 										 ng-class="{submitting:((addDeal.companyPhone.$error.required || addDeal.companyPhone.$error.maxlength) && addDeal.companyPhone.$touched &&  !Dealproj.companyID)}"
-										 required restrict-to="[0-9]" popover="Example: 037463325" popover-placement="bottom" popover-trigger="mouseenter">
+										 ng-required="foraddnewcompany" restrict-to="[0-9]" popover="Example: 037463325" popover-placement="bottom" popover-trigger="mouseenter">
 										<div ng-messages="addDeal.companyPhone.$error" class="errormainpage">
 											<div ng-message="required" ng-if="addDeal.companyPhone.$touched && !Dealproj.companyID">Can't leave this empty.</div>
 											<div ng-message="maxlength" ng-if="addDeal.companyPhone.$touched && !Dealproj.companyID">Maximum length is 10 numbers.</div>
@@ -658,7 +658,7 @@
 									<div class="form-group">
 										<input class="forInput form-control" only-letters-input type="text" name="contactPerson" ng-model="Dealproj.contact_name"
 										 placeholder="Contact Person Name" ng-class="{submitting:addDeal.contactPerson.$error.required && addDeal.contactPerson.$touched &&  !Dealproj.companyID}"
-										 required>
+										 ng-required="foraddnewcompany">
 										<div class="errormainpage">
 											<div ng-show="addDeal.contactPerson.$error.required" ng-if="addDeal.contactPerson.$touched && !Dealproj.companyID">Can't leave this empty.</div>
 										</div>
@@ -668,8 +668,8 @@
 							<div class="form-group spacinga">
 								<div class="form-inline">
 									<div class="form-group">
-										<select class="forInput form-control" name="industry" ng-model="Dealproj.industry_id" ng-options="industry.id as industry.industry for industry in industryList"
-										 ng-class="{submitting:addDeal.industry.$error.required && addDeal.industry.$touched &&  !Dealproj.companyID}" required>
+										<select class="forInput form-control" name="industry" ng-model="Dealproj.industry" ng-options="industry.id as industry.industry for industry in industryList"
+										 ng-class="{submitting:addDeal.industry.$error.required && addDeal.industry.$touched &&  !Dealproj.companyID}" ng-required="foraddnewcompany">
 											<option value="" default disabled selected>Select the Industry</option>
 										</select>
 										<div class="errormainpage">
@@ -677,9 +677,9 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<input class="forInput form-control" type="text" only-letters-input name="contPerPos" ng-model="Dealproj.designation" placeholder="Contact Person Position"
+										<input class="forInput form-control" type="text" only-letters-input name="contPerPos" ng-model="Dealproj.contact_designation" placeholder="Contact Person Position"
 										 ng-class="{submitting:addDeal.contPerPos.$error.required && addDeal.contPerPos.$touched &&  !Dealproj.companyID}"
-										 required>
+										 ng-required="foraddnewcompany">
 										<div class="errormainpage">
 											<div ng-show="addDeal.contPerPos.$error.required" ng-if="addDeal.contPerPos.$touched && !Dealproj.companyID">Can't leave this empty.</div>
 										</div>
@@ -689,9 +689,9 @@
 							<div class="form-group spacinga">
 								<div class="form-inline">
 									<div class="form-group">
-										<input class="forInput form-control" type="email" name="contPerEmail" ng-model="Dealproj.email" placeholder="Contact Person Email"
+										<input class="forInput form-control" type="email" name="contPerEmail" ng-model="Dealproj.contact_email" placeholder="Contact Person Email"
 										 ng-class="{submitting: ((addDeal.contPerEmail.$error.email || addDeal.contPerEmail.$error.required && !Dealproj.companyID) && addDeal.contPerEmail.$touched)}"
-										 required>
+										 ng-required="foraddnewcompany">
 										<div ng-messages="addDeal.contPerEmail.$error" class="errormainpage">
 											<div ng-message="email" ng-if="addDeal.contPerEmail.$touched && !Dealproj.companyID">Wrong email format.</div>
 											<div ng-message="required" ng-if="addDeal.contPerEmail.$touched && !Dealproj.companyID">Can't leave this empty.</div>
@@ -700,7 +700,7 @@
 									<div class="form-group" id="registerpassword">
 										<input class="forInput form-control" type="text" name="contPerPhone" ng-maxlength="15" ng-model="Dealproj.contact_number"
 										 placeholder="Contact Person Phone Number" ng-class="{submitting:((addDeal.contPerPhone.$error.required || addDeal.contPerPhone.$error.maxlength) && addDeal.contPerPhone.$touched && !Dealproj.companyID)}"
-										 required popover="Example: 0172345464" popover-placement="bottom" popover-trigger="mouseenter" restrict-to="[0-9]">
+										 ng-required="foraddnewcompany" popover="Example: 0172345464" popover-placement="bottom" popover-trigger="mouseenter" restrict-to="[0-9]">
 										<div ng-messages="addDeal.contPerPhone.$error" class="errormainpage">
 											<div ng-message="required" ng-if="addDeal.contPerPhone.$touched && !Dealproj.companyID">Can't leave this empty.</div>
 											<div ng-message="maxlength" ng-if="addDeal.contPerPhone.$touched && !Dealproj.companyID">Maximum length is 15 numbers.</div>
@@ -738,7 +738,7 @@
 						<div class="form-group spacinga">
 							<div class="form-inline">
 								<div class="form-group">
-									<select class="forInput form-control" ng-model="Dealproj.product_id" ng-options="product.id as product.product_name for product in productList"
+									<select class="forInput form-control" ng-model="Dealproj.product" ng-options="product.id as product.product_name for product in productList"
 									 name="product" ng-class="{submitting:addDeal.product.$error.required && addDeal.product.$touched}" required>
 										<option value="" default disabled selected>Select the Product</option>
 									</select>
@@ -970,7 +970,7 @@
 								<div>
 									<input class="forInput form-control" id="ponumber" type="text" placeholder="PO-Number" name="ponumber" ng-model="editLeadProj.po_number"
 									 ng-class="{submitting:((editLead.ponumber.$error.required  || editLead.ponumber.$error.pattern) && editLead.ponumber.$touched)}"
-									 required restrict-to="[0-9]">
+									 ng-required="checkdeal" restrict-to="[0-9]">
 									<div ng-messages="editLead.ponumber.$error" class="errormainpage">
 										<div ng-message="required" ng-if="editLead.ponumber.$touched">Can't leave this empty.</div>
 									</div>
@@ -982,7 +982,7 @@
 								</div>
 								<div class="datepicker modaldate" date-format="dd-MM-yyyy">
 									<input class="forInput form-control modaldatepicker" onkeypress="return false;" ng-model="editLeadProj.po_date" type="text"
-									 placeholder="PO-Date: DD-MM-YYYY" name="podate" required ng-class="{submitting:editLead.podate.$error.required && editLead.podate.$touched}">
+									 placeholder="PO-Date: DD-MM-YYYY" name="podate" ng-required="checkdeal" ng-class="{submitting:editLead.podate.$error.required && editLead.podate.$touched}">
 									<i class="fa fa-calendar fafaPosititionondatepicker"></i>
 									</input>
 									<div ng-messages="editLead.podate.$error" class="errormainpage">
