@@ -1694,8 +1694,7 @@ salesVisionControllers.controller('forCloseLead', ['$scope', '$modalInstance', '
             projectService.createProject($scope.leadproj, function (response) {
                 if (response.status == 200) {
                     alert('Project created succesfully');
-                    alert(response.data.company);
-                    projectService.getDetails().push(response.data);
+                     projectService.getDetails().push(response.data[0]);
                     // $scope.leadproj = angular.copy(original);
                     // $scope.addLead.$setPristine();
                     // $scope.addLead.$setValidity();
@@ -1794,20 +1793,23 @@ salesVisionControllers.controller('forCloseDeal', ['$scope', '$modalInstance', '
 
         if (form.$valid) {
             projectService.createProject($scope.Dealproj, function (response) {
-                if (response.status == 200) {
+                if (response.status != 'failed') {
                     alert('Project created succesfully');
+                    //push data to table
+                    projectService.getDetails().push(response.data[0]);
                     // $scope.Dealproj = angular.copy(original);
                     // $scope.addDeal.$setPristine();
                     // $scope.addDeal.$setValidity();
                     // $scope.addDeal.$setUntouched();
-                    //push data to table
+                    
+              
                 }
             }, function (response) {
                 var error = response.data;
                 alert('There was problem creating project');
             });
 
-
+            $scope.close();
         }
         if (form.$invalid) {
 

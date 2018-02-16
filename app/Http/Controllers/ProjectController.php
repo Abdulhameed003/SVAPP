@@ -136,12 +136,11 @@ class ProjectController extends Controller
                 'value'=>'required|numeric',
                 'project_type'=>'required',
                 'sales_stage'=>'required',
-                'status'=>'required',
                 'tender'=>'nullable|string',
                 'remark'=>'nullable|string',
                 'close_date'=>'nullable',
                 'start_date'=>'required',
-                'po_number'=>'sometimes|required|string',
+                'po_number'=>'sometimes|required',
                 'po_date'=>'sometimes|required'
         ];      
     }
