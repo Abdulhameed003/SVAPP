@@ -168,7 +168,7 @@ class ProjectController extends Controller
     {
         $this->validate($request,$this->rule());
         try{
-            $salesPerson = Salesperson::where('salesperson_name',$request->salesperson_name)->first();
+            $salesPerson = Salesperson::where('salesperson_id',$request->salesperson_id)->first();
 
             $project = Project::find($id);
         
