@@ -1286,7 +1286,7 @@ salesVisionControllers.controller('mainCtrl', ['$scope', '$location', function (
 /**modals */
 
 
-salesVisionControllers.controller('MyControllerModal', ['$scope', '$modal', function ($scope, $modal) {
+salesVisionControllers.controller('MyControllerModal', ['$scope', '$modal', 'projectService', function ($scope, $modal, projectService) {
 
     /** nav bar modals */
 
@@ -1415,6 +1415,7 @@ salesVisionControllers.controller('MyControllerModal', ['$scope', '$modal', func
     };
 
     $scope.openEdit = function (size, proj) {
+        projectService.setid(proj.id);
         if (proj.project_category == 'Lead') {
             var modalInstance = $modal.open({
                 controller: 'forCloseEditlead',
@@ -1425,6 +1426,7 @@ salesVisionControllers.controller('MyControllerModal', ['$scope', '$modal', func
 
             });
             modalInstance.leadproject = proj;
+            
         }
         if (proj.project_category == 'Deal') {
             var modalInstance = $modal.open({

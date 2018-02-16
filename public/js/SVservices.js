@@ -81,7 +81,7 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
         }
 
         function updateProject(formdata, onSuccess, onError){
-            $http.put("api/project/{{formdata.id}}/edit")
+            $http.put("api/project/"+projectid)
             .then(function(response){
                 onSuccess(response);
             },function(response){
@@ -107,7 +107,7 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
             });
         }
         var data = {};
-
+        var projectid = 0;
       
         return{
             getDetails: function () {
@@ -115,6 +115,9 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
             },
             setDetails: function (Details) {
                 data = Details;
+            },
+            setid: function(id){
+                projectid = id;
             },
             getProjects: getProjects,
             createProject:createProject,
