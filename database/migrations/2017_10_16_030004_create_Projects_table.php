@@ -22,8 +22,8 @@ class CreateProjectsTable extends Migration
             $table->integer('value');
             $table->string('project_type');
             $table->integer('sales_stage'); 
-            $table->string('status');
-            $table->string('tender');
+            $table->string('status')->nullable();
+            $table->string('tender')->nullable();
             $table->string('remarks')->nullable();
             $table->date('close_at')->nullable();
             $table->date('start_date');
