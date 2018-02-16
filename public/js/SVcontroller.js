@@ -1692,7 +1692,7 @@ salesVisionControllers.controller('forCloseLead', ['$scope', '$modalInstance', '
             projectService.createProject($scope.leadproj, function (response) {
                 if (response.status == 200) {
                     alert('Project created succesfully');
-                    //alert(response.data.company.company_name);
+                    alert(response.data.company);
                     projectService.getDetails().push(response.data);
                     // $scope.leadproj = angular.copy(original);
                     // $scope.addLead.$setPristine();
