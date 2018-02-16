@@ -107,7 +107,7 @@ class ProjectController extends Controller
                     ['po_date'=>Carbon::parse($request->po_date)->format('Y-m-d'),'project_id'=>$project->id]);    
             }    
 
-            return $project;//reditect('/project')->with('success','A new project is added to the list');
+            return Project::getRecentlyAdded($project->id);
 
         }catch(\Exception $e ){
             return 'failed';
@@ -139,7 +139,7 @@ class ProjectController extends Controller
                 'status'=>'required',
                 'tender'=>'nullable|string',
                 'remark'=>'nullable|string',
-                'close_date'=>'nullable|string',
+                'close_date'=>'nullable',
                 'start_date'=>'required',
                 'po_number'=>'sometimes|required|string',
                 'po_date'=>'sometimes|required'

@@ -64,14 +64,17 @@ salesVisionControllers.controller('forgetPasswordController', ['$scope', '$modal
 
         /**call to update database */
         if (form.$valid) {
+                        
             userService.forgotPassword($scope.user,function(response){
-                    if (response == 200){
+                    if (response.status == 200){
+                        alert('A reset link has been sent  please click the link to rest your password.');
                         $scope.user = angular.copy(original);
                         $scope.forgotpass.$setPristine();
                         $scope.forgotpass.$setValidity();
                         $scope.forgotpass.$setUntouched();
-                        alert('A reset link has been sent to ' + $scope.user.email + ' please click the link to rest your password.');
-                        $scope.modalInstance.dismiss('cancel');
+                        //$scope.modalInstance.dismiss('cancel');
+                        
+                       
                     }
             },function(response){
                 alert(response.data+ 'The was a problem reseting the link');
@@ -92,7 +95,7 @@ salesVisionControllers.controller('forgetPasswordController', ['$scope', '$modal
 
 }]);
 
-salesVisionControllers.controller('dashboardController', ['$scope', '$http','dashboardService', function ($scope, $http,dashboardService) {
+salesVisionControllers.controller('dashboardController', ['$scope', '$http','dashboardService', function ($scope, $http, dashboardService) {
     var category = "";
     var projectTitle = "";
     $scope.showdashboard = true;
@@ -1157,7 +1160,7 @@ salesVisionControllers.controller('salesController', ['$scope', '$http', 'salesS
 
 /**Changepassword.html controller */
 
-salesVisionControllers.controller('changepassctrl','userService', function ($scope,userService) {
+salesVisionControllers.controller('changepassctrl','userService','$location', '$window', function ($scope,userService,$location,$windows) {
 
 
     var original = angular.copy($scope.user);
@@ -1165,12 +1168,12 @@ salesVisionControllers.controller('changepassctrl','userService', function ($sco
 
         if (form.$valid) {
             userService.resetPassword($scope.user,function(response){
-                if (response.status == 200){
+                if (response.status == 320){
                     $scope.user = angular.copy(original);
                     $scope.changepassform.$setPristine();
                     $scope.changepassform.$setValidity();
                     $scope.changepassform.$setUntouched();
-
+                    window.location = "/dashboard";
                 }
             }, function(response){
 
