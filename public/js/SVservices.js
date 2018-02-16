@@ -106,7 +106,16 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
                 onError(response);
             });
         }
+        var data = {};
+
+      
         return{
+            getDetails: function () {
+                return data;
+            },
+            setDetails: function (Details) {
+                data = Details;
+            },
             getProjects: getProjects,
             createProject:createProject,
             deleteProject:deleteProject,
@@ -289,8 +298,14 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
                 onError(response);
             });
         }
-
+      var dashdata={};
         return {
+            getDetails: function () {
+                return dashdata;
+            },
+            setDetails: function (Details) {
+                dashdata = Details;
+            },
             showDash:showDash
         }
     }]);
