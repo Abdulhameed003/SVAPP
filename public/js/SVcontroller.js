@@ -106,26 +106,26 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http','das
             dashboardService.setDetails(response.data);
             $scope.content = response.data;
 
-            $scope.totalWonCases.data = test;//$scope.content.totalWonCase;
+            $scope.totalWonCases.data = $scope.content.totalWonCase;
 
-            $scope.totalRenewals.categories = $scope.content.totalRenewals.category;
-            $scope.totalRenewals.dataset = $scope.content.totalRenewals.data;
+            $scope.totalRenewals.categories.category = $scope.content.totalRenewals.category;
+            $scope.totalRenewals.dataset.data = $scope.content.totalRenewals.data;
 
-            $scope.totalNewsales.categories = $scope.content.totalNewsales.category;
-            $scope.totalNewsales.dataset = $scope.content.totalNewsales.data;
+            $scope.totalNewsales.categories.category = $scope.content.totalNewsales.category;
+            $scope.totalNewsales.dataset.data = $scope.content.totalNewsales.data;
 
-            $scope.totalwonComparison.categories = $scope.content.wonOpp.category;
+            $scope.totalwonComparison.categories.category = $scope.content.wonOpp.category;
             $scope.totalwonComparison.dataset[0].data = $scope.content.wonOpp.data.totalOpp;
             $scope.totalwonComparison.dataset[1].data = $scope.content.wonOpp.data.wonOpp;
 
-            $scope.QuarterWoncase.categories = $scope.content.quarterWonLost.category;
+            $scope.QuarterWoncase.categories.category = $scope.content.quarterWonLost.category;
             $scope.QuarterWoncase.dataset[0].data = $scope.content.quarterWonLost.data.won;
             $scope.QuarterWoncase.dataset[1].data = $scope.content.quarterWonLost.data.lost;
 
             $scope.Salesvaluebycustomers.data = $scope.content.salesByProduct;
             $scope.Salesvaluebyindustry.data = $scope.content.salesByIndustry;
 
-            $scope.totalclosingbyquarter.categories = $scope.content.totalCloseOpp.category;
+            $scope.totalclosingbyquarter.categories.category = $scope.content.totalCloseOpp.category;
             $scope.totalclosingbyquarter.dataset[0].data = $scope.content.totalCloseOpp.data.deal;
             $scope.totalclosingbyquarter.dataset[1].data = $scope.content.totalCloseOpp.data.lead;
 
@@ -134,8 +134,7 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http','das
     }, function (response) {
         alert('something went wrong!');
     });
-    var dashdataset=dashboardService.getDetails();
-    alert(dashdataset);
+   
     $scope.totalWonCases = {
         chart: {
             caption: "Won Cases",
@@ -165,29 +164,8 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http','das
             placeValuesInside: "0",
             bgcolor: "#EEEEEE"
         },
-        //categories: [], //[{
-        //     category: [{
-        //         label: "Ab"
-        //     }, {
-        //         label: "Vd"
-        //     }, {
-        //         label: "LQ"
-        //     }, {
-        //         label: "NM"
-        //     }]
-        // }],
-        //dataset: []//[{
-        //     data: [{
-        //         value: "6000"
-        //     }, {
-        //         value: "12800"
-        //     }, {
-        //         value: "18000"
-        //     }, {
-        //         value: "19000"
-        //     }]
-
-        // }]
+        categories: {category:[]}, 
+        dataset: {data:[]}
 
     };
 
@@ -203,30 +181,9 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http','das
             placeValuesInside: "0",
             bgcolor: "#EEEEEE"
         },
-        categories: [],//[{
-        //     category: [{
-        //         label: "Ab"
-        //     }, {
-        //         label: "Vd"
-        //     }, {
-        //         label: "LQ"
-        //     }, {
-        //         label: "NM"
-        //     }]
-        // }],
-        dataset: []
-        // [{
-        //     data: [{
-        //         value: "3000"
-        //     }, {
-        //         value: "6800"
-        //     }, {
-        //         value: "10000"
-        //     }, {
-        //         value: "19000"
-        //     }]
-
-        // }]
+        categories: {category:[]},
+        dataset: {data:[]}
+        
     };
 
     $scope.totalwonComparison = {
@@ -241,93 +198,21 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http','das
             usePlotGradientColor: "0",
             bgcolor: "#EEEEEE"
         },
-        categories: 0,
-        // [{
-        // category: [{
-        //     label: "Jan"
-        // }, {
-        //     label: "Feb"
-        // }, {
-        //     label: "Mar"
-        // }, {
-        //     label: "Apr"
-        // }, {
-        //     label: "May"
-        // }, {
-        //     label: "Jun"
-        // }, {
-        //     label: "Jul"
-        // }, {
-        //     label: "Aug"
-        // }, {
-        //     label: "Sep"
-        // }, {
-        //     label: "Oct"
-        // }, {
-        //     label: "Nov"
-        // }, {
-        //     label: "Dec"
-        // }]
-        //}],
-        dataset: [{
-            seriesName: "Total Oppotunities",
-            data: []
-            // [{
-            //     value: "16000"
-            // }, {
-            //     value: "20000"
-            // }, {
-            //     value: "18000"
-            // }, {
-            //     value: "19000"
-            // }, {
-            //     value: "15000"
-            // }, {
-            //     value: "21000"
-            // }, {
-            //     value: "16000"
-            // }, {
-            //     value: "20000"
-            // }, {
-            //     value: "17000"
-            // }, {
-            //     value: "25000"
-            // }, {
-            //     value: "19000"
-            // }, {
-            //     value: "23000"
-            // }]
-        }, {
-            seriesName: "Won Cases",
-            renderAs: "area",
-            showValues: "0",
-            data: []
-            // [{
-            //     value: "4000"
-            // }, {
-            //     value: "5000"
-            // }, {
-            //     value: "3000"
-            // }, {
-            //     value: "4000"
-            // }, {
-            //     value: "1000"
-            // }, {
-            //     value: "7000"
-            // }, {
-            //     value: "1000"
-            // }, {
-            //     value: "4000"
-            // }, {
-            //     value: "1000"
-            // }, {
-            //     value: "8000"
-            // }, {
-            //     value: "2000"
-            // }, {
-            //     value: "7000"
-            // }]
-        }],
+        categories: {category:[]},
+        
+        dataset: [
+            {
+                seriesName: "Total Oppotunities",
+                data: []
+            }, 
+            {
+                seriesName: "Won Cases",
+                renderAs: "area",
+                showValues: "0",
+                data: []
+                
+            }
+        ],
         /*data: [{
 
             value: "2000"
@@ -370,7 +255,7 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http','das
             placeValuesInside: "0",
             bgcolor: "#EEEEEE"
         },
-        categories: [],
+        categories: {category:[]},
         // [{
         //     category: [{
         //         label: "Q1"
@@ -514,9 +399,9 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http','das
             showLegend: "1",
             bgcolor: "#EEEEEE"
         },
-        categories: [],
+        categories: {category:[]},
         dataset: [{
-            seriesname: "Closing Deals",
+            seriesName: "Closing Deals",
             data: []
             // [{
             //         label: "Q1",
@@ -535,7 +420,7 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http','das
             //         value: "12"
             // }]
         }, {
-            seriesname: "Closing Leads",
+            seriesName: "Closing Leads",
             data: []
         }]
 

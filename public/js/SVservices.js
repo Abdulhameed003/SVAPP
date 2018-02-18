@@ -309,6 +309,7 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
                 onError(response);
             });
         }
+   
       var dashdata={};
         return {
             getDetails: function () {
