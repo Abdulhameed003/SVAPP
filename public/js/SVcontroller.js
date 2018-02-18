@@ -92,7 +92,7 @@ salesVisionControllers.controller('forgetPasswordController', ['$scope', '$modal
 
 }]);
 
-salesVisionControllers.controller('dashboardController', ['$scope', '$http','dashboardService', function ($scope, $http, dashboardService) {
+salesVisionControllers.controller('dashboardController', ['$scope', '$http', 'dashboardService', function ($scope, $http, dashboardService) {
     var category = "";
     var projectTitle = "";
     $scope.showdashboard = true;
@@ -134,7 +134,12 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http','das
     }, function (response) {
         alert('something went wrong!');
     });
+<<<<<<< HEAD
    
+=======
+    var dashdataset = dashboardService.getDetails();
+    alert(dashdataset);
+>>>>>>> a8f7bc29a6396a19cb0b6bb1afec06709c89ac2b
     $scope.totalWonCases = {
         chart: {
             caption: "Won Cases",
@@ -727,6 +732,9 @@ salesVisionControllers.controller('projectController', ['$scope', '$http', 'proj
                     if (list[i] == 9)
                         $scope.colLastupdate = true;
 
+                    if (list[i] == 10)
+                        $scope.colPersonincharge = true;
+
 
                     if (list[i] == 11)
                         $scope.colStartdate = true;
@@ -1044,7 +1052,7 @@ salesVisionControllers.controller('salesController', ['$scope', '$http', 'salesS
 
 /**Changepassword.html controller */
 
-salesVisionControllers.controller('changepassctrl','userService','$location', '$window', function ($scope,userService,$location,$windows) {
+salesVisionControllers.controller('changepassctrl', 'userService', '$location', '$window', function ($scope, userService, $location, $windows) {
 
 
     var original = angular.copy($scope.user);
@@ -1311,7 +1319,7 @@ salesVisionControllers.controller('MyControllerModal', ['$scope', '$modal', 'pro
 
             });
             modalInstance.leadproject = proj;
-            
+
         }
         if (proj.project_category == 'Deal') {
             var modalInstance = $modal.open({
@@ -1579,8 +1587,7 @@ salesVisionControllers.controller('forCloseLead', ['$scope', '$modalInstance', '
             projectService.createProject($scope.leadproj, function (response) {
                 if (response.status == 200) {
                     alert('Project created succesfully');
-                    //alert(response.data.company.company_name);
-                    projectService.getDetails().push(response.data);
+                    projectService.getDetails().push(response.data[0]);
                     // $scope.leadproj = angular.copy(original);
                     // $scope.addLead.$setPristine();
                     // $scope.addLead.$setValidity();
@@ -1679,20 +1686,23 @@ salesVisionControllers.controller('forCloseDeal', ['$scope', '$modalInstance', '
 
         if (form.$valid) {
             projectService.createProject($scope.Dealproj, function (response) {
-                if (response.status == 200) {
+                if (response.status != 'failed') {
                     alert('Project created succesfully');
+                    //push data to table
+                    projectService.getDetails().push(response.data[0]);
                     // $scope.Dealproj = angular.copy(original);
                     // $scope.addDeal.$setPristine();
                     // $scope.addDeal.$setValidity();
                     // $scope.addDeal.$setUntouched();
-                    //push data to table
+
+
                 }
             }, function (response) {
                 var error = response.data;
                 alert('There was problem creating project');
             });
 
-
+            $scope.close();
         }
         if (form.$invalid) {
 
@@ -2038,11 +2048,11 @@ salesVisionControllers.controller('forCloseEditdeal', ['$scope', '$modalInstance
         $scope.types = [
             {
                 "id": "1",
-                "name": "New sales"
+                "name": "New sale"
             },
             {
                 "id": "2",
-                "name": "Renewals"
+                "name": "Renewal"
             }
 
         ];
