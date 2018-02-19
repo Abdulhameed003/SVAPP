@@ -102,9 +102,18 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', 'da
 
     dashboardService.showDash(function (response) {
         if (response.status = 200) {
-            test = [{ label: "New", value: 0 }, { label: "Old", value: "32322" }];
+            
             dashboardService.setDetails(response.data);
             $scope.content = response.data;
+
+            $scope.totalprogress = $scope.content.frontdash[1].progressToTgt;
+            $scope.totaloppvalues = $scope.content.frontdash[2].totalOppVal;
+            $scope.totaloppcounts = $scope.content.frontdash[3].totalOppCount;
+            $scope.totalwonvalues = $scope.content.frontdash[4].totalWonVal;
+            $scope.totalwoncounts = $scope.content.frontdash[5].totalWonCount;
+            $scope.totallostvalues = $scope.content.frontdash[6].totalLostVal;
+            $scope.totallostcounts = $scope.content.frontdash[7].totalLostCount;
+
 
             $scope.totalWonCases.data = $scope.content.totalWonCase;
 
@@ -134,12 +143,15 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', 'da
     }, function (response) {
         alert('something went wrong!');
     });
-<<<<<<< HEAD
+
+    $scope.totalprogress = '';
+    $scope.totaloppvalues = '';
+    $scope.totaloppcounts = '';
+    $scope.totalwonvalues = '';
+    $scope.totalwoncounts = '';
+    $scope.totallostvalues = '';
+    $scope.totallostcounts = '';
    
-=======
-    var dashdataset = dashboardService.getDetails();
-    alert(dashdataset);
->>>>>>> a8f7bc29a6396a19cb0b6bb1afec06709c89ac2b
     $scope.totalWonCases = {
         chart: {
             caption: "Won Cases",
@@ -218,22 +230,7 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', 'da
                 
             }
         ],
-        /*data: [{
-
-            value: "2000"
-            },
-            {
-
-                value: "8000"
-            },
-            {
-
-                value: "4500"
-            },
-            {
-
-                value: "24000"
-        }],*/
+        
 
         trendlines: [{
             line: [{
@@ -261,59 +258,19 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', 'da
             bgcolor: "#EEEEEE"
         },
         categories: {category:[]},
-        // [{
-        //     category: [{
-        //         label: "Q1"
-        //     }, {
-        //         label: "Q2"
-        //     }, {
-        //         label: "Q3"
-        //     }, {
-        //         label: "Q4"
-        //     }]
-        // }],
+       
         dataset: [
             {
                 seriesname: "Won Cases",
 
                 data: []
-                // [{
-
-                //         value: "2000"
-                //     },
-                //     {
-
-                //         value: "8000"
-                //     },
-                //     {
-
-                //         value: "4500"
-                //     },
-                //     {
-
-                //         value: "24000"
-                // }]
+                
             },
             {
                 seriesname: "Lost Cases",
 
                 data: []
-                // [{
-
-                //         value: "500"
-                //     },
-                //     {
-
-                //         value: "8400"
-                //     },
-                //     {
-
-                //         value: "100"
-                //     },
-                //     {
-
-                //         value: "5000"
-                // }]
+                
             }]
     };
 
@@ -335,22 +292,7 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', 'da
             bgcolor: "#EEEEEE"
         },
         data: []
-        // [{
-        //     label: "Hg",
-        //     value: "2000"
-        // },
-        // {
-        //     label: "Ab",
-        //     value: "8000"
-        // },
-        // {
-        //     label: "Kk",
-        //     value: "4500"
-        // },
-        // {
-        //     label: "Mn",
-        //     value: "24000"
-        // }]
+       
     };
 
     $scope.Salesvaluebyindustry = {
@@ -371,22 +313,7 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', 'da
             bgcolor: "#EEEEEE"
         },
         data: []
-        // [{
-        //     label: "Reseller",
-        //     value: "2000"
-        // },
-        // {
-        //     label: "Health",
-        //     value: "24000"
-        // },
-        // {
-        //     label: "Education",
-        //     value: "4500"
-        // },
-        // {
-        //     label: "Retail",
-        //     value: "5000"
-        // }]
+        
     };
 
     $scope.totalclosingbyquarter = {
@@ -408,22 +335,7 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', 'da
         dataset: [{
             seriesName: "Closing Deals",
             data: []
-            // [{
-            //         label: "Q1",
-            //         value: "5"
-            //     },
-            //     {
-            //         label: "Q2",
-            //         value: "10"
-            //     },
-            //     {
-            //         label: "Q3",
-            //         value: "1"
-            //     },
-            //     {
-            //         label: "Q4",
-            //         value: "12"
-            // }]
+           
         }, {
             seriesName: "Closing Leads",
             data: []

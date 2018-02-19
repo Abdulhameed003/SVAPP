@@ -68,7 +68,8 @@ class DashboardController extends Controller
                     'quarterWonLost'=>$this->quarterWonLost(),
                     'salesByProduct'=>$this->salesByProuct(),
                     'salesByIndustry'=>$this->salesByIndustry(),
-                    'totalCloseOpp'=>$this->totalCloseOpp()
+                    'totalCloseOpp'=>$this->totalCloseOpp(),
+                    'frontdash' => $this->frontdash()
         ];
 
         return $dashboard;
