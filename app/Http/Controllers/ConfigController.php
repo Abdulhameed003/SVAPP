@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Industry;
 use App\Product;
+use App\User;
 
 class ConfigController extends Controller
 {
@@ -62,5 +63,27 @@ class ConfigController extends Controller
         return 'success';
 
     }
- 
+
+    /**
+     * This method changes the password of a user when requested from the users settings
+     */
+
+    public function changePassword(Request $request){
+        $this->validate($request,[
+            'oldpassword'=> 'required',
+            'password'=>'required|confirmed'
+        ]);
+        $user = User::find($requst->id);
+        if(bcrypt($request->oldpassword) !== $user->password){
+           return 'failed';
+        }
+       
+        $user->password = bcrypt($request->password);
+        $user->save();
+        return 'success';
+
+
+    }
+
+    
 }

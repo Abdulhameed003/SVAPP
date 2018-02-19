@@ -139,7 +139,7 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
         }
 
         function create(formdata, onSuccess, onError){
-            $http.post('api/settings/add')
+            $http.post('api/settings/add',formdata)
             .then(function(response){
                 onSuccess(response);
             },function(response){
@@ -147,8 +147,8 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
             });
         }
 
-        function deleteIndusty(formdata, onSuccess, onError){
-            $http.delete("api/settings/{{formdata}}/industry")
+        function deleteIndusty(industryid, onSuccess, onError){
+            $http.delete('api/settings/'+idustryid+'/industry')
             .then(function(response){
                 onSuccess(response);
             },function(response){
@@ -156,19 +156,30 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
             });
         }
 
-        function deleteProduct(formdata, onSuccess, onError){
-            $http.delete("api/settings/{{formdata}}/product")
+        function deleteProduct(productid, onSuccess, onError){
+            $http.delete('api/settings/'+productid +'/product')
             .then(function(response){
                 onSuccess(response);
             },function(response){
                 onError(response);
             });
         }
+
+        function changePass(formdata){
+            $http.post("api/settings/change_password",formdata)
+            .then(function(response){
+                onSuccess(response);
+            },function(response){
+                onError(response);
+            });
+        }
+
         return{
             showSettings:showSettings,
             create:create,
             deleteIndustry:deleteIndusty,
-            deleteProduct:deleteProduct
+            deleteProduct:deleteProduct,
+            changePass:changePass
         }
     }]);
 
@@ -251,8 +262,8 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
             });
         }
 
-        function updateSales(sales_id,onSuccess,onError){
-            $http.put("api/salesperson/{{sales_id}}")
+        function updateSales(formdata,onSuccess,onError){
+            $http.put('api/salesperson/'+salesid,formdata)
             .then(function(response){
                 onSuccess(response);
             },function(response){
@@ -261,7 +272,7 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
         }
 
         function deleteSales(sales_id,onSuccess,onError){
-            $http.delete("api/salesperson/{{sales_id}}")
+            $http.delete('api/salesperson/'+sales_id)
             .then(function(response){
                 onSuccess(response);
             },function(response){
@@ -278,8 +289,8 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
             });
         }
 
-        function editSales(formdata,onSuccess,onError){
-            $http.get("api/salesperson/"+ salesid, formdata)
+        function editSales(sales_id,onSuccess,onError){
+            $http.get('api/salesperson/'+ salesid+'/edit')
             .then(function(response){
                 onSuccess(response);
             },function(response){

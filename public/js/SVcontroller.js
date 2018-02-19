@@ -1683,17 +1683,25 @@ salesVisionControllers.controller('forCloseDelete', ['$scope', '$modalInstance',
 
 
 
-salesVisionControllers.controller('forClosePassword', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+salesVisionControllers.controller('forClosePassword', ['$scope', '$modalInstance','settingservice', function ($scope, $modalInstance,settingService) {
 
     var original = angular.copy($scope.user);
     $scope.postchpassformin = function (form) {
 
         if (form.$valid) {
-            alert('can submit');
-            $scope.user = angular.copy(original);
-            $scope.changepassformin.$setPristine();
-            $scope.changepassformin.$setValidity();
-            $scope.changepassformin.$setUntouched();
+            settingService.changePass(scope.user,function(response){
+                if (response.data == 'success'){
+                    $scope.user = angular.copy(original);
+                    $scope.changepassformin.$setPristine();
+                    $scope.changepassformin.$setValidity();
+                    $scope.changepassformin.$setUntouched();
+                    alert('Password successfully changed ');
+                }else if (response.data == 'failed'){
+                    alert('There was an error in your rwquest.');
+                }
+            },function(response){
+
+            });
 
         }
         if (form.$invalid) {

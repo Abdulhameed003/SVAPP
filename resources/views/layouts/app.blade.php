@@ -236,6 +236,9 @@
 			</div>
 			<form id="chpassform" name="changepassformin" novalidate class="form-group">
 				<div class="modal-body">
+
+					<input type="hidden" name="id" user.id="{{Auth::id()}}">
+
 					<div class="form-group spacinga">
 						<input type="password" required name="useroldpass" ng-model="user.oldpassword" ng-class="{submitting: changepassformin.useroldpass.$error.required && changepassformin.useroldpass.$touched }"
 						 class="forInput form-control" placeholder="Old Password">
