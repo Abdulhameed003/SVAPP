@@ -95,7 +95,7 @@ class ContactController extends Controller
         $contact->email = $request->contact_email;
         $contact->designation = $request->contact_designation;
 
-        return $result = $contact->save()? 'success':'failed';
+        return $result = $contact->save()? $contact :'failed';
         
 
     }

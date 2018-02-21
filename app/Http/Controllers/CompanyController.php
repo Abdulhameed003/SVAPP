@@ -50,7 +50,7 @@ class CompanyController extends Controller
         $company->website = $request->website;
         $company->office_num = $request->office_number;
        
-        return $result = $company->save()? $result = 'success': $result = 'failed';
+        return $result = $company->save()? $result = $company : $result = 'failed';
 
     }
 

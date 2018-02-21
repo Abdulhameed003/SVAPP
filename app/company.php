@@ -30,4 +30,6 @@ class Company extends ConfigureDB
         $product = static::all('id','company_name');
         return $product;
     } 
+
+   
 }
