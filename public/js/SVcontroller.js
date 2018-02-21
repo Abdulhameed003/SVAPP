@@ -951,10 +951,8 @@ salesVisionControllers.controller('salesController', ['$scope', '$http', 'salesS
                 spersonlist: []
             };
 
-
-
         } else if (response.data.length == 0) {
-            alert('No contact found!');
+            alert('No salesperson found!');
         }
     }, function (response) {
         alert('There was a problem getting the contacts from the database');
@@ -2385,8 +2383,21 @@ salesVisionControllers.controller('forCloseMultiplecompdelete', ['$scope', '$mod
 
 
 /**company modal controllers */
-salesVisionControllers.controller('forCloseEditpers', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+salesVisionControllers.controller('forCloseEditpers', ['$scope', '$modalInstance','salesService', function ($scope, $modalInstance,salesService) {
+    var isEditable = false;
+    salesService.editSales(function(response){
+        if (response.data == 'success'){
+            isEditable = true;
+        }else if(response.data == 'Unauthorized'){
+            alert('Access denied.');
+        }
+    }, function(response){
+        //Catch a server error here.
+    });
 
+    if(isEditable){
+
+    }
     $scope.editSperson = {
         name: $modalInstance.list.name,
         phone_num: $modalInstance.list.phone_num,

@@ -289,7 +289,7 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
             });
         }
 
-        function editSales(sales_id,onSuccess,onError){
+        function editSales(onSuccess,onError){
             $http.get('api/salesperson/'+ salesid+'/edit')
             .then(function(response){
                 onSuccess(response);
@@ -298,10 +298,17 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
             });
         }    
         var salesid = 0;
+        var isEditable = false;
 
         return {
             setid: function(id){
                 salesid = id;
+            },
+            setIsEditable: function(value){
+                isEditable = value;
+            },
+            getIsEditable: function(){
+                return isEditable;
             },
             showSales:showSales,
             createSales:createSales,
