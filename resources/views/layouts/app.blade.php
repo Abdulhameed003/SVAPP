@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}" ng-app="app">
 
@@ -315,7 +316,7 @@
 						<div class="labelbottomspace">
 							<lable class="convertToblack">Phone:</label>
 						</div>
-						<input class="forInput form-control" type="text" name="companyPhone" ng-model="editcom.office_num" ng-maxlength="10" placeholder="Company Office Phone Number"
+						<input class="forInput form-control" type="text" name="companyPhone" ng-model="editcom.office_number" ng-maxlength="10" placeholder="Company Office Phone Number"
 						 ng-class="{submitting:((editcompany.companyPhone.$error.required || editcompany.companyPhone.$error.maxlength) && editcompany.companyPhone.$touched)}"
 						 required restrict-to="[0-9]" popover="Example: 037463325" popover-placement="bottom" popover-trigger="mouseenter">
 						<div ng-messages="editcompany.companyPhone.$error" class="errormainpage">
@@ -328,7 +329,7 @@
 						<div class="labelbottomspace">
 							<lable class="convertToblack">Industry:</label>
 						</div>
-						<select class="forInput form-control" name="industry" ng-model="editcom.industry_id" ng-options="industry.id as industry.industry for industry in industryList"
+						<select class="forInput form-control" name="industry" ng-model="editcom.industry" ng-options="industry.id as industry.industry for industry in industryList"
 						 ng-class="{submitting:editcompany.industry.$error.required && editcompany.industry.$touched}" required>
 							<option value="" default disabled selected>Select the Industry</option>
 						</select>
