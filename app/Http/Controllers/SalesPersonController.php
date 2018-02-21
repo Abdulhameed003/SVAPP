@@ -96,21 +96,21 @@ class SalesPersonController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $rule = ['salesperson_name'=>'required|string|max:255',
+        $rule = ['name'=>'required|string|max:255',
             'salesperson_id'=>'required|string|max:255',
-            'salesperson_number'=>'required',
-            'salesperson_position'=>'required|string|max:255'
+            'phone_num'=>'required',
+            'position'=>'required|string|max:255'
         ];
         $this->validate($request,$rule);
         try{
-            $salesperson = new  Salesperson();  
-            $salesperson->name = $request->salesperson_name;
+            $salesperson = Salesperson::find($id);  
+            $salesperson->name = $request->name;
             $salesperson->salesperson_id = $request->salesperson_id;
-            $salesperson->phone_num = $request->salesperson_number;
-            $saleperson->position = $request->saleperson_position;
-            $saleperson->save();
+            $salesperson->phone_num = $request->phone_num;
+            $salesperson->position = $request->position;
+            $salesperson->save();
 
-            return 'success';
+            return $salesperson;
         }catch(\Exception $e){
             return 'failed';
         }
