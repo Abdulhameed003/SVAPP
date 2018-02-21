@@ -359,8 +359,7 @@ salesVisionControllers.controller('projectController', ['$scope', '$http', 'proj
     var onlylead = [];
     var onlydeal = [];
     var onlylostcase = [];
-    var startDate = "";
-    var endDate = "";
+   
     var daterangeprojects = [];
 
 
@@ -574,17 +573,29 @@ salesVisionControllers.controller('projectController', ['$scope', '$http', 'proj
                         }
                     };
                     checkrequired();
-                    // startDate = $scope.startdate;
-                    // endDate = $scope.enddate;
-
+                    $scope.startdate = moment($scope.startdate).format('YYYY-MM-DD');
+                    alert($scope.startdate);
+                    var startDate = new moment ($scope.startdate);//$scope.startdate;
+                    var endDate = new moment ($scope.enddate);//$scope.enddate;
+                    
+                    //startDate= moment.utc(startDate);
+                    //endDate = moment.utc(endDate);
+                    alert(startDate);
+                    alert(endDate);
+                    
                     angular.forEach($scope.rows, function (obj) {
-                        obj.start_date = moment(obj.start_date).format('DD/MM/YYYY');
+                       // alert(obj.start_date);
+                       var testdata=moment.utc(obj.start_date);
+                       alert(testdata);
+                      alert(moment(testdata).isBetween(startDate,endDate, 'day','[]'));
+                        //obj.start_date = moment(obj.start_date).format('DD/MM/YYYY');
                         //alert(obj.start_date);
                         //alert("yes");
-                        //alert(moment(obj.close_at).isBefore(startDate, 'days'));
-                        // if (moment(obj.close_at).isBefore(endDate, 'day')) {
-                        // daterangeprojects.push(obj);
-
+                        //alert(moment(obj.close_at).isBefore(endDate, 'days'));
+                       // alert(moment(obj.start_date).isAfter(startDate, 'day'));
+                        //if (moment(obj.close_at).isBefore(endDate, 'day')) {
+                        //daterangeprojects.push(obj);
+                        // }
                     });
                 }
             };
@@ -2425,7 +2436,7 @@ salesVisionControllers.controller('forCloseMultiplecompdelete', ['$scope', '$mod
 /**company modal controllers */
 salesVisionControllers.controller('forCloseEditpers', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
 
-    if(isEditable){
+    if (isEditable) {
         $scope.editSperson = {
             name: $modalInstance.list.name,
             phone_num: $modalInstance.list.phone_num,
@@ -2434,7 +2445,7 @@ salesVisionControllers.controller('forCloseEditpers', ['$scope', '$modalInstance
             position: $modalInstance.list.position
         }
     }
-    
+
 
     var original = angular.copy($scope.editSperson);
     $scope.editPersRow = function (form) {

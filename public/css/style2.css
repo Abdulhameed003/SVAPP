@@ -162,17 +162,25 @@ h2 {
 
 #sign-up {
     position: relative;
-    top: 0pz;
+    top: 0px;
     left: 157px;
     font-size: 12px;
     font-family: 'Lato', sans-serif;
 }
-
-#sign-up:focus {
-outline:0 !important;
-text-decoration: none !important;
+#sign-in {
+    position: relative;
+    top: -10px;
+    left: 325px;
+    font-size: 12px;
+    font-family: 'Lato', sans-serif;
 }
 
+
+#sign-in:focus {
+    outline:0 !important;
+    text-decoration: none !important;
+    }
+    
 
 .mainbutton{
     color:white; 
