@@ -32,6 +32,6 @@ class Company extends ConfigureDB
     } 
 
    public static function getRecentUpdated($id){
-       return static::with('industy')->where('id',$id)->get();
+       return static::with('industry')->where('id',$id)->get();
    }
 }
