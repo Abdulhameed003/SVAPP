@@ -1094,7 +1094,7 @@ salesVisionControllers.controller('mainCtrl', ['$scope', '$location', function (
 /**modals */
 
 
-salesVisionControllers.controller('MyControllerModal', ['$scope', '$modal', 'projectService', function ($scope, $modal, projectService) {
+salesVisionControllers.controller('MyControllerModal', ['$scope', '$modal', 'projectService', 'salesService',function ($scope, $modal, projectService, salesService) {
 
     /** nav bar modals */
 
@@ -1363,27 +1363,50 @@ salesVisionControllers.controller('MyControllerModal', ['$scope', '$modal', 'pro
 
     /**salesperson modals */
     $scope.openEditsperson = function (size, sperson) {
-        var modalInstance = $modal.open({
-            controller: 'forCloseEditpers',
-            templateUrl: 'editsalesperson.html',
-            backdrop: "static",
-            scope: $scope,
-            size: size,
+        salesService.setid(sperson.id);
+        salesService.editSales(function(response){
+            if (response.data == 'success'){
+                
+                var modalInstance = $modal.open({
+                    controller: 'forCloseEditpers',
+                    templateUrl: 'editsalesperson.html',
+                    backdrop: "static",
+                    scope: $scope,
+                    size: size,
+        
+                });
+                modalInstance.list = sperson;
 
+            }else if (response.data=="Unauthorized"){
+               
+                alert('Access Denied.');
+            }
+        }, function(response){
+            //Handle Server error in this callback.
         });
-        modalInstance.list = sperson;
+        
     };
 
     $scope.openDeletesperson = function (size, sperson) {
-        var modalInstance = $modal.open({
-            controller: 'forCloseDeletepers',
-            templateUrl: 'delete.html',
-            backdrop: "static",
-            scope: $scope,
-            size: size,
+        salesService.setid(sperson.id);
+        salesService.editSales(function(response){
+            if (response.data == 'success'){
+                var modalInstance = $modal.open({
+                    controller: 'forCloseDeletepers',
+                    templateUrl: 'delete.html',
+                    backdrop: "static",
+                    scope: $scope,
+                    size: size,
 
+                });
+                modalInstance.list = sperson;
+            }else if (response.data=="Unauthorized"){
+                
+                alert('Access Denied.');
+            }
+        }, function(response){
+            //Handle Server error in this callback.
         });
-        modalInstance.list = sperson;
     };
 
     $scope.openmultiplespersondelete = function (perslist) {
@@ -2114,7 +2137,13 @@ salesVisionControllers.controller('forCloseSalesperson', ['$scope', '$modalInsta
     $scope.postAddSalesPerson = function (form) {
 
         if (form.$valid) {
-            alert('can submit');
+            salesService.create($scope.Sperson,function(response){
+                if (response.data = 'success'){
+
+                }
+            }, function(response){
+
+            });
             $scope.Sperson = angular.copy(original);
             $scope.addSalespersonform.$setPristine();
             $scope.addSalespersonform.$setValidity();
@@ -2391,17 +2420,6 @@ salesVisionControllers.controller('forCloseMultiplecompdelete', ['$scope', '$mod
 /**Editting the sales person record */
 salesVisionControllers.controller('forCloseEditpers', ['$scope', '$modalInstance','salesService', function ($scope, $modalInstance, salesService) {
 
-    salesService.editSales(function(response){
-        if (response.data == 'success'){
-            salesService.setIsEditable(true);
-        }else if (response.data=="Unauthorized"){
-            salesService.serIsEditable(false);
-        }
-    }, function(response){
-        //Handle Server error in this callback.
-    });
-    
-
         $scope.editSperson = {
             name: $modalInstance.list.name,
             phone_num: $modalInstance.list.phone_num,
@@ -2414,14 +2432,23 @@ salesVisionControllers.controller('forCloseEditpers', ['$scope', '$modalInstance
 
     var original = angular.copy($scope.editSperson);
     $scope.editPersRow = function (form) {
-        /**call to update database */
-        if (form.$valid) {
-            alert('can submit');
-            $scope.editSperson = angular.copy(original);
-            $scope.editsalesperson.$setPristine();
-            $scope.editsalesperson.$setValidity();
-            $scope.editsalesperson.$setUntouched();
 
+        if (form.$valid) {
+            salesService.updateSales($scope.editSperson,function(response){
+                if (response.data =='success' ){
+                    $scope.editSperson = angular.copy(original);
+                    $scope.editsalesperson.$setPristine();
+                    $scope.editsalesperson.$setValidity();
+                    $scope.editsalesperson.$setUntouched();
+                    alert('Update Successful');
+                    $modalInstance.dismiss('cancel');
+                }else if(response.data =='failed'){
+                    alert('There was an error updating the record.');
+                }
+            },function(response){
+                //Server related errors
+            });
+            
         }
         if (form.$invalid) {
 
@@ -2440,13 +2467,23 @@ salesVisionControllers.controller('forCloseEditpers', ['$scope', '$modalInstance
 
 }]);
 
-salesVisionControllers.controller('forCloseDeletepers', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+salesVisionControllers.controller('forCloseDeletepers', ['$scope', '$modalInstance','salesService', function ($scope, $modalInstance, salesService) {
     $scope.deleteHeader = "Delete a Sales Person";
     $scope.deleteTitle = "Are you sure to delete this sales person?";
     $scope.removeRow = function () {
-        var currentid = $modalInstance.list;
-        var index = $scope.rows6.indexOf(currentid);
-        $scope.rows6.splice(index, 1);
+        salesService.deleteSales(function(response){
+            if (response.data == 'success'){
+                var currentid = $modalInstance.list;
+                var index = $scope.rows6.indexOf(currentid);
+                $scope.rows6.splice(index, 1);
+            }else{
+                alert('You are not authorized to delete this record.');
+            }
+        },function(response){
+            alert('There was an error deleting the record.');
+        });
+
+
     };
 
     $scope.close = function () {

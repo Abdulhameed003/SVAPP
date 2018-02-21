@@ -63,7 +63,7 @@ class SalesPersonController extends Controller
             );
             
             return 'success';
-        }catch(\Excetion $e){
+        }catch(\Exception $e){
             return 'failed';
         }
 
@@ -80,7 +80,7 @@ class SalesPersonController extends Controller
     public function edit($id)
     {
         $salesperson = Salesperson::find($id);
-        if(auth()->User()->email !== $salesperson->email){
+        if(auth()->User()->user_role != 'Admin'){
             return 'Unauthorized';
         }
         return 'success';
@@ -102,16 +102,18 @@ class SalesPersonController extends Controller
             'salesperson_position'=>'required|string|max:255'
         ];
         $this->validate($request,$rule);
+        try{
+            $salesperson = new  Salesperson();  
+            $salesperson->name = $request->salesperson_name;
+            $salesperson->salesperson_id = $request->salesperson_id;
+            $salesperson->phone_num = $request->salesperson_number;
+            $saleperson->position = $request->saleperson_position;
+            $saleperson->save();
 
-        $salesperson = new  Salesperson();  
-        $salesperson->name = $request->salesperson_name;
-        $salesperson->salesperson_id = $request->salesperson_id;
-        $salesperson->phone_num = $request->salesperson_number;
-        $saleperson->position = $request->saleperson_position;
-        $saleperson->save();
-
-        return 'success';
-
+            return 'success';
+        }catch(\Exception $e){
+            return 'failed';
+        }
 
     }
 

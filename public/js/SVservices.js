@@ -271,7 +271,7 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
             });
         }
 
-        function deleteSales(sales_id,onSuccess,onError){
+        function deleteSales(onSuccess,onError){
             $http.delete('api/salesperson/'+sales_id)
             .then(function(response){
                 onSuccess(response);
@@ -298,18 +298,13 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
             });
         }    
         var salesid = 0;
-        var isEditable = false;
+       
 
         return {
             setid: function(id){
                 salesid = id;
             },
-            setIsEditable: function(value){
-                isEditable = value;
-            },
-            getIsEditable: function(){
-                return isEditable;
-            },
+          
             showSales:showSales,
             createSales:createSales,
             editSales:editSales,
