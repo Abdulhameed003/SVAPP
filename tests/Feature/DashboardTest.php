@@ -25,9 +25,10 @@ class DashboardTest extends TestCase
     public function test_dashboard_return_data(){
         $project = factory(App\Project::class,30)->create(['project_type'=>'New Sales','project_category'=>'Deal']);
         $project = factory(App\Project::class,20)->create(['project_type'=>'Renewals','project_category'=>'Lost Case']);
+        $project = factory(App\Project::class,20)->create(['project_type'=>'Renewals','project_category'=>'Lead']);
         $product2 = factory(App\Product::class,10)->create();
 
-        $response = $this->actingAs($this->user)->get('api/dashboard');
+        $response = $this->actingAs($this->user)->json('GET','api/dashboard');
         var_dump($response->getContent());
         $response->assertJsonStructure(['totalWonCase'=>["New Sales"=>[],"Renewals"=>[]],
         'totalRenewals'=>['category'=>[],'data'=>[]],

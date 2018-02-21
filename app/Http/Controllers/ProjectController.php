@@ -145,17 +145,7 @@ class ProjectController extends Controller
         ];      
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $project = Project::find($id);
-        return $project;
-    }
+  
 
     /**
      * Update the specified resource in storage.

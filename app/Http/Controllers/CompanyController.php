@@ -25,17 +25,7 @@ class CompanyController extends Controller
         return $company;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $company = Company::find($id);
-        return $company;
-    }
+
 
     /**
      * Update the specified resource in storage.

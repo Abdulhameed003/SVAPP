@@ -60,19 +60,16 @@ class DashboardController extends Controller
         $dbToConnect = ConfigureDB::ConfigureDBConnection('db_'.auth()->User()->company_id);
         DB::connection($dbToConnect);
 
-        //$totalWonCase = $this->totalWonCase();
-        //$totalRenewals = $this->totalRenewal();
-       //$totalNewsales = $this->totalNewsales();
-        //$wonOp = $this->quarterWonLost();
-       // return $wonOp;
-        $dashboard = ['totalWonCase'=>$this->totalWonCase(),
+       
+       $dashboard = ['totalWonCase'=>$this->totalWonCase(),
                     'totalRenewals'=>$this->totalRenewal(),
                     'totalNewsales'=>$this->totalNewSales(),
                     'wonOpp'=>$this->wonOpp(),
                     'quarterWonLost'=>$this->quarterWonLost(),
                     'salesByProduct'=>$this->salesByProuct(),
                     'salesByIndustry'=>$this->salesByIndustry(),
-                    'totalCloseOpp'=>$this->totalCloseOpp()
+                    'totalCloseOpp'=>$this->totalCloseOpp(),
+                    'frontdash' => $this->frontdash()
         ];
 
         return $dashboard;
@@ -125,7 +122,7 @@ class DashboardController extends Controller
         $totalOpp = [];
         $wonOpp = [];
 
-        $startdate = Carbon::now()->subYear()->format('Y');
+        $startdate = Carbon::now()->format('Y');
         foreach($this->months as $month){
             $value_sum_wonOpp = Project::where('project_category','Deal')
                     ->whereYear('start_date',$startdate)
@@ -150,7 +147,7 @@ class DashboardController extends Controller
         $won=[];
         $lost =[];
 
-        $startdate = Carbon::now()->subYear()->format('Y');
+        $startdate = Carbon::now()->format('Y');
         foreach($this->quarters as $quarter){
             $value_sum_wonCase = Project::where('project_category','Deal')
                     ->whereYear('start_date',$startdate)
@@ -174,10 +171,12 @@ class DashboardController extends Controller
 
     private function salesByProuct(){
         $salesByProduct = [];
+        $startYear = Carbon::now()->startOfYear();
         $products = Product::all('id','product_name');
         foreach($products as $product){
             $value_sum= Project::where([['project_category','Deal'],
                                         ['project_category','Lead'],
+                                        ['start_date','>=',$startYear],
                                         ['product',$product->id]])
                       ->sum('value');
             $salesByProduct = array_prepend($salesByProduct,['label'=>$product->product_name,'value'=>$value_sum]);
@@ -189,10 +188,13 @@ class DashboardController extends Controller
     
     private function salesByIndustry(){
         $salesByIndustry = [];
+        $startYear = Carbon::now()->startOfYear();
+
         $industries = Industry::all('id','industry');
         foreach($industries as $industry){
             $value_sum= Project::with('company')->where([['project_category','Deal'],
                                         ['project_category','Lead'],
+                                        ['start_date','>=',$startYear],
                                         ['product',$industry->id]])
                       ->sum('value');
             $salesByIndustry = array_prepend($salesByIndustry,['label'=>$industry->industry,'value'=>$value_sum]);
@@ -206,7 +208,7 @@ class DashboardController extends Controller
         $category =[];
         $deal = [];
         $lead = [];
-        $startdate = Carbon::now()->subYear()->format('Y');
+        $startdate = Carbon::now()->format('Y');
         foreach($this->quarters as $quarter){
             $deal_close_count = Project::where('project_category','Deal')
                     ->whereYear('start_date',$startdate)
@@ -228,4 +230,29 @@ class DashboardController extends Controller
 
         return array_reverse($quaterlyClose);
     }
-}
+
+    private function frontdash(){
+        $frontDash = [];
+        $startYear = Carbon::now()->subYear()->format('Y');
+        $target = 200000; // for initial phase we hardcode the target value.
+
+        $project = Project::whereYear('start_date',$startYear)->get();
+        $progressTT = $project->where('project_category','Deal')->sum('value');
+        $totalOppVal = $project->where('project_category','Lead')->sum('value');
+        $totalOppCount = $project->where('project_category','Lead')->count();
+        $totalWonVal = $progressTT;
+        $totalWonCount = $project->where('project_category','Deal')->count();
+        $totalLostVal = $project->where('project_category','Lost Case')->sum('value');
+        $totalLostCount = $project->where('project_category','Lost Case')->count();
+
+        return [['Target'=>$target],
+                ['progressToTgt'=>$progressTT],
+                ['totalOppVal'=>$totalOppVal],
+                ['totalOppCount'=>$totalOppCount],
+                ['totalWonVal'=>$totalWonVal],
+                ['totalWonCount'=>$totalWonCount],
+                ['totalLostVal'=>$totalLostVal],
+                ['totalLostCount'=>$totalLostCount]
+        ];
+    }
+} 

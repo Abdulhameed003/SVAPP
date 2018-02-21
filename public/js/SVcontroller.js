@@ -2,7 +2,7 @@
 
 var salesVisionControllers = angular.module('salesVisionControllers', []);
 
-
+/**Handles registering a new user to the system */
 salesVisionControllers.controller('registerController', ['$scope', '$http', 'userService', '$location', '$window', function ($scope, $http, userService, $location, $window) {
     var original = angular.copy($scope.user);
     $scope.error = false;
@@ -43,6 +43,7 @@ salesVisionControllers.controller('registerController', ['$scope', '$http', 'use
     };
 }]);
 
+/**Handles forgot password request by the user*/
 salesVisionControllers.controller('forgetPasswordController', ['$scope', '$modal', '$http', 'userService', function ($scope, $modal, $http, userService) {
 
     $scope.open = function (size) {
@@ -59,24 +60,28 @@ salesVisionControllers.controller('forgetPasswordController', ['$scope', '$modal
     $scope.close = function () {
         $scope.modalInstance.dismiss('cancel');
     };
+
+
     var original = angular.copy($scope.user);
     $scope.emailSubmit = function (form) {
 
-        /**call to update database */
         if (form.$valid) {
             userService.forgotPassword($scope.user, function (response) {
-                if (response == 200) {
+                if (response.status == 200) {
                     $scope.user = angular.copy(original);
                     $scope.forgotpass.$setPristine();
                     $scope.forgotpass.$setValidity();
                     $scope.forgotpass.$setUntouched();
-                    alert('A reset link has been sent to ' + $scope.user.email + ' please click the link to rest your password.');
-                    $scope.modalInstance.dismiss('cancel');
+                    
                 }
             }, function (response) {
                 alert(response.data + 'The was a problem reseting the link');
             });
 
+            alert('A reset link has been sent to ' + $scope.user.email + ' please click the link to rest your password.');
+            $scope.modalInstance.dismiss('cancel');
+
+          
         }
         if (form.$invalid) {
 
@@ -102,30 +107,39 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', 'da
 
     dashboardService.showDash(function (response) {
         if (response.status = 200) {
-            test = [{ label: "New", value: 0 }, { label: "Old", value: "32322" }];
+            
             dashboardService.setDetails(response.data);
             $scope.content = response.data;
 
-            $scope.totalWonCases.data = test;//$scope.content.totalWonCase;
+            $scope.totalprogress = $scope.content.frontdash[1].progressToTgt;
+            $scope.totaloppvalues = $scope.content.frontdash[2].totalOppVal;
+            $scope.totaloppcounts = $scope.content.frontdash[3].totalOppCount;
+            $scope.totalwonvalues = $scope.content.frontdash[4].totalWonVal;
+            $scope.totalwoncounts = $scope.content.frontdash[5].totalWonCount;
+            $scope.totallostvalues = $scope.content.frontdash[6].totalLostVal;
+            $scope.totallostcounts = $scope.content.frontdash[7].totalLostCount;
 
-            $scope.totalRenewals.categories = $scope.content.totalRenewals.category;
-            $scope.totalRenewals.dataset = $scope.content.totalRenewals.data;
 
-            $scope.totalNewsales.categories = $scope.content.totalNewsales.category;
-            $scope.totalNewsales.dataset = $scope.content.totalNewsales.data;
+            $scope.totalWonCases.data = $scope.content.totalWonCase;
 
-            $scope.totalwonComparison.categories = $scope.content.wonOpp.category;
+            $scope.totalRenewals.categories.category = $scope.content.totalRenewals.category;
+            $scope.totalRenewals.dataset.data = $scope.content.totalRenewals.data;
+
+            $scope.totalNewsales.categories.category = $scope.content.totalNewsales.category;
+            $scope.totalNewsales.dataset.data = $scope.content.totalNewsales.data;
+
+            $scope.totalwonComparison.categories.category = $scope.content.wonOpp.category;
             $scope.totalwonComparison.dataset[0].data = $scope.content.wonOpp.data.totalOpp;
             $scope.totalwonComparison.dataset[1].data = $scope.content.wonOpp.data.wonOpp;
 
-            $scope.QuarterWoncase.categories = $scope.content.quarterWonLost.category;
+            $scope.QuarterWoncase.categories.category = $scope.content.quarterWonLost.category;
             $scope.QuarterWoncase.dataset[0].data = $scope.content.quarterWonLost.data.won;
             $scope.QuarterWoncase.dataset[1].data = $scope.content.quarterWonLost.data.lost;
 
             $scope.Salesvaluebycustomers.data = $scope.content.salesByProduct;
             $scope.Salesvaluebyindustry.data = $scope.content.salesByIndustry;
 
-            $scope.totalclosingbyquarter.categories = $scope.content.totalCloseOpp.category;
+            $scope.totalclosingbyquarter.categories.category = $scope.content.totalCloseOpp.category;
             $scope.totalclosingbyquarter.dataset[0].data = $scope.content.totalCloseOpp.data.deal;
             $scope.totalclosingbyquarter.dataset[1].data = $scope.content.totalCloseOpp.data.lead;
 
@@ -134,8 +148,15 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', 'da
     }, function (response) {
         alert('something went wrong!');
     });
-    var dashdataset = dashboardService.getDetails();
-    alert(dashdataset);
+
+    $scope.totalprogress = '';
+    $scope.totaloppvalues = '';
+    $scope.totaloppcounts = '';
+    $scope.totalwonvalues = '';
+    $scope.totalwoncounts = '';
+    $scope.totallostvalues = '';
+    $scope.totallostcounts = '';
+   
     $scope.totalWonCases = {
         chart: {
             caption: "Won Cases",
@@ -165,29 +186,8 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', 'da
             placeValuesInside: "0",
             bgcolor: "#EEEEEE"
         },
-        //categories: [], //[{
-        //     category: [{
-        //         label: "Ab"
-        //     }, {
-        //         label: "Vd"
-        //     }, {
-        //         label: "LQ"
-        //     }, {
-        //         label: "NM"
-        //     }]
-        // }],
-        //dataset: []//[{
-        //     data: [{
-        //         value: "6000"
-        //     }, {
-        //         value: "12800"
-        //     }, {
-        //         value: "18000"
-        //     }, {
-        //         value: "19000"
-        //     }]
-
-        // }]
+        categories: {category:[]}, 
+        dataset: {data:[]}
 
     };
 
@@ -203,30 +203,9 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', 'da
             placeValuesInside: "0",
             bgcolor: "#EEEEEE"
         },
-        categories: [],//[{
-        //     category: [{
-        //         label: "Ab"
-        //     }, {
-        //         label: "Vd"
-        //     }, {
-        //         label: "LQ"
-        //     }, {
-        //         label: "NM"
-        //     }]
-        // }],
-        dataset: []
-        // [{
-        //     data: [{
-        //         value: "3000"
-        //     }, {
-        //         value: "6800"
-        //     }, {
-        //         value: "10000"
-        //     }, {
-        //         value: "19000"
-        //     }]
-
-        // }]
+        categories: {category:[]},
+        dataset: {data:[]}
+        
     };
 
     $scope.totalwonComparison = {
@@ -241,109 +220,22 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', 'da
             usePlotGradientColor: "0",
             bgcolor: "#EEEEEE"
         },
-        categories: 0,
-        // [{
-        // category: [{
-        //     label: "Jan"
-        // }, {
-        //     label: "Feb"
-        // }, {
-        //     label: "Mar"
-        // }, {
-        //     label: "Apr"
-        // }, {
-        //     label: "May"
-        // }, {
-        //     label: "Jun"
-        // }, {
-        //     label: "Jul"
-        // }, {
-        //     label: "Aug"
-        // }, {
-        //     label: "Sep"
-        // }, {
-        //     label: "Oct"
-        // }, {
-        //     label: "Nov"
-        // }, {
-        //     label: "Dec"
-        // }]
-        //}],
-        dataset: [{
-            seriesName: "Total Oppotunities",
-            data: []
-            // [{
-            //     value: "16000"
-            // }, {
-            //     value: "20000"
-            // }, {
-            //     value: "18000"
-            // }, {
-            //     value: "19000"
-            // }, {
-            //     value: "15000"
-            // }, {
-            //     value: "21000"
-            // }, {
-            //     value: "16000"
-            // }, {
-            //     value: "20000"
-            // }, {
-            //     value: "17000"
-            // }, {
-            //     value: "25000"
-            // }, {
-            //     value: "19000"
-            // }, {
-            //     value: "23000"
-            // }]
-        }, {
-            seriesName: "Won Cases",
-            renderAs: "area",
-            showValues: "0",
-            data: []
-            // [{
-            //     value: "4000"
-            // }, {
-            //     value: "5000"
-            // }, {
-            //     value: "3000"
-            // }, {
-            //     value: "4000"
-            // }, {
-            //     value: "1000"
-            // }, {
-            //     value: "7000"
-            // }, {
-            //     value: "1000"
-            // }, {
-            //     value: "4000"
-            // }, {
-            //     value: "1000"
-            // }, {
-            //     value: "8000"
-            // }, {
-            //     value: "2000"
-            // }, {
-            //     value: "7000"
-            // }]
-        }],
-        /*data: [{
-
-            value: "2000"
-            },
+        categories: {category:[]},
+        
+        dataset: [
             {
-
-                value: "8000"
-            },
+                seriesName: "Total Oppotunities",
+                data: []
+            }, 
             {
-
-                value: "4500"
-            },
-            {
-
-                value: "24000"
-        }],*/
+                seriesName: "Won Cases",
+                renderAs: "area",
+                showValues: "0",
+                data: []
+                
+            }
+        ],
+        
 
         trendlines: [{
             line: [{
@@ -370,60 +262,20 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', 'da
             placeValuesInside: "0",
             bgcolor: "#EEEEEE"
         },
-        categories: [],
-        // [{
-        //     category: [{
-        //         label: "Q1"
-        //     }, {
-        //         label: "Q2"
-        //     }, {
-        //         label: "Q3"
-        //     }, {
-        //         label: "Q4"
-        //     }]
-        // }],
+        categories: {category:[]},
+       
         dataset: [
             {
                 seriesname: "Won Cases",
 
                 data: []
-                // [{
-
-                //         value: "2000"
-                //     },
-                //     {
-
-                //         value: "8000"
-                //     },
-                //     {
-
-                //         value: "4500"
-                //     },
-                //     {
-
-                //         value: "24000"
-                // }]
+                
             },
             {
                 seriesname: "Lost Cases",
 
                 data: []
-                // [{
-
-                //         value: "500"
-                //     },
-                //     {
-
-                //         value: "8400"
-                //     },
-                //     {
-
-                //         value: "100"
-                //     },
-                //     {
-
-                //         value: "5000"
-                // }]
+                
             }]
     };
 
@@ -445,22 +297,7 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', 'da
             bgcolor: "#EEEEEE"
         },
         data: []
-        // [{
-        //     label: "Hg",
-        //     value: "2000"
-        // },
-        // {
-        //     label: "Ab",
-        //     value: "8000"
-        // },
-        // {
-        //     label: "Kk",
-        //     value: "4500"
-        // },
-        // {
-        //     label: "Mn",
-        //     value: "24000"
-        // }]
+       
     };
 
     $scope.Salesvaluebyindustry = {
@@ -481,22 +318,7 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', 'da
             bgcolor: "#EEEEEE"
         },
         data: []
-        // [{
-        //     label: "Reseller",
-        //     value: "2000"
-        // },
-        // {
-        //     label: "Health",
-        //     value: "24000"
-        // },
-        // {
-        //     label: "Education",
-        //     value: "4500"
-        // },
-        // {
-        //     label: "Retail",
-        //     value: "5000"
-        // }]
+        
     };
 
     $scope.totalclosingbyquarter = {
@@ -514,28 +336,13 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', 'da
             showLegend: "1",
             bgcolor: "#EEEEEE"
         },
-        categories: [],
+        categories: {category:[]},
         dataset: [{
-            seriesname: "Closing Deals",
+            seriesName: "Closing Deals",
             data: []
-            // [{
-            //         label: "Q1",
-            //         value: "5"
-            //     },
-            //     {
-            //         label: "Q2",
-            //         value: "10"
-            //     },
-            //     {
-            //         label: "Q3",
-            //         value: "1"
-            //     },
-            //     {
-            //         label: "Q4",
-            //         value: "12"
-            // }]
+           
         }, {
-            seriesname: "Closing Leads",
+            seriesName: "Closing Leads",
             data: []
         }]
 
@@ -1160,9 +967,9 @@ salesVisionControllers.controller('salesController', ['$scope', '$http', 'salesS
 });
 
 
-/**Changepassword.html controller */
+/**Handles the reset of password when a user forgets his/her details*/
 
-salesVisionControllers.controller('changepassctrl', 'userService', '$location', '$window', function ($scope, userService, $location, $windows) {
+salesVisionControllers.controller('changepassctrl', ['userService', '$location', '$window', function ($scope, userService, $location, $windows) {
 
 
     var original = angular.copy($scope.user);
@@ -1170,7 +977,7 @@ salesVisionControllers.controller('changepassctrl', 'userService', '$location', 
 
         if (form.$valid) {
             userService.resetPassword($scope.user, function (response) {
-                if (response.status == 200) {
+                if (response.status == 320) {
                     $scope.user = angular.copy(original);
                     $scope.changepassform.$setPristine();
                     $scope.changepassform.$setValidity();
@@ -1178,10 +985,8 @@ salesVisionControllers.controller('changepassctrl', 'userService', '$location', 
                     window.location = "/dashboard";
                 }
             }, function (response) {
-
+                alert('There was a problem resetting your password.');
             });
-            alert('can submit');
-
         }
         if (form.$invalid) {
 
@@ -1195,7 +1000,7 @@ salesVisionControllers.controller('changepassctrl', 'userService', '$location', 
 
 
     };
-});
+}]);
 
 
 
@@ -1801,10 +1606,10 @@ salesVisionControllers.controller('forCloseDeal', ['$scope', '$modalInstance', '
                     alert('Project created succesfully');
                     //push data to table
                     projectService.getDetails().push(response.data[0]);
-                    // $scope.Dealproj = angular.copy(original);
-                    // $scope.addDeal.$setPristine();
-                    // $scope.addDeal.$setValidity();
-                    // $scope.addDeal.$setUntouched();
+                    //$scope.Dealproj = angular.copy(original);
+                    //$scope.addDeal.$setPristine();
+                    //$scope.addDeal.$setValidity();
+                    //$scope.addDeal.$setUntouched();
 
 
                 }
@@ -1865,7 +1670,7 @@ salesVisionControllers.controller('forCloseDelete', ['$scope', '$modalInstance',
                 var currentid = $modalInstance.id;
                 var index = $scope.rows.indexOf(currentid);
                 $scope.rows.splice(index, 1);
-                // alert('Project has been deleted successfully');
+               
             }
         }, function (response) {
             alert('There was an error deleting the selected project');
@@ -1882,18 +1687,27 @@ salesVisionControllers.controller('forCloseDelete', ['$scope', '$modalInstance',
 
 
 
-salesVisionControllers.controller('forClosePassword', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+salesVisionControllers.controller('forClosePassword', ['$scope', '$modalInstance','settingService', function ($scope, $modalInstance,settingService) {
 
     var original = angular.copy($scope.user);
     $scope.postchpassformin = function (form) {
 
         if (form.$valid) {
-            alert('can submit');
+            settingService.changePass($scope.user,function(response){
+                if (response.data == 'success'){
+                    alert('Password successfully changed ');
+                }else if (response.data == 'failed'){
+                    alert('There was an error in your request.');
+                }
+            },function(response){
+                alert('server down! We will get back to you shortly');
+            });
+
             $scope.user = angular.copy(original);
             $scope.changepassformin.$setPristine();
             $scope.changepassformin.$setValidity();
             $scope.changepassformin.$setUntouched();
-
+            $modalInstance.dismiss('cancel');
         }
         if (form.$invalid) {
 
@@ -1904,11 +1718,7 @@ salesVisionControllers.controller('forClosePassword', ['$scope', '$modalInstance
             });
 
         }
-
-
     };
-
-
 
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
@@ -1917,23 +1727,38 @@ salesVisionControllers.controller('forClosePassword', ['$scope', '$modalInstance
 
 }]);
 
-
+/**This controller manageges the Industry section of the system it helps to DELETE AND SHOW the industry list*/
 salesVisionControllers.controller('forCloseIndustry', ['$scope', '$modalInstance', 'settingService', function ($scope, $modalInstance, settingService) {
+   
     settingService.showSettings(function (response) {
         $scope.industryList = response.data.industry;
     }, function (response) {
         alert('Error in loading industries');
     });
 
+    $scope.addIndustry = function (industry){
+        settingService.create(industry, function(response){
+            if (response.data  != "failed"){
+                $scope.industryList.push(response.data);
+
+            }else{
+                alert('Something went wrong.');
+            }
+        },function(response){
+            alert("Please don't leave the field empty");
+        });
+    };
+
     $scope.deleteSelected = function (index, industry) {
         settingService.deleteIndustry(industry.id, function (response) {
             if (response.status == 200) {
+                $scope.industryList.splice(index, 1);
                 aleart('Industry has been deleted');
             }
         }, function (response) {
             alert('Erorr deleting the selected industry.');
         });
-        $scope.industryList.splice(index, 1);
+        
     };
 
     $scope.close = function () {
@@ -1942,7 +1767,7 @@ salesVisionControllers.controller('forCloseIndustry', ['$scope', '$modalInstance
 
 }]);
 
-
+/**Handles the product section of the system which enbles the management of products in the system. */
 salesVisionControllers.controller('forCloseProduct', ['$scope', '$modalInstance', 'settingService', function ($scope, $modalInstance, settingService) {
     settingService.showSettings(function (response) {
         $scope.productList = response.data.product;
@@ -1950,16 +1775,33 @@ salesVisionControllers.controller('forCloseProduct', ['$scope', '$modalInstance'
         alert('Error in loading product');
     });
 
+    $scope.addProduct = function (product){
+        settingService.create(product, function(response){
+            if (response.data  != "failed"){
+                $scope.productList.push(response.data);
+                
+            }else{
+                alert('Something went wrong.');
+            }
+        },function(response){
+            alert("Please don't leave the field empty");
+        });
+    };
+
+
     $scope.deleteSelected = function (index, product) {
-        settingService.deleteIndustry(product.id, function (response) {
+        
+        settingService.deleteProduct(product.id, function (response) {
             if (response.status == 200) {
+                $scope.productList.splice(index, 1);
                 aleart('product has been deleted.');
             }
         }, function (response) {
             alert('Erorr deleting the selected product.');
         });
-        $scope.productList.splice(index, 1);
+        
     };
+
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
     };
@@ -2099,8 +1941,6 @@ salesVisionControllers.controller('forCloseEditlead', ['$scope', '$modalInstance
     $scope.editLeadRow = function (form) {
         /**call to update database */
         if (form.$valid) {
-            alert('can');
-
             projectService.updateProject($scope.editLeadProj, function (response) {
                 if (response.status == 200) {
                     alert('Updated successfully');

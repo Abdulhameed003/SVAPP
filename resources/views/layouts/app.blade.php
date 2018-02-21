@@ -235,42 +235,44 @@
 			<div class="modal-header" style="height:40px;">
 				<h3>Change your Password</h3>
 			</div>
-			<form id="chpassform" name="changepassformin" novalidate class="form-group">
+			<form id="chpassform" name="changepassformin" ng-submit="postchpassformin(changepassformin)" novalidate class="form-group">
 				<div class="modal-body">
-					<div class="form-group spacinga">
-						<input type="password" required name="useroldpass" ng-model="user.oldpassword" ng-class="{submitting: changepassformin.useroldpass.$error.required && changepassformin.useroldpass.$touched }"
-						 class="forInput form-control" placeholder="Old Password">
-						<div class="errormainpage">
-							<div ng-show="changepassformin.useroldpass.$error.required" ng-if="changepassformin.useroldpass.$touched">Can't leave this empty.</div>
-						</div>
-					</div>
-
-					<div class="form-group spacinga" id="registerpassword">
-						<input id="regpass" type="password" ng-class="{submitting: changepassformin.userpassword.$error.minlength || changepassformin.userpassword.$error.pattern || changepassformin.userpassword.$error.required && changepassformin.userpassword.$touched}"
-						 name="userpassword" ng-model="user.password" ng-minlength="8" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/"
-						 class="forInput form-control" placeholder="Password" aria-required="true" required popover="Passwords must be at least 8 characters and contain one lower &amp; one uppercase letter, and one non-alpha character (a number or a symbol.)"
-						 popover-placement="bottom" popover-trigger="mouseenter" />
-						<div ng-messages="changepassformin.userpassword.$error" class="errormainpage">
-							<div ng-message="minlength && pattern" ng-if="changepassformin.userpassword.$touched">Wrong password format.</div>
-							<div ng-message="required" ng-if="changepassformin.userpassword.$touched">Can't leave this empty.</div>
-						</div>
-					</div>
-
-
-					<div class="form-group spacinga">
-						<input type="password" ng-class="{submitting: ((changepassformin.userpasswordconf.$error.required || changepassformin.userpasswordconf.$error.compareTo && user.password)  && changepassformin.userpasswordconf.$touched )}"
-						 name="userpasswordconf" ng-model="passconf" class="form-control forInput" placeholder="Confirm Password" compare-to="user.password"
-						 required>
-						<div ng-messages="changepassformin.userpasswordconf.$error" class="errormainpage">
-							<div ng-message="required" ng-if="changepassformin.userpasswordconf.$touched">Can't leave this empty.</div>
-							<div ng-message="compareTo" ng-if="changepassformin.userpasswordconf.$touched && user.password">Passwords do not match! </div>
-
+		
+						
+						<div class="form-group spacinga">
+							<input type="password" required name="old_password" ng-model="user.old_password" ng-class="{submitting: changepassformin.old_password.$error.required && changepassformin.old_password.$touched }"
+							class="forInput form-control" placeholder="Old Password">
+							<div class="errormainpage">
+								<div ng-show="changepassformin.old_password.$error.required" ng-if="changepassformin.old_password.$touched">Can't leave this empty.</div>
+							</div>
 						</div>
 
-					</div>
+						<div class="form-group spacinga" id="registerpassword">
+							<input id="regpass" name="password" type="password" ng-class="{submitting: changepassformin.password.$error.minlength || changepassformin.password.$error.pattern || changepassformin.password.$error.required && changepassformin.password.$touched}"
+							name="password" ng-model="user.password" ng-minlength="8" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/"
+							class="forInput form-control" placeholder="Password" aria-required="true" required popover="Passwords must be at least 8 characters and contain one lower &amp; one uppercase letter, and one non-alpha character (a number or a symbol.)"
+							popover-placement="bottom" popover-trigger="mouseenter" />
+							<div ng-messages="changepassformin.password.$error" class="errormainpage">
+								<div ng-message="minlength && pattern" ng-if="changepassformin.password.$touched">Wrong password format.</div>
+								<div ng-message="required" ng-if="changepassformin.password.$touched">Can't leave this empty.</div>
+							</div>
+						</div>
+						<div class="form-group spacinga">
+							<input type="password" ng-class="{submitting: ((changepassformin.password_confirmation.$error.required || changepassformin.password_confirmation.$error.compareTo && user.password)  && changepassformin.password_confirmation.$touched )}"
+							name="password_confirmation" ng-model="user.password_confirmation" class="form-control forInput" placeholder="Confirm Password" compare-to="user.password"
+							required>
+							<div ng-messages="changepassformin.password_confirmation.$error" class="errormainpage">
+								<div ng-message="required" ng-if="changepassformin.password_confirmation.$touched">Can't leave this empty.</div>
+								<div ng-message="compareTo" ng-if="changepassformin.password_confirmation.$touched && user.password">Passwords do not match! </div>
+
+							</div>
+
+						</div>
+						<input type="hidden"  ng-model="user.id" ng-init="user.id={{Auth::id()}}">
+					
 				</div>
 				<div class="modal-footer">
-					<button type="submit" ng-click="postchpassformin(changepassformin)" class="button modalsubmit1">Submit</button>
+					<button type="submit" ng-model="changepass" class="button modalsubmit1">Submit</button>
 				</div>
 			</form>
 			<a href="#" ng-click="close()" style=" position:absolute;top:10px;left:273px;">
@@ -837,7 +839,7 @@
 			<form class="form-group" name="editindustrys">
 				<div class="modal-body" style="overflow-y: auto; max-height:400px;min-height:400px;">
 					<div>
-						<input class="forInput form-control " id="industrytxf" ng-model="industry" type="text" placeholder="Industry Name">
+						<input class="forInput form-control " id="industrytxf" ng-model="industry.industry" type="text" placeholder="Industry Name">
 						<a href="#" id="addIcon" ng-click="addIndustry(industry)">
 							<span id="addIcon" class="glyphicon glyphicon-plus-sign"></span>
 						</a>
@@ -1179,7 +1181,7 @@
 			<form class="form-group">
 				<div class="modal-body" style="overflow-y: auto; max-height:400px;min-height:400px;">
 					<div>
-						<input class="forInput form-control" id="industrytxf" ng-model="product" type="text" placeholder="Product Name">
+						<input class="forInput form-control" id="industrytxf" ng-model="product.product_name" type="text" placeholder="Product Name">
 						<a href="#" id="addIcon" ng-click="addProduct(product)">
 							<span id="addIcon" class="glyphicon glyphicon-plus-sign"></span>
 						</a>

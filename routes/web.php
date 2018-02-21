@@ -13,7 +13,11 @@ use Illuminate\Support\Facades\Auth;
 
 
 Route::get('/', function(){
-    return view('auth.login');
+    if (Auth::guest()){
+         return view('auth.login');
+    }elseif (Auth::check()){
+        return redirect('/dashboard');
+    }
 });
 
 Auth::routes();
@@ -41,15 +45,16 @@ Route::middleware(['auth'])->group(function(){
 
 Route::middleware(['ajax'])->prefix('api')->group(function(){
         Route::get('/dashboard', 'DashboardController@index');
-        Route::resource('/project', 'ProjectController',['except'=>['edit']]);
-        Route::resource('/company', 'CompanyController',['except'=>['edit']]);
-        Route::resource('/contact', 'ContactController',['except'=>['edit']]);
-        Route::resource('/salesperson', 'SalesPersonController',['except'=>['edit']]);
+        Route::resource('/project', 'ProjectController',['except'=>['edit','show',]]);
+        Route::resource('/company', 'CompanyController',['except'=>['edit','show','store','create']]);
+        Route::resource('/contact', 'ContactController',['except'=>['edit','show','create','store']]);
+        Route::resource('/salesperson', 'SalesPersonController',['except'=>['show','create']]);
         Route::prefix('settings')->group(function() {
             Route::get('/','ConfigController@show')->name('settings.show');
             Route::post('/add','ConfigController@store')->name('settings.store');
             Route::delete('/{id}/product','ConfigController@deleteProduct')->name('delete.product');
             Route::delete('/{id}/industry','ConfigController@deleteIndustry')->name('delete.industry');
+            Route::post('/change_password','ConfigController@changePassword')->name('changePass');
         });
 
 });

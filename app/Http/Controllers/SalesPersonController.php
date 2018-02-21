@@ -69,12 +69,7 @@ class SalesPersonController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+ 
 
     /**
      * Show the form for editing the specified resource.
@@ -86,9 +81,9 @@ class SalesPersonController extends Controller
     {
         $salesperson = Salesperson::find($id);
         if(auth()->User()->email !== $salesperson->email){
-            return 'failed';
+            return 'Unauthorized';
         }
-        return $salesperson;
+        return 'success';
 
     }
 
@@ -103,8 +98,8 @@ class SalesPersonController extends Controller
     {
         $rule = ['salesperson_name'=>'required|string|max:255',
             'salesperson_id'=>'required|string|max:255',
-            'salesperson_number'=>'required|digit:11',
-            'salesperson_position'=>'required|string|max:50'
+            'salesperson_number'=>'required',
+            'salesperson_position'=>'required|string|max:255'
         ];
         $this->validate($request,$rule);
 

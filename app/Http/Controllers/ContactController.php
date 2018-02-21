@@ -31,16 +31,7 @@ class ContactController extends Controller
         return $contact;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $company = Company::all();
-        return $company;
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -77,17 +68,7 @@ class ContactController extends Controller
     }
 
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $contact = Contact::with('company')->where('id',$id)->first();
-        return $contact;
-    }
+
 
     /**
      * Update the specified resource in storage.
