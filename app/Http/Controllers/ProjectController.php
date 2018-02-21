@@ -162,7 +162,9 @@ class ProjectController extends Controller
 
             $project = Project::find($id);
         
-            $project->project_category = $request->project_category;
+            if ($request->has('project_category')){
+                $project->project_category = $request->project_category;
+            }
             $project->value =$request->value;
             $project->project_type = $request->project_type;
             $project->sales_stage = $request->sales_stage;

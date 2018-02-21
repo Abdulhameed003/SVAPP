@@ -1092,7 +1092,7 @@ salesVisionControllers.controller('mainCtrl', ['$scope', '$location', function (
 /**modals */
 
 
-salesVisionControllers.controller('MyControllerModal', ['$scope', '$modal', 'projectService', 'companyService', function ($scope, $modal, projectService, companyService) {
+salesVisionControllers.controller('MyControllerModal', ['$scope', '$modal', 'projectService', function ($scope, $modal, projectService) {
 
     /** nav bar modals */
 
@@ -1261,7 +1261,6 @@ salesVisionControllers.controller('MyControllerModal', ['$scope', '$modal', 'pro
     };
     /**Company modals */
     $scope.openEditcomp = function (size, company) {
-        companyService.setid(company.id);
         var modalInstance = $modal.open({
             controller: 'forCloseEditcomp',
             templateUrl: 'editcompany.html',
@@ -1947,9 +1946,9 @@ salesVisionControllers.controller('forCloseEditlead', ['$scope', '$modalInstance
                 alert('Error editting the project.');
             });
             $scope.editLeadProj = angular.copy(original);
-             $scope.editLead.$setPristine();
-           $scope.editLead.$setValidity();
-           $scope.editLead.$setUntouched();
+            $scope.editLead.$setPristine();
+            $scope.editLead.$setValidity();
+            $scope.editLead.$setUntouched();
             $modalInstance.dismiss('cancel');
         }
         if (form.$invalid) {
@@ -1997,7 +1996,7 @@ salesVisionControllers.controller('forCloseEditdeal', ['$scope', '$modalInstance
         $scope.types = [
             {
                 "id": "1",
-                "name": "New Sale"
+                "name": "New sale"
             },
             {
                 "id": "2",
@@ -2016,17 +2015,14 @@ salesVisionControllers.controller('forCloseEditdeal', ['$scope', '$modalInstance
             projectService.updateProject($scope.editDealProj, function (response) {
                 if (response.status == 200) {
                     alert('Updated successfully');
-                    $scope.editDealProj = angular.copy(original);
-                    $scope.editDeal.$setPristine();
-                    $scope.editDeal.$setValidity();
-                    $scope.editDeal.$setUntouched();
-                    $modalInstance.dismiss('cancel');
-
                 }
             }, function (response) {
                 alert('Error editting the project.');
             });
-      
+            $scope.editDealProj = angular.copy(original);
+            $scope.editDeal.$setPristine();
+            $scope.editDeal.$setValidity();
+            $scope.editDeal.$setUntouched();
 
         }
         if (form.$invalid) {
@@ -2067,11 +2063,11 @@ salesVisionControllers.controller('forCloseEditlostcase', ['$scope', '$modalInst
         $scope.types = [
             {
                 "id": "1",
-                "name": "New Sale"
+                "name": "New sales"
             },
             {
                 "id": "2",
-                "name": "Renewal"
+                "name": "Renewals"
             }
 
         ];
@@ -2285,14 +2281,14 @@ salesVisionControllers.controller('forCloseMultiplecontdelete', ['$scope', '$mod
 }]);
 
 /**company modal controllers */
-salesVisionControllers.controller('forCloseEditcomp', ['$scope', '$modalInstance', 'settingService','companyService', function ($scope, $modalInstance, settingService, companyService) {
+salesVisionControllers.controller('forCloseEditcomp', ['$scope', '$modalInstance', 'settingService', function ($scope, $modalInstance, settingService) {
     settingService.showSettings(function (response) {
         $scope.industryList = response.data.industry;
         $scope.editcom = {
             company_name: $modalInstance.comlist.company_name,
             website: $modalInstance.comlist.website,
-            office_number: $modalInstance.comlist.office_num,
-            industry: $modalInstance.comlist.industry.id
+            office_num: $modalInstance.comlist.office_num,
+            industry_id: $modalInstance.comlist.industry.id
         }
 
 
@@ -2300,20 +2296,13 @@ salesVisionControllers.controller('forCloseEditcomp', ['$scope', '$modalInstance
             $modalInstance.dismiss('cancel');
         };
     }, function (response) {
-        alert('No predefined data are set for industries, company and products');
+        alert('No predefined data are set for industires, company and products');
     });
     var original = angular.copy($scope.editcom);
     $scope.postEditCompany = function (form) {
 
         if (form.$valid) {
             alert('can submit');
-            companyService.updateCompany($scope.editcom, function (response) {
-                if (response.status == 200) {
-                    alert('Updated successfully');
-                }
-            }, function (response) {
-                alert('Error editting the company.');
-            });
             $scope.editcom = angular.copy(original);
             $scope.editcompany.$setPristine();
             $scope.editcompany.$setValidity();
@@ -2407,15 +2396,15 @@ salesVisionControllers.controller('forCloseEditpers', ['$scope', '$modalInstance
     });
 
     if(isEditable){
-
+        $scope.editSperson = {
+            name: $modalInstance.list.name,
+            phone_num: $modalInstance.list.phone_num,
+            email: $modalInstance.list.email,
+            salesperson_id: $modalInstance.list.salesperson_id,
+            position: $modalInstance.list.position
+        }
     }
-    $scope.editSperson = {
-        name: $modalInstance.list.name,
-        phone_num: $modalInstance.list.phone_num,
-        email: $modalInstance.list.email,
-        salesperson_id: $modalInstance.list.salesperson_id,
-        position: $modalInstance.list.position
-    }
+    
 
     var original = angular.copy($scope.editSperson);
     $scope.editPersRow = function (form) {
