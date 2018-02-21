@@ -180,7 +180,7 @@ class ProjectController extends Controller
                 ['po_num' => $request->po_number,
                 'po_date' => Carbon::parse($request->po_date)->format('Y-m-d')]);
             }
-            return $result = $project->save() ? $result ='success' : $result = 'failed';
+            return $result = $project->save() ? $result = Project::getRecentlyAdded($project->id) : $result = 'failed';
         }catch(\Exception $e){
             return 'failed';
         }

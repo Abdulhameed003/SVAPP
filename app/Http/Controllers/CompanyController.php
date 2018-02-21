@@ -38,19 +38,19 @@ class CompanyController extends Controller
     {
 
         $rule = ['company_name'=>'required',
-        'industry_id'=>'required',
-        'website'=>'required|url',
-        'office_number'=>'required|string'];
+        'industry'=>'required',
+        'website'=>'required',
+        'office_number'=>'required'];
 
         $this->validate($request,$rule);
           
         $company = Company::find($id);
         $company->company_name = $request->company_name;
-        $company->industry_id = $request->industry_id;
+        $company->industry_id = $request->industry;
         $company->website = $request->website;
         $company->office_num = $request->office_number;
        
-        return $result = $company->save()? $result = $company : $result = 'failed';
+        return $result = $company->save()? $result = Company::getRecentUpdated($company->id) : $result = 'failed';
 
     }
 

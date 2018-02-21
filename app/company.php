@@ -31,5 +31,7 @@ class Company extends ConfigureDB
         return $product;
     } 
 
-   
+   public static function getRecentUpdated($id){
+       return static::with('industy')->where('id',$id)->get();
+   }
 }
