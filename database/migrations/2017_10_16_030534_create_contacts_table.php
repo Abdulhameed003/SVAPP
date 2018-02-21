@@ -17,7 +17,7 @@ class CreateContactsTable extends Migration
             $table->increments('id');
             $table->string('company_id');
             $table->string('contact_name');
-            $table->string('contact_number')->unique();
+            $table->string('contact_number');
             $table->string('email')->unique();
             $table->string('designation');
         });

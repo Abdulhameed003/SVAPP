@@ -68,8 +68,8 @@ class CompanyController extends Controller
         try{
             $company = Company::find($id);
             $company_name = $company->company_name;
-            $company->projects()->where('company_id',$company->company_id)->delete();
-            $company->contacts()->where('company_id',$company->company_id)->delete();
+            $see = $company->projects()->where('company_id',$company->id)->delete();
+            $company->contacts()->where('company_id',$company->id)->delete();
             $company->delete();
             return 'success';
         }catch(\Exception $e){

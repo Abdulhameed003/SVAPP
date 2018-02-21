@@ -52,6 +52,7 @@ class CompanyControllerTest extends TestCase
         $contact = factory(\App\Contact::class)->create(['company_id'=>$company->id]);
 
         $response = $this->actingAs($this->user)->delete("api/company/{$company->id}");
+        var_dump($response->getContent());
         $this->assertDatabaseMissing('companies',['id'=>$company->id],'mysql2');
         $this->assertDatabaseMissing('contacts',['company_id'=>$company->id],'mysql2');
         $this->assertDatabaseMissing('projects',['company_id'=>$company->id],'mysql2');
