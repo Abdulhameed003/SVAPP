@@ -2248,10 +2248,10 @@ salesVisionControllers.controller('forCloseEditcont', ['$scope', '$modalInstance
             companyService.updateContact($scope.editcont, function (response) {
                 if (response.status == 200) {
                     alert('Updated successfully');
-                    // $scope.editcont = angular.copy(original);
-                    // $scope.editContact.$setPristine();
-                    // $scope.editContact.$setValidity();
-                    // $scope.editContact.$setUntouched();
+                    $scope.editcont = angular.copy(original);
+                    $scope.editContact.$setPristine();
+                    $scope.editContact.$setValidity();
+                    $scope.editContact.$setUntouched();
  /////////////////////////////need to return data as response
                    
                    // var index = $scope.rows5.indexOf($modalInstance.contlist);
@@ -2379,10 +2379,10 @@ salesVisionControllers.controller('forCloseEditcomp', ['$scope', '$modalInstance
            companyService.updateCompany($scope.editcom, function (response) {
             if (response.status == 200) {
                 alert('Updated successfully');
-                // $scope.editcont = angular.copy(original);
-                // $scope.editContact.$setPristine();
-                // $scope.editContact.$setValidity();
-                // $scope.editContact.$setUntouched();
+                $scope.editcont = angular.copy(original);
+                 $scope.editContact.$setPristine();
+                 $scope.editContact.$setValidity();
+                 $scope.editContact.$setUntouched();
 /////////////////////////////need to return data as response
                
                // var index = $scope.rows5.indexOf($modalInstance.contlist);
