@@ -2029,7 +2029,7 @@ salesVisionControllers.controller('forCloseEditdeal', ['$scope', '$modalInstance
         $scope.types = [
             {
                 "id": "1",
-                "name": "New sale"
+                "name": "New Sale"
             },
             {
                 "id": "2",
@@ -2093,11 +2093,11 @@ salesVisionControllers.controller('forCloseEditlostcase', ['$scope', '$modalInst
         $scope.types = [
             {
                 "id": "1",
-                "name": "New sales"
+                "name": "New Sale"
             },
             {
                 "id": "2",
-                "name": "Renewals"
+                "name": "Renewal"
             }
 
         ];
@@ -2105,22 +2105,24 @@ salesVisionControllers.controller('forCloseEditlostcase', ['$scope', '$modalInst
         alert('No predefined data are set for industires, company and products');
     });
 
-    var original = angular.copy($scope.editLostProj);
+    var original = angular.copy($scope.editlostProj);
     $scope.editLostRow = function (form) {
         /**call to update database */
         if (form.$valid) {
-            projectService.updateProject($scope.editLostProj, function (response) {
+            projectService.updateProject($scope.editlostProj, function (response) {
                 if (response.status == 200) {
                     alert('Updated successfully');
+                    $scope.editlostProj = angular.copy(original);
+                    $scope.editlostcase.$setPristine();
+                    $scope.editlostcase.$setValidity();
+                    $scope.editlostcase.$setUntouched();
                     $modalInstance.dismiss('cancel');
+              
                 }
             }, function (response) {
                 alert('Error editting the project.');
             });
-            $scope.editLostProj = angular.copy(original);
-            $scope.editlostcase.$setPristine();
-            $scope.editlostcase.$setValidity();
-            $scope.editlostcase.$setUntouched();
+            
 
         }
         if (form.$invalid) {
