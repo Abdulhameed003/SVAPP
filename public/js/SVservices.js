@@ -238,11 +238,12 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
             });
         }
         var id = 0;
-        var params={};
+      
         return {
             setid: function(_id){
                 id = _id;
             },
+        
             showCompany:showCompany,
             updateCompany:updateCompany,
             deleteCompany:deleteCompany,

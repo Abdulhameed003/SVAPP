@@ -2199,7 +2199,7 @@ salesVisionControllers.controller('forCloseMultipledeleteErrormessage', ['$scope
 salesVisionControllers.controller('forCloseEditcont', ['$scope', '$modalInstance', 'companyService', function ($scope, $modalInstance, companyService) {
     companyService.setid($modalInstance.contlist.id);
     $scope.editcont = {
-        company_id: $modalInstance.contlist.id,
+        //company_id: $modalInstance.contlist.company.id,
         company_name: $modalInstance.contlist.company.company_name,
         contact_name: $modalInstance.contlist.contact_name,
         contact_number: $modalInstance.contlist.contact_number,
@@ -2219,6 +2219,10 @@ salesVisionControllers.controller('forCloseEditcont', ['$scope', '$modalInstance
                     // $scope.editContact.$setPristine();
                     // $scope.editContact.$setValidity();
                     // $scope.editContact.$setUntouched();
+ /////////////////////////////need to return data as response
+                   
+                   // var index = $scope.rows5.indexOf($modalInstance.contlist);
+                   // $scope.rows5[index]=$scope.editcont;
                     $modalInstance.dismiss('cancel');
                 }
             }, function (response) {
@@ -2320,26 +2324,42 @@ salesVisionControllers.controller('forCloseEditcomp', ['$scope', '$modalInstance
         $scope.editcom = {
             company_name: $modalInstance.comlist.company_name,
             website: $modalInstance.comlist.website,
-            office_num: $modalInstance.comlist.office_num,
-            industry_id: $modalInstance.comlist.industry.id
+            office_number: $modalInstance.comlist.office_num,
+            industry: $modalInstance.comlist.industry.id
         }
 
 
-        $scope.close = function () {
-            $modalInstance.dismiss('cancel');
-        };
     }, function (response) {
         alert('No predefined data are set for industires, company and products');
     });
+    $scope.close = function () {
+        $modalInstance.dismiss('cancel');
+    };
+
+    companyService.setid($modalInstance.comlist.id);
+    
     var original = angular.copy($scope.editcom);
     $scope.postEditCompany = function (form) {
 
         if (form.$valid) {
-            alert('can submit');
-            $scope.editcom = angular.copy(original);
-            $scope.editcompany.$setPristine();
-            $scope.editcompany.$setValidity();
-            $scope.editcompany.$setUntouched();
+           // alert('can submit');
+           companyService.updateCompany($scope.editcom, function (response) {
+            if (response.status == 200) {
+                alert('Updated successfully');
+                // $scope.editcont = angular.copy(original);
+                // $scope.editContact.$setPristine();
+                // $scope.editContact.$setValidity();
+                // $scope.editContact.$setUntouched();
+/////////////////////////////need to return data as response
+               
+               // var index = $scope.rows5.indexOf($modalInstance.contlist);
+               // $scope.rows5[index]=$scope.editcont;
+                $modalInstance.dismiss('cancel');
+            }
+        }, function (response) {
+            alert('Error editting the company.');
+        });
+            
 
         }
         if (form.$invalid) {
