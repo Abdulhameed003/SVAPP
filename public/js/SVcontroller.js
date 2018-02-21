@@ -359,7 +359,8 @@ salesVisionControllers.controller('projectController', ['$scope', '$http', 'proj
     var onlylead = [];
     var onlydeal = [];
     var onlylostcase = [];
-   
+    var duplicateprojects=[];
+
     var daterangeprojects = [];
 
 
@@ -368,6 +369,7 @@ salesVisionControllers.controller('projectController', ['$scope', '$http', 'proj
             this.projects = response.data;
             $scope.searchData = '';
             $scope.rows = this.projects;
+            duplicateprojects=this.projects;
             projectService.setDetails($scope.rows);
             $scope.filteredRows = this.projects;
 
@@ -567,36 +569,29 @@ salesVisionControllers.controller('projectController', ['$scope', '$http', 'proj
                 }
 
                 if ($scope.filterForm.date) {
+                    $scope.rows=duplicateprojects;
+                    daterangeprojects=[];
                     var checkrequired = function () {
                         if ($scope.startdate == "" && $scope.enddate == "") {
                             alert("Please fill in both start date and end date");
                         }
                     };
                     checkrequired();
-                    $scope.startdate = moment($scope.startdate).format('YYYY-MM-DD');
-                    alert($scope.startdate);
-                    var startDate = new moment ($scope.startdate);//$scope.startdate;
-                    var endDate = new moment ($scope.enddate);//$scope.enddate;
-                    
-                    //startDate= moment.utc(startDate);
-                    //endDate = moment.utc(endDate);
-                    alert(startDate);
-                    alert(endDate);
-                    
+
+                    var startDate = moment($scope.startdate, 'YYYY-MM-DD').toDate();
+                    var endDate = moment($scope.enddate, 'YYYY-MM-DD').toDate();
+
                     angular.forEach($scope.rows, function (obj) {
-                       // alert(obj.start_date);
-                       var testdata=moment.utc(obj.start_date);
-                       alert(testdata);
-                      alert(moment(testdata).isBetween(startDate,endDate, 'day','[]'));
-                        //obj.start_date = moment(obj.start_date).format('DD/MM/YYYY');
-                        //alert(obj.start_date);
-                        //alert("yes");
-                        //alert(moment(obj.close_at).isBefore(endDate, 'days'));
-                       // alert(moment(obj.start_date).isAfter(startDate, 'day'));
-                        //if (moment(obj.close_at).isBefore(endDate, 'day')) {
-                        //daterangeprojects.push(obj);
-                        // }
+                        var testdata = moment.utc(obj.start_date);
+                        var testdatab = moment.utc(obj.close_at);
+                        if ((moment(testdata).isBetween(startDate, endDate, 'day', '[]')) && (moment(testdatab).isBetween(startDate, endDate, 'day','[]'))){
+                       
+                        daterangeprojects.push(obj);
+
+                        }
                     });
+                    $scope.rows = daterangeprojects;
+                    $scope.filteredRows = daterangeprojects;
                 }
             };
 
@@ -2030,6 +2025,7 @@ salesVisionControllers.controller('forCloseEditdeal', ['$scope', '$modalInstance
             projectService.updateProject($scope.editDealProj, function (response) {
                 if (response.status == 200) {
                     alert('Updated successfully');
+                    $modalInstance.dismiss('cancel');
                 }
             }, function (response) {
                 alert('Error editting the project.');
@@ -2093,6 +2089,7 @@ salesVisionControllers.controller('forCloseEditlostcase', ['$scope', '$modalInst
             projectService.updateProject($scope.editLostProj, function (response) {
                 if (response.status == 200) {
                     alert('Updated successfully');
+                    $modalInstance.dismiss('cancel');
                 }
             }, function (response) {
                 alert('Error editting the project.');
