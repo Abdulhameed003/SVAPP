@@ -15,13 +15,13 @@ class CreateProjectsTable extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->increments('id')->unique();
-            $table->string('project_category');
+            $table->string('project_category')->nullable();
             $table->string('company_id');  //rel2
-            $table->integer('salesperson_id'); //rel2
+            $table->integer('salesperson_id')->nullable(); //rel2
             $table->integer('product'); //rel 3
             $table->integer('value');
             $table->string('project_type');
-            $table->integer('sales_stage'); 
+            $table->integer('sales_stage')->nullable(); 
             $table->string('status')->nullable();
             $table->string('tender')->nullable();
             $table->string('remarks')->nullable();

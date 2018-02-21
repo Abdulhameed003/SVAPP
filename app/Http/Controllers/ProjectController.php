@@ -131,7 +131,7 @@ class ProjectController extends Controller
                 'contact_email'=>'sometimes|required',
                 'contact_designation'=>'sometimes|nullable|string',
                 'salesperson_id'=>'required',
-                'project_category'=>'required',
+                'project_category'=>'sometimes|required',
                 'product'=>'required',
                 'value'=>'required|numeric',
                 'project_type'=>'required',
