@@ -2337,20 +2337,27 @@ salesVisionControllers.controller('forCloseEditcomp', ['$scope', '$modalInstance
 
 }]);
 
-salesVisionControllers.controller('forCloseDeletecomp', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+salesVisionControllers.controller('forCloseDeletecomp', ['$scope', '$modalInstance','companyService', function ($scope, $modalInstance, companyService) {
     $scope.deleteHeader = "Delete a Company";
     $scope.deleteTitle = "Deleting this company will delete all the related projects and contacts. Do you want to proceed?";
+    var indexid = modalInstance.comlist.id;
     $scope.removeRow = function () {
+          companyService.deleteCompany(indexid, function (response) {
+        if (response.status == 200) {
         var currentid = $modalInstance.comlist;
         var index = $scope.rows4.indexOf(currentid);
         $scope.rows4.splice(index, 1);
-    };
+        }
+    },function (response) {
+        alert('There was an error deleting the selected company');
+    });
 
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
     };
 
-
+};
+  
 }]);
 
 
