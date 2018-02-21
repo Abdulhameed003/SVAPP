@@ -148,7 +148,7 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
         }
 
         function deleteIndusty(industryid, onSuccess, onError){
-            $http.delete('api/settings/'+idustryid+'/industry')
+            $http.delete('api/settings/'+industryid+'/industry')
             .then(function(response){
                 onSuccess(response);
             },function(response){
@@ -165,8 +165,8 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
             });
         }
 
-        function changePass(formdata){
-            $http.post("api/settings/change_password",formdata)
+        function changePass(formdata, onSuccess,onError){
+            $http.post('api/settings/change_password',formdata)
             .then(function(response){
                 onSuccess(response);
             },function(response){

@@ -2,7 +2,7 @@
 
 var salesVisionControllers = angular.module('salesVisionControllers', []);
 
-
+/**Handles registering a new user to the system */
 salesVisionControllers.controller('registerController', ['$scope', '$http', 'userService', '$location', '$window', function ($scope, $http, userService, $location, $window) {
     var original = angular.copy($scope.user);
     $scope.error = false;
@@ -43,6 +43,7 @@ salesVisionControllers.controller('registerController', ['$scope', '$http', 'use
     };
 }]);
 
+/**Handles forgot password request by the user*/
 salesVisionControllers.controller('forgetPasswordController', ['$scope', '$modal', '$http', 'userService', function ($scope, $modal, $http, userService) {
 
     $scope.open = function (size) {
@@ -59,24 +60,28 @@ salesVisionControllers.controller('forgetPasswordController', ['$scope', '$modal
     $scope.close = function () {
         $scope.modalInstance.dismiss('cancel');
     };
+
+
     var original = angular.copy($scope.user);
     $scope.emailSubmit = function (form) {
 
-        /**call to update database */
         if (form.$valid) {
             userService.forgotPassword($scope.user, function (response) {
-                if (response == 200) {
+                if (response.status == 200) {
                     $scope.user = angular.copy(original);
                     $scope.forgotpass.$setPristine();
                     $scope.forgotpass.$setValidity();
                     $scope.forgotpass.$setUntouched();
-                    alert('A reset link has been sent to ' + $scope.user.email + ' please click the link to rest your password.');
-                    $scope.modalInstance.dismiss('cancel');
+                    
                 }
             }, function (response) {
                 alert(response.data + 'The was a problem reseting the link');
             });
 
+            alert('A reset link has been sent to ' + $scope.user.email + ' please click the link to rest your password.');
+            $scope.modalInstance.dismiss('cancel');
+
+          
         }
         if (form.$invalid) {
 
@@ -962,9 +967,9 @@ salesVisionControllers.controller('salesController', ['$scope', '$http', 'salesS
 });
 
 
-/**Changepassword.html controller */
+/**Handles the reset of password when a user forgets his/her details*/
 
-salesVisionControllers.controller('changepassctrl', 'userService', '$location', '$window', function ($scope, userService, $location, $windows) {
+salesVisionControllers.controller('changepassctrl', ['userService', '$location', '$window', function ($scope, userService, $location, $windows) {
 
 
     var original = angular.copy($scope.user);
@@ -972,7 +977,7 @@ salesVisionControllers.controller('changepassctrl', 'userService', '$location', 
 
         if (form.$valid) {
             userService.resetPassword($scope.user, function (response) {
-                if (response.status == 200) {
+                if (response.status == 320) {
                     $scope.user = angular.copy(original);
                     $scope.changepassform.$setPristine();
                     $scope.changepassform.$setValidity();
@@ -980,10 +985,8 @@ salesVisionControllers.controller('changepassctrl', 'userService', '$location', 
                     window.location = "/dashboard";
                 }
             }, function (response) {
-
+                alert('There was a problem resetting your password.');
             });
-            alert('can submit');
-
         }
         if (form.$invalid) {
 
@@ -997,7 +1000,7 @@ salesVisionControllers.controller('changepassctrl', 'userService', '$location', 
 
 
     };
-});
+}]);
 
 
 
@@ -1602,10 +1605,10 @@ salesVisionControllers.controller('forCloseDeal', ['$scope', '$modalInstance', '
                     alert('Project created succesfully');
                     //push data to table
                     projectService.getDetails().push(response.data[0]);
-                    // $scope.Dealproj = angular.copy(original);
-                    // $scope.addDeal.$setPristine();
-                    // $scope.addDeal.$setValidity();
-                    // $scope.addDeal.$setUntouched();
+                    //$scope.Dealproj = angular.copy(original);
+                    //$scope.addDeal.$setPristine();
+                    //$scope.addDeal.$setValidity();
+                    //$scope.addDeal.$setUntouched();
 
 
                 }
@@ -1666,7 +1669,7 @@ salesVisionControllers.controller('forCloseDelete', ['$scope', '$modalInstance',
                 var currentid = $modalInstance.id;
                 var index = $scope.rows.indexOf(currentid);
                 $scope.rows.splice(index, 1);
-                // alert('Project has been deleted successfully');
+               
             }
         }, function (response) {
             alert('There was an error deleting the selected project');
@@ -1683,26 +1686,27 @@ salesVisionControllers.controller('forCloseDelete', ['$scope', '$modalInstance',
 
 
 
-salesVisionControllers.controller('forClosePassword', ['$scope', '$modalInstance','settingservice', function ($scope, $modalInstance,settingService) {
+salesVisionControllers.controller('forClosePassword', ['$scope', '$modalInstance','settingService', function ($scope, $modalInstance,settingService) {
 
     var original = angular.copy($scope.user);
     $scope.postchpassformin = function (form) {
 
         if (form.$valid) {
-            settingService.changePass(scope.user,function(response){
+            settingService.changePass($scope.user,function(response){
                 if (response.data == 'success'){
-                    $scope.user = angular.copy(original);
-                    $scope.changepassformin.$setPristine();
-                    $scope.changepassformin.$setValidity();
-                    $scope.changepassformin.$setUntouched();
                     alert('Password successfully changed ');
                 }else if (response.data == 'failed'){
-                    alert('There was an error in your rwquest.');
+                    alert('There was an error in your request.');
                 }
             },function(response){
-
+                alert('server down! We will get back to you shortly');
             });
 
+            $scope.user = angular.copy(original);
+            $scope.changepassformin.$setPristine();
+            $scope.changepassformin.$setValidity();
+            $scope.changepassformin.$setUntouched();
+            $modalInstance.dismiss('cancel');
         }
         if (form.$invalid) {
 
@@ -1713,11 +1717,7 @@ salesVisionControllers.controller('forClosePassword', ['$scope', '$modalInstance
             });
 
         }
-
-
     };
-
-
 
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
@@ -1726,23 +1726,38 @@ salesVisionControllers.controller('forClosePassword', ['$scope', '$modalInstance
 
 }]);
 
-
+/**This controller manageges the Industry section of the system it helps to DELETE AND SHOW the industry list*/
 salesVisionControllers.controller('forCloseIndustry', ['$scope', '$modalInstance', 'settingService', function ($scope, $modalInstance, settingService) {
+   
     settingService.showSettings(function (response) {
         $scope.industryList = response.data.industry;
     }, function (response) {
         alert('Error in loading industries');
     });
 
+    $scope.addIndustry = function (industry){
+        settingService.create(industry, function(response){
+            if (response.data  != "failed"){
+                $scope.industryList.push(response.data);
+
+            }else{
+                alert('Something went wrong.');
+            }
+        },function(response){
+            alert("Please don't leave the field empty");
+        });
+    };
+
     $scope.deleteSelected = function (index, industry) {
         settingService.deleteIndustry(industry.id, function (response) {
             if (response.status == 200) {
+                $scope.industryList.splice(index, 1);
                 aleart('Industry has been deleted');
             }
         }, function (response) {
             alert('Erorr deleting the selected industry.');
         });
-        $scope.industryList.splice(index, 1);
+        
     };
 
     $scope.close = function () {
@@ -1751,7 +1766,7 @@ salesVisionControllers.controller('forCloseIndustry', ['$scope', '$modalInstance
 
 }]);
 
-
+/**Handles the product section of the system which enbles the management of products in the system. */
 salesVisionControllers.controller('forCloseProduct', ['$scope', '$modalInstance', 'settingService', function ($scope, $modalInstance, settingService) {
     settingService.showSettings(function (response) {
         $scope.productList = response.data.product;
@@ -1759,16 +1774,33 @@ salesVisionControllers.controller('forCloseProduct', ['$scope', '$modalInstance'
         alert('Error in loading product');
     });
 
+    $scope.addProduct = function (product){
+        settingService.create(product, function(response){
+            if (response.data  != "failed"){
+                $scope.productList.push(response.data);
+                
+            }else{
+                alert('Something went wrong.');
+            }
+        },function(response){
+            alert("Please don't leave the field empty");
+        });
+    };
+
+
     $scope.deleteSelected = function (index, product) {
-        settingService.deleteIndustry(product.id, function (response) {
+        
+        settingService.deleteProduct(product.id, function (response) {
             if (response.status == 200) {
+                $scope.productList.splice(index, 1);
                 aleart('product has been deleted.');
             }
         }, function (response) {
             alert('Erorr deleting the selected product.');
         });
-        $scope.productList.splice(index, 1);
+        
     };
+
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
     };
@@ -1908,8 +1940,6 @@ salesVisionControllers.controller('forCloseEditlead', ['$scope', '$modalInstance
     $scope.editLeadRow = function (form) {
         /**call to update database */
         if (form.$valid) {
-            alert('can');
-
             projectService.updateProject($scope.editLeadProj, function (response) {
                 if (response.status == 200) {
                     alert('Updated successfully');

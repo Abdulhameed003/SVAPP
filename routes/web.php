@@ -13,7 +13,11 @@ use Illuminate\Support\Facades\Auth;
 
 
 Route::get('/', function(){
-    return view('auth.login');
+    if (Auth::guest()){
+         return view('auth.login');
+    }elseif (Auth::check()){
+        return redirect('/dashboard');
+    }
 });
 
 Auth::routes();
