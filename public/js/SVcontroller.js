@@ -887,6 +887,7 @@ salesVisionControllers.controller('contactController', ['$scope', '$http', 'comp
     var myE4 = angular.element(document.querySelector('#contnav'));
     myE4.addClass('active');
     var contacts = [];
+
     companyService.showContact(function (response) {
         if (response.status == 200 && response.data.length > 0) {
             this.contacts = response.data;
@@ -1315,6 +1316,7 @@ salesVisionControllers.controller('MyControllerModal', ['$scope', '$modal', 'pro
 
     /**contact modals */
     $scope.openEditcont = function (size, contact) {
+
         var modalInstance = $modal.open({
             controller: 'forCloseEditcont',
             templateUrl: 'editcontact.html',
@@ -2194,24 +2196,35 @@ salesVisionControllers.controller('forCloseMultipledeleteErrormessage', ['$scope
 }]);
 
 /**contact modal controllers */
-salesVisionControllers.controller('forCloseEditcont', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+salesVisionControllers.controller('forCloseEditcont', ['$scope', '$modalInstance', 'companyService', function ($scope, $modalInstance, companyService) {
+    companyService.setid($modalInstance.contlist.id);
     $scope.editcont = {
+        company_id: $modalInstance.contlist.id,
         company_name: $modalInstance.contlist.company.company_name,
         contact_name: $modalInstance.contlist.contact_name,
         contact_number: $modalInstance.contlist.contact_number,
-        email: $modalInstance.contlist.email,
-        designation: $modalInstance.contlist.designation
+        contact_email: $modalInstance.contlist.email,
+        contact_designation: $modalInstance.contlist.designation
     };
 
     var original = angular.copy($scope.editcont);
     $scope.postEditContact = function (form) {
 
         if (form.$valid) {
-            alert('can submit');
-            $scope.editcont = angular.copy(original);
-            $scope.editContact.$setPristine();
-            $scope.editContact.$setValidity();
-            $scope.editContact.$setUntouched();
+            // alert('can submit');
+            companyService.updateContact($scope.editcont, function (response) {
+                if (response.status == 200) {
+                    alert('Updated successfully');
+                    // $scope.editcont = angular.copy(original);
+                    // $scope.editContact.$setPristine();
+                    // $scope.editContact.$setValidity();
+                    // $scope.editContact.$setUntouched();
+                    $modalInstance.dismiss('cancel');
+                }
+            }, function (response) {
+                alert('Error editting the contact.');
+            });
+
 
         }
         if (form.$invalid) {
@@ -2232,13 +2245,21 @@ salesVisionControllers.controller('forCloseEditcont', ['$scope', '$modalInstance
 
 }]);
 
-salesVisionControllers.controller('forCloseDeletecont', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+salesVisionControllers.controller('forCloseDeletecont', ['$scope', '$modalInstance', 'companyService', function ($scope, $modalInstance, companyService) {
     $scope.deleteHeader = "Delete a Contact";
     $scope.deleteTitle = "Are you sure to delete this contact?";
+    var indexid = $modalInstance.contlist.id;
+
     $scope.removeRow = function () {
-        var currentid = $modalInstance.contlist;
-        var index = $scope.rows5.indexOf(currentid);
-        $scope.rows5.splice(index, 1);
+        companyService.deleteContact(indexid, function (response) {
+            if (response.status == 200) {
+                var currentid = $modalInstance.contlist;
+                var index = $scope.rows5.indexOf(currentid);
+                $scope.rows5.splice(index, 1);
+            }
+        }, function (response) {
+            alert('There was an error deleting the selected company');
+        });
     };
 
     $scope.close = function () {
@@ -2258,7 +2279,7 @@ salesVisionControllers.controller('forCloseMultipledeletecontErrormessage', ['$s
 
 }]);
 
-salesVisionControllers.controller('forCloseMultiplecontdelete', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+salesVisionControllers.controller('forCloseMultiplecontdelete', ['$scope', '$modalInstance', 'companyService', function ($scope, $modalInstance, companyService) {
     $scope.deleteHeaderrows = "Delete Contacts";
     $scope.deleteMessage = "Are you sure to delete the selected contacts?";
 
@@ -2267,11 +2288,17 @@ salesVisionControllers.controller('forCloseMultiplecontdelete', ['$scope', '$mod
         var numbers = $modalInstance.list.length;
         for (var i = 0; i < numbers; i++) {
             angular.forEach($scope.rows5, function (value) {
-                if (value.No == rows[i]) {
-                    var index = $scope.rows5.indexOf(value);
-                    $scope.rows5.splice(index, 1);
+                if (value.id == rows[i]) {
+                    var indexid = rows[i];
+                    companyService.deleteContact(indexid, function (response) {
+                        if (response.status == 200) {
+                            var index = $scope.rows5.indexOf(value);
+                            $scope.rows5.splice(index, 1);
+                        }
+                    }, function (response) {
+                        alert('There was an error deleting the selected contacts');
+                    });
                 }
-
 
             });
         }
@@ -2352,7 +2379,7 @@ salesVisionControllers.controller('forCloseDeletecomp', ['$scope', '$modalInstan
             alert('There was an error deleting the selected company');
         });
 
-     
+
 
     };
     $scope.close = function () {
@@ -2373,7 +2400,7 @@ salesVisionControllers.controller('forCloseMultipledeletecompErrormessage', ['$s
 }]);
 
 
-salesVisionControllers.controller('forCloseMultiplecompdelete', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+salesVisionControllers.controller('forCloseMultiplecompdelete', ['$scope', '$modalInstance', 'companyService', function ($scope, $modalInstance, companyService) {
     $scope.deleteHeaderrows = "Delete Companies";
     $scope.deleteMessage = "Deleting these companies will delete all the related project and contacts. Do you want to proceed?";
 
@@ -2383,14 +2410,21 @@ salesVisionControllers.controller('forCloseMultiplecompdelete', ['$scope', '$mod
         for (var i = 0; i < numbers; i++) {
             angular.forEach($scope.rows4, function (value) {
                 if (value.id == rows[i]) {
-                    var index = $scope.rows4.indexOf(value);
-                    $scope.rows4.splice(index, 1);
-                }
+                    var indexid = rows[i];
+                    companyService.deleteCompany(indexid, function (response) {
+                        if (response.status == 200) {
+                            var index = $scope.rows4.indexOf(value);
+                            $scope.rows4.splice(index, 1);
+                        }
+                    }, function (response) {
+                        alert('There was an error deleting the selected companies');
+                    });
 
+
+                }
 
             });
         }
-
     };
 
     $scope.close = function () {

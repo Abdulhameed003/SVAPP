@@ -79,7 +79,7 @@ class ContactController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $rule = ['company_id'=>'required',
+        $rule = [
                 'contact_name' =>'required',
                 'contact_number'=>'required',
                 'contact_email' =>'required|email',
@@ -90,7 +90,6 @@ class ContactController extends Controller
         $this->validate($request, $rule);
 
         $contact = Contact::find($id);
-        $contact->company_id = $request->company_id;
         $contact->contact_name = $request->contact_name;
         $contact->contact_number = $request->contact_number;
         $contact->email = $request->contact_email;

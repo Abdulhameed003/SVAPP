@@ -220,7 +220,7 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
             });
         }
 
-        function updatecontact(formdata,onSuccess,onError){
+        function updateContact(formdata,onSuccess,onError){
             $http.put("api/contact/"+id,formdata)
             .then(function(response){
                 onSuccess(response);
@@ -238,6 +238,7 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
             });
         }
         var id = 0;
+        var params={};
         return {
             setid: function(_id){
                 id = _id;
@@ -246,7 +247,7 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
             updateCompany:updateCompany,
             deleteCompany:deleteCompany,
             showContact:showContact,
-            updateContact:updatecontact,
+            updateContact:updateContact,
             deleteContact:deleteContact
         }
     }]);
