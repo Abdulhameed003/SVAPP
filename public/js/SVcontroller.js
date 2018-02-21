@@ -72,7 +72,7 @@ salesVisionControllers.controller('forgetPasswordController', ['$scope', '$modal
                     $scope.forgotpass.$setPristine();
                     $scope.forgotpass.$setValidity();
                     $scope.forgotpass.$setUntouched();
-                    
+
                 }
             }, function (response) {
                 alert(response.data + 'The was a problem reseting the link');
@@ -81,7 +81,7 @@ salesVisionControllers.controller('forgetPasswordController', ['$scope', '$modal
             alert('A reset link has been sent to ' + $scope.user.email + ' please click the link to rest your password.');
             $scope.modalInstance.dismiss('cancel');
 
-          
+
         }
         if (form.$invalid) {
 
@@ -107,7 +107,7 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', 'da
 
     dashboardService.showDash(function (response) {
         if (response.status = 200) {
-            
+
             dashboardService.setDetails(response.data);
             $scope.content = response.data;
 
@@ -156,7 +156,7 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', 'da
     $scope.totalwoncounts = '';
     $scope.totallostvalues = '';
     $scope.totallostcounts = '';
-   
+
     $scope.totalWonCases = {
         chart: {
             caption: "Won Cases",
@@ -186,8 +186,8 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', 'da
             placeValuesInside: "0",
             bgcolor: "#EEEEEE"
         },
-        categories: {category:[]}, 
-        dataset: {data:[]}
+        categories: { category: [] },
+        dataset: { data: [] }
 
     };
 
@@ -203,9 +203,9 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', 'da
             placeValuesInside: "0",
             bgcolor: "#EEEEEE"
         },
-        categories: {category:[]},
-        dataset: {data:[]}
-        
+        categories: { category: [] },
+        dataset: { data: [] }
+
     };
 
     $scope.totalwonComparison = {
@@ -220,22 +220,22 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', 'da
             usePlotGradientColor: "0",
             bgcolor: "#EEEEEE"
         },
-        categories: {category:[]},
-        
+        categories: { category: [] },
+
         dataset: [
             {
                 seriesName: "Total Oppotunities",
                 data: []
-            }, 
+            },
             {
                 seriesName: "Won Cases",
                 renderAs: "area",
                 showValues: "0",
                 data: []
-                
+
             }
         ],
-        
+
 
         trendlines: [{
             line: [{
@@ -262,20 +262,20 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', 'da
             placeValuesInside: "0",
             bgcolor: "#EEEEEE"
         },
-        categories: {category:[]},
-       
+        categories: { category: [] },
+
         dataset: [
             {
                 seriesname: "Won Cases",
 
                 data: []
-                
+
             },
             {
                 seriesname: "Lost Cases",
 
                 data: []
-                
+
             }]
     };
 
@@ -297,7 +297,7 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', 'da
             bgcolor: "#EEEEEE"
         },
         data: []
-       
+
     };
 
     $scope.Salesvaluebyindustry = {
@@ -318,7 +318,7 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', 'da
             bgcolor: "#EEEEEE"
         },
         data: []
-        
+
     };
 
     $scope.totalclosingbyquarter = {
@@ -336,11 +336,11 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', 'da
             showLegend: "1",
             bgcolor: "#EEEEEE"
         },
-        categories: {category:[]},
+        categories: { category: [] },
         dataset: [{
             seriesName: "Closing Deals",
             data: []
-           
+
         }, {
             seriesName: "Closing Leads",
             data: []
@@ -951,8 +951,10 @@ salesVisionControllers.controller('salesController', ['$scope', '$http', 'salesS
                 spersonlist: []
             };
 
+
+
         } else if (response.data.length == 0) {
-            alert('No salesperson found!');
+            alert('No contact found!');
         }
     }, function (response) {
         alert('There was a problem getting the contacts from the database');
@@ -1668,7 +1670,7 @@ salesVisionControllers.controller('forCloseDelete', ['$scope', '$modalInstance',
                 var currentid = $modalInstance.id;
                 var index = $scope.rows.indexOf(currentid);
                 $scope.rows.splice(index, 1);
-               
+
             }
         }, function (response) {
             alert('There was an error deleting the selected project');
@@ -1685,19 +1687,19 @@ salesVisionControllers.controller('forCloseDelete', ['$scope', '$modalInstance',
 
 
 
-salesVisionControllers.controller('forClosePassword', ['$scope', '$modalInstance','settingService', function ($scope, $modalInstance,settingService) {
+salesVisionControllers.controller('forClosePassword', ['$scope', '$modalInstance', 'settingService', function ($scope, $modalInstance, settingService) {
 
     var original = angular.copy($scope.user);
     $scope.postchpassformin = function (form) {
 
         if (form.$valid) {
-            settingService.changePass($scope.user,function(response){
-                if (response.data == 'success'){
+            settingService.changePass($scope.user, function (response) {
+                if (response.data == 'success') {
                     alert('Password successfully changed ');
-                }else if (response.data == 'failed'){
+                } else if (response.data == 'failed') {
                     alert('There was an error in your request.');
                 }
-            },function(response){
+            }, function (response) {
                 alert('server down! We will get back to you shortly');
             });
 
@@ -1727,22 +1729,22 @@ salesVisionControllers.controller('forClosePassword', ['$scope', '$modalInstance
 
 /**This controller manageges the Industry section of the system it helps to DELETE AND SHOW the industry list*/
 salesVisionControllers.controller('forCloseIndustry', ['$scope', '$modalInstance', 'settingService', function ($scope, $modalInstance, settingService) {
-   
+
     settingService.showSettings(function (response) {
         $scope.industryList = response.data.industry;
     }, function (response) {
         alert('Error in loading industries');
     });
 
-    $scope.addIndustry = function (industry){
-        settingService.create(industry, function(response){
-            if (response.data  != "failed"){
+    $scope.addIndustry = function (industry) {
+        settingService.create(industry, function (response) {
+            if (response.data != "failed") {
                 $scope.industryList.push(response.data);
 
-            }else{
+            } else {
                 alert('Something went wrong.');
             }
-        },function(response){
+        }, function (response) {
             alert("Please don't leave the field empty");
         });
     };
@@ -1756,7 +1758,7 @@ salesVisionControllers.controller('forCloseIndustry', ['$scope', '$modalInstance
         }, function (response) {
             alert('Erorr deleting the selected industry.');
         });
-        
+
     };
 
     $scope.close = function () {
@@ -1773,22 +1775,22 @@ salesVisionControllers.controller('forCloseProduct', ['$scope', '$modalInstance'
         alert('Error in loading product');
     });
 
-    $scope.addProduct = function (product){
-        settingService.create(product, function(response){
-            if (response.data  != "failed"){
+    $scope.addProduct = function (product) {
+        settingService.create(product, function (response) {
+            if (response.data != "failed") {
                 $scope.productList.push(response.data);
-                
-            }else{
+
+            } else {
                 alert('Something went wrong.');
             }
-        },function(response){
+        }, function (response) {
             alert("Please don't leave the field empty");
         });
     };
 
 
     $scope.deleteSelected = function (index, product) {
-        
+
         settingService.deleteProduct(product.id, function (response) {
             if (response.status == 200) {
                 $scope.productList.splice(index, 1);
@@ -1797,7 +1799,7 @@ salesVisionControllers.controller('forCloseProduct', ['$scope', '$modalInstance'
         }, function (response) {
             alert('Erorr deleting the selected product.');
         });
-        
+
     };
 
     $scope.close = function () {
@@ -1947,9 +1949,9 @@ salesVisionControllers.controller('forCloseEditlead', ['$scope', '$modalInstance
                 alert('Error editting the project.');
             });
             $scope.editLeadProj = angular.copy(original);
-             $scope.editLead.$setPristine();
-           $scope.editLead.$setValidity();
-           $scope.editLead.$setUntouched();
+            $scope.editLead.$setPristine();
+            $scope.editLead.$setValidity();
+            $scope.editLead.$setUntouched();
             $modalInstance.dismiss('cancel');
         }
         if (form.$invalid) {
@@ -2026,7 +2028,7 @@ salesVisionControllers.controller('forCloseEditdeal', ['$scope', '$modalInstance
             }, function (response) {
                 alert('Error editting the project.');
             });
-      
+
 
         }
         if (form.$invalid) {
@@ -2285,7 +2287,7 @@ salesVisionControllers.controller('forCloseMultiplecontdelete', ['$scope', '$mod
 }]);
 
 /**company modal controllers */
-salesVisionControllers.controller('forCloseEditcomp', ['$scope', '$modalInstance', 'settingService','companyService', function ($scope, $modalInstance, settingService, companyService) {
+salesVisionControllers.controller('forCloseEditcomp', ['$scope', '$modalInstance', 'settingService', 'companyService', function ($scope, $modalInstance, settingService, companyService) {
     settingService.showSettings(function (response) {
         $scope.industryList = response.data.industry;
         $scope.editcom = {
@@ -2335,27 +2337,28 @@ salesVisionControllers.controller('forCloseEditcomp', ['$scope', '$modalInstance
 
 }]);
 
-salesVisionControllers.controller('forCloseDeletecomp', ['$scope', '$modalInstance','companyService', function ($scope, $modalInstance, companyService) {
+salesVisionControllers.controller('forCloseDeletecomp', ['$scope', '$modalInstance', 'companyService', function ($scope, $modalInstance, companyService) {
     $scope.deleteHeader = "Delete a Company";
     $scope.deleteTitle = "Deleting this company will delete all the related projects and contacts. Do you want to proceed?";
-    var indexid = modalInstance.comlist.id;
+    var indexid = $modalInstance.comlist.id;
     $scope.removeRow = function () {
-          companyService.deleteCompany(indexid, function (response) {
-        if (response.status == 200) {
-        var currentid = $modalInstance.comlist;
-        var index = $scope.rows4.indexOf(currentid);
-        $scope.rows4.splice(index, 1);
-        }
-    },function (response) {
-        alert('There was an error deleting the selected company');
-    });
+        companyService.deleteCompany(indexid, function (response) {
+            if (response.status == 200) {
+                var currentid = $modalInstance.comlist;
+                var index = $scope.rows4.indexOf(currentid);
+                $scope.rows4.splice(index, 1);
+            }
+        }, function (response) {
+            alert('There was an error deleting the selected company');
+        });
 
+     
+
+    };
     $scope.close = function () {
         $modalInstance.dismiss('cancel');
     };
 
-};
-  
 }]);
 
 
@@ -2401,21 +2404,8 @@ salesVisionControllers.controller('forCloseMultiplecompdelete', ['$scope', '$mod
 
 
 /**company modal controllers */
-salesVisionControllers.controller('forCloseEditpers', ['$scope', '$modalInstance','salesService', function ($scope, $modalInstance,salesService) {
-    var isEditable = false;
-    salesService.editSales(function(response){
-        if (response.data == 'success'){
-            isEditable = true;
-        }else if(response.data == 'Unauthorized'){
-            alert('Access denied.');
-        }
-    }, function(response){
-        //Catch a server error here.
-    });
+salesVisionControllers.controller('forCloseEditpers', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
 
-    if(isEditable){
-
-    }
     $scope.editSperson = {
         name: $modalInstance.list.name,
         phone_num: $modalInstance.list.phone_num,
