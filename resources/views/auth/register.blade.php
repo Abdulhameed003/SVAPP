@@ -90,6 +90,9 @@
                 <div class="form-group">
                     <button type="submit" ng-model="register" class="button register" >Register</button>
                 </div>
+                <a class="btn btn-link" id="sign-in" href="{{route('log_in.show')}}" target="_self">
+                        Login
+                    </a>
             </form>
         </div>
     </div>

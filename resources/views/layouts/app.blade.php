@@ -397,7 +397,7 @@
 						<div class="labelbottomspace">
 							<lable class="convertToblack">Email:</label>
 						</div>
-						<input class="forInput form-control" type="email" name="contPerEmail" ng-model="editcont.email" placeholder="Contact Person Email"
+						<input class="forInput form-control" type="email" name="contPerEmail" ng-model="editcont.contact_email" placeholder="Contact Person Email"
 						 ng-class="{submitting: ((editContact.contPerEmail.$error.email || editContact.contPerEmail.$error.required) && editContact.contPerEmail.$touched)}"
 						 required>
 						<div ng-messages="editContact.contPerEmail.$error" class="errormainpage">
@@ -409,7 +409,7 @@
 						<div class="labelbottomspace">
 							<lable class="convertToblack">Position:</label>
 						</div>
-						<input class="forInput form-control" type="text" only-letters-input name="contPerPos" ng-model="editcont.designation" placeholder="Contact Person Position"
+						<input class="forInput form-control" type="text" only-letters-input name="contPerPos" ng-model="editcont.contact_designation" placeholder="Contact Person Position"
 						 ng-class="{submitting:editContact.contPerPos.$error.required && editContact.contPerPos.$touched}" required>
 						<div class="errormainpage">
 							<div ng-show="editContact.contPerPos.$error.required" ng-if="editContact.contPerPos.$touched">Can't leave this empty.</div>
