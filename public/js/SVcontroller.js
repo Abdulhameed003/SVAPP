@@ -2139,15 +2139,19 @@ salesVisionControllers.controller('forCloseSalesperson', ['$scope', '$modalInsta
         if (form.$valid) {
             salesService.create($scope.Sperson,function(response){
                 if (response.data = 'success'){
-
+                    $scope.Sperson = angular.copy(original);
+                    $scope.addSalespersonform.$setPristine();
+                    $scope.addSalespersonform.$setValidity();
+                    $scope.addSalespersonform.$setUntouched();
+                    alert('Salesperson record created successfully.');
+                    
+                }else if(response.data == 'failed'){
+                    alert("There was an error creating a salesperson's record.");
                 }
             }, function(response){
-
+                //handle server error 
             });
-            $scope.Sperson = angular.copy(original);
-            $scope.addSalespersonform.$setPristine();
-            $scope.addSalespersonform.$setValidity();
-            $scope.addSalespersonform.$setUntouched();
+           
 
         }
         if (form.$invalid) {
