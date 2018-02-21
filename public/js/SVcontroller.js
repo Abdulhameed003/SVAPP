@@ -2388,10 +2388,20 @@ salesVisionControllers.controller('forCloseMultiplecompdelete', ['$scope', '$mod
 
 
 
-/**company modal controllers */
-salesVisionControllers.controller('forCloseEditpers', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+/**Editting the sales person record */
+salesVisionControllers.controller('forCloseEditpers', ['$scope', '$modalInstance','salesService', function ($scope, $modalInstance, salesService) {
 
-    if(isEditable){
+    salesService.editSales(function(response){
+        if (response.data == 'success'){
+            salesService.setIsEditable(true);
+        }else if (response.data=="Unauthorized"){
+            salesService.serIsEditable(false);
+        }
+    }, function(response){
+        //Handle Server error in this callback.
+    });
+    
+
         $scope.editSperson = {
             name: $modalInstance.list.name,
             phone_num: $modalInstance.list.phone_num,
@@ -2399,7 +2409,7 @@ salesVisionControllers.controller('forCloseEditpers', ['$scope', '$modalInstance
             salesperson_id: $modalInstance.list.salesperson_id,
             position: $modalInstance.list.position
         }
-    }
+    
     
 
     var original = angular.copy($scope.editSperson);

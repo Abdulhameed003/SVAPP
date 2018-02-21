@@ -41,7 +41,7 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        $rule = ['company_id'=>'required',
+        $rule = ['company_name'=>'required',
                  'contact_name' =>'required',
                  'contact_number'=>'required',
                  'contact_email' =>'required|email',
@@ -50,16 +50,16 @@ class ContactController extends Controller
 
         $this->validate($request, $rules);
         try{
-            $company = Company::where('company_id',$request->company_id)->first();
-            
+            $company = Company::where('company_name',$request->company_name)->first();
+            if (!is_null($company)){
             $company->contacts()->firstOrCreate(['company_id'=> $company->company_id],
                                 ['contact_name'=>$request->contact_name,
                                 'contact_number'=>$request->contact_number,
                                 'email'=>$request->contact_email,
                                 'designation'=>$request->contact_designation]);
     
-            return 'success';
-
+             return 'success';
+            }   
         }catch(exception $e){
             return 'failed';
         }
@@ -79,7 +79,7 @@ class ContactController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $rule = ['company_id'=>'required',
+        $rule = [
                 'contact_name' =>'required',
                 'contact_number'=>'required',
                 'contact_email' =>'required|email',
@@ -90,7 +90,6 @@ class ContactController extends Controller
         $this->validate($request, $rule);
 
         $contact = Contact::find($id);
-        $contact->company_id = $request->company_id;
         $contact->contact_name = $request->contact_name;
         $contact->contact_number = $request->contact_number;
         $contact->email = $request->contact_email;
