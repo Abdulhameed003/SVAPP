@@ -1289,7 +1289,7 @@ salesVisionControllers.controller('mainCtrl', ['$scope', '$location', function (
 /**modals */
 
 
-salesVisionControllers.controller('MyControllerModal', ['$scope', '$modal', 'projectService', function ($scope, $modal, projectService) {
+salesVisionControllers.controller('MyControllerModal', ['$scope', '$modal', 'projectService', 'companyService', function ($scope, $modal, projectService, companyService) {
 
     /** nav bar modals */
 
@@ -1458,6 +1458,7 @@ salesVisionControllers.controller('MyControllerModal', ['$scope', '$modal', 'pro
     };
     /**Company modals */
     $scope.openEditcomp = function (size, company) {
+        companyService.setid(company.id);
         var modalInstance = $modal.open({
             controller: 'forCloseEditcomp',
             templateUrl: 'editcompany.html',
@@ -2443,7 +2444,7 @@ salesVisionControllers.controller('forCloseMultiplecontdelete', ['$scope', '$mod
 }]);
 
 /**company modal controllers */
-salesVisionControllers.controller('forCloseEditcomp', ['$scope', '$modalInstance', 'settingService', function ($scope, $modalInstance, settingService) {
+salesVisionControllers.controller('forCloseEditcomp', ['$scope', '$modalInstance', 'settingService','companyService', function ($scope, $modalInstance, settingService, companyService) {
     settingService.showSettings(function (response) {
         $scope.industryList = response.data.industry;
         $scope.editcom = {
@@ -2465,6 +2466,13 @@ salesVisionControllers.controller('forCloseEditcomp', ['$scope', '$modalInstance
 
         if (form.$valid) {
             alert('can submit');
+            companyService.updateCompany($scope.editcom, function (response) {
+                if (response.status == 200) {
+                    alert('Updated successfully');
+                }
+            }, function (response) {
+                alert('Error editting the project.');
+            });
             $scope.editcom = angular.copy(original);
             $scope.editcompany.$setPristine();
             $scope.editcompany.$setValidity();
