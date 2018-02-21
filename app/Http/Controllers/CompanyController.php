@@ -38,7 +38,6 @@ class CompanyController extends Controller
     {
 
         $rule = ['company_name'=>'required',
-        'company_id'=>'required',
         'industry_id'=>'required',
         'website'=>'required|url',
         'office_number'=>'required|string'];
@@ -47,7 +46,6 @@ class CompanyController extends Controller
           
         $company = Company::find($id);
         $company->company_name = $request->company_name;
-        $company->company_id =$request->company_id;
         $company->industry_id = $request->industry_id;
         $company->website = $request->website;
         $company->office_num = $request->office_number;
@@ -68,7 +66,7 @@ class CompanyController extends Controller
         try{
             $company = Company::find($id);
             $company_name = $company->company_name;
-            $see = $company->projects()->where('company_id',$company->id)->delete();
+            $company->projects()->where('company_id',$company->id)->delete();
             $company->contacts()->where('company_id',$company->id)->delete();
             $company->delete();
             return 'success';
