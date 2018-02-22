@@ -62,7 +62,7 @@ class SalesPersonController extends Controller
                                         'user_role' => $salesperson->position]
             );
             
-            return Salesperson::getRecentUpdated();
+            return Salesperson::getRecentUpdated($salesperson->id);
         }catch(\Exception $e){
             return 'failed';
         }

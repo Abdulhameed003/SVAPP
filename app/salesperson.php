@@ -23,6 +23,6 @@ class Salesperson extends ConfigureDB
     }
 
     public static function getRecentUpdated($id) {
-        return static::withCount('projects')->orderBy('name', 'asc')->get();
+        return static::withCount('projects')->where('id',$id)->get();
     }
 }
