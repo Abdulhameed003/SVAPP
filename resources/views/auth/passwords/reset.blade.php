@@ -9,7 +9,7 @@
             </div>
             <form name="changepassform" ng-submit="postchpassform(changepassform)" novalidate>
                 <div class="formcontent">
-                        <!--input type="hidden" name="token" ng-model="user.token" ng-init="user.token={{ $token }}"-->
+                        
                         <div class="form-group">
                             <input  type="email" ng-class="{submitting: changepassform.email.$error.email || changepassform.email.$error.required && changepassform.email.$touched}"
                                 ng-model="user.email" name="email" class="form-control registertext" placeholder="Email" required>
@@ -40,8 +40,9 @@
                                 <div ng-message="compareTo" ng-if="changepassform.password_confirmation.$touched && user.password">Passwords do not match! </div>
     
                             </div>
-    
+                            <input type="hidden" ng-model="user.token" ng-init="user.token={{$token}}">
                         </div>
+                        
 
                 </div>
                 <div class="form-group">

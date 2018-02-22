@@ -37,7 +37,7 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
                 });
             }
 
-            function resetPassword(){
+            function resetPassword(formdata, onSuccess, onError){
                 $http.post('/password/reset',formdata)
                 .then(function(response){
                     onSuccess(response);
@@ -273,7 +273,11 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
             });
         }
 
+<<<<<<< HEAD
         function deleteSales(sales_id, onSuccess,onError){
+=======
+        function deleteSales(sale_is,  onSuccess,onError){
+>>>>>>> fcdb04fa7089591a919a2660434924c899d53320
             $http.delete('api/salesperson/'+sales_id)
             .then(function(response){
                 onSuccess(response);
