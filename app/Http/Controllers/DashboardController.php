@@ -154,7 +154,7 @@ class DashboardController extends Controller
                     ->whereMonth('start_date','>=',$quarter['start'])
                     ->whereMonth('start_date','<=',$quarter['end'])
                     ->sum('value');
-            $value_sum_lostCase = Project::where('project_category','Lost Case')
+            $value_sum_lostCase = Project::where('project_category','Lost case')
                     ->whereYear('start_date',$startdate)
                     ->whereMonth('start_date','>=',$quarter['start'])
                     ->whereMonth('start_date','<=',$quarter['end'])
@@ -175,7 +175,6 @@ class DashboardController extends Controller
         $products = Product::all('id','product_name');
         foreach($products as $product){
             $value_sum= Project::where([['project_category','Deal'],
-                                        ['project_category','Lead'],
                                         ['product',$product->id]])->whereYear('start_date',$startYear)
                       ->sum('value');
             $salesByProduct = array_prepend($salesByProduct,['label'=>$product->product_name,'value'=>$value_sum]);
@@ -192,7 +191,6 @@ class DashboardController extends Controller
         $industries = Industry::all('id','industry');
         foreach($industries as $industry){
             $value_sum= Project::with('company')->where([['project_category','Deal'],
-                                        ['project_category','Lead'],
                                         ['product',$industry->id]])->whereYear('start_date','=',$startYear)
                       ->sum('value');
             $salesByIndustry = array_prepend($salesByIndustry,['label'=>$industry->industry,'value'=>$value_sum]);
@@ -240,8 +238,8 @@ class DashboardController extends Controller
         $totalOppCount = $project->where('project_category','Lead')->count();
         $totalWonVal = $progressTT;
         $totalWonCount = $project->where('project_category','Deal')->count();
-        $totalLostVal = $project->where('project_category','Lost Case')->sum('value');
-        $totalLostCount = $project->where('project_category','Lost Case')->count();
+        $totalLostVal = $project->where('project_category','Lost case')->sum('value');
+        $totalLostCount = $project->where('project_category','Lost case')->count();
 
         return [['Target'=>$target],
                 ['progressToTgt'=>$progressTT],
