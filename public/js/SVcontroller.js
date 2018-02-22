@@ -1930,7 +1930,6 @@ salesVisionControllers.controller('forCloseEditlead', ['$scope', '$modalInstance
 
         $scope.selectedItemChanged = function () {
             if ($scope.editLeadProj.project_category == "Deal") {
-                alert('deal is selected');
                 $scope.checkdeal = true;
             }
             else if ($scope.editLeadProj.project_category != "Deal") {
@@ -1986,6 +1985,8 @@ salesVisionControllers.controller('forCloseEditlead', ['$scope', '$modalInstance
                     $scope.editLead.$setValidity();
                     $scope.editLead.$setUntouched();
                     $modalInstance.dismiss('cancel');
+                    var index = $scope.rows.indexOf($modalInstance.leadproject);
+                    $scope.rows[index]=response.data[0];
                    
                 }
                 else if(response.data == 'failed'){
@@ -2061,6 +2062,8 @@ salesVisionControllers.controller('forCloseEditdeal', ['$scope', '$modalInstance
                 if (response.data != 'failed') {
                     alert('Updated successfully');
                     $modalInstance.dismiss('cancel');
+                    var index = $scope.rows.indexOf($modalInstance.dealproject);
+                    $scope.rows[index]=response.data[0];
                 }
                 else if(response.data == 'failed'){
                     alert('Error editting the project.'); 
@@ -2132,6 +2135,8 @@ salesVisionControllers.controller('forCloseEditlostcase', ['$scope', '$modalInst
                     $scope.editlostcase.$setValidity();
                     $scope.editlostcase.$setUntouched();
                     $modalInstance.dismiss('cancel');
+                    var index = $scope.rows.indexOf($modalInstance.lostcaseproject);
+                    $scope.rows[index]=response.data[0];
               
                 }else{
                     alert('Error editting the project.');
@@ -2274,11 +2279,12 @@ salesVisionControllers.controller('forCloseEditcont', ['$scope', '$modalInstance
                     $scope.editContact.$setPristine();
                     $scope.editContact.$setValidity();
                     $scope.editContact.$setUntouched();
+                    $modalInstance.dismiss('cancel');
  /////////////////////////////need to return data as response
                    
-                   // var index = $scope.rows5.indexOf($modalInstance.contlist);
-                   // $scope.rows5[index]=$scope.editcont;
-                    $modalInstance.dismiss('cancel');
+                   var index = $scope.rows5.indexOf($modalInstance.contlist);
+                   $scope.rows5[index]=response.data[0];
+                   
                 }
                 else if(response.data == 'failed'){
                     alert('Error editting the contact.');  
@@ -2411,8 +2417,8 @@ salesVisionControllers.controller('forCloseEditcomp', ['$scope', '$modalInstance
                  $modalInstance.dismiss('cancel');
 /////////////////////////////need to return data as response
                
-               // var index = $scope.rows5.indexOf($modalInstance.contlist);
-               // $scope.rows5[index]=$scope.editcont;
+               var index = $scope.rows4.indexOf($modalInstance.comlist);
+               $scope.rows4[index]=response.data[0];
                 
             }
             else if(response.data == 'failed'){
@@ -2531,12 +2537,15 @@ salesVisionControllers.controller('forCloseEditpers', ['$scope', '$modalInstance
         if (form.$valid) {
             salesService.updateSales($scope.editSperson,function(response){
                 if (response.data != 'failed' ){
+                    alert('Updated Successfully');
                     $scope.editSperson = angular.copy(original);
                     $scope.editsalesperson.$setPristine();
                     $scope.editsalesperson.$setValidity();
                     $scope.editsalesperson.$setUntouched();
-                    alert('Update Successful');
                     $modalInstance.dismiss('cancel');
+                    var index = $scope.rows6.indexOf($modalInstance.list);
+                   $scope.rows6[index]=response.data[0];
+
                 }else if(response.data =='failed'){
                     alert('There was an error updating the sales person.');
                 }
