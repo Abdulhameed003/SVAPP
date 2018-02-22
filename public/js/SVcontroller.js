@@ -75,7 +75,7 @@ salesVisionControllers.controller('forgetPasswordController', ['$scope', '$modal
 
                 }
             }, function (response) {
-                alert(response.data + 'The was a problem reseting the link');
+                alert('The was a problem reseting the link');
             });
 
             alert('A reset link has been sent to ' + $scope.user.email + ' please click the link to rest your password.');
