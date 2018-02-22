@@ -37,7 +37,7 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
                 });
             }
 
-            function resetPassword(){
+            function resetPassword(formdata, onSuccess, onError){
                 $http.post('/password/reset',formdata)
                 .then(function(response){
                     onSuccess(response);

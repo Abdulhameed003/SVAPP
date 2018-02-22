@@ -976,7 +976,7 @@ salesVisionControllers.controller('salesController', ['$scope', '$http', 'salesS
 
 /**Handles the reset of password when a user forgets his/her details*/
 
-salesVisionControllers.controller('changepassctrl', ['userService', '$location', '$window', function ($scope, userService, $location, $windows) {
+salesVisionControllers.controller('changepassctrl', ['$scope','userService', '$location', '$window', function ($scope, userService, $location, $windows) {
 
 
     var original = angular.copy($scope.user);
