@@ -77,7 +77,7 @@ class DashboardController extends Controller
 
     private function totalWonCase(){
         $newSalesSum = Project::where([['project_category','Deal'],['project_type','New Sale'],['start_date','>=',Carbon::now()->startOfYear()]])->sum('value');
-        $renewalSum = Project::where([['project_category','Deal'],['project_type','Renewals'],['start_date','>=',Carbon::now()->startOfYear()]])->sum('value');
+        $renewalSum = Project::where([['project_category','Deal'],['project_type','Renewal'],['start_date','>=',Carbon::now()->startOfYear()]])->sum('value');
         return [['label'=>'Total New Sales','value'=>$newSalesSum],
                 ['label'=>'Total Renewals','value'=>$renewalSum]];
     }
@@ -89,7 +89,7 @@ class DashboardController extends Controller
 
         $products = Product::all('id','product_name');
         foreach($products as $product){
-            $value_sum= Project::where([['project_type','Renewals'],['start_date','>=',Carbon::now()->startOfYear()]])
+            $value_sum= Project::where([['project_type','Renewal'],['start_date','>=',Carbon::now()->startOfYear()]])
                     ->where('product',$product->id)
                     ->sum('value');
             $category = array_prepend($category,['label'=>$product->product_name]);
@@ -171,13 +171,12 @@ class DashboardController extends Controller
 
     private function salesByProuct(){
         $salesByProduct = [];
-        $startYear = Carbon::now()->startOfYear();
+        $startYear = Carbon::now()->format('Y');
         $products = Product::all('id','product_name');
         foreach($products as $product){
             $value_sum= Project::where([['project_category','Deal'],
                                         ['project_category','Lead'],
-                                        ['start_date','>=',$startYear],
-                                        ['product',$product->id]])
+                                        ['product',$product->id]])->whereYear('start_date',$startYear)
                       ->sum('value');
             $salesByProduct = array_prepend($salesByProduct,['label'=>$product->product_name,'value'=>$value_sum]);
         }
@@ -188,14 +187,13 @@ class DashboardController extends Controller
     
     private function salesByIndustry(){
         $salesByIndustry = [];
-        $startYear = Carbon::now()->startOfYear();
+        $startYear = Carbon::now()->format('Y');
 
         $industries = Industry::all('id','industry');
         foreach($industries as $industry){
             $value_sum= Project::with('company')->where([['project_category','Deal'],
                                         ['project_category','Lead'],
-                                        ['start_date','>=',$startYear],
-                                        ['product',$industry->id]])
+                                        ['product',$industry->id]])->whereYear('start_date','=',$startYear)
                       ->sum('value');
             $salesByIndustry = array_prepend($salesByIndustry,['label'=>$industry->industry,'value'=>$value_sum]);
         }
@@ -233,7 +231,7 @@ class DashboardController extends Controller
 
     private function frontdash(){
         $frontDash = [];
-        $startYear = Carbon::now()->subYear()->format('Y');
+        $startYear = Carbon::now()->format('Y');
         $target = 200000; // for initial phase we hardcode the target value.
 
         $project = Project::whereYear('start_date',$startYear)->get();

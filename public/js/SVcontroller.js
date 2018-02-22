@@ -985,7 +985,7 @@ salesVisionControllers.controller('changepassctrl', ['$scope','userService', '$l
 
         if (form.$valid) {
             userService.resetPassword($scope.user, function (response) {
-                if (response.status == 320) {
+                if (response.status == 200) {
                     $scope.user = angular.copy(original);
                     $scope.changepassform.$setPristine();
                     $scope.changepassform.$setValidity();

@@ -108,9 +108,8 @@ class SalesPersonController extends Controller
             $salesperson->salesperson_id = $request->salesperson_id;
             $salesperson->phone_num = $request->phone_num;
             $salesperson->position = $request->position;
-            $salesperson->save();
-
-            return $salesperson;
+            return $result = $salesperson->save() ? Salesperson::getRecentUpdated($salesperson->id) :'failed';
+            
         }catch(\Exception $e){
             return 'failed';
         }

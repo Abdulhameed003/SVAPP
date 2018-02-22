@@ -7,9 +7,10 @@
             <div>
                 <img id="loginlogo" src="image/logo-salesvision (2).png" />
             </div>
-            <form name="changepassform" ng-submit="postchpassform(changepassform)" novalidate>
+            <form name="changepassform"  novalidate>
+                    
                 <div class="formcontent">
-                        
+                        <input  type="hidden" name="token"  ng-model="user.token" ng-init="user.token='{{$token}}'" ng-required="true">
                         <div class="form-group">
                             <input  type="email" ng-class="{submitting: changepassform.email.$error.email || changepassform.email.$error.required && changepassform.email.$touched}"
                                 ng-model="user.email" name="email" class="form-control registertext" placeholder="Email" required>
@@ -40,13 +41,13 @@
                                 <div ng-message="compareTo" ng-if="changepassform.password_confirmation.$touched && user.password">Passwords do not match! </div>
     
                             </div>
-                            <input type="hidden" ng-model="user.token" ng-init="user.token={{$token}}">
+                            
                         </div>
                         
-
+                        
                 </div>
                 <div class="form-group">
-                    <button type="submit" ng-model="resetpass" class="button register" >Submit</button>
+                        <button type="submit" ng-model="login" class="button register" ng-click="postchpassform(changepassform)">Submit</button>
                 </div>
             </form>
         </div>
