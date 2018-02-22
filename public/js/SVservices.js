@@ -273,8 +273,8 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
             });
         }
 
-        function deleteSales(onSuccess,onError){
-            $http.delete('api/salesperson/'+salesid)
+        function deleteSales(sales_id, onSuccess,onError){
+            $http.delete('api/salesperson/'+sales_id)
             .then(function(response){
                 onSuccess(response);
             },function(response){
