@@ -38,7 +38,7 @@ app.config(function($routeProvider,$locationProvider) {
                 require: 'ngModel',
                 link: function(scope, element, attr, ngModelCtrl) {
                     function fromUser(text) {
-                        var transformedInput = text.replace(/[^a-zA-Z]/g, '');
+                        var transformedInput = text.replace(/[^a-zA-Z\s]/g,'');
                         
                         if (transformedInput !== text) {
                             ngModelCtrl.$setViewValue(transformedInput);
