@@ -281,7 +281,7 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', 'da
 
     $scope.Salesvaluebycustomers = {
         chart: {
-            caption: "Sales Value by Customers",
+            caption: "Sales Value by Products",
             numberPrefix: "RM",
             theme: "fint",
             showPercentValues: "1",
@@ -1532,7 +1532,7 @@ salesVisionControllers.controller('forCloseLead', ['$scope', '$modalInstance', '
         if (form.$valid) {
             // alert('can submit');
             projectService.createProject($scope.leadproj, function (response) {
-                if (response.status == 200) {
+                if (response.data != 'failed') {
                     alert('Project created succesfully');
                     projectService.getDetails().push(response.data[0]);
                     // $scope.leadproj = angular.copy(original);
@@ -1540,6 +1540,9 @@ salesVisionControllers.controller('forCloseLead', ['$scope', '$modalInstance', '
                     // $scope.addLead.$setValidity();
                     // $scope.addLead.$setUntouched();
 
+                }
+                else if( response.data == 'failed'){
+                    alert('There was problem creating project');
                 }
             }, function (response) {
                 var error = response.data;
@@ -1633,7 +1636,7 @@ salesVisionControllers.controller('forCloseDeal', ['$scope', '$modalInstance', '
 
         if (form.$valid) {
             projectService.createProject($scope.Dealproj, function (response) {
-                if (response.status != 'failed') {
+                if (response.data != 'failed') {
                     alert('Project created succesfully');
                     //push data to table
                     projectService.getDetails().push(response.data[0]);
@@ -1643,6 +1646,9 @@ salesVisionControllers.controller('forCloseDeal', ['$scope', '$modalInstance', '
                     //$scope.addDeal.$setUntouched();
 
 
+                }
+                else if (response.data == 'failed'){
+                    alert('There was problem creating project');
                 }
             }, function (response) {
                 var error = response.data;
@@ -1924,7 +1930,6 @@ salesVisionControllers.controller('forCloseEditlead', ['$scope', '$modalInstance
 
         $scope.selectedItemChanged = function () {
             if ($scope.editLeadProj.project_category == "Deal") {
-                alert('deal is selected');
                 $scope.checkdeal = true;
             }
             else if ($scope.editLeadProj.project_category != "Deal") {
@@ -1973,20 +1978,27 @@ salesVisionControllers.controller('forCloseEditlead', ['$scope', '$modalInstance
         /**call to update database */
         if (form.$valid) {
             projectService.updateProject($scope.editLeadProj, function (response) {
-                if (response.status == 200) {
+                if (response.data != 'failed') {
                     alert('Updated successfully');
+                    $scope.editLeadProj = angular.copy(original);
+                    $scope.editLead.$setPristine();
+                    $scope.editLead.$setValidity();
+                    $scope.editLead.$setUntouched();
+                    $modalInstance.dismiss('cancel');
+                    var index = $scope.rows.indexOf($modalInstance.leadproject);
+                    $scope.rows[index]=response.data[0];
+                   
+                }
+                else if(response.data == 'failed'){
+                    alert('Error editting the project.');
                 }
             }, function (response) {
                 alert('Error editting the project.');
             });
-            $scope.editLeadProj = angular.copy(original);
-            $scope.editLead.$setPristine();
-            $scope.editLead.$setValidity();
-            $scope.editLead.$setUntouched();
-            $modalInstance.dismiss('cancel');
+           
         }
         if (form.$invalid) {
-            alert('invalid');
+            
             angular.forEach($scope.editLead.$error, function (field) {
                 angular.forEach(field, function (errorField) {
                     errorField.$setTouched();
@@ -2047,9 +2059,14 @@ salesVisionControllers.controller('forCloseEditdeal', ['$scope', '$modalInstance
         /**call to update database */
         if (form.$valid) {
             projectService.updateProject($scope.editDealProj, function (response) {
-                if (response.status == 200) {
+                if (response.data != 'failed') {
                     alert('Updated successfully');
                     $modalInstance.dismiss('cancel');
+                    var index = $scope.rows.indexOf($modalInstance.dealproject);
+                    $scope.rows[index]=response.data[0];
+                }
+                else if(response.data == 'failed'){
+                    alert('Error editting the project.'); 
                 }
             }, function (response) {
                 alert('Error editting the project.');
@@ -2118,6 +2135,8 @@ salesVisionControllers.controller('forCloseEditlostcase', ['$scope', '$modalInst
                     $scope.editlostcase.$setValidity();
                     $scope.editlostcase.$setUntouched();
                     $modalInstance.dismiss('cancel');
+                    var index = $scope.rows.indexOf($modalInstance.lostcaseproject);
+                    $scope.rows[index]=response.data[0];
               
                 }else{
                     alert('Error editting the project.');
@@ -2161,6 +2180,7 @@ salesVisionControllers.controller('forCloseSalesperson', ['$scope', '$modalInsta
                     $scope.addSalespersonform.$setUntouched();
                     alert('Salesperson record was created successfully.');
                     salesService.getDetails().push(response.data[0]);
+                    $modalInstance.dismiss('cancel');
                     
                 }else if(response.data == 'failed'){
                     alert("There was an error creating a salesperson's record.");
@@ -2253,17 +2273,21 @@ salesVisionControllers.controller('forCloseEditcont', ['$scope', '$modalInstance
         if (form.$valid) {
             // alert('can submit');
             companyService.updateContact($scope.editcont, function (response) {
-                if (response.status == 200) {
+                if (response.data != 'failed') {
                     alert('Updated successfully');
                     $scope.editcont = angular.copy(original);
                     $scope.editContact.$setPristine();
                     $scope.editContact.$setValidity();
                     $scope.editContact.$setUntouched();
+                    $modalInstance.dismiss('cancel');
  /////////////////////////////need to return data as response
                    
-                   // var index = $scope.rows5.indexOf($modalInstance.contlist);
-                   // $scope.rows5[index]=$scope.editcont;
-                    $modalInstance.dismiss('cancel');
+                   var index = $scope.rows5.indexOf($modalInstance.contlist);
+                   $scope.rows5[index]=response.data[0];
+                   
+                }
+                else if(response.data == 'failed'){
+                    alert('Error editting the contact.');  
                 }
             }, function (response) {
                 alert('Error editting the contact.');
@@ -2384,7 +2408,7 @@ salesVisionControllers.controller('forCloseEditcomp', ['$scope', '$modalInstance
         if (form.$valid) {
            // alert('can submit');
            companyService.updateCompany($scope.editcom, function (response) {
-            if (response.status == 200) {
+            if (response.data != 'failed') {
                 alert('Updated successfully');
                 $scope.editcom = angular.copy(original);
                  $scope.editcompany.$setPristine();
@@ -2393,9 +2417,12 @@ salesVisionControllers.controller('forCloseEditcomp', ['$scope', '$modalInstance
                  $modalInstance.dismiss('cancel');
 /////////////////////////////need to return data as response
                
-               // var index = $scope.rows5.indexOf($modalInstance.contlist);
-               // $scope.rows5[index]=$scope.editcont;
+               var index = $scope.rows4.indexOf($modalInstance.comlist);
+               $scope.rows4[index]=response.data[0];
                 
+            }
+            else if(response.data == 'failed'){
+                alert('Error editting the company.');
             }
         }, function (response) {
             alert('Error editting the company.');
@@ -2509,15 +2536,18 @@ salesVisionControllers.controller('forCloseEditpers', ['$scope', '$modalInstance
 
         if (form.$valid) {
             salesService.updateSales($scope.editSperson,function(response){
-                if (response.data =='success' ){
+                if (response.data != 'failed' ){
+                    alert('Updated Successfully');
                     $scope.editSperson = angular.copy(original);
                     $scope.editsalesperson.$setPristine();
                     $scope.editsalesperson.$setValidity();
                     $scope.editsalesperson.$setUntouched();
-                    alert('Update Successful');
                     $modalInstance.dismiss('cancel');
+                    var index = $scope.rows6.indexOf($modalInstance.list);
+                   $scope.rows6[index]=response.data[0];
+
                 }else if(response.data =='failed'){
-                    alert('There was an error updating the record.');
+                    alert('There was an error updating the sales person.');
                 }
             },function(response){
                 //Server related errors
@@ -2544,8 +2574,10 @@ salesVisionControllers.controller('forCloseEditpers', ['$scope', '$modalInstance
 salesVisionControllers.controller('forCloseDeletepers', ['$scope', '$modalInstance','salesService', function ($scope, $modalInstance, salesService) {
     $scope.deleteHeader = "Delete a Sales Person";
     $scope.deleteTitle = "Are you sure to delete this sales person?";
+    var indexid = $modalInstance.list.id;
+
     $scope.removeRow = function () {
-        salesService.deleteSales(function(response){
+        salesService.deleteSales(indexid, function(response){
             if (response.data == 'success'){
                 var currentid = $modalInstance.list;
                 var index = $scope.rows6.indexOf(currentid);
@@ -2595,8 +2627,9 @@ salesVisionControllers.controller('forCloseMultiplepersdelete', ['$scope', '$mod
                             var index = $scope.rows6.indexOf(value);
                             $scope.rows6.splice(index, 1);
                         }
+
                     }, function (response) {
-                        alert('There was an error deleting the selected project');
+                        alert('There was an error deleting the selected sales persons');
                     });
                     
                 }
