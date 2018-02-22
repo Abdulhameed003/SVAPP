@@ -281,7 +281,7 @@ salesVisionControllers.controller('dashboardController', ['$scope', '$http', 'da
 
     $scope.Salesvaluebycustomers = {
         chart: {
-            caption: "Sales Value by Customers",
+            caption: "Sales Value by Products",
             numberPrefix: "RM",
             theme: "fint",
             showPercentValues: "1",
