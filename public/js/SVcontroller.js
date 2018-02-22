@@ -2160,8 +2160,7 @@ salesVisionControllers.controller('forCloseSalesperson', ['$scope', '$modalInsta
                     $scope.addSalespersonform.$setValidity();
                     $scope.addSalespersonform.$setUntouched();
                     alert('Salesperson record was created successfully.');
-                    alert(response.data);
-                    salesService.getDetails().push(response.data);
+                    salesService.getDetails().push(response.data[0]);
                     
                 }else if(response.data == 'failed'){
                     alert("There was an error creating a salesperson's record.");
@@ -2580,7 +2579,7 @@ salesVisionControllers.controller('forCloseMultipledeletepersErrormessage', ['$s
 }]);
 
 
-salesVisionControllers.controller('forCloseMultiplepersdelete', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+salesVisionControllers.controller('forCloseMultiplepersdelete', ['$scope', '$modalInstance', 'salesService', function ($scope, $modalInstance, salesService) {
     $scope.deleteHeaderrows = "Delete Sales Persons";
     $scope.deleteMessage = "Are you sure to delete the selected sales persons?";
 
@@ -2589,9 +2588,17 @@ salesVisionControllers.controller('forCloseMultiplepersdelete', ['$scope', '$mod
         var numbers = $modalInstance.list.length;
         for (var i = 0; i < numbers; i++) {
             angular.forEach($scope.rows6, function (value) {
-                if (value.No == rows[i]) {
-                    var index = $scope.rows6.indexOf(value);
-                    $scope.rows6.splice(index, 1);
+                if (value.id == rows[i]) {
+                    var indexid = rows[i];
+                    salesService.deleteSales(indexid, function (response) {
+                        if (response.data == 'success') {
+                            var index = $scope.rows6.indexOf(value);
+                            $scope.rows6.splice(index, 1);
+                        }
+                    }, function (response) {
+                        alert('There was an error deleting the selected project');
+                    });
+                    
                 }
 
 
