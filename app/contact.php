@@ -14,5 +14,10 @@ class Contact extends configureDB
 
     public function company(){
         return $this->belongsTo('App\Company','company_id','id');
+
+    }
+
+    public static function getRecentUpdated($id){
+        return static::with('company')->where('id',$id)->get();
     }
 }
