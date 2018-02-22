@@ -34,27 +34,27 @@ class SalesPersonController extends Controller
      */
     public function store(Request $request)
     {
-        $rules= ['salesperson_name'=>'required|string|max:255',
+        $rules= ['name'=>'required|string|max:255',
                  'salesperson_id'=>'required|string|max:255',
-                 'salesperson_email'=>'required|email|string|max:255',
-                 'salesperson_number'=>'required|string',
-                 'salesperson_position'=>'required|string|max:50',
-                 'Salesperson_password'=>'required|string'
+                 'email'=>'required|email|string|max:255',
+                 'phone_num'=>'required|string',
+                 'position'=>'required|string|max:50',
+                 'password'=>'required|string'
         ];
         
         $this->validate($request,$rules);
         try{
             //creats salesperson in the database
             $salesperson = Salesperson::firstOrCreate(['salesperson_id'=>$request->salesperson_id],
-                                    ['name'=>$request->salesperson_name,
-                                    'email'=>$request->salesperson_email,
-                                    'phone_num'=>$request->salesperson_number,
-                                    'position'=>$request->salesperson_position]
+                                    ['name'=>$request->name,
+                                    'email'=>$request->email,
+                                    'phone_num'=>$request->phone_num,
+                                    'position'=>$request->position]
             );
-            $fullname = explode(' ',$request->salesperson_name,2);
+            $fullname = explode(' ',$request->name,2);
 
             //creates login record for new salesperson.
-            $salesperson->user()->firstOrCreate(['email' => $request->salesperson_email],
+            $salesperson->user()->firstOrCreate(['email' => $request->email],
                                         ['first_name' => $fullname[0],
                                         'last_name' => !empty($fullname[1]) ? $fullname[1] : ' ',
                                         'password' => bcrypt($request->password),
@@ -62,7 +62,7 @@ class SalesPersonController extends Controller
                                         'user_role' => $salesperson->position]
             );
             
-            return 'success';
+            return $salesperson;
         }catch(\Exception $e){
             return 'failed';
         }

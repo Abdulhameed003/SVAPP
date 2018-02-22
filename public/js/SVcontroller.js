@@ -2110,7 +2110,7 @@ salesVisionControllers.controller('forCloseEditlostcase', ['$scope', '$modalInst
         /**call to update database */
         if (form.$valid) {
             projectService.updateProject($scope.editlostProj, function (response) {
-                if (response.status == 200) {
+                if (response.data != 'failed') {
                     alert('Updated successfully');
                     $scope.editlostProj = angular.copy(original);
                     $scope.editlostcase.$setPristine();
@@ -2118,6 +2118,8 @@ salesVisionControllers.controller('forCloseEditlostcase', ['$scope', '$modalInst
                     $scope.editlostcase.$setUntouched();
                     $modalInstance.dismiss('cancel');
               
+                }else{
+                    alert('Error editting the project.');
                 }
             }, function (response) {
                 alert('Error editting the project.');
@@ -2143,19 +2145,19 @@ salesVisionControllers.controller('forCloseEditlostcase', ['$scope', '$modalInst
 }]);
 
 
-salesVisionControllers.controller('forCloseSalesperson', ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+salesVisionControllers.controller('forCloseSalesperson', ['$scope', '$modalInstance','salesService', function ($scope, $modalInstance, salesService) {
 
     var original = angular.copy($scope.Sperson);
     $scope.postAddSalesPerson = function (form) {
 
         if (form.$valid) {
-            salesService.create($scope.Sperson,function(response){
-                if (response.data = 'success'){
+            salesService.createSales($scope.Sperson,function(response){
+                if (response.data != 'failed'){
                     $scope.Sperson = angular.copy(original);
                     $scope.addSalespersonform.$setPristine();
                     $scope.addSalespersonform.$setValidity();
                     $scope.addSalespersonform.$setUntouched();
-                    alert('Salesperson record created successfully.');
+                    alert('Salesperson record was created successfully.');
                     
                 }else if(response.data == 'failed'){
                     alert("There was an error creating a salesperson's record.");

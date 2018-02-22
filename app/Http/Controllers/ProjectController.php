@@ -130,12 +130,12 @@ class ProjectController extends Controller
                 'contact_number'=>'sometimes|required',
                 'contact_email'=>'sometimes|required',
                 'contact_designation'=>'sometimes|nullable|string',
-                'salesperson_id'=>'required',
+                'salesperson_id'=>'sometimes|required',
                 'project_category'=>'sometimes|required',
                 'product'=>'required',
                 'value'=>'required|numeric',
                 'project_type'=>'required',
-                'sales_stage'=>'required',
+                'sales_stage'=>'sometimes|required',
                 'tender'=>'nullable|string',
                 'remark'=>'nullable|string',
                 'close_date'=>'nullable',
@@ -158,8 +158,9 @@ class ProjectController extends Controller
     {
         $this->validate($request,$this->rule());
         try{
+            
             $salesPerson = Salesperson::where('salesperson_id',$request->salesperson_id)->first();
-
+           
             $project = Project::find($id);
         
             if ($request->has('project_category')){
@@ -167,13 +168,13 @@ class ProjectController extends Controller
             }
             $project->value =$request->value;
             $project->project_type = $request->project_type;
-            $project->sales_stage = $request->sales_stage;
-            $project->status = $request->status;
-            $project->tender = $request->tender;
-            $project->remarks = $request->remark;
+            $project->sales_stage = empty($request->sales_stage) ? $project->sales_stage : $request->sales_stage;
+            $project->status = empty($request->status) ? $project->status :$request->status;
+            $project->tender = empty($request->tender) ? $project->tender : $request->tender;
+            $project->remarks = empty($request->remark)? $project->remarks : $request->remarks;
             $project->close_at = Carbon::parse($request->close_at)->format('Y-m-d');
             $project->start_date = Carbon::parse($request->start_date)->format('Y-m-d');
-            $project->salesperson_id = $salesPerson->salesperson_id;
+            $project->salesperson_id = is_null($salesPerson) ? $project->salesperson_id : $salesPerson->salesperson_id;
             
             if($request->has('po_number')){
                 Deal::updateOrCreate(['project_id' => $project->id],
