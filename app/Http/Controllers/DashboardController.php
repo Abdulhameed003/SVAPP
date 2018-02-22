@@ -122,7 +122,7 @@ class DashboardController extends Controller
         $totalOpp = [];
         $wonOpp = [];
 
-        $startdate = Carbon::now()->format('Y');
+        $startdate = Carbon::now()->subYear()->format('Y');
         foreach($this->months as $month){
             $value_sum_wonOpp = Project::where('project_category','Deal')
                     ->whereYear('start_date',$startdate)
@@ -180,7 +180,7 @@ class DashboardController extends Controller
             $salesByProduct = array_prepend($salesByProduct,['label'=>$product->product_name,'value'=>$value_sum]);
         }
         
-        return $salesByProduct;
+        return array_reverse($salesByProduct);
 
     }
     
@@ -196,7 +196,7 @@ class DashboardController extends Controller
             $salesByIndustry = array_prepend($salesByIndustry,['label'=>$industry->industry,'value'=>$value_sum]);
         }
         
-        return $salesByIndustry;
+        return array_reverse($salesByIndustry);
     }
 
     private function totalCloseOpp(){
