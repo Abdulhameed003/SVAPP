@@ -33,7 +33,7 @@
         
                         <div class="form-group">
                             <input  type="password" ng-class="{submitting: ((changepassform.password_confirmation.$error.required || changepassform.password_confirmation.$error.compareTo && user.password)  && changepassform.password_confirmation.$touched )}"
-                                name="password_confirmation" ng-model="user.password-confirmation" class="form-control registertext" placeholder="Confirm Password"
+                                name="password_confirmation" ng-model="user.password_confirmation" class="form-control registertext" placeholder="Confirm Password"
                                 compare-to="user.password" required>
                             <div ng-messages="changepassform.password_confirmation.$error" class="error">
                                 <div ng-message="required" ng-if="changepassform.password_confirmation.$touched">Can't leave this empty.</div>

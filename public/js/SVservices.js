@@ -298,11 +298,18 @@ var salesVisionServices = angular.module('salesVisionServices',['LocalStorageMod
             },function(response){
                 onError(response);
             });
-        }    
+        }
+        var data={};    
         var salesid = 0;
        
 
         return {
+            getDetails: function () {
+                return data;
+            },
+            setDetails: function (Details) {
+                data = Details;
+            },
             setid: function(id){
                 salesid = id;
             },

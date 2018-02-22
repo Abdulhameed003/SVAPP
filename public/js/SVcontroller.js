@@ -940,6 +940,7 @@ salesVisionControllers.controller('salesController', ['$scope', '$http', 'salesS
             this.spersonlist = response.data;
             $scope.searchKeyword2 = '';
             $scope.rows6 = this.spersonlist;
+            salesService.setDetails($scope.rows6);
             $scope.filteredRows6 = this.spersonlist;
 
             $scope.checkLength = function () {
@@ -2153,11 +2154,14 @@ salesVisionControllers.controller('forCloseSalesperson', ['$scope', '$modalInsta
         if (form.$valid) {
             salesService.createSales($scope.Sperson,function(response){
                 if (response.data != 'failed'){
+                  
                     $scope.Sperson = angular.copy(original);
                     $scope.addSalespersonform.$setPristine();
                     $scope.addSalespersonform.$setValidity();
                     $scope.addSalespersonform.$setUntouched();
                     alert('Salesperson record was created successfully.');
+                    alert(response.data);
+                    salesService.getDetails().push(response.data);
                     
                 }else if(response.data == 'failed'){
                     alert("There was an error creating a salesperson's record.");
