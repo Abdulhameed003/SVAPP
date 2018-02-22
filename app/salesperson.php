@@ -21,4 +21,8 @@ class Salesperson extends ConfigureDB
         
         return $this->belongsTo('App\User','email','email');
     }
+
+    public static function getRecentUpdated($id) {
+        return static::withCount('projects')->orderBy('name', 'asc')->get();
+    }
 }
