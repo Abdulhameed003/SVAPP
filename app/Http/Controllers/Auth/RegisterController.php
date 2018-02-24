@@ -90,7 +90,7 @@ class RegisterController extends Controller
     
   
     private function CreateCompany(request $request){
-            $dbaseName = 'DB_'.$request->company_id;
+            $dbaseName = 'crm_'.$request->company_id;
             Tenant::create([
                 'company_name' => $request->company_name,
                 'company_id'=> $request->company_id,
