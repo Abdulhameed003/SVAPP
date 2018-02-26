@@ -5,8 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Config;
 use App\User;
-use App\xmlapi;
 use App;
 
 class ConfigureDB extends Model 
@@ -16,7 +16,7 @@ class ConfigureDB extends Model
         parent::__construct($attributes);
 
         // Set the database connection name.
-        $dbName = !Auth::guest() ? 'db_'.Auth::user()->company_id : '' ;
+        $dbName = !Auth::guest() ? 'crm_'.Auth::user()->company_id : '' ;
         $connName = ConfigureDB::configureDBConnection($dbName);
         $this->setConnection($connName);
     }
@@ -31,8 +31,6 @@ class ConfigureDB extends Model
         $tenantConnection = $connections['mysql2'];
         $newConnection = $tenantConnection;
         $newConnection['database'] = $database;
-        $newConnection['username']= env('DB_USERNAME');
-        $newConnection['password']= env('DB_PASSWORD');
      
         App::make('config')->set('database.connections.mysql2', $newConnection);
         
@@ -42,29 +40,15 @@ class ConfigureDB extends Model
 
    public static function CreateSchema($schemaName)
    {
-       if (App::environmen('production','staging')){
-           $cpanelUser = 'crm';
-           $cpanelPass = '@aI9q-otL,2c';
-           $db_host = 'crm.exitra';      
+        if (App::environment('production','staging')){
             
-           $cpanelXml = new xmlapi($db_host);
-
-            $cpanelXml->password_auth($cpanelUser,$cpanelPass);    
-            $cpanelXml->set_port(2082);
-            $cpanelXml->set_debug(1);  
-            $cpanelXml->set_output('array');
-
-            //create database    
-            $createdb = $cpanelXml->api1_query($cpanelUser, "Mysql", "adddb", array($schemaName));   
-            //create user 
-            //$usr = $xmlapi->api1_query($cpaneluser, "Mysql", "adduser", array($databaseuser, $databasepass));   
-            //add user 
-            $addusr = $cpanelXml->api1_query($cpanelUser, "Mysql", "adduserdb", array($schemaName, env('DB_USERNAME'), 'all'));
-
-           
-       }else if (App::isLocal()){
+            $cpanel = App::make('cpanel');
+            $dbResult = $cpanel->createdb($schemaName);
+            $userResult = $cpanel->api2(config('cpanel.username'),'MysqlFE','setdbuserprivileges',['privileges'=>'ALL PRIVILEGES','dbuser'=>'crm_svapp','db'=>$schemaName]);
+            return $result = ($dbResult->result == $userResult->result) ? true : false;
+        }else if (App::isLocal()){
             return DB::statement('CREATE DATABASE '.$schemaName);
-       } 
+         } 
        
        
    }

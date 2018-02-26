@@ -75,32 +75,37 @@ class RegisterController extends Controller
 
     public function register(request $request){
         $verify = $this->validator($request->all())->validate();
-            $this->CreateCompany($request);
-            User::create([
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'email' => $request->email,
-                'password' => bcrypt($request->password),
-                'company_id' => $request->company_id,
-                'user_role' => 'Admin'
-            ]);
-            return 'success';
-      
+            if ($this->CreateCompany($request)){
+                User::create([
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'email' => $request->email,
+                    'password' => bcrypt($request->password),
+                    'company_id' => $request->company_id,
+                    'user_role' => 'Admin'
+                ]);
+                return 'success';
+            }
+            return 'failed';
     }
     
   
     private function CreateCompany(request $request){
-            $dbaseName = 'crm_'.$request->company_id;
-            Tenant::create([
-                'company_name' => $request->company_name,
-                'company_id'=> $request->company_id,
-                'company_phone'=> $request->company_phone
-            ]);
+            $dbaseName = $request->company_id;
             
-            ConfigureDB::CreateSchema($dbaseName);
-            ConfigureDB::ConfigureDBConnection($dbaseName);
-            Artisan::call('migrate', ['--database' => 'mysql2', '--path' => 'database/migrations', '--force' => true]);
-            return true;
+           if (ConfigureDB::CreateSchema($dbaseName)){
+                Tenant::create([
+                    'company_name' => $request->company_name,
+                    'company_id'=> $request->company_id,
+                    'company_phone'=> $request->company_phone
+                ]);
+
+                ConfigureDB::ConfigureDBConnection($dbaseName);
+                Artisan::call('migrate', ['--database' => 'mysql2', '--path' => 'database/migrations', '--force' => true]);
+                return true;
+           }
+           return false;
+            
     
     }    
 

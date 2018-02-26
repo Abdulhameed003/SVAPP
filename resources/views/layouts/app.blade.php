@@ -34,10 +34,10 @@
 	<script src="{{asset('js/angular-datepicker.js')}}"></script>
 	<script src="{{asset('js/ui-bootstrap-tpls-0.14.3.min.js')}}"></script>
 	<script src="{{asset('js/checklist-model.js')}}"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-messages.js"></script>
+	<script src="{{asset('bower_components/angular-messages/angular-messages.js')}}"></script>
 	<script src="{{asset('bower_components/angular-route/angular-route.min.js')}}"></script>
 	<script src="{{asset('bower_components/angular-local-storage/dist/angular-local-storage.js')}}"></script>
-	<script src="{{('bower_components/angular-route/angular-route.min.js')}}"></script>
+	<script src="{{asset('bower_components/angular-route/angular-route.min.js')}}"></script>
 
 	<script src="{{asset('js/angular-fusioncharts.min.js')}}"></script>
 	<script src="{{asset('js/fusioncharts.charts.js')}}"></script>
