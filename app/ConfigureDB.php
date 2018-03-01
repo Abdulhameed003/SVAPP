@@ -44,10 +44,14 @@ class ConfigureDB extends Model
             
             $cpanel = App::make('cpanel');
             $dbResult = $cpanel->createdb($schemaName);
-            $userResult = $cpanel->api2(config('cpanel.username'),'MysqlFE','setdbuserprivileges',['privileges'=>'ALL PRIVILEGES','dbuser'=>'crm_svapp','db'=>$schemaName]);
-            return $result = ($dbResult->result == $userResult->result) ? true : false;
+            $userResult = $cpanel->api2('crm','MysqlFE','setdbuserprivileges',['privileges'=>'ALL PRIVILEGES','db'=>$schemaName,'dbuser'=>'crm_svapp']);
+            $result = ($dbResult['result'] == $userResult['result']) ? true : false;
+            
+            return $result;
         }else if (App::isLocal()){
-            return DB::statement('CREATE DATABASE '.$schemaName);
+            
+           return DB::statement('CREATE DATABASE '.$schemaName);
+          
          } 
        
        

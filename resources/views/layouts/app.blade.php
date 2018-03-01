@@ -22,7 +22,7 @@
 	<!-- Fonts -->
 	<link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="{{asset('font-awesome-4.7.0/css/font-awesome.min.css')}}" rel="stylesheet">
 	<link href="//fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css" />
 
 	<!-- Angular -->
@@ -1493,7 +1493,7 @@
 						</div>
 
 						<div class="sub-right spacing">
-							<textarea class="forInput form-control" wrap="soft" rows="5" ng-model="leadproj.remark" type="text" size="255" placeholder="Remarks"></textarea>
+							<textarea class="forInput form-control" wrap="soft" rows="5" ng-model="leadproj.remarks" type="text" size="255" placeholder="Remarks"></textarea>
 						</div>
 
 					</div>

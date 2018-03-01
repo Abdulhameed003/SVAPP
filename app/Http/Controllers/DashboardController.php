@@ -57,7 +57,7 @@ class DashboardController extends Controller
         ]);
 
         
-        $dbToConnect = ConfigureDB::ConfigureDBConnection('db_'.auth()->User()->company_id);
+        $dbToConnect = ConfigureDB::ConfigureDBConnection('crm_'.auth()->User()->company_id);
         DB::connection($dbToConnect);
 
        

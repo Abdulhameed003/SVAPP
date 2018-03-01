@@ -962,10 +962,10 @@ salesVisionControllers.controller('salesController', ['$scope', '$http', 'salesS
 
 
         } else if (response.data.length == 0) {
-            alert('No contact found!');
+            alert('No salesperson found!');
         }
     }, function (response) {
-        alert('There was a problem getting the contacts from the database');
+        alert('There was a problem getting the salesperson from the database');
     });
 }]).filter('pagination', function () {
     return function (input, start) {

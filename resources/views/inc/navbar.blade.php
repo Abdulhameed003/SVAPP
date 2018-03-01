@@ -2,7 +2,7 @@
     <div class="clear"></div>
 
     <div>
-        <img id="loginlogo" src="image/logo-salesvision (2).png" />
+        <img id="loginlogo" src="{{asset('image/logo-salesvision (2).png')}}" />
     </div>
     <nav class="bar">
         <button type="button" class="btn btn-link mainbutton" ng-click="callProject()" style="position:absolute;top:3%;left:100px;" id="projnav">Projects</button>
@@ -51,7 +51,7 @@
         <div class="dropdown navdropdown" style="top:3%;left:80.5%;" ng-controller="MyControllerModal">
             <button class="btn-link mainbutton1 barIcon">
                 <span>
-                    <img src="image/settings.png" style="height:22px; width:22px;">
+                    <img src="{{asset('image/Settings.png')}}" style="height:22px; width:22px;">
                 </span>
             </button>
             <div class="dropdown-content">

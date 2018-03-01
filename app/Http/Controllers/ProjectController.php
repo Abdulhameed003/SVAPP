@@ -95,7 +95,7 @@ class ProjectController extends Controller
                     'sales_stage'=>$request->sales_stage,
                     'status'=>$request->status,
                     'tender'=>$request->tender,
-                    'remarks'=>$request->remark,
+                    'remarks'=>$request->remarks,
                     'close_at'=>Carbon::parse($request->close_at)->format('Y-m-d'),
                     'start_date'=>Carbon::parse($request->start_date)->format('Y-m-d'),
                     'company_id'=>$company->id,
@@ -137,7 +137,7 @@ class ProjectController extends Controller
                 'project_type'=>'required',
                 'sales_stage'=>'sometimes|required',
                 'tender'=>'nullable|string',
-                'remark'=>'nullable|string',
+                'remarks'=>'nullable|string',
                 'close_date'=>'nullable',
                 'start_date'=>'required',
                 'po_number'=>'sometimes|required',
@@ -171,7 +171,7 @@ class ProjectController extends Controller
             $project->sales_stage = empty($request->sales_stage) ? $project->sales_stage : $request->sales_stage;
             $project->status = empty($request->status) ? $project->status :$request->status;
             $project->tender = empty($request->tender) ? $project->tender : $request->tender;
-            $project->remarks = empty($request->remark)? $project->remarks : $request->remarks;
+            $project->remarks = empty($request->remarks)? $project->remarks : $request->remarks;
             $project->close_at = Carbon::parse($request->close_at)->format('Y-m-d');
             $project->start_date = Carbon::parse($request->start_date)->format('Y-m-d');
             $project->salesperson_id = is_null($salesPerson) ? $project->salesperson_id : $salesPerson->salesperson_id;
